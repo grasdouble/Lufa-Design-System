@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.2.4
+
+### Patch Changes
+
+- 955d965: chore: use version for some packages since code has been moved from Lufa repo to this one
+
 ## 1.2.3
 
 ### Patch Changes

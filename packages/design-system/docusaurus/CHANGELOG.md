@@ -1,5 +1,15 @@
 # @grasdouble/lufa_design-system-docusaurus
 
+## 1.2.4
+
+### Patch Changes
+
+- 955d965: chore: use version for some packages since code has been moved from Lufa repo to this one
+- Updated dependencies [955d965]
+  - @grasdouble/lufa_design-system-themes@1.1.4
+  - @grasdouble/lufa_design-system-tokens@1.2.4
+  - @grasdouble/lufa_design-system@2.1.4
+
 ## 1.2.3
 
 ### Patch Changes
