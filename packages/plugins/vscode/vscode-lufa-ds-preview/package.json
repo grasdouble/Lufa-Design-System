@@ -1,7 +1,7 @@
 {
   "name": "@grasdouble/lufa_plugin_vscode_lufa-ds-preview",
   "displayName": "Lufa DS Preview",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "private": false,
   "description": "Token previews and decorators for the Lufa design system",
   "categories": [
@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "@grasdouble/lufa_config_eslint": "^0.1.7",
-   "@grasdouble/lufa_config_prettier": "^0.1.4",
+    "@grasdouble/lufa_config_prettier": "^0.1.4",
     "@types/node": "^25.8.0",
     "@types/vscode": "^1.120.0",
     "@vitest/coverage-v8": "^4.1.6",
