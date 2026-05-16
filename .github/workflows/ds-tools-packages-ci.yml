@@ -74,6 +74,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -125,6 +128,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
