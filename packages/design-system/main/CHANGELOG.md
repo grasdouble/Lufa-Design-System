@@ -1,5 +1,13 @@
 # @grasdouble/lufa_design-system
 
+## 2.1.5
+
+### Patch Changes
+
+- be3adab: fix: add missing field repository in package.json
+- Updated dependencies [be3adab]
+  - @grasdouble/lufa_design-system-tokens@1.2.5
+
 ## 2.1.4
 
 ### Patch Changes

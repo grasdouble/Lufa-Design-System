@@ -1,6 +1,6 @@
 {
   "name": "@grasdouble/lufa_design-system-tokens",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "private": false,
   "description": "Lufa Design System - Semantic design tokens (colors, spacing, typography, etc.)",
   "repository": {

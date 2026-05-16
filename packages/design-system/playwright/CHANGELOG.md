@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.2.5
+
+### Patch Changes
+
+- be3adab: fix: add missing field repository in package.json
+
 ## 1.2.4
 
 ### Patch Changes
