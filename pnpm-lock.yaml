@@ -15,11 +15,11 @@ importers:
         specifier: ^2.31.0
         version: 2.31.0(@types/node@25.8.0)
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:packages/config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:packages/config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -41,146 +41,6 @@ importers:
       sort-package-json:
         specifier: ^3.6.1
         version: 3.6.1
-
-  packages/apps/microfrontend/home:
-    dependencies:
-      '@grasdouble/lufa_design-system':
-        specifier: workspace:^
-        version: link:../../../design-system/main
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      react:
-        specifier: ^19.2.6
-        version: 19.2.6
-      react-dom:
-        specifier: ^19.2.6
-        version: 19.2.6(react@19.2.6)
-    devDependencies:
-      '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../../config/eslint
-      '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../../config/prettier
-      '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../../config/tsconfig
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
-        version: 4.7.1(prettier@3.8.3)
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
-      '@vitejs/plugin-react':
-        specifier: ^6.0.2
-        version: 6.0.2(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0))
-      eslint:
-        specifier: ^10.4.0
-        version: 10.4.0(jiti@1.21.7)
-      eslint-plugin-react:
-        specifier: ^7.37.5
-        version: 7.37.5(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-hooks:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-refresh:
-        specifier: ^0.5.2
-        version: 0.5.2(eslint@10.4.0(jiti@1.21.7))
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      typescript-eslint:
-        specifier: ^8.59.3
-        version: 8.59.3(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
-      vite:
-        specifier: ^8.0.13
-        version: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
-      vite-plugin-css-injected-by-js:
-        specifier: ^5.0.1
-        version: 5.0.1(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0))
-      vite-plugin-externalize-deps:
-        specifier: ^0.10.0
-        version: 0.10.0(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0))
-
-  packages/apps/microfrontend/main-container:
-    dependencies:
-      '@grasdouble/lufa_design-system':
-        specifier: workspace:^
-        version: link:../../../design-system/main
-      import-map-overrides:
-        specifier: ^6.1.0
-        version: 6.1.0
-      single-spa:
-        specifier: ^6.0.3
-        version: 6.0.3
-    devDependencies:
-      '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../../config/eslint
-      '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../../config/prettier
-      '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../../config/tsconfig
-      '@grasdouble/lufa_plugin_vite_vite-plugin-import-map-injector':
-        specifier: workspace:^
-        version: link:../../../plugins/vite/vite-plugin-import-map-injector
-      '@grasdouble/lufa_plugin_vite_vite-plugin-react-preamble':
-        specifier: workspace:^
-        version: link:../../../plugins/vite/vite-plugin-react-preamble
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
-        version: 4.7.1(prettier@3.8.3)
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
-      eslint:
-        specifier: ^10.4.0
-        version: 10.4.0(jiti@1.21.7)
-      eslint-plugin-react:
-        specifier: ^7.37.5
-        version: 7.37.5(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-hooks:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-refresh:
-        specifier: ^0.5.2
-        version: 0.5.2(eslint@10.4.0(jiti@1.21.7))
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      typescript-eslint:
-        specifier: ^8.59.3
-        version: 8.59.3(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
-      vite:
-        specifier: ^8.0.13
-        version: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
-      vite-plugin-externalize-deps:
-        specifier: ^0.10.0
-        version: 0.10.0(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0))
 
   packages/cdn/autobuild-server:
     dependencies:
@@ -210,14 +70,14 @@ importers:
         version: 1.6.4
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -264,56 +124,6 @@ importers:
         specifier: ^8.59.3
         version: 8.59.3(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
 
-  packages/config/eslint:
-    dependencies:
-      '@eslint/js':
-        specifier: ^10.0.1
-        version: 10.0.1(eslint@10.4.0(jiti@1.21.7))
-      eslint:
-        specifier: ^10.0.0
-        version: 10.4.0(jiti@1.21.7)
-      eslint-config-prettier:
-        specifier: ^10.1.8
-        version: 10.1.8(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react:
-        specifier: ^7.37.5
-        version: 7.37.5(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-hooks:
-        specifier: ^7.1.1
-        version: 7.1.1(eslint@10.4.0(jiti@1.21.7))
-      eslint-plugin-react-refresh:
-        specifier: ^0.5.2
-        version: 0.5.2(eslint@10.4.0(jiti@1.21.7))
-      globals:
-        specifier: ^17.6.0
-        version: 17.6.0
-      typescript-eslint:
-        specifier: ^8.59.3
-        version: 8.59.3(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
-    devDependencies:
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-
-  packages/config/prettier:
-    dependencies:
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
-        version: 4.7.1(prettier@3.8.3)
-      prettier:
-        specifier: ^3.7.3
-        version: 3.8.3
-    devDependencies:
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-
-  packages/config/tsconfig:
-    devDependencies:
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-
   packages/design-system/cli:
     dependencies:
       '@grasdouble/lufa_design-system-tokens':
@@ -333,14 +143,14 @@ importers:
         version: 4.2.0
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -433,14 +243,14 @@ importers:
         specifier: ^3.10.1
         version: 3.10.1(@swc/core@1.15.33(@swc/helpers@0.5.21))(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.14))(html-minifier-terser@7.2.0)(postcss@8.5.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -485,14 +295,14 @@ importers:
         version: 1.16.0(react@19.2.6)
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -557,14 +367,14 @@ importers:
         specifier: ^4.11.3
         version: 4.11.3(playwright-core@1.60.0)
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@grasdouble/lufa_design-system':
         specifier: workspace:^
         version: link:../main
@@ -624,14 +434,14 @@ importers:
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -688,14 +498,14 @@ importers:
         version: link:../tokens
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@grasdouble/lufa_design-system-cli':
         specifier: workspace:^
         version: link:../cli
@@ -724,14 +534,14 @@ importers:
   packages/design-system/tokens:
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../config/tsconfig
+        specifier: ^0.1.3
+        version: 0.1.3
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.1
         version: 4.7.1(prettier@3.8.3)
@@ -760,68 +570,6 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
 
-  packages/plugins/vite/vite-plugin-import-map-injector:
-    dependencies:
-      vite:
-        specifier: ^6 || ^7 || ^8
-        version: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
-    devDependencies:
-      '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../../config/eslint
-      '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../../config/prettier
-      '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../../config/tsconfig
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
-        version: 4.7.1(prettier@3.8.3)
-      eslint:
-        specifier: ^10.4.0
-        version: 10.4.0(jiti@1.21.7)
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-
-  packages/plugins/vite/vite-plugin-react-preamble:
-    dependencies:
-      vite:
-        specifier: ^6 || ^7 || ^8
-        version: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
-    devDependencies:
-      '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../../config/eslint
-      '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../../config/prettier
-      '@grasdouble/lufa_config_tsconfig':
-        specifier: workspace:^
-        version: link:../../../config/tsconfig
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.7.1
-        version: 4.7.1(prettier@3.8.3)
-      eslint:
-        specifier: ^10.4.0
-        version: 10.4.0(jiti@1.21.7)
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-      sort-package-json:
-        specifier: ^3.6.1
-        version: 3.6.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-
   packages/plugins/vscode/vscode-lufa-ds-preview:
     dependencies:
       '@grasdouble/lufa_design-system-tokens':
@@ -832,11 +580,11 @@ importers:
         version: 4.0.2
     devDependencies:
       '@grasdouble/lufa_config_eslint':
-        specifier: workspace:^
-        version: link:../../../config/eslint
+        specifier: ^0.1.7
+        version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
       '@grasdouble/lufa_config_prettier':
-        specifier: workspace:^
-        version: link:../../../config/prettier
+        specifier: ^0.1.4
+        version: 0.1.4(prettier@3.8.3)
       '@types/node':
         specifier: ^25.8.0
         version: 25.8.0
@@ -2767,6 +2515,19 @@ packages:
   '@gar/promise-retry@1.0.3':
     resolution: {integrity: sha512-GmzA9ckNokPypTg10pgpeHNQe7ph+iIKKmhKu3Ob9ANkswreCx7R3cKmY781K8QK3AqVL3xVh9A42JvIAbkkSA==}
     engines: {node: ^20.17.0 || >=22.9.0}
+
+  '@grasdouble/lufa_config_eslint@0.1.7':
+    resolution: {integrity: sha512-AD0sP3wZux9Ppfvgqp3RwrE/zU6QNIlh38ggcgzm/TffmGq37IC+nNNMGdZ5/OH+t29K5lq6kLEej+I67LPdfQ==, tarball: https://npm.pkg.github.com/download/@grasdouble/lufa_config_eslint/0.1.7/e04fc6655f7d0ccc31a4f6fcfb21bbf3de63beff}
+    peerDependencies:
+      eslint: ^10.0.0
+
+  '@grasdouble/lufa_config_prettier@0.1.4':
+    resolution: {integrity: sha512-TUUQxyYezLHqWXHIP5GSX+fr8UgeTGOVwteIA+G7dY36iY1CBaCZqZK48OKgX4ME+6KbVxVBPgh0t+j55SXhxA==, tarball: https://npm.pkg.github.com/download/@grasdouble/lufa_config_prettier/0.1.4/fbaae85aaa351a87656e4fbbfbe569bbb84656f2}
+    peerDependencies:
+      prettier: ^3.7.3
+
+  '@grasdouble/lufa_config_tsconfig@0.1.3':
+    resolution: {integrity: sha512-4DBFN90DS2cSays3OpIk59C/zOpZRaOYQrDA5XkSs64GaLZOoc9qQzvrH1zzxKUdpUZW9On9o6GA1xUqJ+iCxA==, tarball: https://npm.pkg.github.com/download/@grasdouble/lufa_config_tsconfig/0.1.3/a5f57298c2356614e703889b56cc71807cc0dc88}
 
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
@@ -5564,10 +5325,6 @@ packages:
     resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
-  cookie@1.1.1:
-    resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
-    engines: {node: '>=18'}
-
   copy-text-to-clipboard@3.2.2:
     resolution: {integrity: sha512-T6SqyLd1iLuqPA90J5N4cTalrtovCySh58iiZDGJ6FGznbclKh4UI+FGacQSgFzwKG77W7XT5gwbVEbd9cIH1A==}
     engines: {node: '>=12'}
@@ -6811,9 +6568,6 @@ packages:
   import-lazy@4.0.0:
     resolution: {integrity: sha512-rKtvo6a868b5Hu3heneU+L4yEQ4jYKLtjpnPeUdK7h0yzXGmyBTypknlkCvHFBqfX9YlorEiMM6Dnq/5atfHkw==}
     engines: {node: '>=8'}
-
-  import-map-overrides@6.1.0:
-    resolution: {integrity: sha512-RgrnojVe/aEMW9SauUQizSbjt80Xf5clkmbFo0p6h/0igAI6WAb25d3OhHGDJNdppUHEeHpPEimYP1liDSZn+A==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -9319,9 +9073,6 @@ packages:
     resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
     engines: {node: '>=10'}
 
-  single-spa@6.0.3:
-    resolution: {integrity: sha512-pXlwHXHhs3hx/MnGQHBLdFCVAN2rlm9TLBKazbDMyZ25QRxoen2vlUZ47MyXKa9K8Gd5UZs/gkuQad4TGbViwg==}
-
   sirv@2.0.4:
     resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
     engines: {node: '>= 10'}
@@ -10160,11 +9911,6 @@ packages:
     resolution: {integrity: sha512-5QJKBDc+gNYVqL/skgFAP81Yuzo9R+EAf19d+EtsMF/i8kFUpNi3J/H01QD3Oo8zBQn+NzoCIFkpPLynoOzaJg==}
     peerDependencies:
       vite: '>=2.0.0'
-
-  vite-plugin-css-injected-by-js@5.0.1:
-    resolution: {integrity: sha512-JSB0jjN4VCKqG7XTUdrwiIl5gA+z2yi/tAl9WHo0X4sdyJ1yrmbLOEjf95TDoDIIuKr4GJIc7lMJG0CT88eEUQ==}
-    peerDependencies:
-      vite: '>8.0.0-0'
 
   vite-plugin-dts@5.0.0:
     resolution: {integrity: sha512-VLNAUttBq7pLxxL/m/ztjd5zj5yiviiC7ijfPFVLK5c45FLcibvieBsdjSka3a4ag1qdrAF9K3OysH4/lW+rPQ==}
@@ -13450,6 +13196,33 @@ snapshots:
 
   '@gar/promise-retry@1.0.3': {}
 
+  '@grasdouble/lufa_config_eslint@0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)':
+    dependencies:
+      '@eslint/js': 10.0.1(eslint@10.4.0(jiti@1.21.7))
+      eslint: 10.4.0(jiti@1.21.7)
+      eslint-config-prettier: 10.1.8(eslint@10.4.0(jiti@1.21.7))
+      eslint-plugin-react: 7.37.5(eslint@10.4.0(jiti@1.21.7))
+      eslint-plugin-react-hooks: 7.1.1(eslint@10.4.0(jiti@1.21.7))
+      eslint-plugin-react-refresh: 0.5.2(eslint@10.4.0(jiti@1.21.7))
+      globals: 17.6.0
+      typescript-eslint: 8.59.3(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@grasdouble/lufa_config_prettier@0.1.4(prettier@3.8.3)':
+    dependencies:
+      '@ianvs/prettier-plugin-sort-imports': 4.7.1(prettier@3.8.3)
+      prettier: 3.8.3
+    transitivePeerDependencies:
+      - '@prettier/plugin-oxc'
+      - '@vue/compiler-sfc'
+      - content-tag
+      - prettier-plugin-ember-template-tag
+      - supports-color
+
+  '@grasdouble/lufa_config_tsconfig@0.1.3': {}
+
   '@hapi/hoek@9.3.0': {}
 
   '@hapi/topo@5.1.0':
@@ -16413,8 +16186,6 @@ snapshots:
 
   cookie@0.7.2: {}
 
-  cookie@1.1.1: {}
-
   copy-text-to-clipboard@3.2.2: {}
 
   copy-webpack-plugin@11.0.0(webpack@5.106.2(@swc/core@1.15.33(@swc/helpers@0.5.21))(postcss@8.5.14)):
@@ -18008,10 +17779,6 @@ snapshots:
       resolve-from: 4.0.0
 
   import-lazy@4.0.0: {}
-
-  import-map-overrides@6.1.0:
-    dependencies:
-      cookie: 1.1.1
 
   imurmurhash@0.1.4: {}
 
@@ -21150,8 +20917,6 @@ snapshots:
     dependencies:
       semver: 7.8.0
 
-  single-spa@6.0.3: {}
-
   sirv@2.0.4:
     dependencies:
       '@polka/url': 1.0.0-next.29
@@ -22081,10 +21846,6 @@ snapshots:
       vite: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
-
-  vite-plugin-css-injected-by-js@5.0.1(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)):
-    dependencies:
-      vite: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0)
 
   vite-plugin-dts@5.0.0(@rspack/core@1.7.11(@swc/helpers@0.5.21))(esbuild@0.28.0)(rolldown@1.0.1)(rollup@4.60.4)(typescript@6.0.3)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(jiti@1.21.7)(terser@5.47.1)(tsx@4.22.0)(yaml@2.9.0))(webpack@5.106.2(esbuild@0.28.0)(lightningcss@1.32.0)(postcss@8.5.14)):
     dependencies:
