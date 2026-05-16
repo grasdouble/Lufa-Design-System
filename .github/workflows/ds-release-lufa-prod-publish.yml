@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
