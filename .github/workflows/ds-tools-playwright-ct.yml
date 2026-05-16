@@ -35,6 +35,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -358,7 +361,7 @@ jobs:
         if: github.event_name == 'pull_request' && always() && !contains(github.event.pull_request.labels.*.name, 'snapshot-update')
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: ${{ steps.comment.outputs.body }}
 
@@ -401,6 +404,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -511,7 +517,7 @@ jobs:
         if: steps.commit.outputs.updated == 'true'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: |
             <!-- playwright-ct-results -->
@@ -536,7 +542,7 @@ jobs:
         if: steps.commit.outputs.updated == 'false'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: |
             <!-- playwright-ct-results -->

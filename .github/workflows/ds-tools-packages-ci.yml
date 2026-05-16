@@ -74,6 +74,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -94,7 +97,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
           comment-marker: '<!-- ds-packages-ci-report -->'
           comment-body: ${{ steps.checks.outputs.comment-body }}
 
@@ -125,6 +128,9 @@ jobs:
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version-file: '.tool-versions'
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -145,7 +151,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
           comment-marker: '<!-- performance-budget-comment -->'
           comment-body: ${{ steps.perf.outputs.comment-body }}
 
