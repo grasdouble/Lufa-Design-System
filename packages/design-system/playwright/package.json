@@ -4,6 +4,10 @@
   "private": true,
   "description": "",
   "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grasdouble/lufa-design-system.git"
+  },
   "license": "MIT",
   "author": "",
   "main": "index.js",

@@ -3,6 +3,10 @@
   "version": "1.1.4",
   "private": false,
   "description": "Lufa Design System - Theme variants (ocean, forest, etc.)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grasdouble/lufa-design-system.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {

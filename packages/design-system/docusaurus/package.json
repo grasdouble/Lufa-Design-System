@@ -2,6 +2,10 @@
   "name": "@grasdouble/lufa_design-system-docusaurus",
   "version": "1.2.4",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grasdouble/lufa-design-system.git"
+  },
   "license": "MIT",
   "scripts": {
     "build": "pnpm clear && docusaurus build",
