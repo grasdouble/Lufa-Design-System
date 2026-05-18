@@ -1,5 +1,41 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.0
+
+### Minor Changes
+
+- 7620410: feat: Add `DotNav` navigation component and `useScrollSpy` hook
+  - `DotNav`: Fixed vertical dot navigation for multi-section SPAs. Supports `left`/`right` positioning, accessible labels, design tokens, and `prefers-reduced-motion`. The active section's label is always visible; inactive labels slide in on hover.
+  - `useScrollSpy`: Intersection Observer-based hook that tracks the currently visible section. Returns `activeId`, `setActiveId`, and `lockFor` to prevent observer flicker during programmatic scrolls.
+
+- 4445782: feat(Container): add `paddingBlock` and `paddingInline` spacing props
+
+  Adds two new optional props to the `Container` component for controlling padding via semantic spacing tokens (`none | tight | compact | default | comfortable | spacious`):
+  - `paddingBlock` — vertical padding (top + bottom)
+  - `paddingInline` — horizontal padding (left + right), overrides the default gutter when set
+
+  No behavior change when props are omitted — the existing default horizontal gutter is preserved.
+
+### Patch Changes
+
+- 152b400: feat(Badge): rename `error` variant to `danger` for consistency with Button
+
+  The `Badge` component's red semantic variant has been renamed from `error` to `danger` to align with the `Button` component's naming convention. This makes the variant API consistent across all components.
+
+  **Breaking change:** Any usage of `<Badge variant="error">` must be updated to `<Badge variant="danger">`.
+
+  Updated:
+  - `VariantValue` type union in `Badge.tsx`
+  - `.variant-error` CSS class renamed to `.variant-danger` in `Badge.module.css`
+  - `badge.utilities.config.cjs` updated with new key name
+  - All Storybook stories, Playwright tests, and Docusaurus documentation updated
+
+- Updated dependencies [7620410]
+- Updated dependencies [152b400]
+- Updated dependencies [4445782]
+- Updated dependencies [ca895fe]
+  - @grasdouble/lufa_design-system@3.0.0
+
 ## 1.2.5
 
 ### Patch Changes
