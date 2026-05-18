@@ -273,10 +273,27 @@ export const ActiveLabelAlwaysVisible: Story = {
         </PropCard>
 
         <PropCard label="Label visibility states">
-          <ul style={{ margin: 0, padding: '0 1rem', color: 'var(--lufa-semantic-ui-text-secondary)', fontSize: '0.875rem', lineHeight: '1.75' }}>
-            <li><strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Active section</strong> → label always visible</li>
-            <li><strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Inactive section (hovered)</strong> → label slides in</li>
-            <li><strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Inactive section (idle)</strong> → label hidden</li>
+          <ul
+            style={{
+              margin: 0,
+              padding: '0 1rem',
+              color: 'var(--lufa-semantic-ui-text-secondary)',
+              fontSize: '0.875rem',
+              lineHeight: '1.75',
+            }}
+          >
+            <li>
+              <strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Active section</strong> → label always
+              visible
+            </li>
+            <li>
+              <strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Inactive section (hovered)</strong> →
+              label slides in
+            </li>
+            <li>
+              <strong style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Inactive section (idle)</strong> → label
+              hidden
+            </li>
           </ul>
         </PropCard>
       </div>
