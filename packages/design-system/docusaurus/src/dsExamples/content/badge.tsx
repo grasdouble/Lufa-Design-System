@@ -22,7 +22,7 @@ export function AllVariants() {
   const variants: { value: BadgeProps['variant']; label: string; description: string }[] = [
     { value: 'default', label: 'Default', description: 'Neutral labels, general tags' },
     { value: 'success', label: 'Success', description: 'Active, published, completed' },
-    { value: 'error', label: 'Error', description: 'Failed, blocked, offline' },
+    { value: 'danger', label: 'Danger', description: 'Failed, blocked, offline' },
     { value: 'warning', label: 'Warning', description: 'Pending, in review, attention needed' },
     { value: 'info', label: 'Info', description: 'Beta, new feature, version tags' },
   ];
@@ -166,7 +166,7 @@ export function WithDotIndicator() {
           backgroundColor: 'var(--lufa-semantic-ui-background-surface-default)',
         }}
       >
-        <Badge variant="error">5 alerts</Badge>
+        <Badge variant="danger">5 alerts</Badge>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span
             style={{
@@ -200,7 +200,7 @@ export function WithDotIndicator() {
           backgroundColor: 'var(--lufa-semantic-ui-background-surface-default)',
         }}
       >
-        <Badge dot variant="error">
+        <Badge dot variant="danger">
           5 alerts
         </Badge>
         <div style={{ display: 'flex', flexDirection: 'column' }}>

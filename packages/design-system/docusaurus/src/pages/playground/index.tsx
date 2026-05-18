@@ -109,7 +109,7 @@ function ComponentShowcase() {
           <Cluster spacing="default">
             <Badge variant="default">Default</Badge>
             <Badge variant="success">Success</Badge>
-            <Badge variant="error">Error</Badge>
+            <Badge variant="danger">Danger</Badge>
             <Badge variant="warning">Warning</Badge>
             <Badge variant="info">Info</Badge>
           </Cluster>
@@ -120,8 +120,8 @@ function ComponentShowcase() {
             <Badge variant="success" dot>
               Success with dot
             </Badge>
-            <Badge variant="error" dot>
-              Error with dot
+            <Badge variant="danger" dot>
+              Danger with dot
             </Badge>
             <Badge variant="warning" dot>
               Warning with dot
