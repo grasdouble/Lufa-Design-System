@@ -81,7 +81,7 @@ export const DotNav = ({
             className={`${styles['dot-nav-dot']}${isActive ? ` ${styles['dot-nav-dot--active']}` : ''}`}
             onClick={() => onSelect(id)}
             aria-label={label}
-            aria-current={isActive ? 'true' : undefined}
+            aria-current={isActive ? 'location' : undefined}
           />
         </div>
       );

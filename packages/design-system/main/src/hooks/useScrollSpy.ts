@@ -95,6 +95,15 @@ export function useScrollSpy({
     };
   }, [ids, rootMargin]);
 
+  // Clean up any pending lock timer on unmount
+  useEffect(() => {
+    return () => {
+      if (lockTimerRef.current) {
+        clearTimeout(lockTimerRef.current);
+      }
+    };
+  }, []);
+
   const lockFor = (ms = 700) => {
     isLockedRef.current = true;
     if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
