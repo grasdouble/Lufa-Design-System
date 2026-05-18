@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 
 import {
   Badge,
@@ -337,7 +337,7 @@ export default function DemoSite() {
                           type="email"
                           placeholder="Enter your email"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                           fullWidth
                         />
                       </Box>
