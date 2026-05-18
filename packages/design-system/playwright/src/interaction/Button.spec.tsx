@@ -90,7 +90,7 @@ test.describe('Button Component', () => {
     });
 
     test.describe('Variant Variants (Semantic Colors)', () => {
-      const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'neutral'] as const;
+      const variants = ['primary', 'secondary', 'success', 'error', 'warning', 'info', 'neutral'] as const;
 
       variants.forEach((variant) => {
         test(`should apply variant="${variant}" class`, async ({ mount }) => {
@@ -497,7 +497,7 @@ test.describe('Button Component', () => {
   test.describe('Visual Regression', () => {
     test('should match snapshot for all variants', async ({ mount }) => {
       const types = ['solid', 'outline', 'ghost'] as const;
-      const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'neutral'] as const;
+      const variants = ['primary', 'secondary', 'success', 'error', 'warning', 'info', 'neutral'] as const;
       const sizes = ['sm', 'md', 'lg'] as const;
       const radiusValues = ['none', 'sm', 'base', 'md', 'full'] as const;
 

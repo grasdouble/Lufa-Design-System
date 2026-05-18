@@ -67,7 +67,7 @@
   content: '';
 }
 
-.variant-danger {
+.variant-error {
   content: '';
 }
 
@@ -208,18 +208,18 @@
   background-color: var(--lufa-component-button-type-solid-variant-success-background-active);
 }
 
-/* Solid + Danger (Red) */
+/* Solid + Error (Red) */
 
-.button.type-solid.variant-danger {
+.button.type-solid.variant-error {
   background-color: var(--lufa-component-button-type-solid-variant-destructive-background-default);
   color: var(--lufa-component-button-type-solid-variant-destructive-text);
 }
 
-.button.type-solid.variant-danger:hover:not(:disabled):not(.disabled) {
+.button.type-solid.variant-error:hover:not(:disabled):not(.disabled) {
   background-color: var(--lufa-component-button-type-solid-variant-destructive-background-hover);
 }
 
-.button.type-solid.variant-danger:active:not(:disabled):not(.disabled) {
+.button.type-solid.variant-error:active:not(:disabled):not(.disabled) {
   background-color: var(--lufa-component-button-type-solid-variant-destructive-background-active);
 }
 
@@ -325,21 +325,21 @@
   border-color: var(--lufa-component-button-type-outline-variant-success-border-active);
 }
 
-/* Outline + Danger (Red) */
+/* Outline + Error (Red) */
 
-.button.type-outline.variant-danger {
+.button.type-outline.variant-error {
   background-color: transparent;
   color: var(--lufa-semantic-interactive-action-destructive-default);
   border-color: var(--lufa-semantic-interactive-action-destructive-default);
 }
 
-.button.type-outline.variant-danger:hover:not(:disabled):not(.disabled) {
+.button.type-outline.variant-error:hover:not(:disabled):not(.disabled) {
   background-color: var(--lufa-semantic-interactive-action-destructive-default);
   color: var(--lufa-component-button-type-outline-text-hover);
   border-color: var(--lufa-semantic-interactive-action-destructive-hover);
 }
 
-.button.type-outline.variant-danger:active:not(:disabled):not(.disabled) {
+.button.type-outline.variant-error:active:not(:disabled):not(.disabled) {
   background-color: var(--lufa-component-button-type-outline-variant-destructive-background-active);
   border-color: var(--lufa-component-button-type-outline-variant-destructive-border-active);
 }
@@ -451,19 +451,19 @@
   color: var(--lufa-component-button-type-ghost-variant-success-text-active);
 }
 
-/* Ghost + Danger (Red) */
+/* Ghost + Error (Red) */
 
-.button.type-ghost.variant-danger {
+.button.type-ghost.variant-error {
   background-color: transparent;
   color: var(--lufa-semantic-interactive-action-destructive-default);
 }
 
-.button.type-ghost.variant-danger:hover:not(:disabled):not(.disabled) {
+.button.type-ghost.variant-error:hover:not(:disabled):not(.disabled) {
   background-color: var(--lufa-component-button-type-ghost-background-hover);
   color: var(--lufa-semantic-interactive-action-destructive-hover);
 }
 
-.button.type-ghost.variant-danger:active:not(:disabled):not(.disabled) {
+.button.type-ghost.variant-error:active:not(:disabled):not(.disabled) {
   background-color: var(--lufa-component-button-type-ghost-background-active);
   color: var(--lufa-component-button-type-ghost-variant-destructive-text-active);
 }
