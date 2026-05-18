@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 /**
  * All available theme names in Lufa Design System.
  * This serves as the single source of truth for the ThemeName type.
+ * Includes 'default' plus 10 named theme variants.
  */
 export const THEME_NAMES = [
   'default',
@@ -35,6 +36,13 @@ export const THEME_NAMES = [
 export type ThemeName = (typeof THEME_NAMES)[number];
 
 /**
+ * Type guard for ThemeName — mirrors isValidMode in useThemeMode.ts
+ */
+function isThemeName(value: unknown): value is ThemeName {
+  return typeof value === 'string' && (THEME_NAMES as readonly string[]).includes(value);
+}
+
+/**
  * Theme mode for light/dark variants
  * - light: Light mode (default)
  * - dark: Dark mode
@@ -64,7 +72,7 @@ export type UseThemeReturn = {
  * Custom hook for managing theme and mode in the Lufa Design System
  *
  * Features:
- * - Theme selection (default, ocean, forest, matrix, cyberpunk, sunset, nordic, volcano, coffee, volt, steampunk)
+ * - Theme selection (see {@link THEME_NAMES} for all available themes)
  * - Mode selection (light, dark, auto)
  * - Auto-detection of system preference
  * - Syncs with HTML data attributes
@@ -114,8 +122,8 @@ export function useTheme(options?: {
   const getInitialTheme = (): ThemeName => {
     if (enableStorage && typeof window !== 'undefined') {
       const stored = localStorage.getItem(`${storageKey}-name`);
-      if (stored && (THEME_NAMES as readonly string[]).includes(stored)) {
-        return stored as ThemeName;
+      if (stored && isThemeName(stored)) {
+        return stored;
       }
     }
     return defaultTheme;
