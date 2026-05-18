@@ -40,3 +40,37 @@ export function SizeDemo() {
     </div>
   );
 }
+
+export function PaddingBlockDemo() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <Container as="section" size="lg" paddingBlock="comfortable">
+        <Box background="surface" borderWidth="thin" borderColor="default" padding="compact">
+          paddingBlock="comfortable" — section with comfortable vertical padding
+        </Box>
+      </Container>
+      <Container as="section" size="lg" paddingBlock="spacious">
+        <Box background="surface" borderWidth="thin" borderColor="default" padding="compact">
+          paddingBlock="spacious" — section with spacious vertical padding
+        </Box>
+      </Container>
+    </div>
+  );
+}
+
+export function PaddingInlineDemo() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <Container paddingInline="compact">
+        <Box background="surface" borderWidth="thin" borderColor="default" padding="compact">
+          paddingInline="compact" — narrower horizontal gutter
+        </Box>
+      </Container>
+      <Container paddingInline="spacious">
+        <Box background="surface" borderWidth="thin" borderColor="default" padding="compact">
+          paddingInline="spacious" — wider horizontal gutter
+        </Box>
+      </Container>
+    </div>
+  );
+}

@@ -27,5 +27,29 @@ module.exports = {
         '2xl': 'var(--lufa-component-container-max-width-2xl)',
       },
     },
+    // Vertical padding (block axis)
+    paddingBlock: {
+      properties: ['padding-top', 'padding-bottom'],
+      values: {
+        none: '--lufa-primitive-spacing-0',
+        tight: '--lufa-semantic-ui-spacing-tight',
+        compact: '--lufa-semantic-ui-spacing-compact',
+        default: '--lufa-semantic-ui-spacing-default',
+        comfortable: '--lufa-semantic-ui-spacing-comfortable',
+        spacious: '--lufa-semantic-ui-spacing-spacious',
+      },
+    },
+    // Horizontal padding (inline axis) — overrides the base padding-left/right
+    paddingInline: {
+      properties: ['padding-left', 'padding-right'],
+      values: {
+        none: '--lufa-primitive-spacing-0',
+        tight: '--lufa-semantic-ui-spacing-tight',
+        compact: '--lufa-semantic-ui-spacing-compact',
+        default: '--lufa-semantic-ui-spacing-default',
+        comfortable: '--lufa-semantic-ui-spacing-comfortable',
+        spacious: '--lufa-semantic-ui-spacing-spacious',
+      },
+    },
   },
 };
