@@ -464,7 +464,7 @@ export const Overview: Story = {
         <ColorSwatch
           token="--lufa-component-button-type-solid-variant-destructive-background-default"
           name="destructive-bg"
-          description="Destructive button (error actions)"
+          description="Destructive button (danger actions)"
         />
         <ColorSwatch
           token="--lufa-component-button-type-solid-variant-destructive-background-hover"

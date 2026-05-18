@@ -59,7 +59,7 @@ export function LoadingStatesDemo() {
       <Button loading variant="success">
         Publishing
       </Button>
-      <Button loading variant="error">
+      <Button loading variant="danger">
         Deleting
       </Button>
     </div>
@@ -107,7 +107,7 @@ export function VariantDemo() {
     >
       <Button variant="primary">Primary</Button>
       <Button variant="success">Success</Button>
-      <Button variant="error">Error</Button>
+      <Button variant="danger">Danger</Button>
       <Button variant="warning">Warning</Button>
       <Button variant="info">Info</Button>
       <Button variant="neutral">Neutral</Button>

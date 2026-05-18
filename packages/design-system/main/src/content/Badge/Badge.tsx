@@ -11,7 +11,7 @@ import styles from './Badge.module.css';
  * Built using composition pattern with Box primitive for styling.
  *
  * Features:
- * - Five semantic variants (default, success, error, warning, info)
+ * - Five semantic variants (default, success, danger, warning, info)
  * - Three sizes (sm, md, lg) with token-based dimensions
  * - Optional dot indicator for notifications
  * - Token-based design (component layer tokens)
@@ -27,7 +27,7 @@ import styles from './Badge.module.css';
  * <Badge variant="success">Active</Badge>
  *
  * // Badge with dot
- * <Badge variant="error" dot>3 notifications</Badge>
+ * <Badge variant="danger" dot>3 notifications</Badge>
  *
  * // Small badge for inline use
  * <Badge variant="info" size="sm">Beta</Badge>
@@ -44,7 +44,7 @@ import styles from './Badge.module.css';
 /**
  * Badge variant values - semantic color intention
  */
-type VariantValue = 'default' | 'success' | 'error' | 'warning' | 'info';
+type VariantValue = 'default' | 'success' | 'danger' | 'warning' | 'info';
 
 /**
  * Badge size values

@@ -277,7 +277,7 @@ export const WhyTokensMatter: Story = {
                 <Button variant="secondary" size="sm">
                   Secondary Action
                 </Button>
-                <Button variant="error" size="sm">
+                <Button variant="danger" size="sm">
                   Destructive Action
                 </Button>
               </div>

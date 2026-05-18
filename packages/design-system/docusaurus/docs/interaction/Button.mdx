@@ -31,7 +31,7 @@ An interactive action element with a two-dimensional variant system (type x vari
 Use `Button` when you need:
 
 - A primary or secondary call-to-action in forms, dialogs, or pages
-- Destructive actions with clear error styling
+- Destructive actions with clear danger styling
 - Success confirmations or informational actions with semantic colors
 - Navigation elements styled as buttons (via polymorphic `as="a"`)
 - Icon-only actions in compact toolbars
@@ -89,7 +89,7 @@ export function ButtonExamples() {
       <Button type="outline" variant="secondary">
         Cancel
       </Button>
-      <Button type="solid" variant="error" iconLeft="trash">
+      <Button type="solid" variant="danger" iconLeft="trash">
         Delete
       </Button>
       <Button type="solid" variant="primary" loading>
@@ -109,7 +109,7 @@ export function ButtonExamples() {
 | Prop        | Type                                                                                    | Default     | Description                                          |
 | ----------- | --------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------- |
 | `type`      | `'solid' \| 'outline' \| 'ghost'`                                                       | `'solid'`   | Visual style type (filled, border-only, or minimal)  |
-| `variant`   | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Semantic color variant                               |
+| `variant`   | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Semantic color variant                               |
 | `size`      | `'sm' \| 'md' \| 'lg'`                                                                  | `'md'`      | Button size                                          |
 | `radius`    | `'none' \| 'sm' \| 'base' \| 'md' \| 'full'`                                            | `'base'`    | Border radius                                        |
 | `iconLeft`  | `IconName`                                                                              | `undefined` | Icon to display on the left side                     |
@@ -160,7 +160,7 @@ export function AccessibleButtons() {
 
 - Use `type="solid"` with `variant="primary"` for the most important action on a page.
 - Use `type="outline"` or `type="ghost"` for secondary actions.
-- Use `variant="error"` for destructive actions.
+- Use `variant="danger"` for destructive actions.
 - Provide descriptive labels for all buttons.
 - Use `loading` during async operations.
   :::
@@ -168,7 +168,7 @@ export function AccessibleButtons() {
 :::warning Don't
 
 - Don't use multiple primary solid buttons on the same page.
-- Don't use `variant="error"` for non-destructive actions.
+- Don't use `variant="danger"` for non-destructive actions.
 - Don't create icon-only buttons without `aria-label`.
 - Don't disable buttons without explaining why.
 - Don't use `as="a"` without `href`.

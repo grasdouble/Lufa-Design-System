@@ -6,7 +6,7 @@
  * file and generates Badge.module.css automatically.
  *
  * Architecture: Single-dimensional design
- * - VARIANT: Semantic color intention (default, success, error, warning, info)
+ * - VARIANT: Semantic color intention (default, success, danger, warning, info)
  * - SIZE: Dimensions and padding (compact, default, large)
  * - DOT: Optional notification dot indicator
  *
@@ -46,7 +46,7 @@ module.exports = {
           'var(--lufa-component-badge-variant-success-background)',
           'var(--lufa-component-badge-variant-success-text)',
         ],
-        error: [
+        danger: [
           'var(--lufa-component-badge-variant-error-background)',
           'var(--lufa-component-badge-variant-error-text)',
         ],

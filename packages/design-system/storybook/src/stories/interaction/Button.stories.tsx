@@ -15,7 +15,7 @@ import { STORY_COLORS } from '../../constants/storyColors';
  * ## Features
  * - ✅ Two-dimensional variants: `type` (visual style) + `variant` (semantic color)
  * - ✅ Three types: solid, outline, ghost
- * - ✅ Seven semantic variants: primary, secondary, success, error, warning, info, neutral
+ * - ✅ Seven semantic variants: primary, secondary, success, danger, warning, info, neutral
  * - ✅ Icon support (left, right, or icon-only)
  * - ✅ Loading state with spinner animation
  * - ✅ Polymorphic rendering (button or anchor element)
@@ -42,7 +42,7 @@ const meta = {
     },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'error', 'warning', 'info', 'neutral'],
+      options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'neutral'],
       description: 'Semantic color variant',
       table: {
         category: 'Variants',
@@ -248,7 +248,7 @@ export const PropVariant: Story = {
       { value: 'primary', label: 'primary', description: 'Primary action' },
       { value: 'secondary', label: 'secondary', description: 'Secondary action' },
       { value: 'success', label: 'success', description: 'Success / Positive action' },
-      { value: 'error', label: 'error', description: 'Destructive / Negative action' },
+      { value: 'danger', label: 'danger', description: 'Destructive / Negative action' },
       { value: 'warning', label: 'warning', description: 'Warning / Caution' },
       { value: 'info', label: 'info', description: 'Informational' },
       { value: 'neutral', label: 'neutral', description: 'Neutral / Low-emphasis' },
@@ -324,7 +324,7 @@ export const TypeVariantMatrix: Story = {
   name: 'Type + Variant Matrix',
   render: () => {
     const types = ['solid', 'outline', 'ghost'] as const;
-    const variants = ['primary', 'secondary', 'success', 'error', 'warning', 'info', 'neutral'] as const;
+    const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'neutral'] as const;
 
     {
       /* 
@@ -390,7 +390,7 @@ export const TypeVariantMatrix: Story = {
           <CodeBlock
             code={`{/* 21 combinations: 3 types × 7 variants */}
 <Button type="solid" variant="primary">Primary</Button>
-<Button type="outline" variant="error">Delete</Button>
+<Button type="outline" variant="danger">Delete</Button>
 <Button type="ghost" variant="neutral">Cancel</Button>`}
             language="jsx"
             title="JSX"
@@ -928,7 +928,7 @@ export const UseCases: Story = {
               <Button type="outline" variant="neutral">
                 Keep
               </Button>
-              <Button type="solid" variant="error" iconLeft="trash">
+              <Button type="solid" variant="danger" iconLeft="trash">
                 Delete
               </Button>
             </div>
@@ -980,7 +980,7 @@ export const UseCases: Story = {
 <Button type="solid" variant="primary">Save</Button>
 
 {/* Destructive */}
-<Button type="solid" variant="error" iconLeft="trash">
+<Button type="solid" variant="danger" iconLeft="trash">
   Delete
 </Button>
 

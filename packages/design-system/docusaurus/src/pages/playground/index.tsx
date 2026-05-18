@@ -85,8 +85,8 @@ function ComponentShowcase() {
             <Button type="solid" variant="success">
               Success
             </Button>
-            <Button type="solid" variant="error">
-              Error
+            <Button type="solid" variant="danger">
+              Danger
             </Button>
             <Button type="solid" variant="warning">
               Warning

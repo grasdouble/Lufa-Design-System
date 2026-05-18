@@ -892,8 +892,8 @@ export const ComponentExamples: Story = {
           <Button type="solid" variant="success">
             Success Button
           </Button>
-          <Button type="solid" variant="error">
-            Error Button
+          <Button type="solid" variant="danger">
+            Danger Button
           </Button>
           <Button type="outline" variant="primary">
             Outline Button

@@ -41,7 +41,7 @@
   color: var(--lufa-component-badge-variant-success-text);
 }
 
-.variant-error {
+.variant-danger {
   background-color: var(--lufa-component-badge-variant-error-background);
   color: var(--lufa-component-badge-variant-error-text);
 }

@@ -14,7 +14,7 @@ import styles from './Button.module.css';
  *
  * Features:
  * - Three types (solid, outline, ghost)
- * - Seven variants (primary, secondary, success, error, warning, info, neutral)
+ * - Seven variants (primary, secondary, success, danger, warning, info, neutral)
  * - Three sizes (sm, md, lg) with semantic token-based dimensions
  * - Icon support (left, right, or icon-only)
  * - Loading state with spinner animation
@@ -58,7 +58,7 @@ type TypeValue = 'solid' | 'outline' | 'ghost';
 /**
  * Button variant values - semantic color intention
  */
-type VariantValue = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | 'neutral';
+type VariantValue = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'neutral';
 
 /**
  * Button size values
