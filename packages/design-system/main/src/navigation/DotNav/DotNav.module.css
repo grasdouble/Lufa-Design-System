@@ -4,16 +4,16 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  z-index: 100;
+  gap: var(--lufa-semantic-ui-spacing-default);
+  z-index: var(--lufa-semantic-z-index-fixed);
 }
 
 .dot-nav--right {
-  right: 1.5rem;
+  right: var(--lufa-semantic-ui-spacing-comfortable);
 }
 
 .dot-nav--left {
-  left: 1.5rem;
+  left: var(--lufa-semantic-ui-spacing-comfortable);
 }
 
 /* ========================================== */
@@ -32,6 +32,7 @@
 /* ========================================== */
 
 .dot-nav-dot {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: var(--lufa-semantic-ui-border-radius-full);
@@ -47,6 +48,13 @@
       var(--lufa-semantic-ui-transition-timing-function-default);
 }
 
+/* Expanded invisible hit area for accessible pointer/touch targets */
+.dot-nav-dot::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--lufa-semantic-ui-spacing-default));
+}
+
 .dot-nav-dot:hover,
 .dot-nav-dot--active {
   background: var(--lufa-semantic-interactive-action-primary-default);
@@ -54,8 +62,7 @@
 }
 
 .dot-nav-dot:focus-visible {
-  outline: var(--lufa-component-shared-focus-outline-width) solid
-    var(--lufa-component-shared-focus-outline-color);
+  outline: var(--lufa-component-shared-focus-outline-width) solid var(--lufa-component-shared-focus-outline-color);
   outline-offset: var(--lufa-component-shared-focus-outline-offset);
 }
 
@@ -72,22 +79,21 @@
  */
 .dot-nav-label {
   position: absolute;
-  right: calc(100% + 0.625rem);
+  right: calc(100% + var(--lufa-semantic-ui-spacing-compact));
   font-size: var(--lufa-semantic-ui-typography-caption);
   font-weight: 500;
   color: var(--lufa-semantic-ui-text-primary);
   background: var(--lufa-semantic-ui-background-page);
   border: var(--lufa-semantic-ui-border-width-thin) solid var(--lufa-semantic-ui-border-default);
   border-radius: var(--lufa-semantic-ui-border-radius-small);
-  padding: 0.25rem 0.5rem;
+  padding: var(--lufa-semantic-ui-spacing-tight) var(--lufa-semantic-ui-spacing-compact);
   box-shadow: var(--lufa-semantic-ui-shadow-medium);
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transform: translateX(4px);
+  transform: translateX(var(--lufa-semantic-ui-spacing-tight));
   transition:
-    opacity var(--lufa-semantic-ui-transition-duration-fast)
-      var(--lufa-semantic-ui-transition-timing-function-default),
+    opacity var(--lufa-semantic-ui-transition-duration-fast) var(--lufa-semantic-ui-transition-timing-function-default),
     transform var(--lufa-semantic-ui-transition-duration-fast)
       var(--lufa-semantic-ui-transition-timing-function-default);
 }
@@ -95,12 +101,13 @@
 /* Label on the left side */
 .dot-nav--left .dot-nav-label {
   right: auto;
-  left: calc(100% + 0.625rem);
-  transform: translateX(-4px);
+  left: calc(100% + var(--lufa-semantic-ui-spacing-compact));
+  transform: translateX(calc(-1 * var(--lufa-semantic-ui-spacing-tight)));
 }
 
-/* Label visible on hover (all items) */
-.dot-nav-item:hover .dot-nav-label {
+/* Label visible on hover or keyboard focus (all items) */
+.dot-nav-item:hover .dot-nav-label,
+.dot-nav-item:focus-within .dot-nav-label {
   opacity: 1;
   transform: translateX(0);
 }

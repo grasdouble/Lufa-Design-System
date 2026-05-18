@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Options for the useScrollSpy hook.
  */
-export interface UseScrollSpyOptions {
+export type UseScrollSpyOptions = {
   /** The element `id`s to observe, in document order */
   ids: readonly string[];
   /**
@@ -14,12 +14,12 @@ export interface UseScrollSpyOptions {
    * @default '-45% 0px -45% 0px'
    */
   rootMargin?: string;
-}
+};
 
 /**
  * Return value of the useScrollSpy hook.
  */
-export interface UseScrollSpyReturn {
+export type UseScrollSpyReturn = {
   /** The `id` of the section currently intersecting the active zone */
   activeId: string;
   /** Manually override the active section (e.g. immediately after clicking a dot) */
@@ -32,7 +32,7 @@ export interface UseScrollSpyReturn {
    * @param ms - Duration in milliseconds to hold the lock (default: 700)
    */
   lockFor: (ms?: number) => void;
-}
+};
 
 /**
  * useScrollSpy - Tracks which page section is currently visible
@@ -62,13 +62,13 @@ export interface UseScrollSpyReturn {
  * });
  * ```
  */
-export function useScrollSpy({
-  ids,
-  rootMargin = '-45% 0px -45% 0px',
-}: UseScrollSpyOptions): UseScrollSpyReturn {
+export function useScrollSpy({ ids, rootMargin = '-45% 0px -45% 0px' }: UseScrollSpyOptions): UseScrollSpyReturn {
   const [activeId, setActiveId] = useState<string>(ids[0] ?? '');
   const isLockedRef = useRef(false);
   const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Serialize ids so callers don't need to memoize the array themselves
+  const idsKey = ids.join(',');
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -83,7 +83,7 @@ export function useScrollSpy({
             setActiveId(id);
           }
         },
-        { rootMargin, threshold: 0 },
+        { rootMargin, threshold: 0 }
       );
 
       observer.observe(el);
@@ -93,7 +93,8 @@ export function useScrollSpy({
     return () => {
       observers.forEach((o) => o.disconnect());
     };
-  }, [ids, rootMargin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idsKey, rootMargin]);
 
   // Clean up any pending lock timer on unmount
   useEffect(() => {
@@ -104,13 +105,13 @@ export function useScrollSpy({
     };
   }, []);
 
-  const lockFor = (ms = 700) => {
+  const lockFor = useCallback((ms = 700) => {
     isLockedRef.current = true;
     if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
     lockTimerRef.current = setTimeout(() => {
       isLockedRef.current = false;
     }, ms);
-  };
+  }, []);
 
   return { activeId, setActiveId, lockFor };
 }
