@@ -13,7 +13,7 @@ import { STORY_COLORS } from '../../constants/storyColors';
  * Perfect for showing metadata, statuses, or highlighting information.
  *
  * ## Features
- * - ✅ Five semantic variants: default, success, error, warning, info
+ * - ✅ Five semantic variants: default, success, danger, warning, info
  * - ✅ Three sizes: sm, md, lg
  * - ✅ Optional dot indicator for notifications
  * - ✅ Polymorphic rendering (span, div, label)
@@ -29,7 +29,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'success', 'error', 'warning', 'info'],
+      options: ['default', 'success', 'danger', 'warning', 'info'],
       description: 'Semantic color variant',
       table: {
         category: 'Variants',
@@ -104,7 +104,7 @@ export const PropVariant: Story = {
     const variants = [
       { value: 'default', label: 'default', description: 'Neutral / General purpose' },
       { value: 'success', label: 'success', description: 'Positive / Active status' },
-      { value: 'error', label: 'error', description: 'Error / Critical status' },
+      { value: 'danger', label: 'danger', description: 'Error / Critical status' },
       { value: 'warning', label: 'warning', description: 'Warning / Caution' },
       { value: 'info', label: 'info', description: 'Informational / Notice' },
     ] as const;
@@ -288,7 +288,7 @@ export const PropDot: Story = {
                       alignItems: 'center',
                     }}
                   >
-                    <Badge dot={option.value} variant="error">
+                    <Badge dot={option.value} variant="danger">
                       {option.value ? '3 notifications' : 'Status'}
                     </Badge>
                     <div
@@ -327,8 +327,8 @@ export const PropDot: Story = {
               <Badge dot variant="success">
                 success
               </Badge>
-              <Badge dot variant="error">
-                error
+              <Badge dot variant="danger">
+                danger
               </Badge>
               <Badge dot variant="warning">
                 warning
@@ -433,7 +433,7 @@ export const SizeVariantMatrix: Story = {
   name: 'Size + Variant Matrix',
   render: () => {
     const sizes = ['sm', 'md', 'lg'] as const;
-    const variants = ['default', 'success', 'error', 'warning', 'info'] as const;
+    const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
 
     return (
       <StoryContainer>
@@ -472,7 +472,7 @@ export const SizeVariantMatrix: Story = {
             code={`{/* 15 combinations: 3 sizes × 5 variants */}
 <Badge size="sm" variant="default">Default</Badge>
 <Badge size="md" variant="success">Success</Badge>
-<Badge size="lg" variant="error">Error</Badge>`}
+<Badge size="lg" variant="danger">Danger</Badge>`}
             language="jsx"
             title="JSX"
           />
@@ -516,7 +516,7 @@ export const UseCases: Story = {
             >
               <Badge variant="success">Active</Badge>
               <Badge variant="warning">Pending</Badge>
-              <Badge variant="error">Inactive</Badge>
+              <Badge variant="danger">Inactive</Badge>
               <Badge variant="info">Draft</Badge>
               <Badge variant="default">Archived</Badge>
             </div>
@@ -546,7 +546,7 @@ export const UseCases: Story = {
                 alignItems: 'center',
               }}
             >
-              <Badge dot variant="error">
+              <Badge dot variant="danger">
                 3 new messages
               </Badge>
               <Badge dot variant="warning">
@@ -622,7 +622,7 @@ export const UseCases: Story = {
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Inbox</span>
-                <Badge variant="error">99+</Badge>
+                <Badge variant="danger">99+</Badge>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Tasks</span>
@@ -667,7 +667,7 @@ export const UseCases: Story = {
               <Badge size="sm" variant="success">
                 Stable
               </Badge>
-              <Badge size="sm" variant="error">
+              <Badge size="sm" variant="danger">
                 Deprecated
               </Badge>
             </div>
@@ -676,17 +676,17 @@ export const UseCases: Story = {
           <CodeBlock
             code={`{/* Status labels */}
 <Badge variant="success">Active</Badge>
-<Badge variant="error">Inactive</Badge>
+<Badge variant="danger">Inactive</Badge>
 
 {/* Notifications */}
-<Badge dot variant="error">3 new messages</Badge>
+<Badge dot variant="danger">3 new messages</Badge>
 
 {/* Category tags */}
 <Badge size="sm">React</Badge>
 <Badge size="sm">TypeScript</Badge>
 
 {/* Numeric indicators */}
-<Badge variant="error">99+</Badge>
+<Badge variant="danger">99+</Badge>
 
 {/* Version labels */}
 <Badge size="sm" variant="info">v2.0</Badge>

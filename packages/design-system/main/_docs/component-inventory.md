@@ -274,7 +274,7 @@ All 16 components are now production-ready:
 
 **Features**:
 
-- ✅ Multiple variants (success, error, warning, info, neutral)
+- ✅ Multiple variants (success, danger, warning, info, neutral)
 - ✅ Size variants (sm, md)
 - ✅ Optional dot indicator
 - ✅ Token-based styling
@@ -283,7 +283,7 @@ All 16 components are now production-ready:
 
 **Props**:
 
-- **Variant**: `variant` (success, error, warning, info, neutral)
+- **Variant**: `variant` (success, danger, warning, info, neutral)
 - **Size**: `size` (sm, md)
 - **Dot**: `dot` (boolean - visual indicator)
 
@@ -294,8 +294,8 @@ All 16 components are now production-ready:
   Active
 </Badge>
 
-<Badge variant="error" dot>
-  Error
+<Badge variant="danger" dot>
+  Danger
 </Badge>
 
 <Badge variant="warning" size="sm">
