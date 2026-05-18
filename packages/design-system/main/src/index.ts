@@ -29,5 +29,8 @@ export * from './interaction';
 // Composition - Complex patterns that combine multiple components
 export * from './composition';
 
+// Navigation - Navigation components like dot nav, breadcrumbs
+export * from './navigation';
+
 // Utility - Technical helpers and accessibility utilities
 export * from './utility';
