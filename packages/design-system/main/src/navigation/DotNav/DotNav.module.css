@@ -1,0 +1,123 @@
+.dot-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.dot-nav--right {
+  right: 1.5rem;
+}
+
+.dot-nav--left {
+  left: 1.5rem;
+}
+
+/* ========================================== */
+/* ITEM */
+/* ========================================== */
+
+.dot-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ========================================== */
+/* DOT */
+/* ========================================== */
+
+.dot-nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--lufa-semantic-ui-border-radius-full);
+  background: var(--lufa-semantic-ui-border-default);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition:
+    background var(--lufa-semantic-ui-transition-duration-fast)
+      var(--lufa-semantic-ui-transition-timing-function-default),
+    transform var(--lufa-semantic-ui-transition-duration-fast)
+      var(--lufa-semantic-ui-transition-timing-function-default);
+}
+
+.dot-nav-dot:hover,
+.dot-nav-dot--active {
+  background: var(--lufa-semantic-interactive-action-primary-default);
+  transform: scale(1.6);
+}
+
+.dot-nav-dot:focus-visible {
+  outline: var(--lufa-component-shared-focus-outline-width) solid
+    var(--lufa-component-shared-focus-outline-color);
+  outline-offset: var(--lufa-component-shared-focus-outline-offset);
+}
+
+/* ========================================== */
+/* LABEL */
+/* ========================================== */
+
+/*
+ * The label is absolutely positioned so it never shifts the dot alignment.
+ * By default it is hidden (opacity: 0).
+ * It becomes visible when:
+ *   1. The parent item is hovered (.dot-nav-item:hover)
+ *   2. The item is the active section (.dot-nav-item--active)
+ */
+.dot-nav-label {
+  position: absolute;
+  right: calc(100% + 0.625rem);
+  font-size: var(--lufa-semantic-ui-typography-caption);
+  font-weight: 500;
+  color: var(--lufa-semantic-ui-text-primary);
+  background: var(--lufa-semantic-ui-background-page);
+  border: var(--lufa-semantic-ui-border-width-thin) solid var(--lufa-semantic-ui-border-default);
+  border-radius: var(--lufa-semantic-ui-border-radius-small);
+  padding: 0.25rem 0.5rem;
+  box-shadow: var(--lufa-semantic-ui-shadow-medium);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(4px);
+  transition:
+    opacity var(--lufa-semantic-ui-transition-duration-fast)
+      var(--lufa-semantic-ui-transition-timing-function-default),
+    transform var(--lufa-semantic-ui-transition-duration-fast)
+      var(--lufa-semantic-ui-transition-timing-function-default);
+}
+
+/* Label on the left side */
+.dot-nav--left .dot-nav-label {
+  right: auto;
+  left: calc(100% + 0.625rem);
+  transform: translateX(-4px);
+}
+
+/* Label visible on hover (all items) */
+.dot-nav-item:hover .dot-nav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Label always visible for the active section */
+.dot-nav-item--active .dot-nav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========================================== */
+/* REDUCED MOTION */
+/* ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-nav-dot,
+  .dot-nav-label {
+    transition: none;
+  }
+}
