@@ -57,3 +57,71 @@
 .size-2xl {
   max-width: var(--lufa-component-container-max-width-2xl);
 }
+
+/* ========================================== */
+/* PADDINGBLOCK */
+/* ========================================== */
+
+.paddingBlock-none {
+  padding-top: var(--lufa-primitive-spacing-0);
+  padding-bottom: var(--lufa-primitive-spacing-0);
+}
+
+.paddingBlock-tight {
+  padding-top: var(--lufa-semantic-ui-spacing-tight);
+  padding-bottom: var(--lufa-semantic-ui-spacing-tight);
+}
+
+.paddingBlock-compact {
+  padding-top: var(--lufa-semantic-ui-spacing-compact);
+  padding-bottom: var(--lufa-semantic-ui-spacing-compact);
+}
+
+.paddingBlock-default {
+  padding-top: var(--lufa-semantic-ui-spacing-default);
+  padding-bottom: var(--lufa-semantic-ui-spacing-default);
+}
+
+.paddingBlock-comfortable {
+  padding-top: var(--lufa-semantic-ui-spacing-comfortable);
+  padding-bottom: var(--lufa-semantic-ui-spacing-comfortable);
+}
+
+.paddingBlock-spacious {
+  padding-top: var(--lufa-semantic-ui-spacing-spacious);
+  padding-bottom: var(--lufa-semantic-ui-spacing-spacious);
+}
+
+/* ========================================== */
+/* PADDINGINLINE */
+/* ========================================== */
+
+.paddingInline-none {
+  padding-left: var(--lufa-primitive-spacing-0);
+  padding-right: var(--lufa-primitive-spacing-0);
+}
+
+.paddingInline-tight {
+  padding-left: var(--lufa-semantic-ui-spacing-tight);
+  padding-right: var(--lufa-semantic-ui-spacing-tight);
+}
+
+.paddingInline-compact {
+  padding-left: var(--lufa-semantic-ui-spacing-compact);
+  padding-right: var(--lufa-semantic-ui-spacing-compact);
+}
+
+.paddingInline-default {
+  padding-left: var(--lufa-semantic-ui-spacing-default);
+  padding-right: var(--lufa-semantic-ui-spacing-default);
+}
+
+.paddingInline-comfortable {
+  padding-left: var(--lufa-semantic-ui-spacing-comfortable);
+  padding-right: var(--lufa-semantic-ui-spacing-comfortable);
+}
+
+.paddingInline-spacious {
+  padding-left: var(--lufa-semantic-ui-spacing-spacious);
+  padding-right: var(--lufa-semantic-ui-spacing-spacious);
+}
