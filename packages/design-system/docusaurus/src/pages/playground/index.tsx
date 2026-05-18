@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import Layout from '@theme/Layout';
 
@@ -148,7 +148,7 @@ function ComponentShowcase() {
               type="text"
               placeholder="Enter some text..."
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
             />
           </Stack>
           <Stack direction="vertical" spacing="compact">

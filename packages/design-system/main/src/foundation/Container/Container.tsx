@@ -9,6 +9,9 @@ import styles from './Container.module.css';
 // Breakpoint keys matching the tokens
 type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
+// Spacing values based on semantic tokens
+type SpacingValue = 'none' | 'tight' | 'compact' | 'default' | 'comfortable' | 'spacious';
+
 export type ContainerProps<T extends ElementType = 'div'> = {
   /**
    * The HTML element to render.
@@ -26,6 +29,19 @@ export type ContainerProps<T extends ElementType = 'div'> = {
    */
   size?: Breakpoint;
   /**
+   * Vertical padding (top + bottom) using spacing tokens.
+   * Maps to: --lufa-semantic-ui-spacing-{value}
+   * @default undefined (no vertical padding)
+   */
+  paddingBlock?: SpacingValue;
+  /**
+   * Horizontal padding (left + right) using spacing tokens.
+   * Overrides the default horizontal gutter padding.
+   * Maps to: --lufa-semantic-ui-spacing-{value}
+   * @default undefined (uses component token default)
+   */
+  paddingInline?: SpacingValue;
+  /**
    * The content to render.
    */
   children?: React.ReactNode;
@@ -34,7 +50,7 @@ export type ContainerProps<T extends ElementType = 'div'> = {
    */
   className?: string;
 } & ResponsiveVisibilityProps &
-  Omit<ComponentPropsWithoutRef<T>, 'as' | 'fluid' | 'size' | 'className'>;
+  Omit<ComponentPropsWithoutRef<T>, 'as' | 'fluid' | 'size' | 'paddingBlock' | 'paddingInline' | 'className'>;
 
 /**
  * Container Component
@@ -53,6 +69,16 @@ export type ContainerProps<T extends ElementType = 'div'> = {
  * // Constrained container
  * <Container size="md">Narrow content</Container>
  *
+ * // Page section with vertical padding
+ * <Container as="section" size="lg" paddingBlock="spacious">
+ *   Hero section
+ * </Container>
+ *
+ * // Full padding control
+ * <Container paddingBlock="comfortable" paddingInline="spacious">
+ *   Custom padded content
+ * </Container>
+ *
  * // Responsive visibility
  * <Container hideFrom="xl" size="lg">
  *   Narrow container for smaller screens
@@ -65,6 +91,8 @@ export const Container = forwardRef(
       as,
       fluid = false,
       size,
+      paddingBlock,
+      paddingInline,
       // Responsive visibility props
       show,
       hide,
@@ -94,6 +122,8 @@ export const Container = forwardRef(
           styles.container,
           fluid && styles.fluid,
           size && styles[`size-${size}`],
+          paddingBlock && styles[`paddingBlock-${paddingBlock}`],
+          paddingInline && styles[`paddingInline-${paddingInline}`],
           ...visibilityClasses,
           className
         )}

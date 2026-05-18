@@ -32,6 +32,16 @@ const meta = {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
     },
+    paddingBlock: {
+      description: 'Vertical padding (top + bottom) using spacing tokens',
+      control: 'select',
+      options: ['none', 'tight', 'compact', 'default', 'comfortable', 'spacious'],
+    },
+    paddingInline: {
+      description: 'Horizontal padding (left + right) using spacing tokens — overrides the default gutter',
+      control: 'select',
+      options: ['none', 'tight', 'compact', 'default', 'comfortable', 'spacious'],
+    },
     children: {
       description: 'Content',
       control: 'text',
@@ -138,6 +148,94 @@ export const PropWidth: Story = {
           </div>
 
           <CodeBlock code={generateCode(hoveredVariant)} language="jsx" title="JSX" />
+        </div>
+      </StoryContainer>
+    );
+  },
+};
+
+// ============================================
+// PROP: PADDING
+// ============================================
+
+/**
+ * ## Prop: `paddingBlock` & `paddingInline`
+ *
+ * Controls vertical and horizontal padding using semantic spacing tokens.
+ * `paddingBlock` adds vertical padding (top + bottom).
+ * `paddingInline` overrides the default horizontal gutter padding (left + right).
+ */
+export const PropPadding: Story = {
+  name: 'Prop: padding',
+  render: () => {
+    const spacings = ['tight', 'compact', 'default', 'comfortable', 'spacious'] as const;
+
+    return (
+      <StoryContainer>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <PropCard label="paddingBlock — Vertical Padding">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {spacings.map((spacing, index) => {
+                const colors = getColorByIndex(index);
+                return (
+                  <Container
+                    key={spacing}
+                    paddingBlock={spacing}
+                    style={{
+                      backgroundColor: colors.light,
+                      border: `2px dashed ${colors.main}`,
+                    }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: colors.main,
+                        color: STORY_COLORS.neutral.white,
+                        padding: '0 1rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      paddingBlock=&quot;{spacing}&quot;
+                    </div>
+                  </Container>
+                );
+              })}
+            </div>
+          </PropCard>
+
+          <PropCard label="paddingInline — Horizontal Padding">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {spacings.map((spacing, index) => {
+                const colors = getColorByIndex(index);
+                return (
+                  <Container
+                    key={spacing}
+                    paddingInline={spacing}
+                    style={{
+                      backgroundColor: colors.light,
+                      border: `2px dashed ${colors.main}`,
+                    }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: colors.main,
+                        color: STORY_COLORS.neutral.white,
+                        padding: '0.5rem 0',
+                        fontWeight: 600,
+                      }}
+                    >
+                      paddingInline=&quot;{spacing}&quot;
+                    </div>
+                  </Container>
+                );
+              })}
+            </div>
+          </PropCard>
+
+          <CodeBlock
+            code={`// Vertical padding for page sections\n<Container as="section" size="lg" paddingBlock="spacious">\n  Hero content\n</Container>\n\n// Full padding control\n<Container paddingBlock="comfortable" paddingInline="spacious">\n  Custom padded content\n</Container>`}
+            language="jsx"
+            title="JSX"
+          />
         </div>
       </StoryContainer>
     );
