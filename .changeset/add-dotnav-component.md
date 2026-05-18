@@ -1,5 +1,6 @@
 ---
 '@grasdouble/lufa_design-system': minor
+'@grasdouble/lufa_design-system-storybook': minor
 ---
 
 feat: Add `DotNav` navigation component and `useScrollSpy` hook
