@@ -33,7 +33,7 @@ The Badge component provides a small visual indicator for statuses, counts, cate
 
 Use Badge when you need:
 
-- Status indicators (active, pending, error, warning)
+- Status indicators (active, pending, danger, warning)
 - Notification counts (unread messages, alerts, updates)
 - Category tags (topics or labels)
 - Version labels (beta, new, v2.0)
@@ -71,13 +71,13 @@ export function BadgeExamples() {
     <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
       <Badge>New</Badge>
       <Badge variant="success">Active</Badge>
-      <Badge variant="error">Error</Badge>
+      <Badge variant="danger">Error</Badge>
       <Badge variant="warning">Pending</Badge>
       <Badge variant="info">Beta</Badge>
       <Badge size="sm">Small</Badge>
       <Badge size="md">Medium</Badge>
       <Badge size="lg">Large</Badge>
-      <Badge dot variant="error">
+      <Badge dot variant="danger">
         3 notifications
       </Badge>
       <Badge as="label" htmlFor="input-id">
@@ -92,7 +92,7 @@ export function BadgeExamples() {
 
 | Prop        | Type                                                       | Default     | Description                                               |
 | ----------- | ---------------------------------------------------------- | ----------- | --------------------------------------------------------- |
-| `variant`   | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'` | Semantic variant defining color scheme and meaning        |
+| `variant`   | `'default' \| 'success' \| 'danger' \| 'warning' \| 'info'` | `'default'` | Semantic variant defining color scheme and meaning        |
 | `size`      | `'sm' \| 'md' \| 'lg'`                                     | `'md'`      | Size of the badge affecting padding and font size         |
 | `dot`       | `boolean`                                                  | `false`     | Shows notification dot indicator before content           |
 | `children`  | `React.ReactNode`                                          | required    | Content to display inside the badge (text, numbers, etc.) |

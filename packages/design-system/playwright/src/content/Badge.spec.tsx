@@ -10,7 +10,7 @@
  *
  * Test Categories (following official Playwright CT guidelines):
  * 1. Basic Rendering - Default behavior and core functionality
- * 2. Variants - All semantic color variants (default, success, error, warning, info)
+ * 2. Variants - All semantic color variants (default, success, danger, warning, info)
  * 3. Sizes - All size variants (sm, md, lg)
  * 4. Dot Indicator - Badge with notification dot
  * 5. Accessibility - ARIA attributes, semantic HTML
@@ -86,7 +86,7 @@ test.describe('Badge Component', () => {
   // ============================================
 
   test.describe('Variants', () => {
-    const variants = ['default', 'success', 'error', 'warning', 'info'] as const;
+    const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
 
     variants.forEach((variant) => {
       test(`should render ${variant} variant`, async ({ mount }) => {
@@ -105,8 +105,8 @@ test.describe('Badge Component', () => {
           <Badge variant="success" data-testid="badge-success">
             success
           </Badge>
-          <Badge variant="error" data-testid="badge-error">
-            error
+          <Badge variant="danger" data-testid="badge-danger">
+            danger
           </Badge>
           <Badge variant="warning" data-testid="badge-warning">
             warning
@@ -118,7 +118,7 @@ test.describe('Badge Component', () => {
       );
 
       // Test each variant's background color
-      const variants = ['default', 'success', 'error', 'warning', 'info'] as const;
+      const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
       for (const variant of variants) {
         const badge = component.getByTestId(`badge-${variant}`);
         const bgColor = await badge.evaluate((el) => window.getComputedStyle(el).backgroundColor);
@@ -238,7 +238,7 @@ test.describe('Badge Component', () => {
 
     test('should render dot with correct styling', async ({ mount }) => {
       const component = await mount(
-        <Badge dot variant="error">
+        <Badge dot variant="danger">
           3
         </Badge>
       );
@@ -279,8 +279,8 @@ test.describe('Badge Component', () => {
           <Badge variant="success" dot data-testid="badge-success">
             success
           </Badge>
-          <Badge variant="error" dot data-testid="badge-error">
-            error
+          <Badge variant="danger" dot data-testid="badge-danger">
+            danger
           </Badge>
           <Badge variant="warning" dot data-testid="badge-warning">
             warning
@@ -292,7 +292,7 @@ test.describe('Badge Component', () => {
       );
 
       // Verify dot is visible for each variant
-      const variants = ['default', 'success', 'error', 'warning', 'info'] as const;
+      const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
       for (const variant of variants) {
         const badge = component.getByTestId(`badge-${variant}`);
         const dot = badge.locator('[class*="badge-dot"]');
@@ -444,7 +444,7 @@ test.describe('Badge Component', () => {
 
   test.describe('Visual Regression', () => {
     test('should match snapshot for all variants', async ({ mount }) => {
-      const variants = ['default', 'success', 'error', 'warning', 'info'] as const;
+      const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
       const sizes = ['sm', 'md', 'lg'] as const;
 
       const component = await mount(
@@ -542,10 +542,10 @@ test.describe('Badge Component', () => {
               Numeric Badges
             </h2>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <Badge variant="error">1</Badge>
-              <Badge variant="error">9</Badge>
-              <Badge variant="error">99</Badge>
-              <Badge variant="error">999</Badge>
+              <Badge variant="danger">1</Badge>
+              <Badge variant="danger">9</Badge>
+              <Badge variant="danger">99</Badge>
+              <Badge variant="danger">999</Badge>
             </div>
           </section>
 
@@ -596,7 +596,7 @@ test.describe('Badge Component', () => {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ color: 'var(--lufa-semantic-ui-text-primary)' }}>Notifications</span>
-                <Badge variant="error" dot>
+                <Badge variant="danger" dot>
                   3
                 </Badge>
               </div>
