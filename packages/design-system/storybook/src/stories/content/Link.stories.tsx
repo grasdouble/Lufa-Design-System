@@ -125,7 +125,7 @@ export const Playground: Story = {
     variant: 'default',
     children: 'Lufa Design System',
   },
-  render: (args: any) => {
+  render: (args) => {
     return (
       <StoryContainer>
         <div

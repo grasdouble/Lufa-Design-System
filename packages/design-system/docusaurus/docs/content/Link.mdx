@@ -82,14 +82,14 @@ export function Example() {
 
 | Prop        | Type                                                                            | Default                                             | Description                                                   |
 | ----------- | ------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------- |
-| `href`      | `string`                                                                        | —                                                   | Destination URL                                               |
-| `target`    | `'_self' \| '_blank'`                                                           | `'_self'`                                           | Where to open the URL                                         |
-| `rel`       | `string`                                                                        | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                                                 |
-| `variant`   | `'default' \| 'subtle' \| 'plain'`                                              | `'default'`                                         | Visual style variant                                          |
-| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'` (`'secondary'` for `subtle`) | Text color (semantic tokens) |
-| `as`        | `ElementType`                                                                   | `'a'`                                               | Polymorphic root element (for router links)                   |
-| `children`  | `React.ReactNode`                                                               | required                                            | Link text content                                             |
-| `className` | `string`                                                                        | `undefined`                                         | Additional CSS classes                                        |
+| `href`      | `string`                                                                        | —                                                   | Destination URL                                     |
+| `target`    | `'_self' \| '_blank'`                                                           | `'_self'`                                           | Where to open the URL                               |
+| `rel`       | `string`                                                                        | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                                       |
+| `variant`   | `'default' \| 'subtle' \| 'plain'`                                              | `'default'`                                         | Visual style variant                                |
+| `color`     | `'primary' \| 'secondary' \| 'tertiary'` <br/> `\| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'`; `'secondary'` for `subtle` variant | Text color (semantic tokens) |
+| `as`        | `ElementType`                                                                   | `'a'`                                               | Polymorphic root element (for router links)         |
+| `children`  | `React.ReactNode`                                                               | required                                            | Link text content                                   |
+| `className` | `string`                                                                        | `undefined`                                         | Additional CSS classes                              |
 
 ## Variants
 
