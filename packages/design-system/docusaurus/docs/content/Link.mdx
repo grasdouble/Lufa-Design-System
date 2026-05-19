@@ -1,0 +1,207 @@
+---
+id: link
+title: Link
+sidebar_label: Link
+description: Inline anchor component with token-based styling and hover animation.
+sidebar_position: 7
+---
+
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+import { DarkModeCompatible } from '../../src/components/DarkModeCompatible';
+import { LiveDemoSection } from '../../src/components/LiveDemoSection';
+import { AllVariants, ExternalLinks, InlineUsage, LiveDemo } from '../../src/dsExamples/content/link';
+
+# Link
+
+<DarkModeCompatible />
+
+An inline anchor component for embedding consistently styled links inside text content.
+
+## Overview
+
+The Link component provides a token-based inline anchor element designed to pair with `<Text>` for rich inline content. It eliminates the need for custom CSS when embedding links inside paragraphs and ensures consistent hover, focus, and color behavior across the design system.
+
+<LiveDemoSection
+  tabs={[
+    { id: 'default', label: 'Default', content: <BrowserOnly>{() => <LiveDemo />}</BrowserOnly> },
+    { id: 'variants', label: 'Variants', content: <BrowserOnly>{() => <AllVariants />}</BrowserOnly> },
+    { id: 'inline', label: 'Inline Usage', content: <BrowserOnly>{() => <InlineUsage />}</BrowserOnly> },
+    { id: 'external', label: 'External Links', content: <BrowserOnly>{() => <ExternalLinks />}</BrowserOnly> },
+  ]}
+/>
+
+Use Link when you need:
+
+- Styled anchors embedded inside paragraphs or labels
+- Consistent hover / focus behavior across the product
+- Token-based color and border styling without custom CSS
+- Safe external links (auto `rel="noopener noreferrer"`)
+
+Avoid using Link for standalone call-to-action buttons. Use `Button` instead.
+
+## Anatomy
+
+The Link component is a single inline element:
+
+```text
+┌────────────────────────────────────────┐
+│  Link Component                        │
+│  ┌────────────────────────────────┐    │
+│  │  variant: default | subtle | plain  │
+│  │  color: primary | secondary | ...  │
+│  │                                │    │
+│  │  Link text content              │    │
+│  │  ─────────────────── (hover)   │    │
+│  └────────────────────────────────┘    │
+└────────────────────────────────────────┘
+```
+
+- **Container**: Single anchor element (default `a`, customizable via `as`)
+- **Border-bottom**: Animated underline on hover (`default` and `subtle` variants)
+- **Focus ring**: Visible outline using DS focus tokens
+
+## Usage
+
+```tsx
+import { Link, Text } from '@grasdouble/lufa_design-system';
+
+export function Example() {
+  return (
+    <Text as="p" variant="body-large" color="secondary">
+      My work is split between{' '}
+      <Link href="https://github.com/noofreuuuh" target="_blank">noofreuuuh</Link>
+      {' '}and{' '}
+      <Link href="https://github.com/smouillour" target="_blank">smouillour</Link>.
+    </Text>
+  );
+}
+```
+
+## Props
+
+| Prop        | Type                                                                            | Default                                             | Description                                                   |
+| ----------- | ------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------- |
+| `href`      | `string`                                                                        | —                                                   | Destination URL                                               |
+| `target`    | `'_self' \| '_blank'`                                                           | `'_self'`                                           | Where to open the URL                                         |
+| `rel`       | `string`                                                                        | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                                                 |
+| `variant`   | `'default' \| 'subtle' \| 'plain'`                                              | `'default'`                                         | Visual style variant                                          |
+| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'` (`'secondary'` for `subtle`) | Text color (semantic tokens) |
+| `as`        | `ElementType`                                                                   | `'a'`                                               | Polymorphic root element (for router links)                   |
+| `children`  | `React.ReactNode`                                                               | required                                            | Link text content                                             |
+| `className` | `string`                                                                        | `undefined`                                         | Additional CSS classes                                        |
+
+## Variants
+
+### `default`
+
+Colored text with an animated `border-bottom` that appears on hover. Ideal for links inside body text where the hover interaction helps users discover clickable content.
+
+```tsx
+<Link href="https://example.com" variant="default">Default link</Link>
+```
+
+### `subtle`
+
+Same animated hover behavior as `default`, but defaults to secondary text color. Use for de-emphasized links that shouldn't draw strong visual attention.
+
+```tsx
+<Link href="https://example.com" variant="subtle">Subtle link</Link>
+```
+
+### `plain`
+
+No underline. Color only. Use for links inside buttons, badges, or any context where the underline would be visually disruptive.
+
+```tsx
+<Link href="https://example.com" variant="plain">Plain link</Link>
+```
+
+## Security — External Links
+
+When `target="_blank"`, the `rel` attribute is automatically set to `"noopener noreferrer"` to prevent tab-nabbing attacks:
+
+```tsx
+// Automatically adds rel="noopener noreferrer"
+<Link href="https://github.com" target="_blank">GitHub</Link>
+
+// Override with a custom rel value
+<Link href="https://github.com" target="_blank" rel="noopener">GitHub</Link>
+```
+
+## Polymorphic Rendering
+
+Use the `as` prop to integrate with router link components:
+
+```tsx
+import { Link as RouterLink } from 'react-router-dom';
+
+// Use with React Router
+<Link as={RouterLink} to="/about">About</Link>
+
+// Use as a button (no href needed)
+<Link as="button" onClick={handleClick} variant="plain">
+  Click me
+</Link>
+```
+
+## Font Inheritance
+
+The Link component inherits `font-size` and `font-weight` from its parent, making it naturally blend into any typographic context:
+
+```tsx
+<Text as="p" variant="body-large" weight="semibold">
+  Learn more in our{' '}
+  <Link href="/docs">documentation</Link>
+  {/* Link will be body-large, semibold — inherited from Text */}
+</Text>
+```
+
+## Accessibility
+
+- Uses native `<a>` element by default for correct semantics
+- Visible focus ring on keyboard navigation (uses DS focus tokens)
+- Auto `rel="noopener noreferrer"` when `target="_blank"` prevents tab-nabbing
+- Color is not the only visual affordance — border-bottom appears on hover
+
+```tsx
+import { Link, Text } from '@grasdouble/lufa_design-system';
+
+export function AccessibleLinks() {
+  return (
+    <Text as="p" variant="body">
+      Read the{' '}
+      <Link href="/terms">Terms of Service</Link>
+      {' '}and{' '}
+      <Link href="/privacy">Privacy Policy</Link>.
+    </Text>
+  );
+}
+```
+
+## Theming & Tokens
+
+`Link` uses semantic UI text tokens for color, border tokens for the underline width, and transition tokens for animation. Update tokens in your theme to adjust appearance consistently.
+
+## Do / Don't
+
+:::tip Do
+
+- Use Link for inline text anchors inside paragraphs
+- Use `target="_blank"` for external links — `rel` is auto-applied
+- Use `variant="subtle"` for de-emphasized navigation
+- Use `variant="plain"` for links inside buttons or badges
+  :::
+
+:::warning Don't
+
+- Don't use Link as a standalone CTA — use `Button` instead
+- Don't rely on color alone to indicate a link
+- Don't apply font-size or font-weight manually — Link inherits from parent
+  :::
+
+## Related Components
+
+- [Text](/docs/content/text) - For displaying text content alongside links
+- [Button](/docs/interaction/button) - For standalone call-to-action elements
+- [Badge](/docs/content/badge) - For status indicators and labels
