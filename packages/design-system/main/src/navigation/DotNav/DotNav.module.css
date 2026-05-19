@@ -4,7 +4,7 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: var(--lufa-semantic-ui-spacing-default);
+  gap: var(--lufa-semantic-ui-spacing-spacious);
   z-index: var(--lufa-semantic-z-index-fixed);
 }
 
@@ -22,9 +22,19 @@
 
 .dot-nav-item {
   position: relative;
+  z-index: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.dot-nav-item--active {
+  z-index: 1;
+}
+
+.dot-nav-item:hover,
+.dot-nav-item:focus-within {
+  z-index: 2;
 }
 
 /* ========================================== */
