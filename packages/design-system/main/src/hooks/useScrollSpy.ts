@@ -33,9 +33,7 @@ export type UseScrollSpyOptions = {
    * Duration in milliseconds for the built-in RAF scroll animation.
    * Also controls the observer lock duration (via `lockFor`) even when
    * `onScroll` is provided. Must be a finite number ≥ 0; negative or
-   * invalid values are treated as 0 (immediate jump, no animation).
-   * A 50ms buffer is always added to the lock to prevent observer flicker,
-   * so even an immediate jump (duration 0) results in a 50ms lock.
+   * invalid values are treated as 0 (immediate jump, no animation, no lock).
    *
    * @default 650
    */
@@ -173,11 +171,13 @@ export function useScrollSpy({
       const duration = Number.isFinite(scrollDuration) && scrollDuration > 0 ? scrollDuration : 0;
 
       setActiveId(id);
-      // Lock for scroll duration + a 50ms buffer so the observer does not
-      // re-fire before the animation fully settles. The 50ms buffer applies
-      // even when duration is 0 (immediate jump) to prevent observer flicker
-      // right after the position change. Applies regardless of onScroll.
-      lockFor(duration + 50);
+      // Lock for the animation duration + a 50ms buffer so the observer does
+      // not re-fire before the animation fully settles. When duration is 0
+      // (immediate jump) no lock is applied — the position change is instant
+      // and introducing an unexpected lock would break the documented behaviour.
+      if (duration > 0) {
+        lockFor(duration + 50);
+      }
 
       // Cancel any in-flight animation before branching, so superseded calls
       // are always cleaned up regardless of the scroll strategy.
