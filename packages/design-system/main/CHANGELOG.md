@@ -1,5 +1,17 @@
 # @grasdouble/lufa_design-system
 
+## 3.1.0
+
+### Minor Changes
+
+- bcd3010: feat(useScrollSpy): expose `scrollTo()` and accept `onScroll`/`scrollDuration` options
+
+  The hook now returns a `scrollTo(id)` function that animates to the target section, locks the observer during the animation to prevent active-id flickering, and immediately updates `activeId`.
+
+  Two new options are available:
+  - `onScroll`: custom scroll handler for non-`window` scroll containers (e.g. an overflow div)
+  - `scrollDuration`: duration in ms for the built-in RAF easeInOutCubic animation (default: 650)
+
 ## 3.0.1
 
 ### Patch Changes
