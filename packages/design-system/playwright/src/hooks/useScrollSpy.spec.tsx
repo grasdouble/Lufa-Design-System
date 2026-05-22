@@ -12,9 +12,11 @@
 
 import { expect, test } from '@playwright/experimental-ct-react';
 
-// Non-component imports are kept separate so the component-only import below
-// can be fully removed by the Playwright CT Babel transform (which replaces
-// every specifier with an importRef when ALL specifiers are JSX components).
+// SECTION_IDS is a plain constant (not a JSX component). Keep it in a separate
+// import so the component-only import below can be FULLY removed by the
+// Playwright CT Babel transform (which replaces every specifier with an
+// importRef object only when ALL specifiers in the declaration are JSX
+// components). Mixing components and non-components prevents the removal.
 import {
   MinimalHarness,
   NoOpScrollHarness,
