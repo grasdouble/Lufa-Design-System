@@ -1,5 +1,7 @@
 ---
 "@grasdouble/lufa_design-system": minor
+"@grasdouble/lufa_design-system-playwright": patch
+"@grasdouble/lufa_design-system-storybook": patch
 ---
 
 feat(useScrollSpy): expose `scrollTo()` and accept `onScroll`/`scrollDuration` options
