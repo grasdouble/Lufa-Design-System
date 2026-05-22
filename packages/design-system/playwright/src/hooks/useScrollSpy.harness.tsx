@@ -5,7 +5,7 @@
 
 import { useScrollSpy } from '@grasdouble/lufa_design-system';
 
-export const SECTION_IDS = ['section-a', 'section-b', 'section-c'] as const;
+const SECTION_IDS = ['section-a', 'section-b', 'section-c'] as const;
 
 const sectionStyle: React.CSSProperties = {
   height: '100vh',
