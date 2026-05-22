@@ -34,6 +34,8 @@ export type UseScrollSpyOptions = {
    * Also controls the observer lock duration (via `lockFor`) even when
    * `onScroll` is provided. Must be a finite number ≥ 0; negative or
    * invalid values are treated as 0 (immediate jump, no animation).
+   * A 50ms buffer is always added to the lock to prevent observer flicker,
+   * so even an immediate jump (duration 0) results in a 50ms lock.
    *
    * @default 650
    */
@@ -149,6 +151,7 @@ export function useScrollSpy({
       }
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
     };
   }, []);
@@ -170,9 +173,10 @@ export function useScrollSpy({
       const duration = Number.isFinite(scrollDuration) && scrollDuration > 0 ? scrollDuration : 0;
 
       setActiveId(id);
-      // Lock for scroll duration + a small buffer so the observer does not
-      // re-fire before the animation fully settles. Applies even when onScroll
-      // is provided, since the lock prevents observer flicker during any scroll.
+      // Lock for scroll duration + a 50ms buffer so the observer does not
+      // re-fire before the animation fully settles. The 50ms buffer applies
+      // even when duration is 0 (immediate jump) to prevent observer flicker
+      // right after the position change. Applies regardless of onScroll.
       lockFor(duration + 50);
 
       // Cancel any in-flight animation before branching, so superseded calls

@@ -59,9 +59,9 @@ test.describe('useScrollSpy', () => {
     });
 
     test('should not run built-in scroll animation when onScroll is provided', async ({ mount, page }) => {
-      const scrollYBefore = await page.evaluate(() => window.scrollY);
-
+      // Capture baseline after mount so the component's layout doesn't skew the assertion.
       const component = await mount(<NoOpScrollHarness />);
+      const scrollYBefore = await page.evaluate(() => window.scrollY);
 
       await component.getByTestId('go-b').click();
 
@@ -92,7 +92,10 @@ test.describe('useScrollSpy', () => {
     });
 
     test('should not update activeId while scroll lock is active', async ({ mount, page }) => {
-      const component = await mount(<ScrollSpyHarness />);
+      // Use an onScroll that jumps immediately (no RAF animation) to avoid
+      // competing scroll operations when scrollIntoView() is called below.
+      // scrollDuration stays > 0 so the observer lock remains active long enough.
+      const component = await mount(<ScrollSpyHarness onScroll={(el) => el.scrollIntoView()} scrollDuration={700} />);
 
       // Trigger scrollTo which locks the observer
       await component.getByTestId('scroll-to-b').click();
