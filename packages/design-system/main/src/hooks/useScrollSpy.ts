@@ -173,11 +173,8 @@ export function useScrollSpy({
       setActiveId(id);
       // Lock for the animation duration + a 50ms buffer so the observer does
       // not re-fire before the animation fully settles. When duration is 0
-      // (immediate jump) no lock is applied — the position change is instant
-      // and introducing an unexpected lock would break the documented behaviour.
-      if (duration > 0) {
-        lockFor(duration + 50);
-      }
+      // (immediate jump) lockFor(0) is called so no meaningful lock is held.
+      lockFor(duration > 0 ? duration + 50 : 0);
 
       // Cancel any in-flight animation before branching, so superseded calls
       // are always cleaned up regardless of the scroll strategy.
