@@ -12,18 +12,13 @@
 
 import { expect, test } from '@playwright/experimental-ct-react';
 
-// SECTION_IDS is a plain constant (not a JSX component). Keep it in a separate
-// import so the component-only import below can be FULLY removed by the
-// Playwright CT Babel transform (which replaces every specifier with an
-// importRef object only when ALL specifiers in the declaration are JSX
-// components). Mixing components and non-components prevents the removal.
-import {
-  MinimalHarness,
-  NoOpScrollHarness,
-  OnScrollTrackerHarness,
-  ScrollSpyHarness,
-  SECTION_IDS,
-} from './useScrollSpy.harness';
+// All specifiers in this import MUST be JSX components — no plain values.
+// Playwright CT's Babel transform only replaces an import with importRef objects
+// when every specifier is a JSX component. If even one non-component (e.g. a
+// constant) is mixed in, Babel keeps a require() for that module and all JSX
+// references use the live module namespace instead of the importRef → mount
+// error. Keep SECTION_IDS hardcoded below to avoid polluting this import.
+import { MinimalHarness, NoOpScrollHarness, OnScrollTrackerHarness, ScrollSpyHarness } from './useScrollSpy.harness';
 
 // -----------------------------------------------------------------------------
 // TEST SUITE: Initialization
@@ -33,7 +28,7 @@ test.describe('useScrollSpy', () => {
   test.describe('Initialization', () => {
     test('should default activeId to the first id', async ({ mount }) => {
       const component = await mount(<MinimalHarness />);
-      await expect(component.getByTestId('active')).toHaveText(SECTION_IDS[0]);
+      await expect(component.getByTestId('active')).toHaveText('section-a');
     });
   });
 
