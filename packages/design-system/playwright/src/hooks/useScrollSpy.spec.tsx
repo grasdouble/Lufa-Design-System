@@ -12,12 +12,9 @@
 
 import { expect, test } from '@playwright/experimental-ct-react';
 
-// All specifiers in this import MUST be JSX components — no plain values.
-// Playwright CT's Babel transform only replaces an import with importRef objects
-// when every specifier is a JSX component. If even one non-component (e.g. a
-// constant) is mixed in, Babel keeps a require() for that module and all JSX
-// references use the live module namespace instead of the importRef → mount
-// error. Keep SECTION_IDS hardcoded below to avoid polluting this import.
+// Only JSX components here — mixing in plain values (constants, types…) causes
+// Playwright CT's Babel transform to keep a require() for this module, making
+// JSX resolve to the live namespace instead of importRef objects → mount error.
 import { MinimalHarness, NoOpScrollHarness, OnScrollTrackerHarness, ScrollSpyHarness } from './useScrollSpy.harness';
 
 // -----------------------------------------------------------------------------
