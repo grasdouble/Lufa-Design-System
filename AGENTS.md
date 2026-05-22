@@ -60,6 +60,24 @@ Never create git commits. Stage changes and present them for the user to review 
 - ✅ `git add <files>`
 - ❌ `git commit` — never, even when asked to "save" or "apply" changes
 
+## Tests — Always write or update tests
+
+Any feature addition or modification **must** be accompanied by tests. Never consider a task complete without them.
+
+- When adding a new feature → write tests that cover the new behaviour
+- When modifying an existing feature → update existing tests and add new ones for the changed behaviour
+- Before marking a task done → run the full test suite and confirm it passes
+
+For this repo the test command is:
+
+```bash
+pnpm test   # from packages/design-system/playwright/
+```
+
+If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
+
+---
+
 ## Changesets — Naming convention
 
 When creating a changeset file manually in `.changeset/`, always use a **descriptive kebab-case name** that summarises the change — never a random hex ID.
