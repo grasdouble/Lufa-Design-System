@@ -28,13 +28,7 @@ import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
  * const SECTIONS = ['hero', 'about', 'skills'] as const;
  * const sections = SECTIONS.map((id) => ({ id, label: id }));
  *
- * const { activeId, setActiveId, lockFor } = useScrollSpy({ ids: SECTIONS });
- *
- * const scrollTo = (id: string) => {
- *   setActiveId(id);
- *   lockFor(700);
- *   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
- * };
+ * const { activeId, scrollTo } = useScrollSpy({ ids: SECTIONS });
  *
  * <DotNav sections={sections} activeId={activeId} onSelect={scrollTo} />
  * ```
@@ -169,13 +163,7 @@ export const Default: Story = {
         <CodeBlock
           language="tsx"
           title="JSX"
-          code={`const { activeId, setActiveId, lockFor } = useScrollSpy({ ids: SECTION_IDS });
-
-const scrollTo = (id) => {
-  setActiveId(id);
-  lockFor(700);
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-};
+          code={`const { activeId, scrollTo } = useScrollSpy({ ids: SECTION_IDS });
 
 <DotNav
   sections={[
