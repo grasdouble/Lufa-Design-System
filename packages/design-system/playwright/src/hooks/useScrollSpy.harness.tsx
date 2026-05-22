@@ -3,11 +3,13 @@
  * Defined here (not in the spec file) so Playwright CT can bundle them.
  */
 
+import type { CSSProperties } from 'react';
+
 import { useScrollSpy } from '@grasdouble/lufa_design-system';
 
 const SECTION_IDS = ['section-a', 'section-b', 'section-c'] as const;
 
-const sectionStyle: React.CSSProperties = {
+const sectionStyle: CSSProperties = {
   height: '100vh',
   display: 'flex',
   alignItems: 'center',

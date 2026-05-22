@@ -31,7 +31,9 @@ export type UseScrollSpyOptions = {
   onScroll?: (element: HTMLElement) => void;
   /**
    * Duration in milliseconds for the built-in RAF scroll animation.
-   * Has no effect when `onScroll` is provided.
+   * Also controls the observer lock duration (via `lockFor`) even when
+   * `onScroll` is provided. Must be a finite number ≥ 0; negative or
+   * invalid values are treated as 0 (immediate jump, no animation).
    *
    * @default 650
    */
@@ -59,9 +61,10 @@ export type UseScrollSpyReturn = {
    * immediately, and locks the observer for the duration of the animation
    * to prevent flickering.
    *
-   * Uses a `requestAnimationFrame`-based easeInOutCubic animation by default,
-   * which is cross-browser reliable and unaffected by OS/browser smooth-scroll
-   * settings. Pass `onScroll` to `useScrollSpy` to use a custom scroll container.
+   * Uses a `requestAnimationFrame`-based easeInOutCubic animation by default.
+   * Jumps immediately when `prefers-reduced-motion: reduce` is set or when
+   * `scrollDuration` is 0. Pass `onScroll` to `useScrollSpy` to use a custom
+   * scroll container.
    *
    * @param id - The `id` of the target section element
    */
@@ -163,28 +166,46 @@ export function useScrollSpy({
       const el = document.getElementById(id);
       if (!el) return;
 
+      // Sanitize: negative / non-finite values are treated as 0 (immediate jump)
+      const duration = Number.isFinite(scrollDuration) && scrollDuration > 0 ? scrollDuration : 0;
+
       setActiveId(id);
       // Lock for scroll duration + a small buffer so the observer does not
-      // re-fire before the animation fully settles.
-      lockFor(scrollDuration + 50);
+      // re-fire before the animation fully settles. Applies even when onScroll
+      // is provided, since the lock prevents observer flicker during any scroll.
+      lockFor(duration + 50);
+
+      // Cancel any in-flight animation before branching, so superseded calls
+      // are always cleaned up regardless of the scroll strategy.
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
 
       if (onScroll) {
         onScroll(el);
         return;
       }
 
-      // RAF-based easeInOutCubic animation — cross-browser reliable,
-      // unaffected by OS "reduce motion" or browser smooth-scroll settings.
-      const start = window.scrollY;
       const target = el.getBoundingClientRect().top + window.scrollY;
+
+      // Respect the user's reduced-motion preference, or jump when duration is 0.
+      if (duration === 0 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.scrollTo(window.scrollX, target);
+        return;
+      }
+
+      // RAF-based easeInOutCubic animation — cross-browser reliable.
+      const start = window.scrollY;
       const distance = target - start;
       const startTime = performance.now();
 
       const step = (currentTime: number) => {
         const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / scrollDuration, 1);
+        const progress = Math.min(elapsed / duration, 1);
         const eased = easeInOutCubic(progress);
-        window.scrollTo(0, start + distance * eased);
+        // Preserve horizontal scroll position while animating vertically.
+        window.scrollTo(window.scrollX, start + distance * eased);
         if (progress < 1) {
           rafRef.current = requestAnimationFrame(step);
         } else {
@@ -192,9 +213,6 @@ export function useScrollSpy({
         }
       };
 
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
       rafRef.current = requestAnimationFrame(step);
     },
     [lockFor, onScroll, scrollDuration]
