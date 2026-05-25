@@ -105,11 +105,24 @@ export type ClusterProps<T extends ElementType = 'div'> = {
   className?: string;
 
   /**
+   * Whether the Cluster should grow to fill all available space in its parent.
+   * Applies `flex: 1 1 auto`, `height: 100%`, `min-height: 0`, and `min-width: 0`.
+   * Useful when Cluster is inside a height-constrained flex container.
+   *
+   * **Note:** Cluster always uses `flex-wrap: wrap`. Using `grow` on a wrapping flex container
+   * is unsupported — it cannot reliably fill 100% height and may overflow its parent.
+   *
+   * **Note:** When using the `as` prop with a custom component that also accepts a `grow` prop,
+   * this component's `grow` is consumed here and will **not** be forwarded to the rendered element.
+   * @default false
+   */
+  grow?: boolean;
+
+  /**
    * Children elements
    */
   children?: React.ReactNode;
 };
-
 /**
  * Combined props type including element-specific props
  */
@@ -129,6 +142,7 @@ const ClusterImpl = <T extends ElementType = 'div'>(
     spacing = 'default',
     align = 'center',
     justify = 'flex-start',
+    grow = false,
     className,
     children,
     ...htmlProps
@@ -137,6 +151,13 @@ const ClusterImpl = <T extends ElementType = 'div'>(
 ) => {
   // Determine the element to render
   const Component = as ?? 'div';
+
+  if (import.meta.env.DEV && grow) {
+    console.warn(
+      '[Cluster] Using `grow` on Cluster is unsupported. ' +
+        'Cluster always uses `flex-wrap: wrap`, so a growing Cluster cannot reliably fill 100% height and may overflow its parent.'
+    );
+  }
 
   // Build className from utility props
   const clusterClassName = clsx(
@@ -151,6 +172,9 @@ const ClusterImpl = <T extends ElementType = 'div'>(
 
     // Justification utilities
     justify && styles[`justify-${justify}`],
+
+    // Grow utility
+    grow && styles.grow,
 
     // Custom className
     className

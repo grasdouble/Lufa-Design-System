@@ -53,9 +53,21 @@ export type FlexProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
  * ```
  */
 const FlexImpl = <T extends ElementType = 'div'>(
-  { direction, wrap, justify, align, gap, inline, className, ...props }: FlexProps<T>,
+  { direction, wrap, justify, align, gap, inline, className, grow, ...props }: FlexProps<T>,
   ref: React.ForwardedRef<Element>
 ) => {
+  // `grow` is incompatible with wrapping flex containers: neutralise it in production
+  // to prevent the known height-overflow bug, and still warn in development.
+  const isWrapping = wrap && wrap !== 'nowrap';
+  const effectiveGrow = grow === true && !isWrapping;
+
+  if (import.meta.env.DEV && grow && isWrapping) {
+    console.warn(
+      '[Flex] Using `grow` together with `wrap` is unsupported. ' +
+        'A wrapping flex container cannot reliably fill 100% height and may overflow its parent.'
+    );
+  }
+
   const flexClassName = clsx(
     styles.flex,
     direction && styles[`direction-${direction}`],
@@ -67,7 +79,14 @@ const FlexImpl = <T extends ElementType = 'div'>(
     className
   );
 
-  return <Box<T> ref={ref as React.Ref<never>} className={flexClassName} {...(props as BoxComponentProps<T>)} />;
+  return (
+    <Box<T>
+      ref={ref as React.Ref<never>}
+      className={flexClassName}
+      grow={effectiveGrow}
+      {...(props as BoxComponentProps<T>)}
+    />
+  );
 };
 
 export const Flex = forwardRef(FlexImpl) as (<T extends ElementType = 'div'>(
