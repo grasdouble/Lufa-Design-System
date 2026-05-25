@@ -2,6 +2,7 @@
   "extends": "@grasdouble/lufa_config_tsconfig/react-library.json",
   "include": ["src/**/*"],
   "compilerOptions": {
+    "noEmit": true,
     "paths": {
       "@foundation/*": ["./src/foundation/*"],
       "@content/*": ["./src/content/*"],

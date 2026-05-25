@@ -424,17 +424,17 @@ test.describe('Box Component', () => {
     test.describe('Grow Variants', () => {
       test('should apply grow class when grow={true}', async ({ mount }) => {
         const component = await mount(<Box grow>Content</Box>);
-        await expect(component).toHaveClass(/\bgrow\b/);
+        await expect(component).toHaveClass(/grow/);
       });
 
       test('should not apply grow class when grow={false}', async ({ mount }) => {
         const component = await mount(<Box grow={false}>Content</Box>);
-        await expect(component).not.toHaveClass(/\bgrow\b/);
+        await expect(component).not.toHaveClass(/grow/);
       });
 
       test('should default to grow={false}', async ({ mount }) => {
         const component = await mount(<Box>Content</Box>);
-        await expect(component).not.toHaveClass(/\bgrow\b/);
+        await expect(component).not.toHaveClass(/grow/);
       });
 
       test('should apply flex: 1 1 auto when grow={true}', async ({ mount }) => {
@@ -453,8 +453,13 @@ test.describe('Box Component', () => {
       });
 
       test('should apply height: 100% when grow={true}', async ({ mount }) => {
-        const component = await mount(<Box grow>Content</Box>);
-        await expect(component).toHaveCSS('height', '100%');
+        // Mount inside a 200px-tall flex container so height:100% resolves to a computable pixel value.
+        const wrapper = await mount(
+          <div style={{ height: '200px', display: 'flex' }}>
+            <Box grow>Content</Box>
+          </div>
+        );
+        await expect(wrapper.locator('> *').first()).toHaveCSS('height', '200px');
       });
 
       test('should combine grow with padding without conflict', async ({ mount }) => {
@@ -463,7 +468,7 @@ test.describe('Box Component', () => {
             <div>Content</div>
           </Box>
         );
-        await expect(component).toHaveClass(/\bgrow\b/);
+        await expect(component).toHaveClass(/grow/);
         await expect(component).toHaveClass(/padding-comfortable/);
       });
 

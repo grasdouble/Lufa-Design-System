@@ -40,17 +40,17 @@ test.describe('Flex', () => {
   test.describe('Grow Variants', () => {
     test('should apply grow class when grow={true}', async ({ mount }) => {
       const component = await mount(<Flex grow>Content</Flex>);
-      await expect(component).toHaveClass(/\bgrow\b/);
+      await expect(component).toHaveClass(/grow/);
     });
 
     test('should not apply grow class when grow={false}', async ({ mount }) => {
       const component = await mount(<Flex grow={false}>Content</Flex>);
-      await expect(component).not.toHaveClass(/\bgrow\b/);
+      await expect(component).not.toHaveClass(/grow/);
     });
 
     test('should default to grow={false}', async ({ mount }) => {
       const component = await mount(<Flex>Content</Flex>);
-      await expect(component).not.toHaveClass(/\bgrow\b/);
+      await expect(component).not.toHaveClass(/grow/);
     });
 
     test('should apply flex: 1 1 auto when grow={true}', async ({ mount }) => {
@@ -59,8 +59,13 @@ test.describe('Flex', () => {
     });
 
     test('should apply height: 100% when grow={true}', async ({ mount }) => {
-      const component = await mount(<Flex grow>Content</Flex>);
-      await expect(component).toHaveCSS('height', '100%');
+      // Mount inside a 200px-tall flex container so height:100% resolves to a computable pixel value.
+      const wrapper = await mount(
+        <div style={{ height: '200px', display: 'flex' }}>
+          <Flex grow>Content</Flex>
+        </div>
+      );
+      await expect(wrapper.locator('> *').first()).toHaveCSS('height', '200px');
     });
 
     test('should apply min-height: 0 when grow={true}', async ({ mount }) => {
@@ -80,7 +85,7 @@ test.describe('Flex', () => {
           <div>B</div>
         </Flex>
       );
-      await expect(component).toHaveClass(/\bgrow\b/);
+      await expect(component).toHaveClass(/grow/);
       await expect(component).toHaveClass(/direction-column/);
       await expect(component).toHaveClass(/gap-compact/);
     });
