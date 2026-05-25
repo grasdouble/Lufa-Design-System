@@ -63,5 +63,15 @@ module.exports = {
         'space-around': 'space-around',
       },
     },
+
+    // ==========================================
+    // LAYOUT - Grow (fill available space)
+    // ==========================================
+    grow: {
+      properties: ['flex', 'height', 'min-height', 'min-width'],
+      values: {
+        true: ['1 1 auto', '100%', '0', '0'],
+      },
+    },
   },
 };

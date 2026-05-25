@@ -36,6 +36,55 @@ test.describe('Flex', () => {
       .analyze();
     expect(accessibilityScanResults.violations).toEqual([]);
   });
+
+  test.describe('Grow Variants', () => {
+    test('should apply grow class when grow={true}', async ({ mount }) => {
+      const component = await mount(<Flex grow>Content</Flex>);
+      await expect(component).toHaveClass(/\bgrow\b/);
+    });
+
+    test('should not apply grow class when grow={false}', async ({ mount }) => {
+      const component = await mount(<Flex grow={false}>Content</Flex>);
+      await expect(component).not.toHaveClass(/\bgrow\b/);
+    });
+
+    test('should default to grow={false}', async ({ mount }) => {
+      const component = await mount(<Flex>Content</Flex>);
+      await expect(component).not.toHaveClass(/\bgrow\b/);
+    });
+
+    test('should apply flex: 1 1 auto when grow={true}', async ({ mount }) => {
+      const component = await mount(<Flex grow>Content</Flex>);
+      await expect(component).toHaveCSS('flex', '1 1 auto');
+    });
+
+    test('should apply height: 100% when grow={true}', async ({ mount }) => {
+      const component = await mount(<Flex grow>Content</Flex>);
+      await expect(component).toHaveCSS('height', '100%');
+    });
+
+    test('should apply min-height: 0 when grow={true}', async ({ mount }) => {
+      const component = await mount(<Flex grow>Content</Flex>);
+      await expect(component).toHaveCSS('min-height', '0px');
+    });
+
+    test('should apply min-width: 0 when grow={true}', async ({ mount }) => {
+      const component = await mount(<Flex grow>Content</Flex>);
+      await expect(component).toHaveCSS('min-width', '0px');
+    });
+
+    test('should combine grow with direction and gap without conflict', async ({ mount }) => {
+      const component = await mount(
+        <Flex grow direction="column" gap="compact">
+          <div>A</div>
+          <div>B</div>
+        </Flex>
+      );
+      await expect(component).toHaveClass(/\bgrow\b/);
+      await expect(component).toHaveClass(/direction-column/);
+      await expect(component).toHaveClass(/gap-compact/);
+    });
+  });
 });
 
 test.describe('Visual Regression', () => {

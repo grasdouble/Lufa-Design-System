@@ -56,6 +56,15 @@ const FlexImpl = <T extends ElementType = 'div'>(
   { direction, wrap, justify, align, gap, inline, className, ...props }: FlexProps<T>,
   ref: React.ForwardedRef<Element>
 ) => {
+  const { grow } = props as { grow?: boolean };
+
+  if (import.meta.env.DEV && grow && wrap && wrap !== 'nowrap') {
+    console.warn(
+      '[Flex] Using `grow` together with `wrap` is unsupported. ' +
+        'A wrapping flex container cannot reliably fill 100% height and may overflow its parent.'
+    );
+  }
+
   const flexClassName = clsx(
     styles.flex,
     direction && styles[`direction-${direction}`],

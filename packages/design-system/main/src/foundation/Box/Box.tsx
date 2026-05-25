@@ -247,6 +247,17 @@ export type BoxProps<T extends ElementType = 'div'> = {
   display?: DisplayValue;
 
   /**
+   * Whether the Box should grow to fill all available space in its parent.
+   * Applies `flex: 1 1 auto`, `height: 100%`, `min-height: 0`, and `min-width: 0`.
+   * Useful when Box is inside a height-constrained flex container (modal, Card, grid cell).
+   *
+   * **Note:** When using the `as` prop with a custom component that also accepts a `grow` prop,
+   * this component's `grow` is consumed here and will **not** be forwarded to the rendered element.
+   * @default false
+   */
+  grow?: boolean;
+
+  /**
    * Additional CSS classes
    * @default undefined
    */
@@ -298,6 +309,8 @@ const BoxImpl = <T extends ElementType = 'div'>(
     borderColor,
     // Display
     display,
+    // Grow
+    grow = false,
     // Responsive visibility props
     show,
     hide,
@@ -351,6 +364,9 @@ const BoxImpl = <T extends ElementType = 'div'>(
 
     // Display utilities
     display && styles[`display-${display}`],
+
+    // Grow utility
+    grow && styles.grow,
 
     // Responsive visibility utilities
     ...visibilityClasses,

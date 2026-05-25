@@ -132,6 +132,9 @@ export type StackProps<T extends ElementType = 'div'> = {
    *
    * **Note:** Using `grow` together with `wrap` is unsupported — a wrapping flex container
    * cannot reliably fill a fixed height and may overflow its parent.
+   *
+   * **Note:** When using the `as` prop with a custom component that also accepts a `grow` prop,
+   * this component's `grow` is consumed here and will **not** be forwarded to the rendered element.
    * @default false
    */
   grow?: boolean;

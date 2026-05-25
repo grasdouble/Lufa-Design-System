@@ -167,6 +167,66 @@ test.describe('Cluster Component', () => {
       });
     });
 
+    test.describe('Grow Variants', () => {
+      test('should apply grow class when grow={true}', async ({ mount }) => {
+        const component = await mount(<Cluster grow>Content</Cluster>);
+        await expect(component).toHaveClass(/\bgrow\b/);
+      });
+
+      test('should not apply grow class when grow={false}', async ({ mount }) => {
+        const component = await mount(<Cluster grow={false}>Content</Cluster>);
+        await expect(component).not.toHaveClass(/\bgrow\b/);
+      });
+
+      test('should default to grow={false}', async ({ mount }) => {
+        const component = await mount(<Cluster>Content</Cluster>);
+        await expect(component).not.toHaveClass(/\bgrow\b/);
+      });
+
+      test('should apply flex: 1 1 auto when grow={true}', async ({ mount }) => {
+        const component = await mount(<Cluster grow>Content</Cluster>);
+        await expect(component).toHaveCSS('flex', '1 1 auto');
+      });
+
+      test('should apply min-height: 0 when grow={true}', async ({ mount }) => {
+        const component = await mount(<Cluster grow>Content</Cluster>);
+        await expect(component).toHaveCSS('min-height', '0px');
+      });
+
+      test('should apply min-width: 0 when grow={true}', async ({ mount }) => {
+        const component = await mount(<Cluster grow>Content</Cluster>);
+        await expect(component).toHaveCSS('min-width', '0px');
+      });
+
+      test('should apply height: 100% when grow={true}', async ({ mount }) => {
+        const component = await mount(<Cluster grow>Content</Cluster>);
+        await expect(component).toHaveCSS('height', '100%');
+      });
+
+      test('should combine grow with spacing without conflict', async ({ mount }) => {
+        const component = await mount(
+          <Cluster grow spacing="compact">
+            <span>A</span>
+            <span>B</span>
+          </Cluster>
+        );
+        await expect(component).toHaveClass(/\bgrow\b/);
+        await expect(component).toHaveClass(/spacing-compact/);
+      });
+
+      test('should pass a11y checks when grow={true}', async ({ mount, page }) => {
+        await mount(
+          <Cluster grow>
+            <div>Accessible growing cluster</div>
+          </Cluster>
+        );
+        const accessibilityScanResults = await new AxeBuilder({ page })
+          .disableRules(['page-has-heading-one', 'landmark-one-main', 'region'])
+          .analyze();
+        expect(accessibilityScanResults.violations).toEqual([]);
+      });
+    });
+
     test.describe('Polymorphic Variants (as prop)', () => {
       test('should render as section element', async ({ mount }) => {
         const component = await mount(<Cluster as="section">Section content</Cluster>);
