@@ -91,6 +91,15 @@ const meta = {
         defaultValue: { summary: false },
       },
     },
+    grow: {
+      control: 'boolean',
+      description: 'Makes the Stack fill all available space in its parent (flex: 1 1 auto + height: 100%)',
+      table: {
+        category: 'Layout',
+        type: { summary: 'boolean' },
+        defaultValue: { summary: false },
+      },
+    },
 
     // Standard
     children: {
@@ -578,6 +587,128 @@ export const PropWrap: Story = {
 
           {/* Code block */}
           <CodeBlock code={generateCode(hoveredWrap === 'wrap')} language="jsx" title="JSX" subtitle={hoveredWrap} />
+        </div>
+      </StoryContainer>
+    );
+  },
+};
+
+// ============================================
+// PROP: GROW
+// ============================================
+
+/**
+ * ## Prop: `grow`
+ *
+ * When `true`, the Stack fills all available space in its parent container.
+ * Applies `flex: 1 1 auto`, `height: 100%`, and `min-height: 0`.
+ *
+ * Useful when Stack is placed inside a height-constrained container such as
+ * a CSS grid cell, a Card, or a modal with `max-height`.
+ */
+export const PropGrow: Story = {
+  render: () => {
+    const growCode = `// ✅ With grow prop — no className workaround needed
+<Stack direction="vertical" spacing="default" grow>
+  <div>Header</div>
+  <div style={{ flex: 1 }}>Content</div>
+  <div>Footer pinned to bottom</div>
+</Stack>
+
+// ❌ Workaround needed today
+<Stack direction="vertical" spacing="default" className={styles['my-stack']}>
+  ...
+</Stack>
+// .my-stack { height: 100%; }`;
+
+    return (
+      <StoryContainer>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+            {/* Without grow */}
+            <PropCard label="grow={false} (default)">
+              <div
+                style={{
+                  height: '200px',
+                  border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`,
+                  padding: '8px',
+                  display: 'flex',
+                }}
+              >
+                <Stack direction="vertical" spacing="compact">
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      background: STORY_COLORS.primary.blue.main,
+                      color: 'white',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Header
+                  </div>
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      background: STORY_COLORS.neutral.backgroundMedium,
+                      borderRadius: '6px',
+                    }}
+                  >
+                    Content (doesn't fill)
+                  </div>
+                </Stack>
+              </div>
+            </PropCard>
+
+            {/* With grow */}
+            <PropCard label="grow={true}">
+              <div
+                style={{
+                  height: '200px',
+                  border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`,
+                  padding: '8px',
+                  display: 'flex',
+                }}
+              >
+                <Stack direction="vertical" spacing="compact" grow>
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      background: STORY_COLORS.primary.violet.main,
+                      color: 'white',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Header
+                  </div>
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      background: STORY_COLORS.neutral.backgroundMedium,
+                      borderRadius: '6px',
+                      flex: 1,
+                    }}
+                  >
+                    Content fills height ✓
+                  </div>
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      background: STORY_COLORS.primary.pink.main,
+                      color: 'white',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Footer pinned ✓
+                  </div>
+                </Stack>
+              </div>
+            </PropCard>
+          </div>
+
+          <CodeBlock code={growCode} language="jsx" title="JSX" subtitle="grow" />
         </div>
       </StoryContainer>
     );

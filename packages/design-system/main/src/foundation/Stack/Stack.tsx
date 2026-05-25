@@ -126,6 +126,14 @@ export type StackProps<T extends ElementType = 'div'> = {
   wrap?: boolean;
 
   /**
+   * Whether the Stack should grow to fill all available space in its parent.
+   * Applies `flex: 1 1 auto`, `height: 100%`, and `min-height: 0`.
+   * Useful when Stack is inside a height-constrained container (CSS grid cell, Card, modal).
+   * @default false
+   */
+  grow?: boolean;
+
+  /**
    * Additional CSS classes
    * @default undefined
    */
@@ -158,6 +166,7 @@ const StackImpl = <T extends ElementType = 'div'>(
     align = 'stretch',
     justify = 'start',
     wrap = false,
+    grow = false,
     // Responsive visibility props
     show,
     hide,
@@ -201,6 +210,9 @@ const StackImpl = <T extends ElementType = 'div'>(
     // Wrap utilities
     wrap && styles[`wrap-wrap`],
     !wrap && styles[`wrap-nowrap`],
+
+    // Grow utility
+    grow && styles.grow,
 
     // Responsive visibility utilities
     ...visibilityClasses,

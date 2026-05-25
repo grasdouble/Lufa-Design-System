@@ -84,5 +84,15 @@ module.exports = {
         'wrap-reverse': 'wrap-reverse',
       },
     },
+
+    // ==========================================
+    // LAYOUT - Grow (fill available space)
+    // ==========================================
+    grow: {
+      properties: ['flex', 'height', 'min-height'],
+      values: {
+        true: ['1 1 auto', '100%', '0'],
+      },
+    },
   },
 };
