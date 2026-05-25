@@ -185,6 +185,62 @@ test.describe('Stack Component', () => {
       });
     });
 
+    test.describe('Grow Variants', () => {
+      test('should apply grow class when grow={true}', async ({ mount }) => {
+        const component = await mount(<Stack grow>Content</Stack>);
+        await expect(component).toHaveClass(/grow/);
+      });
+
+      test('should not apply grow class when grow={false}', async ({ mount }) => {
+        const component = await mount(<Stack grow={false}>Content</Stack>);
+        await expect(component).not.toHaveClass(/\bgrow\b/);
+      });
+
+      test('should default to grow={false}', async ({ mount }) => {
+        const component = await mount(<Stack>Content</Stack>);
+        await expect(component).not.toHaveClass(/\bgrow\b/);
+      });
+
+      test('should apply flex: 1 1 auto when grow={true}', async ({ mount }) => {
+        const component = await mount(<Stack grow>Content</Stack>);
+        await expect(component).toHaveCSS('flex', '1 1 auto');
+      });
+
+      test('should apply min-height: 0 when grow={true}', async ({ mount }) => {
+        const component = await mount(<Stack grow>Content</Stack>);
+        await expect(component).toHaveCSS('min-height', '0px');
+      });
+
+      test('should apply min-width: 0 when grow={true}', async ({ mount }) => {
+        const component = await mount(<Stack grow>Content</Stack>);
+        await expect(component).toHaveCSS('min-width', '0px');
+      });
+
+      test('should combine grow with direction and spacing without conflict', async ({ mount }) => {
+        const component = await mount(
+          <Stack grow direction="horizontal" spacing="compact">
+            <div>A</div>
+            <div>B</div>
+          </Stack>
+        );
+        await expect(component).toHaveClass(/grow/);
+        await expect(component).toHaveClass(/direction-horizontal/);
+        await expect(component).toHaveClass(/spacing-compact/);
+      });
+
+      test('should pass a11y checks when grow={true}', async ({ mount, page }) => {
+        await mount(
+          <Stack grow>
+            <div>Accessible growing stack</div>
+          </Stack>
+        );
+        const accessibilityScanResults = await new AxeBuilder({ page })
+          .disableRules(['page-has-heading-one', 'landmark-one-main', 'region'])
+          .analyze();
+        expect(accessibilityScanResults.violations).toEqual([]);
+      });
+    });
+
     test.describe('Polymorphic Variants (as prop)', () => {
       test('should render as section element', async ({ mount }) => {
         const component = await mount(<Stack as="section">Section content</Stack>);

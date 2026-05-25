@@ -126,6 +126,17 @@ export type StackProps<T extends ElementType = 'div'> = {
   wrap?: boolean;
 
   /**
+   * Whether the Stack should grow to fill all available space in its parent.
+   * Applies `flex: 1 1 auto`, `height: 100%`, `min-height: 0`, and `min-width: 0`.
+   * Useful when Stack is inside a height-constrained container (CSS grid cell, Card, modal).
+   *
+   * **Note:** Using `grow` together with `wrap` is unsupported — a wrapping flex container
+   * cannot reliably fill a fixed height and may overflow its parent.
+   * @default false
+   */
+  grow?: boolean;
+
+  /**
    * Additional CSS classes
    * @default undefined
    */
@@ -158,6 +169,7 @@ const StackImpl = <T extends ElementType = 'div'>(
     align = 'stretch',
     justify = 'start',
     wrap = false,
+    grow = false,
     // Responsive visibility props
     show,
     hide,
@@ -172,6 +184,13 @@ const StackImpl = <T extends ElementType = 'div'>(
 ) => {
   // Determine the element to render
   const Component = as ?? 'div';
+
+  if (import.meta.env.DEV && grow && wrap) {
+    console.warn(
+      '[Stack] Using `grow` together with `wrap` is unsupported. ' +
+        'A wrapping flex container cannot reliably fill 100% height and may overflow its parent.'
+    );
+  }
 
   // Get responsive visibility classes
   const visibilityClasses = getResponsiveVisibilityClasses({
@@ -201,6 +220,9 @@ const StackImpl = <T extends ElementType = 'div'>(
     // Wrap utilities
     wrap && styles[`wrap-wrap`],
     !wrap && styles[`wrap-nowrap`],
+
+    // Grow utility
+    grow && styles.grow,
 
     // Responsive visibility utilities
     ...visibilityClasses,
