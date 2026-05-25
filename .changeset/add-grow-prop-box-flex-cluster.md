@@ -26,4 +26,6 @@ This eliminates the need for consumer-side workarounds when using these primitiv
 </Flex>
 ```
 
+**Note:** On `Flex`, `grow` is automatically neutralized when `wrap` is active (any value other than `'nowrap'`). Wrapping flex containers cannot reliably fill 100% height, so applying `grow` in that context would produce broken layouts in production. The prop is silently ignored in that combination.
+
 Closes #27
