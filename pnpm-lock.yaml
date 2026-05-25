@@ -14,6 +14,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.31.0
         version: 2.31.0(@types/node@25.8.0)
+      '@grasdouble/lufa_config_agents':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@grasdouble/lufa_config_eslint':
         specifier: ^0.1.7
         version: 0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)
@@ -2419,6 +2422,10 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
+
+  '@grasdouble/lufa_config_agents@1.0.1':
+    resolution: {integrity: sha512-5XJiGaWKAza3PxcjEaH/XjotLK0qLaz7LjCZsA9B9T4Q5w9umplIDALeGE90iwNGSc6Ioxdr+qNym3/BazpkIw==, tarball: https://npm.pkg.github.com/download/@grasdouble/lufa_config_agents/1.0.1/0662f7ba26843ce9fa3252f18ac7b78ba6689e5e}
+    hasBin: true
 
   '@grasdouble/lufa_config_eslint@0.1.7':
     resolution: {integrity: sha512-AD0sP3wZux9Ppfvgqp3RwrE/zU6QNIlh38ggcgzm/TffmGq37IC+nNNMGdZ5/OH+t29K5lq6kLEej+I67LPdfQ==, tarball: https://npm.pkg.github.com/download/@grasdouble/lufa_config_eslint/0.1.7/e04fc6655f7d0ccc31a4f6fcfb21bbf3de63beff}
@@ -12643,6 +12650,8 @@ snapshots:
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.11': {}
+
+  '@grasdouble/lufa_config_agents@1.0.1': {}
 
   '@grasdouble/lufa_config_eslint@0.1.7(eslint@10.4.0(jiti@1.21.7))(typescript@6.0.3)':
     dependencies:

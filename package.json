@@ -120,6 +120,8 @@
     "plugin:vite:prettier:check": "pnpm --filter @grasdouble/lufa_plugin_vite_* run prettier:check",
     "plugin:vite:prettier:write": "pnpm --filter @grasdouble/lufa_plugin_vite_* run prettier:write",
     "prepare": "husky",
+    "sync:agents": "lufa-agents-sync",
+    "sync-----------------------------": "",
     "tools:---------------------------------------------": "",
     "tools:bmad:status": "pnpm dlx bmad-method status",
     "tools:bmad:update": "pnpm dlx bmad-method install",
@@ -145,6 +147,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "@grasdouble/lufa_config_agents": "^1.0.1",
     "@grasdouble/lufa_config_eslint": "^0.1.7",
     "@grasdouble/lufa_config_prettier": "^0.1.4",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
