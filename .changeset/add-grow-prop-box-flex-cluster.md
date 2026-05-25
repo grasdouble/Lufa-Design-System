@@ -1,5 +1,6 @@
 ---
 '@grasdouble/lufa_design-system': minor
+'@grasdouble/lufa_design-system-playwright': minor
 ---
 
 feat: add `grow` prop to Box, Flex, and Cluster components
