@@ -1,5 +1,16 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.2
+
+### Patch Changes
+
+- 614143d: feat: add `grow` prop to Stack component
+
+  The `grow` prop allows a Stack to fill all available space in its parent container by applying `flex: 1 1 auto`, `height: 100%`, `min-height: 0`, and `min-width: 0`. Useful when Stack is nested inside height-constrained containers (CSS grid cells, Card, modals). A dev-mode warning is emitted when `grow` and `wrap` are used together, as that combination is unsupported.
+
+- Updated dependencies [614143d]
+  - @grasdouble/lufa_design-system@3.2.0
+
 ## 1.3.1
 
 ### Patch Changes
