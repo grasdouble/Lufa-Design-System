@@ -13,6 +13,17 @@ When the user points out a mistake or a recurring problem, **always update this 
 - Do not add vague rules ("be careful with X") — write actionable rules with ✅/❌ examples
 - Check that a similar rule doesn't already exist before adding
 
+**Rule template:**
+
+```markdown
+## Rule title — short imperative
+
+One sentence explaining why this matters.
+
+- ✅ Correct example
+- ❌ Wrong example (with consequence if useful)
+```
+
 This applies to any type of mistake: tooling, workflow, code quality, file management, etc.
 
 **✅ Update AGENTS.md when:**
@@ -74,6 +85,7 @@ This repo uses **pnpm** exclusively. Never use `npm` or `yarn`.
 
 - ✅ `pnpm install`, `pnpm add <pkg>`, `pnpm run <script>`
 - ❌ `npm install`, `yarn add`
+- ❌ `npx <cmd>` — bypasses pnpm, can silently pull packages from the npm registry; use `pnpm dlx` instead
 
 ---
 
@@ -106,7 +118,7 @@ rtk proxy <cmd>       # Run raw (no filtering) but track usage
 
 ## TypeScript — Never call `tsc` directly
 
-The `tsconfig` files in this repo have `declaration: true` and `sourceMap: true`. **Any direct invocation of the `tsc` binary can emit `.js`, `.d.ts`, and `.map` files into `src/`, even with `--noEmit`.**
+The `tsconfig` files in this repo have `declaration: true` and `sourceMap: true`. **Running `tsc` without `--noEmit` emits `.js`, `.d.ts`, and `.map` files into `src/`. Always use the project scripts which set the correct flags.**
 
 ### Allowed — type checking
 
@@ -126,24 +138,27 @@ If stray generated files appear in `src/` (`.js`, `.js.map`, `.d.ts`, `.d.ts.map
 
 ## Build & Validation
 
-Run these commands to validate your changes before presenting them to the user:
+Run these commands to validate your changes before presenting them to the user. **Always prefix commands with `rtk`** (e.g. `rtk pnpm all:lint`).
 
-| Scope                      | Command              | From           |
-| -------------------------- | -------------------- | -------------- |
-| All packages — lint        | `pnpm all:lint`      | root           |
-| All packages — build       | `pnpm all:build`     | root           |
-| All packages — typecheck   | `pnpm all:typecheck` | root           |
-| Single package — lint      | `pnpm lint`          | package folder |
-| Single package — build     | `pnpm build`         | package folder |
-| Single package — typecheck | `pnpm typecheck`     | package folder |
+| Scope                          | Command                     | From                                 |
+| ------------------------------ | --------------------------- | ------------------------------------ |
+| All packages — lint            | `pnpm all:lint`             | root                                 |
+| All packages — build           | `pnpm all:build`            | root                                 |
+| All packages — typecheck       | `pnpm all:typecheck`        | root                                 |
+| Single package — lint          | `pnpm lint`                 | package folder                       |
+| Single package — build         | `pnpm build`                | package folder                       |
+| Single package — typecheck     | `pnpm typecheck`            | package folder                       |
+| DS — tests                     | `pnpm test`                 | `packages/design-system/playwright/` |
+| DS main — validate components  | `pnpm validate:components`  | `packages/design-system/main/`       |
+| DS main — validate token usage | `pnpm validate:token-usage` | `packages/design-system/main/`       |
 
 **Which scope to use:**
 
-- Changed only one package → run package-level commands first (faster)
+- Changed only one package → run package-level commands first (faster); include `validate:components` and `validate:token-usage` for DS main changes
 - Changed shared code (tokens, config) → run root-level commands
 - Unsure → run root-level to be safe
 
-**On failure:** Stop. Fix the error. Re-run the failing command. Do not present changes to the user until the relevant commands pass. Never edit generated files (`dist/`, `node_modules/`, `.pnpm-store/`, `*.map`, `*.d.ts` in build output) to work around a failure.
+**On failure:** Stop. Fix the error. Re-run the failing command. Do not stage with `git add` or report to the user until the relevant commands pass. Never edit generated files (`dist/`, `node_modules/`, `.pnpm-store/`, `*.map`, `*.d.ts` in build output) to work around a failure.
 
 > The repo is a monorepo. Explore `packages/` to discover available packages — never assume their paths.
 
@@ -160,8 +175,10 @@ Any feature addition or modification **must** be accompanied by tests. Never con
 For this repo the test command is:
 
 ```bash
-pnpm test   # from packages/design-system/playwright/
+rtk pnpm test   # from packages/design-system/playwright/
 ```
+
+Tests are also listed in the Build & Validation table above.
 
 If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
 
@@ -185,7 +202,46 @@ Checklist to apply systematically:
 - **Heading hierarchy** → logical `h1 → h2 → h3` structure, never skip levels
 - **Live regions** → use `aria-live` for content that updates dynamically without a page reload
 
+**DS-specific requirements:**
+
+- Each new or modified component must document its accessibility contract in a JSDoc comment on the component: keyboard interactions, ARIA roles used, and any assumptions about the consumer's markup
+- Focus ring and color contrast must use design tokens — never hardcode `outline`, `box-shadow`, or color values that bypass the token system
+- Keyboard interaction patterns must follow [ARIA APG](https://www.w3.org/WAI/ARIA/apg/) for the corresponding widget role (e.g. listbox, dialog, tabs)
+
 When writing or reviewing code, if an accessibility issue is found, fix it in the same task — never defer it.
+
+---
+
+## Design System — Component anatomy
+
+Every component in `packages/design-system/main/src/` follows this structure:
+
+```
+ComponentName/
+  ComponentName.tsx          # Component implementation
+  ComponentName.module.css   # CSS Modules styles (tokens only, no hard-coded values)
+  index.ts                   # Re-exports: component + its public types
+```
+
+Rules when adding or modifying a component:
+
+- **Props** → all props must have a JSDoc description (enforced by `validate:components`)
+- **Refs** → forward refs to the underlying DOM element using `React.forwardRef`
+- **Tokens** → CSS must use design tokens for all dimensions, colors, spacing — no hard-coded `px`/`rem`/`color` values (enforced by `validate:token-usage`)
+- **Export** → add the component and its types to the package's top-level `index.ts`
+- **Validate** → run `pnpm validate:components` and `pnpm validate:token-usage` from `packages/design-system/main/` after any component change
+
+---
+
+## Workflow — No planning files in the repository
+
+Never create markdown files in the repository for planning, notes, or tracking.
+
+- ✅ Use in-memory notes, session workspace files (e.g. `~/.copilot/session-state/*/plan.md`)
+- ❌ `PLAN.md`, `TODO.md`, `NOTES.md`, or any tracking file committed to the repo
+- ❌ Creating a markdown file "temporarily" — even temporary files pollute git history
+
+This applies to sub-agents you launch: always instruct them not to create planning files in the repo.
 
 ---
 
@@ -200,7 +256,7 @@ When creating a changeset file manually in `.changeset/`, always use a **descrip
 
 **Content rules:**
 
-- Always check `git diff main --name-only` first to identify **all** changed packages before writing changesets
+- Always check `rtk git diff main --name-only` first to identify **all** changed packages before writing changesets (assumes `main` is the default branch — adjust if different)
 - Use `patch` for fixes/refactors, `minor` for new user-visible features, `major` for breaking changes
 - **Always prefix the description** with a conventional commit type: `feat:`, `fix:`, `chore:`, `refactor:`, `perf:`, `docs:`, `style:`, `test:`
 - **Always verify** the changeset after creation: `rtk pnpm changeset status`
