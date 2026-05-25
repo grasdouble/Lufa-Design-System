@@ -211,6 +211,11 @@ test.describe('Stack Component', () => {
         await expect(component).toHaveCSS('min-height', '0px');
       });
 
+      test('should apply min-width: 0 when grow={true}', async ({ mount }) => {
+        const component = await mount(<Stack grow>Content</Stack>);
+        await expect(component).toHaveCSS('min-width', '0px');
+      });
+
       test('should combine grow with direction and spacing without conflict', async ({ mount }) => {
         const component = await mount(
           <Stack grow direction="horizontal" spacing="compact">
