@@ -4,6 +4,38 @@ These rules apply to every session, including after a compact or checkpoint. Bef
 
 ---
 
+## Self-improvement — Update this file when a mistake is identified
+
+When the user points out a mistake or a recurring problem, **always update this file** to prevent it from happening again — in the same response, before moving on.
+
+- Identify the root cause, not just the symptom
+- Write a rule specific enough to prevent the exact mistake
+- Do not add vague rules ("be careful with X") — write actionable rules with ✅/❌ examples
+- Check that a similar rule doesn't already exist before adding
+
+This applies to any type of mistake: tooling, workflow, code quality, file management, etc.
+
+**✅ Update AGENTS.md when:**
+
+- The user explicitly asks to add or change a rule
+- A recurring mistake is identified (same error happened twice or more)
+- A new validated pattern emerges that applies to any future session in this repo
+
+**❌ Do NOT update AGENTS.md when:**
+
+- The instruction is session-specific ("for this task, skip lint")
+- The user qualified it with "for now", "just this time", "temporarily"
+- The fact is already captured by a stored memory
+- The rule would duplicate or contradict an existing section
+
+**Agent memories vs AGENTS.md:**
+
+- Use your agent's memory system (if available) for facts that could apply across multiple repos (user preferences, general conventions)
+- Use AGENTS.md for rules that are **specific to this repo** (tooling, architecture, workflow)
+- When in doubt: if it references a specific file, command, or package in this repo → AGENTS.md
+
+---
+
 ## Critical thinking — Always challenge requests
 
 Before implementing anything, evaluate the request critically:
@@ -13,28 +45,55 @@ Before implementing anything, evaluate the request critically:
 - If you disagree, explain why clearly and propose an alternative
 - Only proceed once the approach is validated (either confirmed by the user or after proposing a better option)
 
-This applies to: architecture decisions, API design, naming, technology choices, and any non-trivial implementation.
+**Non-trivial = anything involving:** architecture decisions, API design, technology or library choices, naming that will be hard to change, security-sensitive code, or changes that affect more than one package.
+
+- ✅ "You asked to add this prop directly on the component, but the existing pattern uses a compound component — should I follow that pattern?"
+- ✅ "Splitting this into two components makes sense, but it will require changing the parent interface — is that acceptable?"
+- ❌ Silently implementing a pattern that conflicts with the existing codebase
+- ❌ Asking for validation on every trivial decision (adding a CSS class, fixing a typo)
 
 ---
 
-# RTK — Token-Optimized CLI
+## Git — No commits, no destructive operations
+
+Never create git commits. Stage changes and present them for the user to review and commit manually. **This rule also applies to any sub-agent or background agent you launch — always instruct sub-agents explicitly to only `git add`, never `git commit`.**
+
+- ✅ `git add <files>`, `git diff`, `git status`, `git log`, `git stash`
+- ❌ `git commit` — never, even when asked to "save" or "apply" changes
+- ❌ Launching a sub-agent without explicitly telling it "never run git commit, only git add"
+- ❌ `git rebase` — rewrites history
+- ❌ `git reset --hard` — destroys uncommitted work
+- ❌ `git push --force` / `git push --force-with-lease` — overwrites remote
+- ❌ `git clean -fd` — permanently deletes untracked files
+
+---
+
+## Package Manager — Always use pnpm
+
+This repo uses **pnpm** exclusively. Never use `npm` or `yarn`.
+
+- ✅ `pnpm install`, `pnpm add <pkg>`, `pnpm run <script>`
+- ❌ `npm install`, `yarn add`
+
+---
+
+## RTK — Token-Optimized CLI
 
 **rtk** is a CLI proxy that filters and compresses command outputs, saving 60-90% tokens.
 
-## Rule
+### Rule
 
-Always prefix shell commands with `rtk`:
+Always prefix **bash/shell** commands with `rtk` (not tool calls like `ide-get_diagnostics`):
 
 ```bash
 # Instead of:              Use:
 git status                 rtk git status
 git log -10                rtk git log -10
-cargo test                 rtk cargo test
-docker ps                  rtk docker ps
-kubectl get pods           rtk kubectl pods
+pnpm lint                  rtk pnpm lint
+pnpm build                 rtk pnpm build
 ```
 
-## Meta commands (use directly)
+### Native rtk commands (run as-is, no prefix needed)
 
 ```bash
 rtk gain              # Token savings dashboard
@@ -43,22 +102,52 @@ rtk discover          # Find missed rtk opportunities
 rtk proxy <cmd>       # Run raw (no filtering) but track usage
 ```
 
+---
+
 ## TypeScript — Never call `tsc` directly
 
-The `tsconfig` files in this repo have `declaration: true` and `sourceMap: true`. Always use the `typecheck` script — never call `tsc` directly.
+The `tsconfig` files in this repo have `declaration: true` and `sourceMap: true`. **Any direct invocation of the `tsc` binary can emit `.js`, `.d.ts`, and `.map` files into `src/`, even with `--noEmit`.**
 
+### Allowed — type checking
+
+- ✅ `ide-get_diagnostics` tool — preferred, zero risk of file emission
+- ✅ `pnpm typecheck` from a specific package folder
 - ✅ `pnpm all:typecheck` from the root (runs all packages)
-- ✅ `pnpm typecheck` from a specific package folder (e.g. `packages/parcels/landing-page`)
-- ❌ `tsc` or `tsc -p tsconfig.json` alone → emits `.js`, `.d.ts`, `.map` files into `src/`
+
+### Forbidden — always
+
+- ❌ `tsc` — direct binary call
+- ❌ `pnpm tsc` — still calls the binary directly, bypasses the script
+- ❌ `tsc -p tsconfig.json` with any flags, including `--noEmit` or `--listEmittedFiles`
 
 If stray generated files appear in `src/` (`.js`, `.js.map`, `.d.ts`, `.d.ts.map`), delete them immediately.
 
-## Git — No commits
+---
 
-Never create git commits. Stage changes and present them for the user to review and commit manually.
+## Build & Validation
 
-- ✅ `git add <files>`
-- ❌ `git commit` — never, even when asked to "save" or "apply" changes
+Run these commands to validate your changes before presenting them to the user:
+
+| Scope                      | Command              | From           |
+| -------------------------- | -------------------- | -------------- |
+| All packages — lint        | `pnpm all:lint`      | root           |
+| All packages — build       | `pnpm all:build`     | root           |
+| All packages — typecheck   | `pnpm all:typecheck` | root           |
+| Single package — lint      | `pnpm lint`          | package folder |
+| Single package — build     | `pnpm build`         | package folder |
+| Single package — typecheck | `pnpm typecheck`     | package folder |
+
+**Which scope to use:**
+
+- Changed only one package → run package-level commands first (faster)
+- Changed shared code (tokens, config) → run root-level commands
+- Unsure → run root-level to be safe
+
+**On failure:** Stop. Fix the error. Re-run the failing command. Do not present changes to the user until the relevant commands pass. Never edit generated files (`dist/`, `node_modules/`, `.pnpm-store/`, `*.map`, `*.d.ts` in build output) to work around a failure.
+
+> The repo is a monorepo. Explore `packages/` to discover available packages — never assume their paths.
+
+---
 
 ## Tests — Always write or update tests
 
@@ -78,11 +167,57 @@ If a feature cannot be tested in the current test infrastructure, explain why an
 
 ---
 
-## Changesets — Naming convention
+## Accessibility — Non-negotiable
 
-When creating a changeset file manually in `.changeset/`, always use a **descriptive kebab-case name** that summarises the change — never a random hex ID.
+Every UI change must consider accessibility. This is not optional and must never be skipped during review or implementation.
+
+Checklist to apply systematically:
+
+- **Decorative elements** (svg, images without meaning) → `aria-hidden="true"`
+- **Interactive elements** → keyboard accessible, `role` and `aria-*` attributes correct
+- **Images** → `alt` attribute always present (empty string `""` if decorative)
+- **Form fields** → associated `<label>` or `aria-label`
+- **Color** → never the only means of conveying information
+- **Focus** → visible focus indicator, logical tab order
+- **Animations** → always respect `prefers-reduced-motion: reduce` — pause or skip any motion when active
+- **Contrast** → WCAG AA minimum: 4.5:1 for text, 3:1 for large text and UI components
+- **Semantic HTML** → use the right element first (`<button>`, `<nav>`, `<main>`…) before reaching for ARIA roles
+- **Heading hierarchy** → logical `h1 → h2 → h3` structure, never skip levels
+- **Live regions** → use `aria-live` for content that updates dynamically without a page reload
+
+When writing or reviewing code, if an accessibility issue is found, fix it in the same task — never defer it.
+
+---
+
+## Changesets — Naming and content
+
+When creating a changeset file manually in `.changeset/`, always use a **descriptive kebab-case name** — never a random hex ID.
 
 - ✅ `.changeset/update-projects-list.md`
 - ✅ `.changeset/add-dark-mode-toggle.md`
 - ✅ `.changeset/happy-lions-sing.md` (auto-generated by the CLI — acceptable)
 - ❌ `.changeset/6197e9-63944d-6768e0.md`
+
+**Content rules:**
+
+- Always check `git diff main --name-only` first to identify **all** changed packages before writing changesets
+- Use `patch` for fixes/refactors, `minor` for new user-visible features, `major` for breaking changes
+- **Always prefix the description** with a conventional commit type: `feat:`, `fix:`, `chore:`, `refactor:`, `perf:`, `docs:`, `style:`, `test:`
+- **Always verify** the changeset after creation: `rtk pnpm changeset status`
+
+**One changeset per package** — never bundle unrelated packages in a single changeset:
+
+- ✅ One file per package when changes are independent
+- ✅ One shared file when a **single atomic change** touches multiple packages together
+- ❌ One file listing several packages with unrelated changes
+
+Prefix guide:
+
+- `feat:` — new user-visible feature
+- `fix:` — bug fix
+- `chore:` — maintenance, config, tooling, dependency update
+- `refactor:` — code restructuring without behavior change
+- `perf:` — performance improvement
+- `docs:` — documentation only
+- `style:` — visual/CSS change with no logic change
+- `test:` — test additions or changes
