@@ -1,5 +1,13 @@
 # @grasdouble/lufa_plugin_vscode_lufa-ds-preview
 
+## 0.4.11
+
+### Patch Changes
+
+- 2be11cf: chore: update dev dependencies (lufa*config*\*, postcss, storybook, vite, tsx, vitest, @types/node, @types/react, style-dictionary, typescript-eslint, lint-staged)
+- Updated dependencies [2be11cf]
+  - @grasdouble/lufa_design-system-tokens@1.2.6
+
 ## 0.4.10
 
 ### Patch Changes
