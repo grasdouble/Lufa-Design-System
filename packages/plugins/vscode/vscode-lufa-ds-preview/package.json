@@ -77,7 +77,7 @@
     "culori": "^4.0.2"
   },
   "devDependencies": {
-    "@grasdouble/lufa_config_eslint": "^0.1.8",
+    "@grasdouble/lufa_config_eslint": "^0.1.9",
     "@grasdouble/lufa_config_prettier": "^0.1.5",
     "@types/node": "^25.9.1",
     "@types/vscode": "^1.120.0",

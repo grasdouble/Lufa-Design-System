@@ -53,7 +53,7 @@
     "react-dom": "^19.2.6"
   },
   "devDependencies": {
-    "@grasdouble/lufa_config_eslint": "^0.1.8",
+    "@grasdouble/lufa_config_eslint": "^0.1.9",
     "@grasdouble/lufa_config_prettier": "^0.1.5",
     "@grasdouble/lufa_config_tsconfig": "^0.1.4",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
