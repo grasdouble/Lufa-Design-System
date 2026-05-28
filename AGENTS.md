@@ -5,7 +5,7 @@ These rules apply to every session, including after a compact or checkpoint. Bef
 ---
 
 <!-- BEGIN:AGENTS.shared -->
-<!-- source: @grasdouble/lufa_config_agents@1.1.0 — DO NOT EDIT this block manually, run `pnpm sync:agents` -->
+<!-- source: @grasdouble/lufa_config_agents@1.1.1 — DO NOT EDIT this block manually, run `pnpm sync:agents` -->
 
 # Shared Agent Rules — Grasdouble Ecosystem
 
@@ -77,13 +77,14 @@ Before implementing anything, evaluate the request critically:
 
 ---
 
-## Git — No commits, no destructive operations
+## Git — No commits, no staging, no destructive operations
 
-Never create git commits. Stage changes and present them for the user to review and commit manually. **This rule also applies to any sub-agent or background agent you launch — always instruct sub-agents explicitly to only `git add`, never `git commit`.**
+Never create git commits and never stage files. Leave all git operations to the user. **This rule also applies to any sub-agent or background agent you launch — always instruct sub-agents explicitly to never run `git commit` or `git add`.**
 
-- ✅ `git add <files>`, `git diff`, `git status`, `git log`, `git stash`
+- ✅ `git diff`, `git status`, `git log`, `git stash`
+- ❌ `git add` — never; staging is the user's responsibility
 - ❌ `git commit` — never, even when asked to "save" or "apply" changes
-- ❌ Launching a sub-agent without explicitly telling it "never run git commit, only git add"
+- ❌ Launching a sub-agent without explicitly telling it "never run git commit or git add"
 - ❌ `git rebase` — rewrites history
 - ❌ `git reset --hard` — destroys uncommitted work
 - ❌ `git push --force` / `git push --force-with-lease` — overwrites remote
