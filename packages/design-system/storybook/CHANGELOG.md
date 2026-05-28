@@ -1,5 +1,15 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.3
+
+### Patch Changes
+
+- 2be11cf: chore: update dev dependencies (lufa*config*\*, postcss, storybook, vite, tsx, vitest, @types/node, @types/react, style-dictionary, typescript-eslint, lint-staged)
+- Updated dependencies [2be11cf]
+  - @grasdouble/lufa_design-system-themes@1.1.6
+  - @grasdouble/lufa_design-system-tokens@1.2.6
+  - @grasdouble/lufa_design-system@3.3.1
+
 ## 1.3.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.1
+
+### Patch Changes
+
+- 2be11cf: chore: update dev dependencies (lufa*config*\*, postcss, storybook, vite, tsx, vitest, @types/node, @types/react, style-dictionary, typescript-eslint, lint-staged)
+
 ## 1.3.0
 
 ### Minor Changes
