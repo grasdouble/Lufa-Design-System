@@ -77,18 +77,18 @@
     "culori": "^4.0.2"
   },
   "devDependencies": {
-    "@grasdouble/lufa_config_eslint": "^0.1.7",
-    "@grasdouble/lufa_config_prettier": "^0.1.4",
-    "@types/node": "^25.8.0",
+    "@grasdouble/lufa_config_eslint": "^0.1.8",
+    "@grasdouble/lufa_config_prettier": "^0.1.5",
+    "@types/node": "^25.9.1",
     "@types/vscode": "^1.120.0",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitest/coverage-v8": "^4.1.7",
     "@vscode/vsce": "^3.9.1",
     "esbuild": "^0.28.0",
     "eslint": "^10.4.0",
     "prettier": "^3.8.3",
     "sort-package-json": "^3.6.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   },
   "engines": {
     "vscode": "^1.108.0"
