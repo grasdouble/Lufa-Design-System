@@ -58,7 +58,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            🎉 The Storybook for this PR has been published! You can view it [here](https://grasdouble.github.io/Lufa/pr-${{ github.event.pull_request.number }}/).
+            🎉 The Storybook for this PR has been published! You can view it [here](https://grasdouble.github.io/Lufa-Design-System/pr-${{ github.event.pull_request.number }}/).
 
       - name: 🏷️ Remove 'publish-storybook' label
         uses: actions-ecosystem/action-remove-labels@v1
