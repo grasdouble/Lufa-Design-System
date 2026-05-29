@@ -12,9 +12,9 @@ import styles from './Link.module.css';
  * from the surrounding context.
  *
  * Features:
- * - Three visual variants (default, subtle, plain)
+ * - Two visual variants (underline, plain)
  * - Four functional colors (primary, secondary, tertiary, inverse)
- * - Animated border-bottom on hover (default and subtle variants)
+ * - Animated border-bottom on hover (underline variant)
  * - Accessible: native `<a>` semantics with visible focus ring
  * - Auto `rel="noopener noreferrer"` when `target="_blank"`
  * - Polymorphic `as` prop for router link integration
@@ -35,9 +35,6 @@ import styles from './Link.module.css';
  *   {' '}and{' '}
  *   <Link href="https://github.com/smouillour" target="_blank">smouillour</Link>.
  * </Text>
- *
- * // Subtle variant (secondary color by default)
- * <Link href="/about" variant="subtle">About us</Link>
  *
  * // Plain variant (no underline)
  * <Link href="/home" variant="plain" color="primary">Home</Link>

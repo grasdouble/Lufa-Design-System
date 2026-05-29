@@ -29,15 +29,10 @@ export function LiveDemo() {
 export function AllVariants() {
   const variants: { value: LinkProps['variant']; label: string; description: string; color?: LinkProps['color'] }[] = [
     {
-      value: 'default',
-      label: 'Default',
+      value: 'underline',
+      label: 'Underline',
       description: 'Colored text with animated border-bottom on hover',
       color: 'primary',
-    },
-    {
-      value: 'subtle',
-      label: 'Subtle',
-      description: 'Secondary text color, same animated border behavior',
     },
     {
       value: 'plain',

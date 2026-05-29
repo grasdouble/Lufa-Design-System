@@ -58,7 +58,7 @@ The Link component is a single inline element:
 ```
 
 - **Container**: Single anchor element (default `a`, customizable via `as`)
-- **Border-bottom**: Animated underline on hover (`default` and `subtle` variants)
+- **Border-bottom**: Animated underline on hover (`underline` variant)
 - **Focus ring**: Visible outline using DS focus tokens
 
 ## Usage
@@ -85,16 +85,16 @@ export function Example() {
 
 ## Props
 
-| Prop        | Type                                                                                                         | Default                                             | Description                                 |
-| ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- | ------------------------------------------- |
-| `href`      | `string`                                                                                                     | —                                                   | Destination URL                             |
-| `target`    | `'_self' \| '_blank'`                                                                                        | `'_self'`                                           | Where to open the URL                       |
-| `rel`       | `string`                                                                                                     | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                               |
-| `variant`   | `'underline' \| 'plain'`                                                                                     | `'underline'`                                       | Visual style variant                        |
-| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'inverse'`                                                       | `'primary'`; `'secondary'` for `subtle` variant     | Link color                                  |
-| `as`        | `ElementType`                                                                                                | `'a'`                                               | Polymorphic root element (for router links) |
-| `children`  | `React.ReactNode`                                                                                            | —                                                   | Link text content                           |
-| `className` | `string`                                                                                                     | `undefined`                                         | Additional CSS classes                      |
+| Prop        | Type                                                  | Default                                             | Description                                 |
+| ----------- | ----------------------------------------------------- | --------------------------------------------------- | ------------------------------------------- |
+| `href`      | `string`                                              | —                                                   | Destination URL                             |
+| `target`    | `'_self' \| '_blank'`                                 | `'_self'`                                           | Where to open the URL                       |
+| `rel`       | `string`                                              | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                               |
+| `variant`   | `'underline' \| 'plain'`                              | `'underline'`                                       | Visual style variant                        |
+| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'inverse'` | `'primary'`                                         | Link color                                  |
+| `as`        | `ElementType`                                         | `'a'`                                               | Polymorphic root element (for router links) |
+| `children`  | `React.ReactNode`                                     | —                                                   | Link text content                           |
+| `className` | `string`                                              | `undefined`                                         | Additional CSS classes                      |
 
 ## Variants
 
