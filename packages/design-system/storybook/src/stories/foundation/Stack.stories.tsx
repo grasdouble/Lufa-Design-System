@@ -1,12 +1,9 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Stack } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { getColorByIndex, STORY_COLORS } from '../../constants/storyColors';
-
-const NEUTRAL = STORY_COLORS.neutral;
 
 /**
  * Stack - Flexible Layout Primitive for Spacing
@@ -190,8 +187,6 @@ export const Playground: Story = {
  */
 export const PropDirection: Story = {
   render: () => {
-    const [selectedDirection, setSelectedDirection] = React.useState<string>('vertical');
-
     const generateCode = (direction: string): string => {
       return `<Stack direction="${direction}" spacing="default">
   <div>Item 1</div>
@@ -205,59 +200,49 @@ export const PropDirection: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
-            <div onMouseEnter={() => setSelectedDirection('vertical')}>
-              <PropCard label='direction="vertical"' highlight={selectedDirection === 'vertical'}>
-                <Stack direction="vertical" spacing="default">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      style={{
-                        padding: '16px',
-                        background: getColorByIndex(i - 1).main,
-                        color: 'white',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                      }}
-                    >
-                      Item {i}
-                    </div>
-                  ))}
-                </Stack>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setSelectedDirection('horizontal')}>
-              <PropCard label='direction="horizontal"' highlight={selectedDirection === 'horizontal'}>
-                <Stack direction="horizontal" spacing="default">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      style={{
-                        padding: '16px',
-                        background: getColorByIndex(i - 1).main,
-                        color: 'white',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                        minWidth: '80px',
-                      }}
-                    >
-                      Item {i}
-                    </div>
-                  ))}
-                </Stack>
-              </PropCard>
-            </div>
+            <PropCard label='direction="vertical"'>
+              <Stack direction="vertical" spacing="default">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '16px',
+                      background: getColorByIndex(i - 1).main,
+                      color: 'white',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      textAlign: 'center',
+                    }}
+                  >
+                    Item {i}
+                  </div>
+                ))}
+              </Stack>
+            </PropCard>
+            <PropCard label='direction="horizontal"'>
+              <Stack direction="horizontal" spacing="default">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '16px',
+                      background: getColorByIndex(i - 1).main,
+                      color: 'white',
+                      borderRadius: '8px',
+                      fontWeight: 600,
+                      textAlign: 'center',
+                      minWidth: '80px',
+                    }}
+                  >
+                    Item {i}
+                  </div>
+                ))}
+              </Stack>
+            </PropCard>
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(selectedDirection)}
-            language="jsx"
-            title="JSX"
-            subtitle={`direction="${selectedDirection}"`}
-          />
+          <CodeBlock code={generateCode('vertical')} language="jsx" title="JSX" subtitle='direction="vertical"' />
         </div>
       </StoryContainer>
     );
@@ -275,10 +260,8 @@ export const PropDirection: Story = {
  */
 export const PropSpacing: Story = {
   render: () => {
-    const [hoveredSpacing, setHoveredSpacing] = React.useState<string>('default');
-
     const spacingValues = [
-      { value: 'none' as const, size: '4px', color: STORY_COLORS.neutral.borderMedium },
+      { value: 'none' as const, size: '4px', color: STORY_COLORS.themed.border.default },
       { value: 'tight' as const, size: '4px', color: STORY_COLORS.primary.cyan.main },
       { value: 'compact' as const, size: '8px', color: STORY_COLORS.primary.green.main },
       { value: 'default' as const, size: '16px', color: STORY_COLORS.primary.blue.main },
@@ -300,38 +283,31 @@ export const PropSpacing: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
             {spacingValues.map(({ value, size, color }) => (
-              <div key={value} onMouseEnter={() => setHoveredSpacing(value)}>
-                <PropCard label={`spacing="${value}" (${size})`} highlight={hoveredSpacing === value}>
-                  <Stack spacing={value}>
-                    {[1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        style={{
-                          padding: '12px',
-                          background: color,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontSize: '13px',
-                          fontWeight: 600,
-                          textAlign: 'center',
-                        }}
-                      >
-                        Item {i}
-                      </div>
-                    ))}
-                  </Stack>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`spacing="${value}" (${size})`}>
+                <Stack spacing={value}>
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: '12px',
+                        background: color,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                      }}
+                    >
+                      Item {i}
+                    </div>
+                  ))}
+                </Stack>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredSpacing)}
-            language="jsx"
-            title="JSX"
-            subtitle={`spacing="${hoveredSpacing}"`}
-          />
+          <CodeBlock code={generateCode('default')} language="jsx" title="JSX" subtitle='spacing="default"' />
         </div>
       </StoryContainer>
     );
@@ -349,8 +325,6 @@ export const PropSpacing: Story = {
  */
 export const PropAlign: Story = {
   render: () => {
-    const [hoveredAlign, setHoveredAlign] = React.useState<string>('stretch');
-
     const alignValues = ['start', 'center', 'end', 'stretch', 'baseline'] as const;
 
     const generateCode = (align: string): string => {
@@ -367,66 +341,59 @@ export const PropAlign: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             {alignValues.map((value) => (
-              <div key={value} onMouseEnter={() => setHoveredAlign(value)}>
-                <PropCard label={`align="${value}"`} highlight={hoveredAlign === value}>
-                  <div style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px' }}>
-                    <Stack direction="horizontal" align={value} spacing="default">
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.blue.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '40px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        40px
-                      </div>
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.violet.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '60px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        60px
-                      </div>
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.pink.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '50px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        50px
-                      </div>
-                    </Stack>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`align="${value}"`}>
+                <div style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px' }}>
+                  <Stack direction="horizontal" align={value} spacing="default">
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.blue.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      40px
+                    </div>
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.violet.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '60px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      60px
+                    </div>
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.pink.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      50px
+                    </div>
+                  </Stack>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredAlign)}
-            language="jsx"
-            title="JSX"
-            subtitle={`align="${hoveredAlign}"`}
-          />
+          <CodeBlock code={generateCode('stretch')} language="jsx" title="JSX" subtitle='align="stretch"' />
         </div>
       </StoryContainer>
     );
@@ -444,8 +411,6 @@ export const PropAlign: Story = {
  */
 export const PropJustify: Story = {
   render: () => {
-    const [hoveredJustify, setHoveredJustify] = React.useState<string>('start');
-
     const justifyValues = ['start', 'center', 'end', 'space-between', 'space-around', 'space-evenly'] as const;
 
     const generateCode = (justify: string): string => {
@@ -462,46 +427,39 @@ export const PropJustify: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
             {justifyValues.map((value, idx) => (
-              <div key={value} onMouseEnter={() => setHoveredJustify(value)}>
-                <PropCard label={`justify="${value}"`} highlight={hoveredJustify === value}>
-                  <div style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px' }}>
-                    <Stack
-                      direction="horizontal"
-                      justify={value}
-                      spacing={value.startsWith('space') ? 'none' : 'default'}
-                    >
-                      {[1, 2, 3].map((i) => {
-                        const color = getColorByIndex(idx);
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              padding: '12px 16px',
-                              background: color.main,
-                              color: 'white',
-                              borderRadius: '6px',
-                              fontWeight: 600,
-                              fontSize: '13px',
-                            }}
-                          >
-                            {i}
-                          </div>
-                        );
-                      })}
-                    </Stack>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`justify="${value}"`}>
+                <div style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px' }}>
+                  <Stack
+                    direction="horizontal"
+                    justify={value}
+                    spacing={value.startsWith('space') ? 'none' : 'default'}
+                  >
+                    {[1, 2, 3].map((i) => {
+                      const color = getColorByIndex(idx);
+                      return (
+                        <div
+                          key={i}
+                          style={{
+                            padding: '12px 16px',
+                            background: color.main,
+                            color: 'white',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                            fontSize: '13px',
+                          }}
+                        >
+                          {i}
+                        </div>
+                      );
+                    })}
+                  </Stack>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredJustify)}
-            language="jsx"
-            title="JSX"
-            subtitle={`justify="${hoveredJustify}"`}
-          />
+          <CodeBlock code={generateCode('start')} language="jsx" title="JSX" subtitle='justify="start"' />
         </div>
       </StoryContainer>
     );
@@ -519,8 +477,6 @@ export const PropJustify: Story = {
  */
 export const PropWrap: Story = {
   render: () => {
-    const [hoveredWrap, setHoveredWrap] = React.useState<string>('nowrap');
-
     const generateCode = (wrap: boolean): string => {
       return `<Stack direction="horizontal" wrap={${wrap}} spacing="default">
   {items.map(item => <Card key={item.id} />)}
@@ -532,61 +488,56 @@ export const PropWrap: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Examples */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div onMouseEnter={() => setHoveredWrap('nowrap')}>
-              <PropCard label="wrap={false} (default)" highlight={hoveredWrap === 'nowrap'}>
-                <div
-                  style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px', width: '100%' }}
-                >
-                  <Stack direction="horizontal" wrap={false} spacing="default">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                      <div
-                        key={i}
-                        style={{
-                          padding: '12px 16px',
-                          background: getColorByIndex(i - 1).main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        Item {i}
-                      </div>
-                    ))}
-                  </Stack>
-                </div>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredWrap('wrap')}>
-              <PropCard label="wrap={true}" highlight={hoveredWrap === 'wrap'}>
-                <div
-                  style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px', width: '100%' }}
-                >
-                  <Stack direction="horizontal" wrap spacing="default">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                      <div
-                        key={i}
-                        style={{
-                          padding: '12px 16px',
-                          background: getColorByIndex(i - 1).main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        Item {i}
-                      </div>
-                    ))}
-                  </Stack>
-                </div>
-              </PropCard>
-            </div>
+            <PropCard label="wrap={false} (default)">
+              <div
+                style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px', width: '100%' }}
+              >
+                <Stack direction="horizontal" wrap={false} spacing="default">
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: '12px 16px',
+                        background: getColorByIndex(i - 1).main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Item {i}
+                    </div>
+                  ))}
+                </Stack>
+              </div>
+            </PropCard>
+            <PropCard label="wrap={true}">
+              <div
+                style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px', width: '100%' }}
+              >
+                <Stack direction="horizontal" wrap spacing="default">
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: '12px 16px',
+                        background: getColorByIndex(i - 1).main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Item {i}
+                    </div>
+                  ))}
+                </Stack>
+              </div>
+            </PropCard>
           </div>
 
           {/* Code block */}
-          <CodeBlock code={generateCode(hoveredWrap === 'wrap')} language="jsx" title="JSX" subtitle={hoveredWrap} />
+          <CodeBlock code={generateCode(false)} language="jsx" title="JSX" subtitle="nowrap" />
         </div>
       </StoryContainer>
     );
@@ -630,7 +581,7 @@ export const PropGrow: Story = {
               <div
                 style={{
                   height: '200px',
-                  border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`,
+                  border: `2px dashed ${STORY_COLORS.themed.border.default}`,
                   padding: '8px',
                   display: 'flex',
                 }}
@@ -650,7 +601,7 @@ export const PropGrow: Story = {
                   <div
                     style={{
                       padding: '8px 12px',
-                      background: STORY_COLORS.neutral.backgroundMedium,
+                      background: STORY_COLORS.themed.background.surface,
                       borderRadius: '6px',
                     }}
                   >
@@ -665,7 +616,7 @@ export const PropGrow: Story = {
               <div
                 style={{
                   height: '200px',
-                  border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`,
+                  border: `2px dashed ${STORY_COLORS.themed.border.default}`,
                   padding: '8px',
                   display: 'flex',
                 }}
@@ -685,7 +636,7 @@ export const PropGrow: Story = {
                   <div
                     style={{
                       padding: '8px 12px',
-                      background: STORY_COLORS.neutral.backgroundMedium,
+                      background: STORY_COLORS.themed.background.surface,
                       borderRadius: '6px',
                       flex: 1,
                     }}
@@ -726,8 +677,6 @@ export const PropGrow: Story = {
  */
 export const PropAs: Story = {
   render: () => {
-    const [selectedElement, setSelectedElement] = React.useState<string>('div');
-
     const generateCode = (element: string): string => {
       return `<Stack as="${element}" spacing="default">
   <div>Item 1</div>
@@ -742,21 +691,15 @@ export const PropAs: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
             {(['div', 'section', 'article', 'header', 'footer', 'main', 'nav', 'aside'] as const).map((element) => (
-              <PropCard
-                key={element}
-                label={`<${element}>`}
-                highlight={selectedElement === element}
-                onInteraction={() => setSelectedElement(element)}
-                interactionType="click"
-              >
+              <PropCard key={element} label={`<${element}>`}>
                 <Stack
                   as={element}
                   spacing="compact"
                   style={{
                     padding: '16px',
-                    background: STORY_COLORS.neutral.backgroundLight,
+                    background: STORY_COLORS.themed.background.surface,
                     borderRadius: '8px',
-                    border: `2px solid ${STORY_COLORS.neutral.borderMedium}`,
+                    border: `2px solid ${STORY_COLORS.themed.border.default}`,
                   }}
                 >
                   <div
@@ -777,12 +720,7 @@ export const PropAs: Story = {
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(selectedElement)}
-            language="jsx"
-            title="JSX"
-            subtitle={`as="${selectedElement}"`}
-          />
+          <CodeBlock code={generateCode('div')} language="jsx" title="JSX" subtitle='as="div"' />
         </div>
       </StoryContainer>
     );
@@ -812,7 +750,11 @@ export const CombinedVariants: Story = {
                 <input
                   type="text"
                   placeholder="Enter your name"
-                  style={{ padding: '8px', borderRadius: '6px', border: `1px solid ${NEUTRAL.borderMedium}` }}
+                  style={{
+                    padding: '8px',
+                    borderRadius: '6px',
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
+                  }}
                 />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -820,7 +762,11 @@ export const CombinedVariants: Story = {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  style={{ padding: '8px', borderRadius: '6px', border: `1px solid ${NEUTRAL.borderMedium}` }}
+                  style={{
+                    padding: '8px',
+                    borderRadius: '6px',
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
+                  }}
                 />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -830,7 +776,7 @@ export const CombinedVariants: Story = {
                   style={{
                     padding: '8px',
                     borderRadius: '6px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                     minHeight: '80px',
                   }}
                 />
@@ -846,7 +792,7 @@ export const CombinedVariants: Story = {
               spacing="comfortable"
               align="center"
               justify="space-between"
-              style={{ padding: '16px', background: STORY_COLORS.neutral.backgroundLight, borderRadius: '8px' }}
+              style={{ padding: '16px', background: STORY_COLORS.themed.background.surface, borderRadius: '8px' }}
             >
               <div style={{ fontSize: '18px', fontWeight: 700 }}>Logo</div>
               <Stack direction="horizontal" spacing="default" align="center">
@@ -923,9 +869,9 @@ export const CombinedVariants: Story = {
                 style={{
                   padding: '10px 20px',
                   borderRadius: '6px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   background: STORY_COLORS.themed.background.surface,
-                  color: NEUTRAL.textSlate,
+                  color: STORY_COLORS.themed.text.secondary,
                   fontWeight: 600,
                   cursor: 'pointer',
                 }}

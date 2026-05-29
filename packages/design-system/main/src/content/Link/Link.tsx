@@ -13,7 +13,7 @@ import styles from './Link.module.css';
  *
  * Features:
  * - Three visual variants (default, subtle, plain)
- * - Semantic color values matching the Text component palette
+ * - Four functional colors (primary, secondary, tertiary, inverse)
  * - Animated border-bottom on hover (default and subtle variants)
  * - Accessible: native `<a>` semantics with visible focus ring
  * - Auto `rel="noopener noreferrer"` when `target="_blank"`
@@ -53,17 +53,19 @@ import styles from './Link.module.css';
 
 /**
  * Link variant values — controls visual style
- * - `default`: colored text + animated border-bottom on hover
- * - `subtle`:  secondary text color, same hover border behavior
- * - `plain`:   no underline, color only
+ * - `underline`: colored text + animated border-bottom on hover
+ * - `plain`:     no underline, color only
  */
-type VariantValue = 'default' | 'subtle' | 'plain';
+type VariantValue = 'underline' | 'plain';
 
 /**
- * Link color values — semantic text colors matching the Text component
- * Maps to: --lufa-semantic-ui-text-{color}
+ * Link color values — functional link colors
+ * - `primary`:   brand link color (--lufa-semantic-interactive-link-default)
+ * - `secondary`: subdued link for de-emphasized content
+ * - `tertiary`:  very subtle, for footer-style links
+ * - `inverse`:   white link for use on dark/primary backgrounds
  */
-type ColorValue = 'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info' | 'inverse';
+type ColorValue = 'primary' | 'secondary' | 'tertiary' | 'inverse';
 
 /**
  * Link component props
@@ -95,13 +97,16 @@ export type LinkProps<T extends ElementType = 'a'> = {
 
   /**
    * Visual style variant
-   * @default 'default'
+   * @default 'underline'
    */
   variant?: VariantValue;
 
   /**
-   * Text color (semantic colors matching Text component)
-   * Defaults to 'primary' for default/plain variants and 'secondary' for subtle variant
+   * Text color
+   * - `primary` (default): brand link color, visually distinct from surrounding text
+   * - `secondary`: subdued
+   * - `tertiary`: very subtle
+   * - `inverse`: white, for use on dark/primary-colored backgrounds
    */
   color?: ColorValue;
 
@@ -135,7 +140,7 @@ const LinkImpl = <T extends ElementType = 'a'>(
     href,
     target = '_self',
     rel,
-    variant = 'default',
+    variant = 'underline',
     color,
     className,
     children,
@@ -146,8 +151,8 @@ const LinkImpl = <T extends ElementType = 'a'>(
   // Determine the element to render
   const Component = as ?? 'a';
 
-  // Resolve color — subtle variant defaults to 'secondary', all others default to 'primary'
-  const resolvedColor = color ?? (variant === 'subtle' ? 'secondary' : 'primary');
+  // Resolve color — defaults to 'primary' when not specified
+  const resolvedColor = color ?? 'primary';
 
   // Auto-apply rel="noopener noreferrer" when target="_blank" for security
   const resolvedRel = rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined);

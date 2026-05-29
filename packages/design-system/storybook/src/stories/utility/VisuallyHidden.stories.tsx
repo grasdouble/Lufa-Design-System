@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { VisuallyHidden } from '@grasdouble/lufa_design-system';
@@ -35,8 +34,6 @@ const generateCode = (variant: 'button' | 'heading') => {
 export const PropAccessibility: Story = {
   name: 'Prop: accessibility',
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<'button' | 'heading'>('button');
-
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -47,40 +44,35 @@ export const PropAccessibility: Story = {
               gap: '24px',
             }}
           >
-            <div onMouseEnter={() => setHoveredVariant('button')}>
-              <PropCard label="Icon-only button" highlight={hoveredVariant === 'button'}>
-                <button
-                  aria-label="Notifications"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '8px 12px',
-                    borderRadius: '6px',
-                    border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
-                    backgroundColor: STORY_COLORS.neutral.backgroundLight,
-                    cursor: 'pointer',
-                  }}
-                >
-                  <span aria-hidden="true" style={{ fontSize: '20px' }}>
-                    🔔
-                  </span>
-                  <VisuallyHidden>View notifications</VisuallyHidden>
-                </button>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('heading')}>
-              <PropCard label="Supplemental text" highlight={hoveredVariant === 'heading'}>
-                <h2 style={{ margin: 0, color: STORY_COLORS.neutral.textDark }}>
-                  Visible Title
-                  <VisuallyHidden> (Screen reader only)</VisuallyHidden>
-                </h2>
-              </PropCard>
-            </div>
+            <PropCard label="Icon-only button">
+              <button
+                aria-label="Notifications"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
+                  backgroundColor: STORY_COLORS.themed.background.surface,
+                  cursor: 'pointer',
+                }}
+              >
+                <span aria-hidden="true" style={{ fontSize: '20px' }}>
+                  🔔
+                </span>
+                <VisuallyHidden>View notifications</VisuallyHidden>
+              </button>
+            </PropCard>
+            <PropCard label="Supplemental text">
+              <h2 style={{ margin: 0, color: STORY_COLORS.themed.text.primary }}>
+                Visible Title
+                <VisuallyHidden> (Screen reader only)</VisuallyHidden>
+              </h2>
+            </PropCard>
           </div>
 
-          <CodeBlock code={generateCode(hoveredVariant)} language="jsx" title="JSX" subtitle={hoveredVariant} />
+          <CodeBlock code={generateCode('button')} language="jsx" title="JSX" subtitle="button" />
         </div>
       </StoryContainer>
     );

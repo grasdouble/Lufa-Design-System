@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Text } from '@grasdouble/lufa_design-system';
@@ -6,7 +5,6 @@ import { Text } from '@grasdouble/lufa_design-system';
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
 
-const NEUTRAL = STORY_COLORS.neutral;
 const PRIMARY = STORY_COLORS.primary;
 
 /**
@@ -134,7 +132,7 @@ export const Playground: Story = {
         <div
           style={{
             padding: '32px',
-            background: STORY_COLORS.neutral.backgroundLight,
+            background: STORY_COLORS.themed.background.surface,
             borderRadius: '8px',
           }}
         >
@@ -156,8 +154,6 @@ export const Playground: Story = {
  */
 export const PropVariant: Story = {
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<string>('body');
-
     const variantValues = [
       { value: 'h1' as const, label: 'Heading 1', example: 'Extra Large Heading' },
       { value: 'h2' as const, label: 'Heading 2', example: 'Large Heading' },
@@ -184,24 +180,19 @@ export const PropVariant: Story = {
           {/* Examples */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {variantValues.map(({ value, label, example }) => (
-              <div key={value} onMouseEnter={() => setHoveredVariant(value)}>
-                <PropCard label={`variant="${value}"`} highlight={hoveredVariant === value}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ fontSize: '12px', fontWeight: 600, color: NEUTRAL.textSlate }}>{label}</div>
-                    <Text variant={value}>{example}</Text>
+              <PropCard key={value} label={`variant="${value}"`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 600, color: STORY_COLORS.themed.text.secondary }}>
+                    {label}
                   </div>
-                </PropCard>
-              </div>
+                  <Text variant={value}>{example}</Text>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredVariant)}
-            language="jsx"
-            title="JSX"
-            subtitle={`variant="${hoveredVariant}"`}
-          />
+          <CodeBlock code={generateCode('body')} language="jsx" title="JSX" subtitle='variant="body"' />
         </div>
       </StoryContainer>
     );
@@ -219,8 +210,6 @@ export const PropVariant: Story = {
  */
 export const PropColor: Story = {
   render: () => {
-    const [hoveredColor, setHoveredColor] = React.useState<string>('primary');
-
     {
       /* 
       💡 TOKEN EDUCATION: Semantic Text Colors
@@ -274,28 +263,21 @@ export const PropColor: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
             {colorValues.map(({ value, label, description }) => (
-              <div key={value} onMouseEnter={() => setHoveredColor(value)}>
-                <PropCard label={`color="${value}"`} highlight={hoveredColor === value}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <Text variant="body" weight="semibold" color={value}>
-                      {label}
-                    </Text>
-                    <Text variant="body-small" color={value}>
-                      {description}
-                    </Text>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`color="${value}"`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <Text variant="body" weight="semibold" color={value}>
+                    {label}
+                  </Text>
+                  <Text variant="body-small" color={value}>
+                    {description}
+                  </Text>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredColor)}
-            language="jsx"
-            title="JSX"
-            subtitle={`color="${hoveredColor}"`}
-          />
+          <CodeBlock code={generateCode('primary')} language="jsx" title="JSX" subtitle='color="primary"' />
         </div>
       </StoryContainer>
     );
@@ -313,8 +295,6 @@ export const PropColor: Story = {
  */
 export const PropWeight: Story = {
   render: () => {
-    const [hoveredWeight, setHoveredWeight] = React.useState<string>('normal');
-
     const weightValues = [
       { value: 'normal' as const, label: 'Normal (400)', example: 'Regular weight text' },
       { value: 'medium' as const, label: 'Medium (500)', example: 'Medium weight text' },
@@ -334,26 +314,21 @@ export const PropWeight: Story = {
           {/* Examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
             {weightValues.map(({ value, label, example }) => (
-              <div key={value} onMouseEnter={() => setHoveredWeight(value)}>
-                <PropCard label={`weight="${value}"`} highlight={hoveredWeight === value}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ fontSize: '12px', fontWeight: 600, color: NEUTRAL.textSlate }}>{label}</div>
-                    <Text variant="body" weight={value}>
-                      {example}
-                    </Text>
+              <PropCard key={value} label={`weight="${value}"`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 600, color: STORY_COLORS.themed.text.secondary }}>
+                    {label}
                   </div>
-                </PropCard>
-              </div>
+                  <Text variant="body" weight={value}>
+                    {example}
+                  </Text>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredWeight)}
-            language="jsx"
-            title="JSX"
-            subtitle={`weight="${hoveredWeight}"`}
-          />
+          <CodeBlock code={generateCode('normal')} language="jsx" title="JSX" subtitle='weight="normal"' />
         </div>
       </StoryContainer>
     );
@@ -371,8 +346,6 @@ export const PropWeight: Story = {
  */
 export const PropAlign: Story = {
   render: () => {
-    const [hoveredAlign, setHoveredAlign] = React.useState<string>('left');
-
     const alignValues = ['left', 'center', 'right', 'justify'] as const;
 
     const generateCode = (align: string): string => {
@@ -387,32 +360,25 @@ export const PropAlign: Story = {
           {/* Examples */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {alignValues.map((value) => (
-              <div key={value} onMouseEnter={() => setHoveredAlign(value)}>
-                <PropCard label={`align="${value}"`} highlight={hoveredAlign === value}>
-                  <div
-                    style={{
-                      border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`,
-                      padding: '16px',
-                      borderRadius: '8px',
-                    }}
-                  >
-                    <Text variant="body" align={value}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.
-                    </Text>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`align="${value}"`}>
+                <div
+                  style={{
+                    border: `2px dashed ${STORY_COLORS.themed.border.default}`,
+                    padding: '16px',
+                    borderRadius: '8px',
+                  }}
+                >
+                  <Text variant="body" align={value}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                  </Text>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredAlign)}
-            language="jsx"
-            title="JSX"
-            subtitle={`align="${hoveredAlign}"`}
-          />
+          <CodeBlock code={generateCode('left')} language="jsx" title="JSX" subtitle='align="left"' />
         </div>
       </StoryContainer>
     );
@@ -430,8 +396,6 @@ export const PropAlign: Story = {
  */
 export const PropTransform: Story = {
   render: () => {
-    const [hoveredTransform, setHoveredTransform] = React.useState<string>('none');
-
     const transformValues = [
       { value: 'none' as const, label: 'None', example: 'The Quick Brown Fox' },
       { value: 'uppercase' as const, label: 'Uppercase', example: 'The Quick Brown Fox' },
@@ -451,26 +415,21 @@ export const PropTransform: Story = {
           {/* Examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
             {transformValues.map(({ value, label, example }) => (
-              <div key={value} onMouseEnter={() => setHoveredTransform(value)}>
-                <PropCard label={`transform="${value}"`} highlight={hoveredTransform === value}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <div style={{ fontSize: '12px', fontWeight: 600, color: NEUTRAL.textSlate }}>{label}</div>
-                    <Text variant="body" transform={value}>
-                      {example}
-                    </Text>
+              <PropCard key={value} label={`transform="${value}"`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 600, color: STORY_COLORS.themed.text.secondary }}>
+                    {label}
                   </div>
-                </PropCard>
-              </div>
+                  <Text variant="body" transform={value}>
+                    {example}
+                  </Text>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredTransform)}
-            language="jsx"
-            title="JSX"
-            subtitle={`transform="${hoveredTransform}"`}
-          />
+          <CodeBlock code={generateCode('none')} language="jsx" title="JSX" subtitle='transform="none"' />
         </div>
       </StoryContainer>
     );
@@ -488,8 +447,6 @@ export const PropTransform: Story = {
  */
 export const PropAs: Story = {
   render: () => {
-    const [selectedElement, setSelectedElement] = React.useState<string>('p');
-
     const generateCode = (element: string): string => {
       return `<Text as="${element}" variant="body">
   Text content
@@ -502,21 +459,15 @@ export const PropAs: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
             {(['p', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'label'] as const).map((element) => (
-              <PropCard
-                key={element}
-                label={`<${element}>`}
-                highlight={selectedElement === element}
-                onInteraction={() => setSelectedElement(element)}
-                interactionType="click"
-              >
+              <PropCard key={element} label={`<${element}>`}>
                 <Text
                   as={element}
                   variant="body"
                   style={{
                     padding: '16px',
-                    background: STORY_COLORS.neutral.backgroundLight,
+                    background: STORY_COLORS.themed.background.surface,
                     borderRadius: '8px',
-                    border: `2px solid ${STORY_COLORS.neutral.borderMedium}`,
+                    border: `2px solid ${STORY_COLORS.themed.border.default}`,
                     display: 'block',
                     textAlign: 'center',
                   }}
@@ -528,12 +479,7 @@ export const PropAs: Story = {
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(selectedElement)}
-            language="jsx"
-            title="JSX"
-            subtitle={`as="${selectedElement}"`}
-          />
+          <CodeBlock code={generateCode('p')} language="jsx" title="JSX" subtitle='as="p"' />
         </div>
       </StoryContainer>
     );
@@ -560,7 +506,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
@@ -579,9 +525,9 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '12px',
-                border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
+                border: `1px solid ${STORY_COLORS.themed.border.default}`,
               }}
             >
               <Text variant="label" transform="uppercase" weight="semibold" color="secondary">
@@ -668,7 +614,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
@@ -686,7 +632,7 @@ export const CombinedVariants: Story = {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                     fontSize: '14px',
                   }}
                 />
@@ -705,7 +651,7 @@ export const CombinedVariants: Story = {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '6px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                     fontSize: '14px',
                   }}
                 />
@@ -719,7 +665,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
@@ -812,7 +758,7 @@ export const RealWorldPatterns: Story = {
                     background: STORY_COLORS.themed.background.surface,
                     borderRadius: '12px',
                     border: '2px solid',
-                    borderColor: idx === 1 ? STORY_COLORS.primary.blue.main : NEUTRAL.borderMedium,
+                    borderColor: idx === 1 ? STORY_COLORS.primary.blue.main : STORY_COLORS.themed.border.default,
                   }}
                 >
                   <Text variant="label" transform="uppercase" weight="semibold" color="secondary">
@@ -856,7 +802,7 @@ export const RealWorldPatterns: Story = {
                     padding: '20px',
                     background: STORY_COLORS.themed.background.surface,
                     borderRadius: '8px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   }}
                 >
                   <Text variant="label" color="secondary">

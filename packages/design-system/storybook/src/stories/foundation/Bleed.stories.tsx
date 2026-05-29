@@ -1,13 +1,10 @@
 import type { ComponentProps } from 'react';
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Bleed, Container, Stack } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
-
-const NEUTRAL = STORY_COLORS.neutral;
 
 /**
  * Bleed - Layout Primitive for Breaking Container Constraints
@@ -100,12 +97,12 @@ export const Playground: Story = {
       <Container
         size="md"
         style={{
-          backgroundColor: NEUTRAL.backgroundLight,
+          backgroundColor: STORY_COLORS.themed.background.surface,
           padding: '24px',
           border: `2px dashed ${STORY_COLORS.primary.blue.main}`,
         }}
       >
-        <div style={{ marginBottom: '16px', color: NEUTRAL.textSecondary as string }}>
+        <div style={{ marginBottom: '16px', color: STORY_COLORS.themed.text.secondary }}>
           Container boundary (constrained)
         </div>
         <Bleed {...args}>
@@ -131,92 +128,79 @@ export const Playground: Story = {
 export const PropInline: Story = {
   name: 'Prop: inline',
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<'numeric' | 'full'>('numeric');
     const numericValues = [8, 16, 32, 48] as const;
 
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
           {/* Numeric values */}
-          <div onMouseEnter={() => setHoveredVariant('numeric')}>
-            <PropCard label="Numeric Values (Spacing Scale)" highlight={hoveredVariant === 'numeric'}>
-              <Stack spacing="comfortable">
-                {numericValues.map((value) => (
-                  <Container
-                    key={value}
-                    size="md"
-                    style={{
-                      backgroundColor: NEUTRAL.backgroundLight,
-                      padding: '16px',
-                      border: '1px dashed #ccc',
-                    }}
-                  >
-                    <p style={{ fontSize: '12px', marginBottom: '8px', color: NEUTRAL.textSecondary as string }}>
-                      inline={String(value)}
-                    </p>
-                    <Bleed inline={value}>
-                      <div
-                        style={{
-                          backgroundColor: STORY_COLORS.primary.blue.light,
-                          padding: '12px',
-                          textAlign: 'center',
-                          fontSize: '14px',
-                        }}
-                      >
-                        Bleeds {value}px on each side
-                      </div>
-                    </Bleed>
-                  </Container>
-                ))}
-              </Stack>
-            </PropCard>
-          </div>
+          <PropCard label="Numeric Values (Spacing Scale)">
+            <Stack spacing="comfortable">
+              {numericValues.map((value) => (
+                <Container
+                  key={value}
+                  size="md"
+                  style={{
+                    backgroundColor: STORY_COLORS.themed.background.surface,
+                    padding: '16px',
+                    border: '1px dashed #ccc',
+                  }}
+                >
+                  <p style={{ fontSize: '12px', marginBottom: '8px', color: STORY_COLORS.themed.text.secondary }}>
+                    inline={String(value)}
+                  </p>
+                  <Bleed inline={value}>
+                    <div
+                      style={{
+                        backgroundColor: STORY_COLORS.primary.blue.light,
+                        padding: '12px',
+                        textAlign: 'center',
+                        fontSize: '14px',
+                      }}
+                    >
+                      Bleeds {value}px on each side
+                    </div>
+                  </Bleed>
+                </Container>
+              ))}
+            </Stack>
+          </PropCard>
 
           {/* Full-width */}
-          <div onMouseEnter={() => setHoveredVariant('full')}>
-            <PropCard label='Full Width (inline="full")' highlight={hoveredVariant === 'full'}>
-              <Container
-                size="md"
-                style={{
-                  backgroundColor: NEUTRAL.backgroundLight,
-                  padding: '16px',
-                  border: '1px dashed #ccc',
-                }}
-              >
-                <p style={{ fontSize: '12px', marginBottom: '8px', color: NEUTRAL.textSecondary as string }}>
-                  inline="full"
-                </p>
-                <Bleed inline="full">
-                  <div
-                    style={{
-                      backgroundColor: STORY_COLORS.primary.green.main,
-                      padding: '24px',
-                      textAlign: 'center',
-                      color: 'white',
-                      fontSize: '16px',
-                    }}
-                  >
-                    Full viewport width (100vw technique)
-                  </div>
-                </Bleed>
-              </Container>
-            </PropCard>
-          </div>
+          <PropCard label='Full Width (inline="full")'>
+            <Container
+              size="md"
+              style={{
+                backgroundColor: STORY_COLORS.themed.background.surface,
+                padding: '16px',
+                border: '1px dashed #ccc',
+              }}
+            >
+              <p style={{ fontSize: '12px', marginBottom: '8px', color: STORY_COLORS.themed.text.secondary }}>
+                inline="full"
+              </p>
+              <Bleed inline="full">
+                <div
+                  style={{
+                    backgroundColor: STORY_COLORS.primary.green.main,
+                    padding: '24px',
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: '16px',
+                  }}
+                >
+                  Full viewport width (100vw technique)
+                </div>
+              </Bleed>
+            </Container>
+          </PropCard>
 
           <CodeBlock
-            code={
-              hoveredVariant === 'numeric'
-                ? `<Container size="md">
+            code={`<Container size="md">
   <Bleed inline={16}>
     <Box>Bleeds 16px on each side</Box>
   </Bleed>
-</Container>`
-                : `<Container size="md">
-  <Bleed inline="full">
-    <Box>Full viewport width</Box>
-  </Bleed>
-</Container>`
-            }
+</Container>`}
             language="jsx"
             title="JSX"
           />
@@ -237,7 +221,7 @@ export const PropBlock: Story = {
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <PropCard label="Block Bleed (Vertical)">
-            <div style={{ backgroundColor: NEUTRAL.backgroundLight, padding: '24px' }}>
+            <div style={{ backgroundColor: STORY_COLORS.themed.background.surface, padding: '24px' }}>
               <div style={{ backgroundColor: '#ddd', padding: '16px', marginBottom: '16px' }}>Content above</div>
 
               <Bleed inline={16} block={8}>
@@ -391,7 +375,7 @@ export const UseCaseMarketing: Story = {
               {/* Hero Section */}
               <div style={{ padding: '32px', backgroundColor: 'white' }}>
                 <h1 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '16px' }}>Product Title</h1>
-                <p style={{ fontSize: '18px', color: NEUTRAL.textSecondary as string }}>
+                <p style={{ fontSize: '18px', color: STORY_COLORS.themed.text.secondary }}>
                   Transform your workflow with our amazing product
                 </p>
               </div>
@@ -434,7 +418,7 @@ export const UseCaseMarketing: Story = {
 
               {/* Another full-width section */}
               <Bleed inline="full">
-                <div style={{ backgroundColor: NEUTRAL.backgroundLight, padding: '48px' }}>
+                <div style={{ backgroundColor: STORY_COLORS.themed.background.surface, padding: '48px' }}>
                   <Container size="lg">
                     <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', textAlign: 'center' }}>
                       What Our Customers Say

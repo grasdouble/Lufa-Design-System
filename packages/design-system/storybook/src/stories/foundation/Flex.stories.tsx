@@ -68,7 +68,7 @@ const Item = ({ children, color }: { children: React.ReactNode; color: string })
       padding: '1rem',
       borderRadius: '4px',
       textAlign: 'center',
-      border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
+      border: `1px solid ${STORY_COLORS.themed.border.default}`,
     }}
   >
     {children}
@@ -78,7 +78,6 @@ const Item = ({ children, color }: { children: React.ReactNode; color: string })
 export const PropLayout: Story = {
   name: 'Prop: layout',
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<'row' | 'column' | 'center'>('row');
     const colors = [getColorByIndex(0), getColorByIndex(1), getColorByIndex(2)];
 
     return (
@@ -91,46 +90,38 @@ export const PropLayout: Story = {
               gap: '24px',
             }}
           >
-            <div onMouseEnter={() => setHoveredVariant('row')}>
-              <PropCard label="Row (default)" highlight={hoveredVariant === 'row'}>
-                <Flex gap="default" style={{ border: `2px dashed ${colors[0].main}`, padding: '1rem' }}>
-                  <Item color={colors[0].main}>Item 1</Item>
-                  <Item color={colors[0].main}>Item 2</Item>
-                  <Item color={colors[0].main}>Item 3</Item>
-                </Flex>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('column')}>
-              <PropCard label="Column" highlight={hoveredVariant === 'column'}>
-                <Flex
-                  direction="column"
-                  gap="compact"
-                  style={{ border: `2px dashed ${colors[1].main}`, padding: '1rem' }}
-                >
-                  <Item color={colors[1].main}>Item 1</Item>
-                  <Item color={colors[1].main}>Item 2</Item>
-                  <Item color={colors[1].main}>Item 3</Item>
-                </Flex>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('center')}>
-              <PropCard label="Center Align" highlight={hoveredVariant === 'center'}>
-                <Flex
-                  justify="center"
-                  align="center"
-                  gap="default"
-                  style={{ border: `2px dashed ${colors[2].main}`, padding: '1rem' }}
-                >
-                  <Item color={colors[2].main}>1</Item>
-                  <Item color={colors[2].main}>2</Item>
-                </Flex>
-              </PropCard>
-            </div>
+            <PropCard label="Row (default)">
+              <Flex gap="default" style={{ border: `2px dashed ${colors[0].main}`, padding: '1rem' }}>
+                <Item color={colors[0].main}>Item 1</Item>
+                <Item color={colors[0].main}>Item 2</Item>
+                <Item color={colors[0].main}>Item 3</Item>
+              </Flex>
+            </PropCard>
+            <PropCard label="Column">
+              <Flex
+                direction="column"
+                gap="compact"
+                style={{ border: `2px dashed ${colors[1].main}`, padding: '1rem' }}
+              >
+                <Item color={colors[1].main}>Item 1</Item>
+                <Item color={colors[1].main}>Item 2</Item>
+                <Item color={colors[1].main}>Item 3</Item>
+              </Flex>
+            </PropCard>
+            <PropCard label="Center Align">
+              <Flex
+                justify="center"
+                align="center"
+                gap="default"
+                style={{ border: `2px dashed ${colors[2].main}`, padding: '1rem' }}
+              >
+                <Item color={colors[2].main}>1</Item>
+                <Item color={colors[2].main}>2</Item>
+              </Flex>
+            </PropCard>
           </div>
 
-          <CodeBlock code={generateCode(hoveredVariant)} language="jsx" title="JSX" subtitle={hoveredVariant} />
+          <CodeBlock code={generateCode('row')} language="jsx" title="JSX" subtitle="row" />
         </div>
       </StoryContainer>
     );

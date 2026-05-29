@@ -26,8 +26,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const NEUTRAL = STORY_COLORS.neutral;
-
 // Simple color swatch component
 const ColorSwatch = ({ token, name, description }: { token: string; name: string; description?: string }) => (
   <div
@@ -45,15 +43,22 @@ const ColorSwatch = ({ token, name, description }: { token: string; name: string
         height: '80px',
         backgroundColor: `var(${token})`,
         borderRadius: '6px',
-        border: `1px solid ${NEUTRAL.borderMedium}`,
+        border: `1px solid ${STORY_COLORS.themed.border.default}`,
         boxShadow: STORY_COLORS.themed.shadow.sm,
       }}
     />
     <div style={{ fontSize: '11px', fontFamily: 'monospace' }}>
       <div style={{ fontWeight: 600, marginBottom: '2px' }}>{name}</div>
-      <div style={{ color: NEUTRAL.textSlate, fontSize: '10px' }}>{token}</div>
+      <div style={{ color: STORY_COLORS.themed.text.secondary, fontSize: '10px' }}>{token}</div>
       {description && (
-        <div style={{ color: NEUTRAL.textSlate, fontSize: '9px', marginTop: '4px', fontFamily: 'sans-serif' }}>
+        <div
+          style={{
+            color: STORY_COLORS.themed.text.secondary,
+            fontSize: '9px',
+            marginTop: '4px',
+            fontFamily: 'sans-serif',
+          }}
+        >
           {description}
         </div>
       )}
@@ -69,8 +74,8 @@ const ColorCategory = ({ title, children }: { title: string; children: React.Rea
         fontSize: '24px',
         fontWeight: 700,
         marginBottom: '24px',
-        color: NEUTRAL.textDark,
-        borderBottom: `2px solid ${NEUTRAL.borderMedium}`,
+        color: STORY_COLORS.themed.text.primary,
+        borderBottom: `2px solid ${STORY_COLORS.themed.border.default}`,
         paddingBottom: '12px',
       }}
     >

@@ -80,7 +80,7 @@ test.describe('Link Component', () => {
 
   test.describe('Variants', () => {
     test.describe('Variant Prop', () => {
-      const variantValues = ['default', 'subtle', 'plain'] as const;
+      const variantValues = ['underline', 'plain'] as const;
 
       variantValues.forEach((value) => {
         test(`should apply variant="${value}" class`, async ({ mount }) => {
@@ -93,23 +93,14 @@ test.describe('Link Component', () => {
         });
       });
 
-      test('should default to variant="default"', async ({ mount }) => {
+      test('should default to variant="underline"', async ({ mount }) => {
         const component = await mount(<Link href="https://example.com">Content</Link>);
-        await expect(component).toHaveClass(/variant-default/);
+        await expect(component).toHaveClass(/variant-underline/);
       });
     });
 
     test.describe('Color Prop', () => {
-      const colorValues = [
-        'primary',
-        'secondary',
-        'tertiary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'inverse',
-      ] as const;
+      const colorValues = ['primary', 'secondary', 'tertiary', 'inverse'] as const;
 
       colorValues.forEach((value) => {
         test(`should apply color="${value}" class`, async ({ mount }) => {
@@ -124,24 +115,6 @@ test.describe('Link Component', () => {
 
       test('should default to color="primary" for variant="default"', async ({ mount }) => {
         const component = await mount(<Link href="https://example.com">Content</Link>);
-        await expect(component).toHaveClass(/color-primary/);
-      });
-
-      test('should default to color="secondary" for variant="subtle"', async ({ mount }) => {
-        const component = await mount(
-          <Link href="https://example.com" variant="subtle">
-            Content
-          </Link>
-        );
-        await expect(component).toHaveClass(/color-secondary/);
-      });
-
-      test('should override subtle default color when color prop is provided', async ({ mount }) => {
-        const component = await mount(
-          <Link href="https://example.com" variant="subtle" color="primary">
-            Content
-          </Link>
-        );
         await expect(component).toHaveClass(/color-primary/);
       });
     });

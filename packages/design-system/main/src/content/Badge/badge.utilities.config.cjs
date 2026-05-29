@@ -28,6 +28,7 @@ module.exports = {
     'text-align': 'center',
     'white-space': 'nowrap',
     'border-radius': 'var(--lufa-component-badge-border-radius)', // Pill shape (full)
+    border: '1px solid transparent', // Reserve space for optional border (default variant uses it)
     'user-select': 'none',
   },
 
@@ -36,25 +37,33 @@ module.exports = {
     // VARIANT - Semantic Color Intention (5 values)
     // ==========================================
     variant: {
-      property: ['background-color', 'color'],
+      property: ['background-color', 'color', 'border-color'],
       values: {
         default: [
           'var(--lufa-component-badge-variant-default-background)',
           'var(--lufa-component-badge-variant-default-text)',
+          'var(--lufa-component-badge-variant-default-border)',
         ],
         success: [
           'var(--lufa-component-badge-variant-success-background)',
           'var(--lufa-component-badge-variant-success-text)',
+          'var(--lufa-component-badge-variant-success-border)',
         ],
         danger: [
           'var(--lufa-component-badge-variant-error-background)',
           'var(--lufa-component-badge-variant-error-text)',
+          'var(--lufa-component-badge-variant-error-border)',
         ],
         warning: [
           'var(--lufa-component-badge-variant-warning-background)',
           'var(--lufa-component-badge-variant-warning-text)',
+          'var(--lufa-component-badge-variant-warning-border)',
         ],
-        info: ['var(--lufa-component-badge-variant-info-background)', 'var(--lufa-component-badge-variant-info-text)'],
+        info: [
+          'var(--lufa-component-badge-variant-info-background)',
+          'var(--lufa-component-badge-variant-info-text)',
+          'var(--lufa-component-badge-variant-info-border)',
+        ],
       },
     },
 

@@ -31,13 +31,7 @@
 /* VARIANT */
 /* ========================================== */
 
-.variant-default {
-  border-bottom-width: var(--lufa-semantic-ui-border-width-thin);
-  border-bottom-style: solid;
-  border-bottom-color: transparent;
-}
-
-.variant-subtle {
+.variant-underline {
   border-bottom-width: var(--lufa-semantic-ui-border-width-thin);
   border-bottom-style: solid;
   border-bottom-color: transparent;
@@ -54,7 +48,7 @@
 /* ========================================== */
 
 .color-primary {
-  color: var(--lufa-semantic-ui-text-primary);
+  color: var(--lufa-semantic-interactive-link-default);
 }
 
 .color-secondary {
@@ -65,22 +59,6 @@
   color: var(--lufa-semantic-ui-text-tertiary);
 }
 
-.color-success {
-  color: var(--lufa-semantic-ui-text-success);
-}
-
-.color-error {
-  color: var(--lufa-semantic-ui-text-error);
-}
-
-.color-warning {
-  color: var(--lufa-semantic-ui-text-warning);
-}
-
-.color-info {
-  color: var(--lufa-semantic-ui-text-info);
-}
-
 .color-inverse {
   color: var(--lufa-semantic-ui-background-on-primary);
 }
@@ -89,13 +67,13 @@
 /* STANDALONE SELECTORS */
 /* ========================================== */
 
-/* Default variant - border appears on hover */
-.link.variant-default:hover {
-  border-bottom-color: currentColor;
+/* Primary color - darken on hover */
+.link.color-primary:hover {
+  color: var(--lufa-semantic-interactive-link-hover);
 }
 
-/* Subtle variant - border appears on hover */
-.link.variant-subtle:hover {
+/* Default variant - border appears on hover */
+.link.variant-underline:hover {
   border-bottom-color: currentColor;
 }
 

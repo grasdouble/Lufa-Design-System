@@ -40,7 +40,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const NEUTRAL = STORY_COLORS.neutral;
 const PRIMARY = STORY_COLORS.primary;
 
 /**
@@ -157,7 +156,7 @@ color: var(--lufa-semantic-ui-text-success);`}
                 <button
                   style={{
                     background: PRIMARY.blue.main,
-                    color: NEUTRAL.white,
+                    color: STORY_COLORS.neutral.white,
                     border: 'none',
                     padding: '10px 20px',
                     borderRadius: '8px',
@@ -172,7 +171,7 @@ color: var(--lufa-semantic-ui-text-success);`}
                 <button
                   style={{
                     background: PRIMARY.violet.main,
-                    color: NEUTRAL.white,
+                    color: STORY_COLORS.neutral.white,
                     border: 'none',
                     padding: '10px 20px',
                     borderRadius: '8px',
@@ -184,7 +183,7 @@ color: var(--lufa-semantic-ui-text-success);`}
                   Hard-Coded Secondary
                 </button>
 
-                <p style={{ color: NEUTRAL.textDark, margin: 0, fontSize: '14px' }}>
+                <p style={{ color: STORY_COLORS.themed.text.primary, margin: 0, fontSize: '14px' }}>
                   Hard-coded text (breaks in dark mode)
                 </p>
                 <p style={{ color: PRIMARY.green.main, margin: 0, fontSize: '14px' }}>

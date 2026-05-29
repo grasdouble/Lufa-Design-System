@@ -48,7 +48,7 @@ The Link component is a single inline element:
 ┌────────────────────────────────────────┐
 │  Link Component                        │
 │  ┌────────────────────────────────┐    │
-│  │  variant: default | subtle | plain  │
+│  │  variant: underline | plain           │
 │  │  color: primary | secondary | ...  │
 │  │                                │    │
 │  │  Link text content              │    │
@@ -90,31 +90,21 @@ export function Example() {
 | `href`      | `string`                                                                                                     | —                                                   | Destination URL                             |
 | `target`    | `'_self' \| '_blank'`                                                                                        | `'_self'`                                           | Where to open the URL                       |
 | `rel`       | `string`                                                                                                     | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                               |
-| `variant`   | `'default' \| 'subtle' \| 'plain'`                                                                           | `'default'`                                         | Visual style variant                        |
-| `color`     | `'primary' \| 'secondary' \| 'tertiary'` <br/> `\| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'`; `'secondary'` for `subtle` variant     | Text color (semantic tokens)                |
+| `variant`   | `'underline' \| 'plain'`                                                                                     | `'underline'`                                       | Visual style variant                        |
+| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'inverse'`                                                       | `'primary'`; `'secondary'` for `subtle` variant     | Link color                                  |
 | `as`        | `ElementType`                                                                                                | `'a'`                                               | Polymorphic root element (for router links) |
 | `children`  | `React.ReactNode`                                                                                            | —                                                   | Link text content                           |
 | `className` | `string`                                                                                                     | `undefined`                                         | Additional CSS classes                      |
 
 ## Variants
 
-### `default`
+### `underline`
 
 Colored text with an animated `border-bottom` that appears on hover. Ideal for links inside body text where the hover interaction helps users discover clickable content.
 
 ```tsx
-<Link href="https://example.com" variant="default">
-  Default link
-</Link>
-```
-
-### `subtle`
-
-Same animated hover behavior as `default`, but defaults to secondary text color. Use for de-emphasized links that shouldn't draw strong visual attention.
-
-```tsx
-<Link href="https://example.com" variant="subtle">
-  Subtle link
+<Link href="https://example.com" variant="underline">
+  Underline link
 </Link>
 ```
 
@@ -196,7 +186,6 @@ export function AccessibleLinks() {
 
 - Use Link for inline text anchors inside paragraphs
 - Use `target="_blank"` for external links — `rel` is auto-applied
-- Use `variant="subtle"` for de-emphasized navigation
 - Use `variant="plain"` for links inside buttons or badges
   :::
 

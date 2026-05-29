@@ -6,8 +6,6 @@ import { Link, Text } from '@grasdouble/lufa_design-system';
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
 
-const NEUTRAL = STORY_COLORS.neutral;
-
 /**
  * Link - Inline Anchor Component
  *
@@ -16,9 +14,9 @@ const NEUTRAL = STORY_COLORS.neutral;
  * from the surrounding context.
  *
  * ## Features
- * - ✅ Three visual variants: default, subtle, plain
- * - ✅ Semantic color values (8 colors, same as Text)
- * - ✅ Animated border-bottom on hover (default and subtle)
+ * - ✅ Two visual variants: underline, plain
+ * - ✅ Four functional colors (primary, secondary, tertiary, inverse)
+ * - ✅ Animated border-bottom on hover (underline variant)
  * - ✅ Auto rel="noopener noreferrer" for target="_blank"
  * - ✅ Accessible: native `<a>` semantics with visible focus ring
  * - ✅ Polymorphic `as` prop for router link integration
@@ -75,22 +73,22 @@ const meta = {
     // Variants
     variant: {
       control: 'select',
-      options: ['default', 'subtle', 'plain'],
+      options: ['underline', 'plain'],
       description: 'Visual style variant',
       table: {
         category: 'Variants',
-        type: { summary: "'default' | 'subtle' | 'plain'" },
-        defaultValue: { summary: 'default' },
+        type: { summary: "'underline' | 'plain'" },
+        defaultValue: { summary: 'underline' },
       },
     },
     color: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info', 'inverse'],
-      description: 'Text color (semantic tokens, same as Text component)',
+      options: ['primary', 'secondary', 'tertiary', 'inverse'],
+      description: 'Link color',
       table: {
         category: 'Variants',
         type: { summary: 'ColorValue' },
-        defaultValue: { summary: 'primary (secondary for subtle variant)' },
+        defaultValue: { summary: 'primary' },
       },
     },
 
@@ -122,7 +120,7 @@ export const Playground: Story = {
   args: {
     href: 'https://github.com/grasdouble/Lufa-Design-System',
     target: '_blank',
-    variant: 'default',
+    variant: 'underline',
     children: 'Lufa Design System',
   },
   render: (args) => {
@@ -131,7 +129,7 @@ export const Playground: Story = {
         <div
           style={{
             padding: '32px',
-            background: NEUTRAL.backgroundLight,
+            background: STORY_COLORS.themed.background.surface,
             borderRadius: '8px',
           }}
         >
@@ -153,59 +151,45 @@ export const Playground: Story = {
  *
  * Controls the visual style of the link.
  *
- * - **`default`**: colored text + animated border-bottom on hover
- * - **`subtle`**: secondary text color, same animated border behavior
+ * - **`underline`**: colored text + animated border-bottom on hover
  * - **`plain`**: no underline, color only — for use inside buttons or badges
  */
 export const PropVariant: Story = {
   render: () => {
     const variants = [
       {
-        value: 'default' as const,
-        label: 'Default',
+        value: 'underline' as const,
         description: 'Colored text with animated border-bottom on hover',
-        color: 'primary' as const,
-      },
-      {
-        value: 'subtle' as const,
-        label: 'Subtle',
-        description: 'Secondary text color, same hover border behavior',
-        color: 'secondary' as const,
       },
       {
         value: 'plain' as const,
-        label: 'Plain',
         description: 'No underline, color only — for use inside buttons or badges',
-        color: 'primary' as const,
       },
     ];
 
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '32px' }}>
-          {variants.map(({ value, label, description, color }) => (
+          {variants.map(({ value, description }) => (
             <div key={value} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <PropCard>
                 <Text as="p" variant="body">
                   Example with{' '}
-                  <Link href="https://example.com" variant={value} color={color}>
-                    {label} link
+                  <Link href="https://example.com" variant={value}>
+                    {value} link
                   </Link>{' '}
                   inside a paragraph.
                 </Text>
               </PropCard>
-              <div style={{ fontSize: '12px', color: NEUTRAL.textSlate }}>
+              <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
                 variant="{value}" — {description}
               </div>
             </div>
           ))}
 
           <CodeBlock
-            code={`// Default — animated border-bottom on hover
-<Link href="https://example.com" variant="default">Default link</Link>
-
-// Subtle — secondary color, same hover behavior
-<Link href="https://example.com" variant="subtle">Subtle link</Link>
+            code={`// Underline — animated border-bottom on hover
+<Link href="https://example.com" variant="underline">Underline link</Link>
 
 // Plain — no underline, color only
 <Link href="https://example.com" variant="plain">Plain link</Link>`}
@@ -225,10 +209,10 @@ export const PropVariant: Story = {
 /**
  * ## Prop: `color`
  *
- * Controls the text color using semantic tokens — same values as the Text component.
+ * Controls the link color. Uses dedicated link tokens for `primary`
+ * to ensure visual distinction from surrounding text.
  *
- * When not specified, defaults to `'primary'` for `default`/`plain` variants
- * and `'secondary'` for the `subtle` variant.
+ * When not specified, defaults to `'primary'`.
  */
 export const PropColor: Story = {
   render: () => {
@@ -236,10 +220,6 @@ export const PropColor: Story = {
       { value: 'primary' as const, label: 'Primary' },
       { value: 'secondary' as const, label: 'Secondary' },
       { value: 'tertiary' as const, label: 'Tertiary' },
-      { value: 'success' as const, label: 'Success' },
-      { value: 'error' as const, label: 'Error' },
-      { value: 'warning' as const, label: 'Warning' },
-      { value: 'info' as const, label: 'Info' },
       { value: 'inverse' as const, label: 'Inverse' },
     ];
 
@@ -248,7 +228,9 @@ export const PropColor: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '32px' }}>
           {colors.map(({ value, label }) => (
             <div key={value} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ width: '100px', fontSize: '12px', color: NEUTRAL.textSlate }}>color="{value}"</div>
+              <div style={{ width: '100px', fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
+                color="{value}"
+              </div>
               <Link href="https://example.com" color={value}>
                 {label} link
               </Link>
@@ -258,8 +240,8 @@ export const PropColor: Story = {
           <CodeBlock
             code={`<Link href="https://example.com" color="primary">Primary</Link>
 <Link href="https://example.com" color="secondary">Secondary</Link>
-<Link href="https://example.com" color="success">Success</Link>
-<Link href="https://example.com" color="error">Error</Link>`}
+<Link href="https://example.com" color="tertiary">Tertiary</Link>
+<Link href="https://example.com" color="inverse">Inverse</Link>`}
             language="jsx"
             title="JSX"
           />
@@ -295,7 +277,9 @@ export const PropTarget: Story = {
                 </Link>
               </Text>
             </PropCard>
-            <div style={{ fontSize: '12px', color: NEUTRAL.textSlate }}>target="_self" — no rel attribute added</div>
+            <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
+              target="_self" — no rel attribute added
+            </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -307,7 +291,7 @@ export const PropTarget: Story = {
                 </Link>
               </Text>
             </PropCard>
-            <div style={{ fontSize: '12px', color: NEUTRAL.textSlate }}>
+            <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
               target="_blank" — auto adds rel="noopener noreferrer" for security
             </div>
           </div>

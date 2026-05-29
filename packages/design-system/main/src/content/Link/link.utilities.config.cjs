@@ -30,30 +30,25 @@ module.exports = {
 
   utilities: {
     // ==========================================
-    // VARIANT - Visual Style (3 values)
+    // VARIANT - Visual Style (2 values)
     // ==========================================
     variant: {
       property: ['border-bottom-width', 'border-bottom-style', 'border-bottom-color'],
       values: {
-        default: ['var(--lufa-semantic-ui-border-width-thin)', 'solid', 'transparent'],
-        subtle: ['var(--lufa-semantic-ui-border-width-thin)', 'solid', 'transparent'],
+        underline: ['var(--lufa-semantic-ui-border-width-thin)', 'solid', 'transparent'],
         plain: ['0', 'none', 'transparent'],
       },
     },
 
     // ==========================================
-    // COLOR - Semantic Text Color (8 values)
+    // COLOR - Link Color (4 values)
     // ==========================================
     color: {
       property: 'color',
       values: {
-        primary: '--lufa-semantic-ui-text-primary',
+        primary: '--lufa-semantic-interactive-link-default',
         secondary: '--lufa-semantic-ui-text-secondary',
         tertiary: '--lufa-semantic-ui-text-tertiary',
-        success: '--lufa-semantic-ui-text-success',
-        error: '--lufa-semantic-ui-text-error',
-        warning: '--lufa-semantic-ui-text-warning',
-        info: '--lufa-semantic-ui-text-info',
         inverse: '--lufa-semantic-ui-background-on-primary',
       },
     },
@@ -64,15 +59,15 @@ module.exports = {
   // ==========================================
   selectors: [
     {
-      comment: 'Default variant - border appears on hover',
-      selector: '.link.variant-default:hover',
+      comment: 'Primary color - darken on hover',
+      selector: '.link.color-primary:hover',
       properties: {
-        'border-bottom-color': 'currentColor',
+        color: 'var(--lufa-semantic-interactive-link-hover)',
       },
     },
     {
-      comment: 'Subtle variant - border appears on hover',
-      selector: '.link.variant-subtle:hover',
+      comment: 'Default variant - border appears on hover',
+      selector: '.link.variant-underline:hover',
       properties: {
         'border-bottom-color': 'currentColor',
       },
