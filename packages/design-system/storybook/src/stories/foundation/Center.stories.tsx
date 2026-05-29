@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Center } from '@grasdouble/lufa_design-system';
@@ -42,8 +41,6 @@ const generateCode = (variant: 'block' | 'inline') => {
 export const PropCentering: Story = {
   name: 'Prop: centering',
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<'block' | 'inline'>('block');
-
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -54,65 +51,55 @@ export const PropCentering: Story = {
               gap: '24px',
             }}
           >
-            <div onMouseEnter={() => setHoveredVariant('block')}>
-              <PropCard label="Block Center" highlight={hoveredVariant === 'block'}>
-                <div
-                  style={{
-                    height: '200px',
-                    backgroundColor: STORY_COLORS.neutral.backgroundLight,
-                    border: `2px dashed ${STORY_COLORS.primary.blue.main}`,
-                  }}
-                >
-                  <Center style={{ height: '100%', width: '100%' }}>
-                    <div
-                      style={{
-                        backgroundColor: STORY_COLORS.primary.blue.main,
-                        color: STORY_COLORS.neutral.white,
-                        padding: '1rem',
-                        borderRadius: '50%',
-                        width: '4rem',
-                        height: '4rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontWeight: 600,
-                      }}
-                    >
-                      X
-                    </div>
-                  </Center>
-                </div>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('inline')}>
-              <PropCard label="Inline Center" highlight={hoveredVariant === 'inline'}>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <span>Text</span>
-                  <Center
-                    inline
+            <PropCard label="Block Center">
+              <div
+                style={{
+                  height: '200px',
+                  backgroundColor: STORY_COLORS.themed.background.surface,
+                  border: `2px dashed ${STORY_COLORS.primary.blue.main}`,
+                }}
+              >
+                <Center style={{ height: '100%', width: '100%' }}>
+                  <div
                     style={{
-                      width: '32px',
-                      height: '32px',
-                      backgroundColor: STORY_COLORS.primary.violet.main,
-                      borderRadius: '50%',
+                      backgroundColor: STORY_COLORS.primary.blue.main,
                       color: STORY_COLORS.neutral.white,
+                      padding: '1rem',
+                      borderRadius: '50%',
+                      width: '4rem',
+                      height: '4rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 600,
                     }}
                   >
-                    ?
-                  </Center>
-                  <span>Text</span>
-                </div>
-              </PropCard>
-            </div>
+                    X
+                  </div>
+                </Center>
+              </div>
+            </PropCard>
+            <PropCard label="Inline Center">
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <span>Text</span>
+                <Center
+                  inline
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    backgroundColor: STORY_COLORS.primary.violet.main,
+                    borderRadius: '50%',
+                    color: STORY_COLORS.neutral.white,
+                  }}
+                >
+                  ?
+                </Center>
+                <span>Text</span>
+              </div>
+            </PropCard>
           </div>
 
-          <CodeBlock
-            code={generateCode(hoveredVariant)}
-            language="jsx"
-            title="JSX"
-            subtitle={hoveredVariant === 'inline' ? 'inline' : 'default'}
-          />
+          <CodeBlock code={generateCode('block')} language="jsx" title="JSX" subtitle="default" />
         </div>
       </StoryContainer>
     );

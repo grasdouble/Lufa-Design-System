@@ -60,7 +60,7 @@ const Item = ({ children, color }: { children: React.ReactNode; color: string })
       borderRadius: '4px',
       textAlign: 'center',
       fontWeight: 600,
-      border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
+      border: `1px solid ${STORY_COLORS.themed.border.default}`,
     }}
   >
     {children}
@@ -70,7 +70,6 @@ const Item = ({ children, color }: { children: React.ReactNode; color: string })
 export const PropColumns: Story = {
   name: 'Prop: columns',
   render: () => {
-    const [hoveredVariant, setHoveredVariant] = React.useState<'two' | 'three' | 'four'>('three');
     const colors = [getColorByIndex(0), getColorByIndex(1), getColorByIndex(2)];
 
     return (
@@ -83,44 +82,36 @@ export const PropColumns: Story = {
               gap: '24px',
             }}
           >
-            <div onMouseEnter={() => setHoveredVariant('two')}>
-              <PropCard label="2 Columns" highlight={hoveredVariant === 'two'}>
-                <Grid columns={2} gap="default" style={{ border: `2px dashed ${colors[0].main}`, padding: '1rem' }}>
-                  {[1, 2, 3, 4].map((i) => (
-                    <Item key={i} color={colors[0].main}>
-                      {i}
-                    </Item>
-                  ))}
-                </Grid>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('three')}>
-              <PropCard label="3 Columns" highlight={hoveredVariant === 'three'}>
-                <Grid columns={3} gap="default" style={{ border: `2px dashed ${colors[1].main}`, padding: '1rem' }}>
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <Item key={i} color={colors[1].main}>
-                      {i}
-                    </Item>
-                  ))}
-                </Grid>
-              </PropCard>
-            </div>
-
-            <div onMouseEnter={() => setHoveredVariant('four')}>
-              <PropCard label="4 Columns" highlight={hoveredVariant === 'four'}>
-                <Grid columns={4} gap="tight" style={{ border: `2px dashed ${colors[2].main}`, padding: '1rem' }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                    <Item key={i} color={colors[2].main}>
-                      {i}
-                    </Item>
-                  ))}
-                </Grid>
-              </PropCard>
-            </div>
+            <PropCard label="2 Columns">
+              <Grid columns={2} gap="default" style={{ border: `2px dashed ${colors[0].main}`, padding: '1rem' }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <Item key={i} color={colors[0].main}>
+                    {i}
+                  </Item>
+                ))}
+              </Grid>
+            </PropCard>
+            <PropCard label="3 Columns">
+              <Grid columns={3} gap="default" style={{ border: `2px dashed ${colors[1].main}`, padding: '1rem' }}>
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <Item key={i} color={colors[1].main}>
+                    {i}
+                  </Item>
+                ))}
+              </Grid>
+            </PropCard>
+            <PropCard label="4 Columns">
+              <Grid columns={4} gap="tight" style={{ border: `2px dashed ${colors[2].main}`, padding: '1rem' }}>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <Item key={i} color={colors[2].main}>
+                    {i}
+                  </Item>
+                ))}
+              </Grid>
+            </PropCard>
           </div>
 
-          <CodeBlock code={generateCode(hoveredVariant)} language="jsx" title="JSX" subtitle={hoveredVariant} />
+          <CodeBlock code={generateCode('three')} language="jsx" title="JSX" subtitle="three" />
         </div>
       </StoryContainer>
     );

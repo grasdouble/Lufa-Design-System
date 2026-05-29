@@ -95,26 +95,22 @@ export const Playground: Story = {
 
 ### `PropCard`
 
-Helper component to display individual prop examples with a label. Label is displayed BELOW content to guarantee perfect visual alignment, even if some labels wrap to multiple lines. Includes hover effects for better interactivity. Supports click or hover interactions.
+Helper component to display individual prop examples with a label. Label is displayed BELOW content to guarantee perfect visual alignment, even if some labels wrap to multiple lines.
 
 **Props:**
 
 - `label: string` - Label text displayed BELOW content
 - `children: React.ReactNode` - Component or elements to display
-- `highlight?: boolean` - If `true`, applies highlighted background (useful for indicating selected element)
-- `onInteraction?: () => void` - Callback called on interaction (click or hover)
-- `interactionType?: 'click' | 'hover'` - Interaction type (default: 'hover')
 
 **Usage:**
 
 ```tsx
 import { PropCard } from '../../components/helpers';
 
-// Example 1: Hover (default)
 export const MyStory: Story = {
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
-      <PropCard label='variant="primary"' highlight>
+      <PropCard label='variant="primary"'>
         <Button variant="primary">Click me</Button>
       </PropCard>
 
@@ -124,26 +120,6 @@ export const MyStory: Story = {
     </div>
   ),
 };
-
-// Example 2: Click interaction (to display code, etc.)
-export const PropAsStory: Story = {
-  render: () => {
-    const [selected, setSelected] = React.useState('div');
-
-    return (
-      <div style={{ display: 'grid', ... }}>
-        <PropCard
-          label="<section>"
-          highlight={selected === 'section'}
-          onInteraction={() => setSelected('section')}
-          interactionType="click"
-        >
-          <Box as="section">Content</Box>
-        </PropCard>
-      </div>
-    );
-  },
-};
 ```
 
 **When to use:**
@@ -151,16 +127,12 @@ export const PropAsStory: Story = {
 - ✅ Display component prop variants
 - ✅ Individual examples with descriptive labels
 - ✅ Prop comparison grids
-- ✅ Click interaction to select element (with CodeBlock)
-- ✅ Hover interaction for quick preview
+- ✅ Static example groupings
 
 **Visual effects:**
 
-- Hover: Background change + translateY(-2px)
 - Label: Uppercase, monospace, gray
-- Transition: 0.2s ease
-- Highlight: Light blue background when `highlight={true}`
-- Cursor: Pointer if `interactionType="click"`
+- Container background: Transparent by default
 
 ---
 

@@ -46,6 +46,7 @@
   --lufa-core-color-neutral-background: #fff5ff;
   --lufa-core-color-neutral-surface-default: #ffe6ff;
   --lufa-core-color-neutral-surface-hover: #ffccff;
+  --lufa-core-color-neutral-surface-active: #ff99ff; /* Explicit override — prevents HC-leaked value (#374151 post-PR) causing contrast failure: #330033 on #ff99ff = 9.47:1 */
   --lufa-core-color-neutral-border-default: #aa00aa;
   --lufa-core-color-neutral-border-strong: #880088;
   --lufa-core-color-neutral-text-primary: #330033;
@@ -102,7 +103,7 @@
   --lufa-component-button-type-outline-variant-destructive-border-active: #ffffff;
   --lufa-component-button-type-outline-variant-warning-border-active: #ffffff;
   --lufa-component-button-type-outline-variant-info-border-active: #ffffff;
-  --lufa-component-button-type-outline-variant-neutral-border-active: #330033; /* neutral-text-primary on #d1d5db = 11.99:1 */
+  --lufa-component-button-type-outline-variant-neutral-border-active: #330033; /* #330033 on #ff99ff = 9.47:1 */
   /* Interactive: fix text-active (#330033 on #b300b3 = 3.0:1) and page-bg check */
   --lufa-semantic-interactive-background-active: #ff66ff;
   --lufa-semantic-interactive-text-active: #330033;
@@ -204,6 +205,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #1a0033;
+  --lufa-core-color-neutral-surface-active: #000000; /* Explicit override — dark HC background prevents HC-leaked value causing contrast failure */
   --lufa-core-color-neutral-border-default: #00ffff;
   --lufa-core-color-neutral-border-strong: #ff00ff;
   --lufa-core-color-neutral-text-primary: #ffffff;
@@ -260,5 +262,6 @@
   --lufa-component-button-type-outline-variant-destructive-border-active: #000000;
   --lufa-component-button-type-outline-variant-warning-border-active: #000000;
   --lufa-component-button-type-outline-variant-info-border-active: #000000;
-  --lufa-component-button-type-outline-variant-neutral-border-active: #000000; /* black on #d1d5db = 14.46:1 (white would be 1.47:1 — fails) */
+  --lufa-component-button-type-outline-variant-neutral-border-active: #00ffff; /* #00ffff on #000000 = 16.75:1 — consistent with neutral-border-default in HC */
+  --lufa-component-button-type-outline-variant-neutral-background-active: #000000;
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { AspectRatioProps } from '@grasdouble/lufa_design-system';
@@ -105,8 +104,6 @@ export const Default: Story = {
 export const PropRatio: Story = {
   name: 'Prop: ratio',
   render: () => {
-    const [selectedRatio, setSelectedRatio] = React.useState<number>(16 / 9);
-
     const ratios = [
       { value: 16 / 9, label: '16:9', description: 'Widescreen video', usage: 'YouTube, streaming' },
       { value: 4 / 3, label: '4:3', description: 'Classic TV/video', usage: 'Traditional media' },
@@ -141,9 +138,6 @@ export const PropRatio: Story = {
                 <PropCard
                   key={ratioItem.label}
                   label={`ratio={${ratioItem.value === 1 ? '1' : ratioItem.value.toFixed(4)}}`}
-                  highlight={selectedRatio === ratioItem.value}
-                  onInteraction={() => setSelectedRatio(ratioItem.value)}
-                  interactionType="click"
                 >
                   <div
                     style={{
@@ -177,7 +171,7 @@ export const PropRatio: Story = {
                       <div
                         style={{
                           fontSize: '12px',
-                          color: STORY_COLORS.neutral.text,
+                          color: STORY_COLORS.themed.text.primary,
                           fontWeight: 600,
                           marginBottom: '4px',
                         }}
@@ -187,7 +181,7 @@ export const PropRatio: Story = {
                       <div
                         style={{
                           fontSize: '11px',
-                          color: STORY_COLORS.neutral.textSlate,
+                          color: STORY_COLORS.themed.text.secondary,
                         }}
                       >
                         {ratioItem.usage}
@@ -199,7 +193,7 @@ export const PropRatio: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedRatio)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode(16 / 9)} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -213,8 +207,6 @@ export const PropRatio: Story = {
 export const PropAs: Story = {
   name: 'Prop: as (Polymorphic)',
   render: () => {
-    const [selectedAs, setSelectedAs] = React.useState<'div' | 'figure' | 'section'>('div');
-
     const asOptions = [
       {
         value: 'div' as const,
@@ -258,13 +250,7 @@ export const PropAs: Story = {
           >
             {asOptions.map((option) => {
               return (
-                <PropCard
-                  key={option.value}
-                  label={option.label}
-                  highlight={selectedAs === option.value}
-                  onInteraction={() => setSelectedAs(option.value)}
-                  interactionType="click"
-                >
+                <PropCard key={option.value} label={option.label}>
                   <div
                     style={{
                       padding: '20px',
@@ -296,7 +282,7 @@ export const PropAs: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -313,7 +299,7 @@ export const PropAs: Story = {
               padding: '16px',
               borderRadius: '8px',
               fontSize: '12px',
-              color: STORY_COLORS.neutral.text,
+              color: STORY_COLORS.themed.text.primary,
               background: STORY_COLORS.themed.background.surface,
             }}
           >
@@ -321,7 +307,7 @@ export const PropAs: Story = {
             SEO when displaying images.
           </div>
 
-          <CodeBlock code={generateCode(selectedAs)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('div')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -343,7 +329,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -377,7 +363,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -421,7 +407,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -432,7 +418,7 @@ export const UseCases: Story = {
             <div style={{ maxWidth: '300px' }}>
               <div
                 style={{
-                  border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '8px',
                   overflow: 'hidden',
                 }}
@@ -459,7 +445,7 @@ export const UseCases: Story = {
                     style={{
                       fontSize: '16px',
                       fontWeight: '600',
-                      color: STORY_COLORS.neutral.text,
+                      color: STORY_COLORS.themed.text.primary,
                       marginBottom: '8px',
                     }}
                   >
@@ -468,7 +454,7 @@ export const UseCases: Story = {
                   <p
                     style={{
                       fontSize: '14px',
-                      color: STORY_COLORS.neutral.textSlate,
+                      color: STORY_COLORS.themed.text.secondary,
                       marginBottom: '12px',
                     }}
                   >
@@ -494,7 +480,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -539,7 +525,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -574,7 +560,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -725,7 +711,7 @@ export const Playground: Story = {
               padding: '16px',
               borderRadius: '8px',
               fontSize: '12px',
-              color: STORY_COLORS.neutral.textSlate,
+              color: STORY_COLORS.themed.text.secondary,
               background: STORY_COLORS.themed.background.surface,
             }}
           >

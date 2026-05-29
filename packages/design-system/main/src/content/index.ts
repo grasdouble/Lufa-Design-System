@@ -7,3 +7,6 @@ export type { IconProps, IconName } from './Icon';
 
 export { Badge } from './Badge';
 export type { BadgeProps } from './Badge';
+
+export { Link } from './Link';
+export type { LinkProps } from './Link';

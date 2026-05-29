@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { DividerProps } from '@grasdouble/lufa_design-system';
@@ -6,8 +5,6 @@ import { Divider } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
-
-const NEUTRAL = STORY_COLORS.neutral;
 
 /**
  * Divider - Visual Separator Component
@@ -98,9 +95,9 @@ export const Default: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <PropCard label="Default Divider (Horizontal)">
             <div style={{ width: '100%', maxWidth: '400px' }}>
-              <div style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Section 1</div>
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Section 1</div>
               <Divider />
-              <div style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Section 2</div>
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Section 2</div>
             </div>
           </PropCard>
 
@@ -118,8 +115,6 @@ export const Default: Story = {
 export const PropOrientation: Story = {
   name: 'Prop: orientation',
   render: () => {
-    const [selectedOrientation, setSelectedOrientation] = React.useState<string>('horizontal');
-
     const orientations = [
       { value: 'horizontal', label: 'horizontal (default)', description: 'Horizontal separator' },
       { value: 'vertical', label: 'vertical', description: 'Vertical separator' },
@@ -154,13 +149,7 @@ export const PropOrientation: Story = {
           >
             {orientations.map((orientationItem) => {
               return (
-                <PropCard
-                  key={orientationItem.value}
-                  label={`orientation="${orientationItem.label}"`}
-                  highlight={selectedOrientation === orientationItem.value}
-                  onInteraction={() => setSelectedOrientation(orientationItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={orientationItem.value} label={`orientation="${orientationItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -176,7 +165,7 @@ export const PropOrientation: Story = {
                         <div
                           style={{
                             fontSize: '12px',
-                            color: STORY_COLORS.neutral.text,
+                            color: STORY_COLORS.themed.text.primary,
                             textAlign: 'center',
                           }}
                         >
@@ -186,7 +175,7 @@ export const PropOrientation: Story = {
                         <div
                           style={{
                             fontSize: '12px',
-                            color: STORY_COLORS.neutral.text,
+                            color: STORY_COLORS.themed.text.primary,
                             textAlign: 'center',
                           }}
                         >
@@ -201,15 +190,15 @@ export const PropOrientation: Story = {
                           height: '60px',
                         }}
                       >
-                        <span style={{ fontSize: '12px', color: STORY_COLORS.neutral.text }}>Left</span>
+                        <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.primary }}>Left</span>
                         <Divider orientation="vertical" />
-                        <span style={{ fontSize: '12px', color: STORY_COLORS.neutral.text }}>Right</span>
+                        <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.primary }}>Right</span>
                       </div>
                     )}
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -221,7 +210,7 @@ export const PropOrientation: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedOrientation)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('horizontal')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -235,8 +224,6 @@ export const PropOrientation: Story = {
 export const PropEmphasis: Story = {
   name: 'Prop: emphasis',
   render: () => {
-    const [selectedEmphasis, setSelectedEmphasis] = React.useState<string>('default');
-
     const emphasisLevels = [
       { value: 'subtle', label: 'subtle', color: 'gray.300', thickness: '1px', description: 'Minimal separation' },
       { value: 'default', label: 'default', color: 'gray.300', thickness: '1px', description: 'Standard separator' },
@@ -262,13 +249,7 @@ export const PropEmphasis: Story = {
           >
             {emphasisLevels.map((emphasisItem) => {
               return (
-                <PropCard
-                  key={emphasisItem.value}
-                  label={`emphasis="${emphasisItem.label}"`}
-                  highlight={selectedEmphasis === emphasisItem.value}
-                  onInteraction={() => setSelectedEmphasis(emphasisItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={emphasisItem.value} label={`emphasis="${emphasisItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -285,7 +266,7 @@ export const PropEmphasis: Story = {
                     <div
                       style={{
                         fontSize: '10px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -294,7 +275,7 @@ export const PropEmphasis: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.text,
+                        color: STORY_COLORS.themed.text.primary,
                         textAlign: 'center',
                         fontWeight: 500,
                       }}
@@ -313,7 +294,7 @@ export const PropEmphasis: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -335,7 +316,7 @@ export const PropEmphasis: Story = {
                   <div
                     style={{
                       fontSize: '12px',
-                      color: STORY_COLORS.neutral.textSlate,
+                      color: STORY_COLORS.themed.text.secondary,
                       marginBottom: '8px',
                       fontFamily: 'monospace',
                     }}
@@ -348,7 +329,7 @@ export const PropEmphasis: Story = {
             </div>
           </div>
 
-          <CodeBlock code={generateCode(selectedEmphasis)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('default')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -362,8 +343,6 @@ export const PropEmphasis: Story = {
 export const PropSpacing: Story = {
   name: 'Prop: spacing',
   render: () => {
-    const [selectedSpacing, setSelectedSpacing] = React.useState<string>('default');
-
     const spacings = [
       { value: 'compact', label: 'compact', description: 'Tight spacing (8px)' },
       { value: 'default', label: 'default', description: 'Standard spacing (16px)' },
@@ -388,13 +367,7 @@ export const PropSpacing: Story = {
           >
             {spacings.map((spacingItem) => {
               return (
-                <PropCard
-                  key={spacingItem.value}
-                  label={`spacing="${spacingItem.label}"`}
-                  highlight={selectedSpacing === spacingItem.value}
-                  onInteraction={() => setSelectedSpacing(spacingItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={spacingItem.value} label={`spacing="${spacingItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -409,7 +382,7 @@ export const PropSpacing: Story = {
                       <div
                         style={{
                           fontSize: '12px',
-                          color: STORY_COLORS.neutral.text,
+                          color: STORY_COLORS.themed.text.primary,
                         }}
                       >
                         Above
@@ -418,7 +391,7 @@ export const PropSpacing: Story = {
                       <div
                         style={{
                           fontSize: '12px',
-                          color: STORY_COLORS.neutral.text,
+                          color: STORY_COLORS.themed.text.primary,
                         }}
                       >
                         Below
@@ -427,7 +400,7 @@ export const PropSpacing: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -439,7 +412,7 @@ export const PropSpacing: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedSpacing)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('default')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -453,8 +426,6 @@ export const PropSpacing: Story = {
 export const PropLineStyle: Story = {
   name: 'Prop: lineStyle',
   render: () => {
-    const [selectedLineStyle, setSelectedLineStyle] = React.useState<string>('solid');
-
     const lineStyles = [
       { value: 'solid', label: 'solid (default)', description: 'Continuous line' },
       { value: 'dashed', label: 'dashed', description: 'Dashed line' },
@@ -479,13 +450,7 @@ export const PropLineStyle: Story = {
           >
             {lineStyles.map((lineStyleItem) => {
               return (
-                <PropCard
-                  key={lineStyleItem.value}
-                  label={`lineStyle="${lineStyleItem.label}"`}
-                  highlight={selectedLineStyle === lineStyleItem.value}
-                  onInteraction={() => setSelectedLineStyle(lineStyleItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={lineStyleItem.value} label={`lineStyle="${lineStyleItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -502,7 +467,7 @@ export const PropLineStyle: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -520,7 +485,7 @@ export const PropLineStyle: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -541,7 +506,7 @@ export const PropLineStyle: Story = {
                 <div
                   style={{
                     fontSize: '12px',
-                    color: STORY_COLORS.neutral.textSlate,
+                    color: STORY_COLORS.themed.text.secondary,
                     marginBottom: '8px',
                   }}
                 >
@@ -557,7 +522,7 @@ export const PropLineStyle: Story = {
                 <div
                   style={{
                     fontSize: '12px',
-                    color: STORY_COLORS.neutral.textSlate,
+                    color: STORY_COLORS.themed.text.secondary,
                     marginBottom: '8px',
                   }}
                 >
@@ -572,7 +537,7 @@ export const PropLineStyle: Story = {
             </div>
           </div>
 
-          <CodeBlock code={generateCode(selectedLineStyle)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('solid')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -586,8 +551,6 @@ export const PropLineStyle: Story = {
 export const PropAs: Story = {
   name: 'Prop: as (Polymorphic)',
   render: () => {
-    const [selectedAs, setSelectedAs] = React.useState<'hr' | 'div'>('hr');
-
     const asOptions = [
       {
         value: 'hr' as const,
@@ -619,13 +582,7 @@ export const PropAs: Story = {
           >
             {asOptions.map((option) => {
               return (
-                <PropCard
-                  key={option.value}
-                  label={option.label}
-                  highlight={selectedAs === option.value}
-                  onInteraction={() => setSelectedAs(option.value)}
-                  interactionType="click"
-                >
+                <PropCard key={option.value} label={option.label}>
                   <div
                     style={{
                       padding: '24px',
@@ -642,7 +599,7 @@ export const PropAs: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -659,7 +616,7 @@ export const PropAs: Story = {
               padding: '16px',
               borderRadius: '8px',
               fontSize: '12px',
-              color: STORY_COLORS.neutral.text,
+              color: STORY_COLORS.themed.text.primary,
             }}
           >
             💡 <strong>Note:</strong> For horizontal dividers, the default element is <code>&lt;hr&gt;</code> (semantic
@@ -667,7 +624,7 @@ export const PropAs: Story = {
             vertical orientation).
           </div>
 
-          <CodeBlock code={generateCode(selectedAs)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('hr')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -689,7 +646,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -703,18 +660,24 @@ export const UseCases: Story = {
                 borderRadius: '8px',
               }}
             >
-              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.neutral.text }}>Introduction</div>
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.textSlate }}>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>
+                Introduction
+              </div>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.secondary }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </div>
               <Divider spacing="comfortable" />
-              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.neutral.text }}>Main Content</div>
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.textSlate }}>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>
+                Main Content
+              </div>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.secondary }}>
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </div>
               <Divider spacing="comfortable" />
-              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.neutral.text }}>Conclusion</div>
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.textSlate }}>
+              <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>
+                Conclusion
+              </div>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.secondary }}>
                 Ut enim ad minim veniam, quis nostrud exercitation.
               </div>
             </div>
@@ -726,7 +689,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -740,19 +703,19 @@ export const UseCases: Story = {
                 borderRadius: '8px',
               }}
             >
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.text, padding: '8px 0' }}>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.primary, padding: '8px 0' }}>
                 Item 1 - First entry
               </div>
               <Divider emphasis="subtle" spacing="compact" />
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.text, padding: '8px 0' }}>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.primary, padding: '8px 0' }}>
                 Item 2 - Second entry
               </div>
               <Divider emphasis="subtle" spacing="compact" />
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.text, padding: '8px 0' }}>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.primary, padding: '8px 0' }}>
                 Item 3 - Third entry
               </div>
               <Divider emphasis="subtle" spacing="compact" />
-              <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.text, padding: '8px 0' }}>
+              <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.primary, padding: '8px 0' }}>
                 Item 4 - Fourth entry
               </div>
             </div>
@@ -764,7 +727,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -785,7 +748,7 @@ export const UseCases: Story = {
                 style={{
                   padding: '8px 16px',
                   background: STORY_COLORS.themed.background.surface,
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   cursor: 'pointer',
                   fontSize: '13px',
@@ -797,7 +760,7 @@ export const UseCases: Story = {
                 style={{
                   padding: '8px 16px',
                   background: STORY_COLORS.themed.background.surface,
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   cursor: 'pointer',
                   fontSize: '13px',
@@ -809,7 +772,7 @@ export const UseCases: Story = {
                 style={{
                   padding: '8px 16px',
                   background: STORY_COLORS.themed.background.surface,
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   cursor: 'pointer',
                   fontSize: '13px',
@@ -822,7 +785,7 @@ export const UseCases: Story = {
                 style={{
                   padding: '8px 16px',
                   background: STORY_COLORS.themed.background.surface,
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   cursor: 'pointer',
                   fontSize: '13px',
@@ -834,7 +797,7 @@ export const UseCases: Story = {
                 style={{
                   padding: '8px 16px',
                   background: STORY_COLORS.themed.background.surface,
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   cursor: 'pointer',
                   fontSize: '13px',
@@ -851,7 +814,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -870,13 +833,13 @@ export const UseCases: Story = {
                   style={{
                     fontSize: '13px',
                     fontWeight: 600,
-                    color: STORY_COLORS.neutral.text,
+                    color: STORY_COLORS.themed.text.primary,
                     marginBottom: '8px',
                   }}
                 >
                   Personal Information
                 </div>
-                <div style={{ fontSize: '12px', color: STORY_COLORS.neutral.textSlate }}>Name, Email, Phone...</div>
+                <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>Name, Email, Phone...</div>
               </div>
               <Divider emphasis="strong" spacing="comfortable" />
               <div>
@@ -884,13 +847,13 @@ export const UseCases: Story = {
                   style={{
                     fontSize: '13px',
                     fontWeight: 600,
-                    color: STORY_COLORS.neutral.text,
+                    color: STORY_COLORS.themed.text.primary,
                     marginBottom: '8px',
                   }}
                 >
                   Address Information
                 </div>
-                <div style={{ fontSize: '12px', color: STORY_COLORS.neutral.textSlate }}>
+                <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
                   Street, City, Postal Code...
                 </div>
               </div>
@@ -900,13 +863,13 @@ export const UseCases: Story = {
                   style={{
                     fontSize: '13px',
                     fontWeight: 600,
-                    color: STORY_COLORS.neutral.text,
+                    color: STORY_COLORS.themed.text.primary,
                     marginBottom: '8px',
                   }}
                 >
                   Payment Information
                 </div>
-                <div style={{ fontSize: '12px', color: STORY_COLORS.neutral.textSlate }}>
+                <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>
                   Card Number, Expiry, CVV...
                 </div>
               </div>
@@ -919,7 +882,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -929,7 +892,7 @@ export const UseCases: Story = {
             </h3>
             <div
               style={{
-                border: `1px solid ${NEUTRAL.borderMedium}`,
+                border: `1px solid ${STORY_COLORS.themed.border.default}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
                 maxWidth: '350px',
@@ -940,13 +903,13 @@ export const UseCases: Story = {
                   style={{
                     fontSize: '16px',
                     fontWeight: 600,
-                    color: STORY_COLORS.neutral.text,
+                    color: STORY_COLORS.themed.text.primary,
                     marginBottom: '8px',
                   }}
                 >
                   Card Title
                 </div>
-                <div style={{ fontSize: '13px', color: STORY_COLORS.neutral.textSlate }}>
+                <div style={{ fontSize: '13px', color: STORY_COLORS.themed.text.secondary }}>
                   This is the main content of the card. It contains important information for the user.
                 </div>
               </div>
@@ -959,7 +922,7 @@ export const UseCases: Story = {
                   alignItems: 'center',
                 }}
               >
-                <span style={{ fontSize: '12px', color: STORY_COLORS.neutral.textSlate }}>Card Footer</span>
+                <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>Card Footer</span>
                 <button
                   style={{
                     padding: '6px 12px',
@@ -1039,9 +1002,9 @@ export const Playground: Story = {
             >
               {args.orientation === 'horizontal' ? (
                 <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-                  <div style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Section Above</div>
+                  <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Section Above</div>
                   <Divider {...args} />
-                  <div style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Section Below</div>
+                  <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Section Below</div>
                 </div>
               ) : (
                 <div
@@ -1052,9 +1015,9 @@ export const Playground: Story = {
                     height: '100px',
                   }}
                 >
-                  <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Left</span>
+                  <span style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Left</span>
                   <Divider {...args} />
-                  <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Right</span>
+                  <span style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Right</span>
                 </div>
               )}
             </div>
@@ -1065,7 +1028,7 @@ export const Playground: Story = {
               padding: '16px',
               borderRadius: '8px',
               fontSize: '12px',
-              color: STORY_COLORS.neutral.textSlate,
+              color: STORY_COLORS.themed.text.secondary,
             }}
           >
             💡 <strong>Tip:</strong> Use the Controls panel below to experiment with different prop combinations

@@ -13,7 +13,7 @@
               "useCase": "Page backgrounds, root container backgrounds",
               "modes": {
                 "dark": "{primitive.color.gray.900}",
-                "high-contrast": "{primitive.color.hc.white}"
+                "high-contrast": "{primitive.color.hc.black}"
               },
               "themeable": true,
               "themeLevel": "starter"
@@ -32,7 +32,7 @@
                 "useCase": "Cards, modals, dropdowns, panels",
                 "modes": {
                   "dark": "{primitive.color.gray.800}",
-                  "high-contrast": "{primitive.color.gray.50}"
+                  "high-contrast": "{primitive.color.gray.900}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -50,7 +50,7 @@
                 "useCase": "Resting state for neutral solid buttons, slightly elevated surfaces",
                 "modes": {
                   "dark": "{primitive.color.gray.700}",
-                  "high-contrast": "{primitive.color.gray.200}"
+                  "high-contrast": "{primitive.color.gray.800}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -68,7 +68,7 @@
                 "useCase": "Hover state for list items, table rows, clickable cards",
                 "modes": {
                   "dark": "{primitive.color.gray.700}",
-                  "high-contrast": "{primitive.color.gray.200}"
+                  "high-contrast": "{primitive.color.gray.800}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -86,7 +86,7 @@
                 "useCase": "Active/pressed state for list items, table rows, clickable cards",
                 "modes": {
                   "dark": "{primitive.color.gray.600}",
-                  "high-contrast": "{primitive.color.gray.300}"
+                  "high-contrast": "{primitive.color.gray.700}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -106,7 +106,7 @@
                 "useCase": "Input borders, card borders, dividers, separators",
                 "modes": {
                   "dark": "{primitive.color.gray.700}",
-                  "high-contrast": "{primitive.color.hc.black}"
+                  "high-contrast": "{primitive.color.hc.white}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -124,7 +124,7 @@
                 "useCase": "Emphasized borders, active input borders, strong dividers",
                 "modes": {
                   "dark": "{primitive.color.gray.600}",
-                  "high-contrast": "{primitive.color.hc.black}"
+                  "high-contrast": "{primitive.color.hc.white}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -144,7 +144,7 @@
                 "useCase": "Body text, headings, primary labels",
                 "modes": {
                   "dark": "{primitive.color.gray.50}",
-                  "high-contrast": "{primitive.color.hc.black}"
+                  "high-contrast": "{primitive.color.hc.white}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -162,7 +162,7 @@
                 "useCase": "Secondary labels, descriptions, captions, metadata",
                 "modes": {
                   "dark": "{primitive.color.gray.400}",
-                  "high-contrast": "{primitive.color.gray.700}"
+                  "high-contrast": "{primitive.color.gray.200}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -180,7 +180,7 @@
                 "useCase": "Placeholder text, timestamps, optional information",
                 "modes": {
                   "dark": "{primitive.color.gray.500}",
-                  "high-contrast": "{primitive.color.gray.600}"
+                  "high-contrast": "{primitive.color.gray.400}"
                 },
                 "note": "Intentionally below secondary (gray.600). Gray.500 is borderline contrast on light surfaces — reserve for non-essential content only.",
                 "themeable": true,
@@ -199,7 +199,7 @@
                 "useCase": "Disabled input text, disabled labels, inactive menu items",
                 "modes": {
                   "dark": "{primitive.color.gray.600}",
-                  "high-contrast": "{primitive.color.gray.500}"
+                  "high-contrast": "{primitive.color.gray.600}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"

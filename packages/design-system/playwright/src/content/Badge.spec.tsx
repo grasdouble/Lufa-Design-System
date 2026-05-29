@@ -133,6 +133,18 @@ test.describe('Badge Component', () => {
       expect(color).toBeTruthy();
       expect(color).not.toBe('rgba(0, 0, 0, 0)');
     });
+
+    const borderVariants = ['default', 'success', 'danger', 'warning', 'info'] as const;
+
+    borderVariants.forEach((variant) => {
+      test(`should apply a visible border on the ${variant} variant`, async ({ mount }) => {
+        const component = await mount(<Badge variant={variant}>{variant}</Badge>);
+        const borderWidth = await component.evaluate((el) => window.getComputedStyle(el).borderTopWidth);
+        const borderStyle = await component.evaluate((el) => window.getComputedStyle(el).borderTopStyle);
+        expect(borderWidth).not.toBe('0px');
+        expect(borderStyle).toBe('solid');
+      });
+    });
   });
 
   // ============================================
@@ -365,6 +377,69 @@ test.describe('Badge Component', () => {
       expect(bgColor).toBeTruthy();
       expect(textColor).toBeTruthy();
       expect(bgColor).not.toBe(textColor); // Background and text should differ
+    });
+
+    test('should have sufficient color contrast in high-contrast mode', async ({ mount, page }) => {
+      // Helper: parse rgb(r,g,b) or rgba(r,g,b,a) to [r,g,b]
+      const parseRgb = (css: string): [number, number, number] => {
+        const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(css);
+        if (!m) throw new Error(`Cannot parse color: ${css}`);
+        return [parseInt(m[1]), parseInt(m[2]), parseInt(m[3])];
+      };
+
+      // Relative luminance per WCAG 2.1
+      const luminance = ([r, g, b]: [number, number, number]): number => {
+        const [rs, gs, bs] = [r, g, b].map((c) => {
+          const s = c / 255;
+          return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+      };
+
+      const contrastRatio = (fg: string, bg: string): number => {
+        const l1 = luminance(parseRgb(fg));
+        const l2 = luminance(parseRgb(bg));
+        const [lighter, darker] = l1 > l2 ? [l1, l2] : [l2, l1];
+        return (lighter + 0.05) / (darker + 0.05);
+      };
+
+      // Enable high-contrast mode on the root element (same pattern as ThemeSwitcher)
+      await page.evaluate(() => {
+        document.documentElement.setAttribute('data-mode', 'high-contrast');
+      });
+
+      // success, danger, warning are checked — info (pure blue #0000ff) has a known
+      // primitive contrast limitation on black backgrounds and is tracked separately.
+      const component = await mount(
+        <div>
+          <Badge variant="success" data-testid="badge-success">
+            success
+          </Badge>
+          <Badge variant="danger" data-testid="badge-danger">
+            danger
+          </Badge>
+          <Badge variant="warning" data-testid="badge-warning">
+            warning
+          </Badge>
+        </div>
+      );
+
+      const variantsToCheck: ('success' | 'danger' | 'warning')[] = ['success', 'danger', 'warning'];
+      for (const variant of variantsToCheck) {
+        const badge = component.getByTestId(`badge-${variant}`);
+        const bg = await badge.evaluate((el) => window.getComputedStyle(el).backgroundColor);
+        const text = await badge.evaluate((el) => window.getComputedStyle(el).color);
+        const ratio = contrastRatio(text, bg);
+        expect(
+          ratio,
+          `Variant "${variant}" contrast ratio ${ratio.toFixed(2)} < 4.5 in high-contrast mode`
+        ).toBeGreaterThanOrEqual(4.5);
+      }
+
+      // Restore light mode so subsequent tests are unaffected
+      await page.evaluate(() => {
+        document.documentElement.setAttribute('data-mode', 'light');
+      });
     });
 
     test('should render semantic HTML with label element', async ({ mount }) => {
@@ -615,6 +690,56 @@ test.describe('Badge Component', () => {
       await component.page().waitForTimeout(100);
 
       await expect(component).toHaveScreenshot('badge-all-variants.png');
+    });
+
+    test('should match snapshot in high-contrast mode', async ({ mount, page }) => {
+      const variants = ['default', 'success', 'danger', 'warning', 'info'] as const;
+
+      await page.evaluate(() => {
+        document.documentElement.setAttribute('data-mode', 'high-contrast');
+      });
+
+      const component = await mount(
+        <div
+          style={{
+            padding: '32px',
+            background: 'var(--lufa-semantic-ui-background-page)',
+            width: '900px',
+          }}
+        >
+          <h1
+            style={{
+              marginBottom: '24px',
+              fontSize: '28px',
+              fontWeight: 'bold',
+              color: 'var(--lufa-semantic-ui-text-primary)',
+            }}
+          >
+            Badge Component - High Contrast Mode
+          </h1>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {variants.map((variant) => (
+              <Badge key={variant} variant={variant}>
+                {variant}
+              </Badge>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
+            {variants.map((variant) => (
+              <Badge key={variant} dot variant={variant}>
+                {variant} dot
+              </Badge>
+            ))}
+          </div>
+        </div>
+      );
+
+      await component.page().waitForTimeout(100);
+      await expect(component).toHaveScreenshot('badge-high-contrast.png');
+
+      await page.evaluate(() => {
+        document.documentElement.setAttribute('data-mode', 'light');
+      });
     });
   });
 });

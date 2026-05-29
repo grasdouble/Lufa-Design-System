@@ -6,7 +6,6 @@
  * dans vos stories pour créer des layouts modernes et cohérents.
  */
 
-import React from 'react';
 import type { StoryObj } from '@storybook/react-vite';
 
 import { Box } from '@grasdouble/lufa_design-system';
@@ -27,9 +26,9 @@ export const ExampleBasicPropCard: StoryObj = {
           </Box>
         </PropCard>
 
-        <PropCard label='padding="comfortable"' highlight>
+        <PropCard label='padding="comfortable"'>
           <Box padding="comfortable" background="info" borderRadius="medium">
-            Box with comfortable padding (highlighted)
+            Box with comfortable padding
           </Box>
         </PropCard>
       </div>
@@ -105,12 +104,10 @@ export const ExampleSideBySide: StoryObj = {
 };
 
 // ============================================
-// EXEMPLE 4: CodeBlock avec hover interactif
+// EXEMPLE 4: CodeBlock avec aperçu fixe
 // ============================================
 
 const ExampleCodeBlockWithHoverComponent = () => {
-  const [hoveredRadius, setHoveredRadius] = React.useState<string>('default');
-
   const generateCode = (radius: string) => {
     return `<Box
   padding="comfortable"
@@ -127,36 +124,28 @@ const ExampleCodeBlockWithHoverComponent = () => {
         {/* Grid d'exemples */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '16px' }}>
           {(['none', 'small', 'default', 'medium', 'large'] as const).map((radius) => (
-            <div key={radius} onMouseEnter={() => setHoveredRadius(radius)}>
-              <PropCard label={`borderRadius="${radius}"`} highlight={hoveredRadius === radius}>
-                <Box
-                  padding="comfortable"
-                  background="surface"
-                  borderWidth="medium"
-                  borderRadius={radius}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '100px',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  }}
-                >
-                  {radius}
-                </Box>
-              </PropCard>
-            </div>
+            <PropCard key={radius} label={`borderRadius="${radius}"`}>
+              <Box
+                padding="comfortable"
+                background="surface"
+                borderWidth="medium"
+                borderRadius={radius}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: '100px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                }}
+              >
+                {radius}
+              </Box>
+            </PropCard>
           ))}
         </div>
 
-        {/* Code block qui se met à jour */}
-        <CodeBlock
-          code={generateCode(hoveredRadius)}
-          language="jsx"
-          title="JSX Code"
-          subtitle={`borderRadius="${hoveredRadius}"`}
-        />
+        <CodeBlock code={generateCode('default')} language="jsx" title="JSX Code" subtitle='borderRadius="default"' />
       </div>
     </StoryContainer>
   );
@@ -221,7 +210,7 @@ export const ExampleWithoutContainer: StoryObj = {
  *
  * 1. Utilisez StoryContainer pour les stories avec layout="fullscreen"
  * 2. PropCard est parfait pour montrer des variantes de props
- * 3. L'attribut highlight=true met en évidence les exemples importants
+ * 3. PropCard reste volontairement simple : label + contenu uniquement
  * 4. CodeBlock affiche du code formaté avec un header optionnel
  * 5. Combinez avec des grids CSS pour des layouts modernes
  *

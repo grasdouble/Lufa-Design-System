@@ -91,7 +91,7 @@ export const States: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 marginBottom: '16px',
               }}
@@ -109,7 +109,7 @@ export const States: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 marginBottom: '16px',
               }}
@@ -151,7 +151,7 @@ export const FullWidth: Story = {
               style={{
                 width: '100%',
                 maxWidth: '500px',
-                border: `1px dashed ${STORY_COLORS.neutral.borderMedium}`,
+                border: `1px dashed ${STORY_COLORS.themed.border.default}`,
                 padding: '10px',
               }}
             >

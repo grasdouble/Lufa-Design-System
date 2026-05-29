@@ -32,7 +32,7 @@
                 "useCase": "Success alert backgrounds, success banner backgrounds",
                 "modes": {
                   "dark": "{primitive.color.green.900}",
-                  "high-contrast": "{primitive.color.green.100}"
+                  "high-contrast": "{primitive.color.hc.black}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -145,7 +145,7 @@
                 "useCase": "Error alert backgrounds, error banner backgrounds",
                 "modes": {
                   "dark": "{primitive.color.red.900}",
-                  "high-contrast": "{primitive.color.red.100}"
+                  "high-contrast": "{primitive.color.hc.black}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -258,7 +258,7 @@
                 "useCase": "Warning alert backgrounds, warning banner backgrounds",
                 "modes": {
                   "dark": "{primitive.color.yellow.900}",
-                  "high-contrast": "{primitive.color.yellow.100}"
+                  "high-contrast": "{primitive.color.hc.black}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"
@@ -371,7 +371,7 @@
                 "useCase": "Info alert backgrounds, info banner backgrounds",
                 "modes": {
                   "dark": "{primitive.color.blue.900}",
-                  "high-contrast": "{primitive.color.blue.100}"
+                  "high-contrast": "{primitive.color.hc.black}"
                 },
                 "themeable": true,
                 "themeLevel": "starter"

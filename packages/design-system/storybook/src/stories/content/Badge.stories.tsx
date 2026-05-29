@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Badge } from '@grasdouble/lufa_design-system';
@@ -99,8 +98,6 @@ export const Default: Story = {
 export const PropVariant: Story = {
   name: 'Prop: variant',
   render: () => {
-    const [selectedVariant, setSelectedVariant] = React.useState<string>('default');
-
     const variants = [
       { value: 'default', label: 'default', description: 'Neutral / General purpose' },
       { value: 'success', label: 'success', description: 'Positive / Active status' },
@@ -127,13 +124,7 @@ export const PropVariant: Story = {
           >
             {variants.map((variantItem) => {
               return (
-                <PropCard
-                  key={variantItem.value}
-                  label={`variant="${variantItem.label}"`}
-                  highlight={selectedVariant === variantItem.value}
-                  onInteraction={() => setSelectedVariant(variantItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={variantItem.value} label={`variant="${variantItem.label}"`}>
                   <div
                     style={{
                       padding: '20px',
@@ -148,7 +139,7 @@ export const PropVariant: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -160,7 +151,7 @@ export const PropVariant: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedVariant)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('default')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -174,8 +165,6 @@ export const PropVariant: Story = {
 export const PropSize: Story = {
   name: 'Prop: size',
   render: () => {
-    const [selectedSize, setSelectedSize] = React.useState<string>('md');
-
     const sizes = [
       { value: 'sm', label: 'sm', fontSize: '10px', description: 'Small (inline text)' },
       { value: 'md', label: 'md', fontSize: '12px', description: 'Medium (default)' },
@@ -199,13 +188,7 @@ export const PropSize: Story = {
           >
             {sizes.map((sizeItem) => {
               return (
-                <PropCard
-                  key={sizeItem.value}
-                  label={`size="${sizeItem.label}"`}
-                  highlight={selectedSize === sizeItem.value}
-                  onInteraction={() => setSelectedSize(sizeItem.value)}
-                  interactionType="click"
-                >
+                <PropCard key={sizeItem.value} label={`size="${sizeItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -220,7 +203,7 @@ export const PropSize: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                       }}
                     >
                       {sizeItem.fontSize} • {sizeItem.description}
@@ -231,7 +214,7 @@ export const PropSize: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedSize)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('md')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -245,8 +228,6 @@ export const PropSize: Story = {
 export const PropDot: Story = {
   name: 'Prop: dot',
   render: () => {
-    const [showDot, setShowDot] = React.useState<boolean>(true);
-
     const dotOptions = [
       { value: false, label: 'dot={false} (default)', description: 'No indicator' },
       { value: true, label: 'dot={true}', description: 'With dot indicator' },
@@ -271,13 +252,7 @@ export const PropDot: Story = {
           >
             {dotOptions.map((option) => {
               return (
-                <PropCard
-                  key={String(option.value)}
-                  label={option.label}
-                  highlight={showDot === option.value}
-                  onInteraction={() => setShowDot(option.value)}
-                  interactionType="click"
-                >
+                <PropCard key={String(option.value)} label={option.label}>
                   <div
                     style={{
                       padding: '24px',
@@ -294,7 +269,7 @@ export const PropDot: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -312,7 +287,7 @@ export const PropDot: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -339,7 +314,7 @@ export const PropDot: Story = {
             </div>
           </div>
 
-          <CodeBlock code={generateCode(showDot)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode(true)} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -353,8 +328,6 @@ export const PropDot: Story = {
 export const PropAs: Story = {
   name: 'Prop: as (Polymorphic)',
   render: () => {
-    const [selectedAs, setSelectedAs] = React.useState<'span' | 'div' | 'label'>('span');
-
     const asOptions = [
       { value: 'span' as const, label: 'as="span" (default)', description: 'Inline element' },
       { value: 'div' as const, label: 'as="div"', description: 'Block element' },
@@ -385,13 +358,7 @@ export const PropAs: Story = {
           >
             {asOptions.map((option) => {
               return (
-                <PropCard
-                  key={option.value}
-                  label={option.label}
-                  highlight={selectedAs === option.value}
-                  onInteraction={() => setSelectedAs(option.value)}
-                  interactionType="click"
-                >
+                <PropCard key={option.value} label={option.label}>
                   <div
                     style={{
                       padding: '24px',
@@ -406,7 +373,7 @@ export const PropAs: Story = {
                     <div
                       style={{
                         fontSize: '11px',
-                        color: STORY_COLORS.neutral.textSlate,
+                        color: STORY_COLORS.themed.text.secondary,
                         textAlign: 'center',
                       }}
                     >
@@ -418,7 +385,7 @@ export const PropAs: Story = {
             })}
           </div>
 
-          <CodeBlock code={generateCode(selectedAs)} language="jsx" title="JSX" />
+          <CodeBlock code={generateCode('span')} language="jsx" title="JSX" />
         </div>
       </StoryContainer>
     );
@@ -444,7 +411,7 @@ export const SizeVariantMatrix: Story = {
                 style={{
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: STORY_COLORS.neutral.text,
+                  color: STORY_COLORS.themed.text.primary,
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   marginBottom: '16px',
@@ -497,7 +464,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -528,7 +495,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -564,7 +531,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -602,7 +569,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -621,15 +588,15 @@ export const UseCases: Story = {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Inbox</span>
+                <span style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Inbox</span>
                 <Badge variant="danger">99+</Badge>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Tasks</span>
+                <span style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Tasks</span>
                 <Badge variant="warning">12</Badge>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', color: STORY_COLORS.neutral.text }}>Done</span>
+                <span style={{ fontSize: '14px', color: STORY_COLORS.themed.text.primary }}>Done</span>
                 <Badge variant="success">45</Badge>
               </div>
             </div>
@@ -641,7 +608,7 @@ export const UseCases: Story = {
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
-                color: STORY_COLORS.neutral.text,
+                color: STORY_COLORS.themed.text.primary,
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
                 marginBottom: '16px',
@@ -734,7 +701,7 @@ export const Playground: Story = {
               padding: '16px',
               borderRadius: '8px',
               fontSize: '12px',
-              color: STORY_COLORS.neutral.textSlate,
+              color: STORY_COLORS.themed.text.secondary,
             }}
           >
             💡 <strong>Tip:</strong> Use the Controls panel below to experiment with different prop combinations

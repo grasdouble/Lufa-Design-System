@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import type { IconName } from '@grasdouble/lufa_design-system';
@@ -7,7 +6,6 @@ import { Icon } from '@grasdouble/lufa_design-system';
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
 
-const NEUTRAL = STORY_COLORS.neutral;
 const PRIMARY = STORY_COLORS.primary;
 
 /**
@@ -148,7 +146,7 @@ export const Playground: Story = {
         <div
           style={{
             padding: '64px',
-            background: STORY_COLORS.neutral.backgroundLight,
+            background: STORY_COLORS.themed.background.surface,
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
@@ -173,8 +171,6 @@ export const Playground: Story = {
  */
 export const PropName: Story = {
   render: () => {
-    const [hoveredIcon, setHoveredIcon] = React.useState<IconName>('user');
-
     const iconCategories = [
       {
         category: 'User & Navigation',
@@ -212,43 +208,43 @@ export const PropName: Story = {
           {/* Icon categories */}
           {iconCategories.map(({ category, icons }) => (
             <div key={category}>
-              <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600, color: NEUTRAL.textDark }}>
+              <h3
+                style={{
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: STORY_COLORS.themed.text.primary,
+                }}
+              >
                 {category}
               </h3>
               <div
                 style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '16px' }}
               >
                 {icons.map((iconName) => (
-                  <div key={iconName} onMouseEnter={() => setHoveredIcon(iconName)}>
-                    <PropCard label={iconName} highlight={hoveredIcon === iconName}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          gap: '8px',
-                          padding: '16px',
-                        }}
-                      >
-                        <Icon name={iconName} size="lg" />
-                        <div style={{ fontSize: '11px', color: NEUTRAL.textSlate, textAlign: 'center' }}>
-                          {iconName}
-                        </div>
+                  <PropCard key={iconName} label={iconName}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '16px',
+                      }}
+                    >
+                      <Icon name={iconName} size="lg" />
+                      <div style={{ fontSize: '11px', color: STORY_COLORS.themed.text.secondary, textAlign: 'center' }}>
+                        {iconName}
                       </div>
-                    </PropCard>
-                  </div>
+                    </div>
+                  </PropCard>
                 ))}
               </div>
             </div>
           ))}
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredIcon)}
-            language="jsx"
-            title="JSX"
-            subtitle={`name="${hoveredIcon as string}"`}
-          />
+          <CodeBlock code={generateCode('user')} language="jsx" title="JSX" subtitle='name="user"' />
         </div>
       </StoryContainer>
     );
@@ -266,8 +262,6 @@ export const PropName: Story = {
  */
 export const PropSize: Story = {
   render: () => {
-    const [hoveredSize, setHoveredSize] = React.useState<string>('md');
-
     const sizeValues = [
       { value: 'xs' as const, label: 'Extra Small', dimension: '16x16px' },
       { value: 'sm' as const, label: 'Small', dimension: '20x20px' },
@@ -286,30 +280,30 @@ export const PropSize: Story = {
           {/* Examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
             {sizeValues.map(({ value, label, dimension }) => (
-              <div key={value} onMouseEnter={() => setHoveredSize(value)}>
-                <PropCard label={`size="${value}"`} highlight={hoveredSize === value}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '24px',
-                    }}
-                  >
-                    <Icon name="star" size={value} />
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '14px', fontWeight: 600, color: NEUTRAL.textDark }}>{label}</div>
-                      <div style={{ fontSize: '12px', color: NEUTRAL.textSlate }}>{dimension}</div>
+              <PropCard key={value} label={`size="${value}"`}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '24px',
+                  }}
+                >
+                  <Icon name="star" size={value} />
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>
+                      {label}
                     </div>
+                    <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>{dimension}</div>
                   </div>
-                </PropCard>
-              </div>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock code={generateCode(hoveredSize)} language="jsx" title="JSX" subtitle={`size="${hoveredSize}"`} />
+          <CodeBlock code={generateCode('md')} language="jsx" title="JSX" subtitle='size="md"' />
         </div>
       </StoryContainer>
     );
@@ -327,8 +321,6 @@ export const PropSize: Story = {
  */
 export const PropColor: Story = {
   render: () => {
-    const [hoveredColor, setHoveredColor] = React.useState<string>('currentColor');
-
     const colorValues = [
       { value: 'currentColor' as const, label: 'Current Color', description: 'Inherits from parent' },
       { value: 'primary' as const, label: 'Primary', description: 'Default text color' },
@@ -350,35 +342,30 @@ export const PropColor: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
             {colorValues.map(({ value, label, description }) => (
-              <div key={value} onMouseEnter={() => setHoveredColor(value)}>
-                <PropCard label={`color="${value}"`} highlight={hoveredColor === value}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '24px',
-                    }}
-                  >
-                    <Icon name="heart" size="lg" color={value} />
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '14px', fontWeight: 600, color: NEUTRAL.textDark }}>{label}</div>
-                      <div style={{ fontSize: '12px', color: NEUTRAL.textSlate }}>{description}</div>
+              <PropCard key={value} label={`color="${value}"`}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '24px',
+                  }}
+                >
+                  <Icon name="heart" size="lg" color={value} />
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>
+                      {label}
                     </div>
+                    <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>{description}</div>
                   </div>
-                </PropCard>
-              </div>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredColor)}
-            language="jsx"
-            title="JSX"
-            subtitle={`color="${hoveredColor}"`}
-          />
+          <CodeBlock code={generateCode('currentColor')} language="jsx" title="JSX" subtitle='color="currentColor"' />
         </div>
       </StoryContainer>
     );
@@ -405,11 +392,11 @@ export const PropTitle: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
-              <div style={{ marginBottom: '12px', fontSize: '14px', color: NEUTRAL.textSlate }}>
+              <div style={{ marginBottom: '12px', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
                 Icon without title is decorative (aria-hidden=&quot;true&quot;)
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -431,11 +418,11 @@ export const PropTitle: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
-              <div style={{ marginBottom: '12px', fontSize: '14px', color: NEUTRAL.textSlate }}>
+              <div style={{ marginBottom: '12px', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
                 Icon with title is accessible (role=&quot;img&quot; + aria-label)
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -461,17 +448,17 @@ export const PropTitle: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
               }}
             >
-              <div style={{ marginBottom: '12px', fontSize: '14px', color: NEUTRAL.textSlate }}>
+              <div style={{ marginBottom: '12px', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
                 Icon-only interactive elements MUST have a title
               </div>
               <button
                 style={{
                   padding: '8px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '4px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -505,8 +492,6 @@ export const PropTitle: Story = {
  */
 export const PropAs: Story = {
   render: () => {
-    const [selectedElement, setSelectedElement] = React.useState<string>('span');
-
     const generateCode = (element: string): string => {
       return `<Icon as="${element}" name="star" />`;
     };
@@ -517,19 +502,13 @@ export const PropAs: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '16px' }}>
             {(['span', 'div', 'i'] as const).map((element) => (
-              <PropCard
-                key={element}
-                label={`<${element}>`}
-                highlight={selectedElement === element}
-                onInteraction={() => setSelectedElement(element)}
-                interactionType="click"
-              >
+              <PropCard key={element} label={`<${element}>`}>
                 <div
                   style={{
                     padding: '24px',
-                    background: STORY_COLORS.neutral.backgroundLight,
+                    background: STORY_COLORS.themed.background.surface,
                     borderRadius: '8px',
-                    border: `2px solid ${STORY_COLORS.neutral.borderMedium}`,
+                    border: `2px solid ${STORY_COLORS.themed.border.default}`,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -537,19 +516,16 @@ export const PropAs: Story = {
                   }}
                 >
                   <Icon as={element} name="star" size="lg" />
-                  <div style={{ fontSize: '12px', fontWeight: 600, color: NEUTRAL.textSlate }}>{element}</div>
+                  <div style={{ fontSize: '12px', fontWeight: 600, color: STORY_COLORS.themed.text.secondary }}>
+                    {element}
+                  </div>
                 </div>
               </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(selectedElement)}
-            language="jsx"
-            title="JSX"
-            subtitle={`as="${selectedElement}"`}
-          />
+          <CodeBlock code={generateCode('span')} language="jsx" title="JSX" subtitle='as="span"' />
         </div>
       </StoryContainer>
     );
@@ -576,7 +552,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
                 display: 'flex',
                 gap: '16px',
@@ -585,7 +561,7 @@ export const CombinedVariants: Story = {
               <button
                 style={{
                   padding: '12px 16px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -600,7 +576,7 @@ export const CombinedVariants: Story = {
               <button
                 style={{
                   padding: '12px 16px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -692,7 +668,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
                 display: 'flex',
                 gap: '12px',
@@ -702,7 +678,7 @@ export const CombinedVariants: Story = {
               <button
                 style={{
                   padding: '10px 16px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -717,7 +693,7 @@ export const CombinedVariants: Story = {
               <button
                 style={{
                   padding: '10px 16px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -748,7 +724,7 @@ export const CombinedVariants: Story = {
               <button
                 style={{
                   padding: '10px 16px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -769,7 +745,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
                 display: 'flex',
                 gap: '8px',
@@ -779,7 +755,7 @@ export const CombinedVariants: Story = {
                 title="Settings"
                 style={{
                   padding: '8px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -791,7 +767,7 @@ export const CombinedVariants: Story = {
                 title="Search"
                 style={{
                   padding: '8px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -803,7 +779,7 @@ export const CombinedVariants: Story = {
                 title="Menu"
                 style={{
                   padding: '8px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   borderRadius: '6px',
                   background: STORY_COLORS.themed.background.surface,
                   cursor: 'pointer',
@@ -820,7 +796,7 @@ export const CombinedVariants: Story = {
             <div
               style={{
                 padding: '24px',
-                background: STORY_COLORS.neutral.backgroundLight,
+                background: STORY_COLORS.themed.background.surface,
                 borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
@@ -829,23 +805,23 @@ export const CombinedVariants: Story = {
             >
               <div style={{ textAlign: 'center' }}>
                 <Icon name="star" size="xs" color="warning" />
-                <div style={{ marginTop: '4px', fontSize: '10px', color: NEUTRAL.textSlate }}>XS</div>
+                <div style={{ marginTop: '4px', fontSize: '10px', color: STORY_COLORS.themed.text.secondary }}>XS</div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <Icon name="star" size="sm" color="warning" />
-                <div style={{ marginTop: '4px', fontSize: '11px', color: NEUTRAL.textSlate }}>SM</div>
+                <div style={{ marginTop: '4px', fontSize: '11px', color: STORY_COLORS.themed.text.secondary }}>SM</div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <Icon name="star" size="md" color="warning" />
-                <div style={{ marginTop: '4px', fontSize: '12px', color: NEUTRAL.textSlate }}>MD</div>
+                <div style={{ marginTop: '4px', fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>MD</div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <Icon name="star" size="lg" color="warning" />
-                <div style={{ marginTop: '4px', fontSize: '13px', color: NEUTRAL.textSlate }}>LG</div>
+                <div style={{ marginTop: '4px', fontSize: '13px', color: STORY_COLORS.themed.text.secondary }}>LG</div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <Icon name="star" size="xl" color="warning" />
-                <div style={{ marginTop: '4px', fontSize: '14px', color: NEUTRAL.textSlate }}>XL</div>
+                <div style={{ marginTop: '4px', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>XL</div>
               </div>
             </div>
           </section>
@@ -886,7 +862,7 @@ export const RealWorldPatterns: Story = {
                   style={{
                     width: '64px',
                     height: '64px',
-                    background: NEUTRAL.backgroundMedium,
+                    background: STORY_COLORS.themed.background.surface,
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -897,7 +873,7 @@ export const RealWorldPatterns: Story = {
                 </div>
                 <div>
                   <div style={{ fontSize: '18px', fontWeight: 600 }}>Jane Doe</div>
-                  <div style={{ fontSize: '14px', color: NEUTRAL.textSlate }}>Product Designer</div>
+                  <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>Product Designer</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -905,7 +881,7 @@ export const RealWorldPatterns: Story = {
                   style={{
                     flex: 1,
                     padding: '10px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                     borderRadius: '6px',
                     background: STORY_COLORS.themed.background.surface,
                     cursor: 'pointer',
@@ -921,7 +897,7 @@ export const RealWorldPatterns: Story = {
                 <button
                   style={{
                     padding: '10px',
-                    border: `1px solid ${NEUTRAL.borderMedium}`,
+                    border: `1px solid ${STORY_COLORS.themed.border.default}`,
                     borderRadius: '6px',
                     background: STORY_COLORS.themed.background.surface,
                     cursor: 'pointer',
@@ -950,7 +926,7 @@ export const RealWorldPatterns: Story = {
                   key={file}
                   style={{
                     padding: '16px 24px',
-                    borderBottom: idx < 2 ? `1px solid ${NEUTRAL.borderLight}` : 'none',
+                    borderBottom: idx < 2 ? `1px solid ${STORY_COLORS.themed.border.default}` : 'none',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',

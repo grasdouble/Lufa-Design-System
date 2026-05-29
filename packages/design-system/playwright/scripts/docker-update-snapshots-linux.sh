@@ -82,7 +82,6 @@ docker run --rm \
   -v /workspace/packages/design-system/playwright/node_modules \
   -v /workspace/packages/design-system/main/node_modules \
   -v /workspace/packages/design-system/tokens/node_modules \
-  -v /workspace/packages/design-system/primitives/node_modules \
   -w "/workspace" \
   "$DOCKER_IMAGE" \
   bash -c '
@@ -99,9 +98,9 @@ docker run --rm \
     pnpm ds:main:build
     
     echo ""
-    echo "🎭 Running Playwright component tests with --update-snapshots..."
+    echo "🎭 Running Playwright component tests with --update-snapshots=all + compression..."
     cd /workspace/packages/design-system/playwright
-    pnpm test-ct --update-snapshots
+    pnpm test-ct:update-snapshots
     
     echo ""
     echo "✅ Linux snapshots generated successfully!"

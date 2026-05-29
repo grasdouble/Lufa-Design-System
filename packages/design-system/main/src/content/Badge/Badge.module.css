@@ -24,6 +24,7 @@
   text-align: center;
   white-space: nowrap;
   border-radius: var(--lufa-component-badge-border-radius);
+  border: 1px solid transparent;
   user-select: none;
 }
 
@@ -34,26 +35,31 @@
 .variant-default {
   background-color: var(--lufa-component-badge-variant-default-background);
   color: var(--lufa-component-badge-variant-default-text);
+  border-color: var(--lufa-component-badge-variant-default-border);
 }
 
 .variant-success {
   background-color: var(--lufa-component-badge-variant-success-background);
   color: var(--lufa-component-badge-variant-success-text);
+  border-color: var(--lufa-component-badge-variant-success-border);
 }
 
 .variant-danger {
   background-color: var(--lufa-component-badge-variant-error-background);
   color: var(--lufa-component-badge-variant-error-text);
+  border-color: var(--lufa-component-badge-variant-error-border);
 }
 
 .variant-warning {
   background-color: var(--lufa-component-badge-variant-warning-background);
   color: var(--lufa-component-badge-variant-warning-text);
+  border-color: var(--lufa-component-badge-variant-warning-border);
 }
 
 .variant-info {
   background-color: var(--lufa-component-badge-variant-info-background);
   color: var(--lufa-component-badge-variant-info-text);
+  border-color: var(--lufa-component-badge-variant-info-border);
 }
 
 /* ========================================== */

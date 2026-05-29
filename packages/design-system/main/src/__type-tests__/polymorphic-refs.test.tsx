@@ -10,6 +10,7 @@
 import { useRef } from 'react';
 
 import { Icon } from '../content/Icon/Icon';
+import { Link } from '../content/Link/Link';
 import { Text } from '../content/Text/Text';
 import { Box } from '../foundation/Box/Box';
 import { Divider } from '../foundation/Divider/Divider';
@@ -148,6 +149,36 @@ export function DividerRefTests() {
   // ✅ As div
   const divRef = useRef<HTMLDivElement>(null);
   <Divider as="div" ref={divRef} orientation="vertical" />;
+}
+
+/**
+ * Test: Link component with different `as` props
+ */
+export function LinkRefTests() {
+  // ✅ Default element (a)
+  const anchorRef = useRef<HTMLAnchorElement>(null);
+  <Link href="https://example.com" ref={anchorRef}>
+    Example
+  </Link>;
+
+  // ✅ As span (for router links)
+  const spanRef = useRef<HTMLSpanElement>(null);
+  <Link as="span" ref={spanRef} variant="plain">
+    Span link
+  </Link>;
+
+  // ✅ Ref callback for anchor
+  <Link
+    href="/home"
+    ref={(node) => {
+      if (node) {
+        // node should be HTMLAnchorElement for default 'a'
+        const _test: HTMLAnchorElement = node;
+      }
+    }}
+  >
+    Home
+  </Link>;
 }
 
 /**

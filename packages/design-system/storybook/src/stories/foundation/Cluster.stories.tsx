@@ -1,12 +1,9 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Cluster } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { getColorByIndex, STORY_COLORS } from '../../constants/storyColors';
-
-const NEUTRAL = STORY_COLORS.neutral;
 
 /**
  * Cluster - Layout Primitive for Wrapping Collections
@@ -182,8 +179,6 @@ export const Playground: Story = {
  */
 export const PropSpacing: Story = {
   render: () => {
-    const [hoveredSpacing, setHoveredSpacing] = React.useState<string>('default');
-
     const spacingValues = [
       { value: 'tight' as const, size: '4px', color: STORY_COLORS.primary.cyan.main },
       { value: 'compact' as const, size: '8px', color: STORY_COLORS.primary.green.main },
@@ -206,37 +201,30 @@ export const PropSpacing: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
             {spacingValues.map(({ value, size, color }) => (
-              <div key={value} onMouseEnter={() => setHoveredSpacing(value)}>
-                <PropCard label={`spacing="${value}" (${size})`} highlight={hoveredSpacing === value}>
-                  <Cluster spacing={value}>
-                    {['React', 'TS', 'Next', 'Tailwind', 'CSS'].map((tag) => (
-                      <div
-                        key={tag}
-                        style={{
-                          padding: '6px 12px',
-                          background: color,
-                          color: 'white',
-                          borderRadius: '16px',
-                          fontSize: '12px',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {tag}
-                      </div>
-                    ))}
-                  </Cluster>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`spacing="${value}" (${size})`}>
+                <Cluster spacing={value}>
+                  {['React', 'TS', 'Next', 'Tailwind', 'CSS'].map((tag) => (
+                    <div
+                      key={tag}
+                      style={{
+                        padding: '6px 12px',
+                        background: color,
+                        color: 'white',
+                        borderRadius: '16px',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {tag}
+                    </div>
+                  ))}
+                </Cluster>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredSpacing)}
-            language="jsx"
-            title="JSX"
-            subtitle={`spacing="${hoveredSpacing}"`}
-          />
+          <CodeBlock code={generateCode('default')} language="jsx" title="JSX" subtitle='spacing="default"' />
         </div>
       </StoryContainer>
     );
@@ -254,8 +242,6 @@ export const PropSpacing: Story = {
  */
 export const PropAlign: Story = {
   render: () => {
-    const [hoveredAlign, setHoveredAlign] = React.useState<string>('center');
-
     const alignValues = ['flex-start', 'center', 'flex-end', 'baseline', 'stretch'] as const;
 
     const generateCode = (align: string): string => {
@@ -272,66 +258,59 @@ export const PropAlign: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             {alignValues.map((value) => (
-              <div key={value} onMouseEnter={() => setHoveredAlign(value)}>
-                <PropCard label={`align="${value}"`} highlight={hoveredAlign === value}>
-                  <div style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px' }}>
-                    <Cluster align={value} spacing="default">
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.blue.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '40px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        40px
-                      </div>
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.violet.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '60px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        60px
-                      </div>
-                      <div
-                        style={{
-                          padding: '12px',
-                          background: STORY_COLORS.primary.pink.main,
-                          color: 'white',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          height: '50px',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        50px
-                      </div>
-                    </Cluster>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`align="${value}"`}>
+                <div style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px' }}>
+                  <Cluster align={value} spacing="default">
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.blue.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      40px
+                    </div>
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.violet.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '60px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      60px
+                    </div>
+                    <div
+                      style={{
+                        padding: '12px',
+                        background: STORY_COLORS.primary.pink.main,
+                        color: 'white',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      50px
+                    </div>
+                  </Cluster>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredAlign)}
-            language="jsx"
-            title="JSX"
-            subtitle={`align="${hoveredAlign}"`}
-          />
+          <CodeBlock code={generateCode('center')} language="jsx" title="JSX" subtitle='align="center"' />
         </div>
       </StoryContainer>
     );
@@ -349,8 +328,6 @@ export const PropAlign: Story = {
  */
 export const PropJustify: Story = {
   render: () => {
-    const [hoveredJustify, setHoveredJustify] = React.useState<string>('flex-start');
-
     const justifyValues = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around'] as const;
 
     const generateCode = (justify: string): string => {
@@ -367,42 +344,35 @@ export const PropJustify: Story = {
           {/* Grid of examples */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
             {justifyValues.map((value, idx) => (
-              <div key={value} onMouseEnter={() => setHoveredJustify(value)}>
-                <PropCard label={`justify="${value}"`} highlight={hoveredJustify === value}>
-                  <div style={{ border: `2px dashed ${STORY_COLORS.neutral.borderMedium}`, padding: '8px' }}>
-                    <Cluster justify={value} spacing={value.startsWith('space') ? 'tight' : 'default'}>
-                      {[1, 2, 3].map((i) => {
-                        const color = getColorByIndex(idx);
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              padding: '10px 14px',
-                              background: color.main,
-                              color: 'white',
-                              borderRadius: '6px',
-                              fontWeight: 600,
-                              fontSize: '13px',
-                            }}
-                          >
-                            Item {i}
-                          </div>
-                        );
-                      })}
-                    </Cluster>
-                  </div>
-                </PropCard>
-              </div>
+              <PropCard key={value} label={`justify="${value}"`}>
+                <div style={{ border: `2px dashed ${STORY_COLORS.themed.border.default}`, padding: '8px' }}>
+                  <Cluster justify={value} spacing={value.startsWith('space') ? 'tight' : 'default'}>
+                    {[1, 2, 3].map((i) => {
+                      const color = getColorByIndex(idx);
+                      return (
+                        <div
+                          key={i}
+                          style={{
+                            padding: '10px 14px',
+                            background: color.main,
+                            color: 'white',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                            fontSize: '13px',
+                          }}
+                        >
+                          Item {i}
+                        </div>
+                      );
+                    })}
+                  </Cluster>
+                </div>
+              </PropCard>
             ))}
           </div>
 
           {/* Code block */}
-          <CodeBlock
-            code={generateCode(hoveredJustify)}
-            language="jsx"
-            title="JSX"
-            subtitle={`justify="${hoveredJustify}"`}
-          />
+          <CodeBlock code={generateCode('flex-start')} language="jsx" title="JSX" subtitle='justify="flex-start"' />
         </div>
       </StoryContainer>
     );
@@ -426,7 +396,7 @@ export const UseCases: Story = {
           {/* Use Case 1: Tag Collection */}
           <section>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: 600 }}>Tags Collection</h3>
-            <p style={{ margin: '0 0 16px 0', color: NEUTRAL.textSlate, fontSize: '14px' }}>
+            <p style={{ margin: '0 0 16px 0', color: STORY_COLORS.themed.text.secondary, fontSize: '14px' }}>
               Perfect for displaying skill tags, categories, or filters.
             </p>
             <Cluster spacing="compact">
@@ -462,7 +432,7 @@ export const UseCases: Story = {
           {/* Use Case 2: Button Group */}
           <section>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: 600 }}>Button Group</h3>
-            <p style={{ margin: '0 0 16px 0', color: NEUTRAL.textSlate, fontSize: '14px' }}>
+            <p style={{ margin: '0 0 16px 0', color: STORY_COLORS.themed.text.secondary, fontSize: '14px' }}>
               Group action buttons with proper spacing and alignment.
             </p>
             <Cluster spacing="default" align="center">
@@ -496,9 +466,9 @@ export const UseCases: Story = {
                 style={{
                   padding: '10px 20px',
                   borderRadius: '6px',
-                  border: `1px solid ${NEUTRAL.borderMedium}`,
+                  border: `1px solid ${STORY_COLORS.themed.border.default}`,
                   background: STORY_COLORS.themed.background.surface,
-                  color: NEUTRAL.textSlate,
+                  color: STORY_COLORS.themed.text.secondary,
                   fontWeight: 600,
                   cursor: 'pointer',
                 }}
@@ -520,7 +490,7 @@ export const UseCases: Story = {
           {/* Use Case 3: Badges with Status */}
           <section>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: 600 }}>Status Badges</h3>
-            <p style={{ margin: '0 0 16px 0', color: NEUTRAL.textSlate, fontSize: '14px' }}>
+            <p style={{ margin: '0 0 16px 0', color: STORY_COLORS.themed.text.secondary, fontSize: '14px' }}>
               Display status indicators or labels that wrap naturally.
             </p>
             <Cluster spacing="compact" align="center">
@@ -529,7 +499,7 @@ export const UseCases: Story = {
                 { label: 'In Review', color: STORY_COLORS.primary.cyan.main },
                 { label: 'Approved', color: STORY_COLORS.primary.blue.main },
                 { label: 'Completed', color: STORY_COLORS.primary.violet.main },
-                { label: 'Archived', color: NEUTRAL.textSlate },
+                { label: 'Archived', color: STORY_COLORS.themed.text.secondary },
               ].map(({ label, color }) => (
                 <div
                   key={label}
@@ -562,7 +532,7 @@ export const UseCases: Story = {
           {/* Use Case 4: Centered Navigation Links */}
           <section>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: 600 }}>Centered Navigation</h3>
-            <p style={{ margin: '0 0 16px 0', color: NEUTRAL.textSlate, fontSize: '14px' }}>
+            <p style={{ margin: '0 0 16px 0', color: STORY_COLORS.themed.text.secondary, fontSize: '14px' }}>
               Center-aligned navigation links that wrap on smaller screens.
             </p>
             <Cluster as="nav" spacing="comfortable" align="center" justify="center">
@@ -686,14 +656,14 @@ export const MigrationFromChakra: Story = {
             <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: 600 }}>Key Differences</h3>
             <div
               style={{
-                border: `1px solid ${NEUTRAL.borderMedium}`,
+                border: `1px solid ${STORY_COLORS.themed.border.default}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
               }}
             >
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: NEUTRAL.backgroundLight }}>
+                  <tr style={{ background: STORY_COLORS.themed.background.surface }}>
                     <th style={{ padding: '12px', textAlign: 'left', fontWeight: 600, fontSize: '14px' }}>Feature</th>
                     <th style={{ padding: '12px', textAlign: 'left', fontWeight: 600, fontSize: '14px' }}>
                       Chakra Wrap
@@ -705,36 +675,46 @@ export const MigrationFromChakra: Story = {
                 </thead>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>Wrapper</td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      Wrapper
+                    </td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       Requires <code>WrapItem</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       ✅ No wrapper needed
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>Spacing</td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      Spacing
+                    </td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       Numeric values (2, 4, 6)
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       ✅ Semantic tokens
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>Props</td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      Props
+                    </td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       spacing, align, justify
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>✅ Same props</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      ✅ Same props
+                    </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>Behavior</td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      Behavior
+                    </td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       Automatic wrapping
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       ✅ Automatic wrapping
                     </td>
                   </tr>
@@ -748,14 +728,14 @@ export const MigrationFromChakra: Story = {
             <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: 600 }}>Spacing Value Mapping</h3>
             <div
               style={{
-                border: `1px solid ${NEUTRAL.borderMedium}`,
+                border: `1px solid ${STORY_COLORS.themed.border.default}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
               }}
             >
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: NEUTRAL.backgroundLight }}>
+                  <tr style={{ background: STORY_COLORS.themed.background.surface }}>
                     <th style={{ padding: '12px', textAlign: 'left', fontWeight: 600, fontSize: '14px' }}>
                       Chakra spacing
                     </th>
@@ -769,49 +749,59 @@ export const MigrationFromChakra: Story = {
                 </thead>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing={'{2}'}</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing="tight"</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>4px</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      4px
+                    </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing={'{4}'}</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing="compact"</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>8px</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      8px
+                    </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing={'{6}'}</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing="default"</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>16px</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      16px
+                    </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing={'{8}'}</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing="comfortable"</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>24px</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      24px
+                    </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing={'{10}'}</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
                       <code>spacing="spacious"</code>
                     </td>
-                    <td style={{ padding: '12px', borderTop: `1px solid ${NEUTRAL.borderLight}` }}>32px</td>
+                    <td style={{ padding: '12px', borderTop: `1px solid ${STORY_COLORS.themed.border.default}` }}>
+                      32px
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -821,7 +811,7 @@ export const MigrationFromChakra: Story = {
           {/* Live Example */}
           <section>
             <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: 600 }}>Live Example</h3>
-            <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: NEUTRAL.textSlate }}>
+            <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
               This is how your Chakra Wrap translates to Lufa Cluster:
             </p>
             <Cluster spacing="compact">
