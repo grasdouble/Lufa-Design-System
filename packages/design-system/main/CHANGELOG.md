@@ -1,5 +1,22 @@
 # @grasdouble/lufa_design-system
 
+## 3.4.0
+
+### Minor Changes
+
+- c714876: feat: add Link component — polymorphic inline anchor with variants, semantic colors, focus ring, and auto rel for target=\_blank
+
+  refactor: simplify PropCard helper — remove all interaction props (click, hover, highlight); PropCard is now a static display-only component with label and children
+
+### Patch Changes
+
+- c714876: fix: feedback subtle backgrounds in high-contrast mode now use black (#000000) instead of light pastel colors — ensures WCAG AA contrast ratio (≥4.5:1) for success, danger, warning, and info badge variants in high-contrast mode
+
+  fix: cyberpunk theme — add explicit neutral-surface-active overrides in light (#ff99ff) and high-contrast (#000000) modes to prevent HC-leaked token value causing WCAG AA contrast failures on solid/outline neutral button active states
+
+- Updated dependencies [c714876]
+  - @grasdouble/lufa_design-system-tokens@1.2.7
+
 ## 3.3.1
 
 ### Patch Changes

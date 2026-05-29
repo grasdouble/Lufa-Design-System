@@ -1,5 +1,19 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.4
+
+### Patch Changes
+
+- c714876: feat: add Link component — polymorphic inline anchor with variants, semantic colors, focus ring, and auto rel for target=\_blank
+
+  refactor: simplify PropCard helper — remove all interaction props (click, hover, highlight); PropCard is now a static display-only component with label and children
+
+- Updated dependencies [c714876]
+- Updated dependencies [c714876]
+  - @grasdouble/lufa_design-system@3.4.0
+  - @grasdouble/lufa_design-system-tokens@1.2.7
+  - @grasdouble/lufa_design-system-themes@1.1.7
+
 ## 1.3.3
 
 ### Patch Changes
