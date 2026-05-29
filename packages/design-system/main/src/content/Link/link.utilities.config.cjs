@@ -84,7 +84,7 @@ module.exports = {
         outline:
           'var(--lufa-component-shared-focus-outline-width) solid var(--lufa-component-shared-focus-outline-color)',
         'outline-offset': 'var(--lufa-component-shared-focus-outline-offset)',
-        'border-radius': 'var(--lufa-primitive-radius-scale-xs)',
+        'border-radius': 'var(--lufa-semantic-ui-border-radius-small)',
       },
     },
   ],

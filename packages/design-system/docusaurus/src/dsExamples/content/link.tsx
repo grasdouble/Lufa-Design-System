@@ -203,10 +203,7 @@ export function ExternalLinks() {
         }}
       >
         <Text as="p" variant="body">
-          <Link href="/about">
-            About page
-          </Link>{' '}
-          (same tab, no rel)
+          <Link href="/about">About page</Link> (same tab, no rel)
         </Text>
       </div>
     </div>

@@ -167,11 +167,16 @@ const LinkImpl = <T extends ElementType = 'a'>(
     className
   );
 
-  // Only spread anchor-specific props when rendering as an anchor (href present)
-  const anchorProps = href !== undefined ? { href, target, rel: resolvedRel } : {};
+  // Spread anchor props only when rendering as a native <a> or a custom component.
+  // Native non-anchor elements (e.g. span, button) must not receive href/target/rel.
+  const isNativeAnchor = typeof Component === 'string' ? Component === 'a' : true;
+  const anchorProps = isNativeAnchor && href !== undefined ? { href, target, rel: resolvedRel } : {};
+
+  // Default type="button" for native <button> to prevent accidental form submission.
+  const buttonProps = Component === 'button' && !('type' in htmlProps) ? { type: 'button' as const } : {};
 
   return (
-    <Component ref={ref as React.Ref<never>} className={linkClassName} {...anchorProps} {...htmlProps}>
+    <Component ref={ref as React.Ref<never>} className={linkClassName} {...buttonProps} {...anchorProps} {...htmlProps}>
       {children}
     </Component>
   );

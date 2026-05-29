@@ -21,7 +21,10 @@
   font-size: inherit;
   font-weight: inherit;
   text-decoration: none;
-  transition: border-color var(--lufa-semantic-ui-transition-duration-fast) var(--lufa-semantic-ui-transition-timing-function-default), color var(--lufa-semantic-ui-transition-duration-fast) var(--lufa-semantic-ui-transition-timing-function-default);
+  transition:
+    border-color var(--lufa-semantic-ui-transition-duration-fast)
+      var(--lufa-semantic-ui-transition-timing-function-default),
+    color var(--lufa-semantic-ui-transition-duration-fast) var(--lufa-semantic-ui-transition-timing-function-default);
 }
 
 /* ========================================== */
@@ -100,5 +103,5 @@
 .link:focus-visible {
   outline: var(--lufa-component-shared-focus-outline-width) solid var(--lufa-component-shared-focus-outline-color);
   outline-offset: var(--lufa-component-shared-focus-outline-offset);
-  border-radius: var(--lufa-primitive-radius-scale-xs);
+  border-radius: var(--lufa-semantic-ui-border-radius-small);
 }

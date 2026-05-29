@@ -199,13 +199,19 @@ test.describe('Link Component', () => {
 
   test.describe('Polymorphic', () => {
     test('should render as span when as="span"', async ({ mount }) => {
+      const component = await mount(<Link as="span">Span link</Link>);
+      const tagName = await component.evaluate((el) => el.tagName.toLowerCase());
+      expect(tagName).toBe('span');
+    });
+
+    test('should not spread href/target/rel onto a native non-anchor element', async ({ mount }) => {
       const component = await mount(
         <Link as="span" href="https://example.com">
           Span link
         </Link>
       );
-      const tagName = await component.evaluate((el) => el.tagName.toLowerCase());
-      expect(tagName).toBe('span');
+      const href = await component.getAttribute('href');
+      expect(href).toBeNull();
     });
 
     test('should render as button when as="button"', async ({ mount }) => {
@@ -216,6 +222,22 @@ test.describe('Link Component', () => {
       );
       const tagName = await component.evaluate((el) => el.tagName.toLowerCase());
       expect(tagName).toBe('button');
+    });
+
+    test('should default to type="button" when as="button" to prevent form submission', async ({ mount }) => {
+      const component = await mount(<Link as="button">Button link</Link>);
+      const type = await component.getAttribute('type');
+      expect(type).toBe('button');
+    });
+
+    test('should respect explicit type when as="button"', async ({ mount }) => {
+      const component = await mount(
+        <Link as="button" type="submit">
+          Submit
+        </Link>
+      );
+      const type = await component.getAttribute('type');
+      expect(type).toBe('submit');
     });
   });
 

@@ -70,9 +70,14 @@ export function Example() {
   return (
     <Text as="p" variant="body-large" color="secondary">
       My work is split between{' '}
-      <Link href="https://github.com/noofreuuuh" target="_blank">noofreuuuh</Link>
-      {' '}and{' '}
-      <Link href="https://github.com/smouillour" target="_blank">smouillour</Link>.
+      <Link href="https://github.com/noofreuuuh" target="_blank">
+        noofreuuuh
+      </Link>{' '}
+      and{' '}
+      <Link href="https://github.com/smouillour" target="_blank">
+        smouillour
+      </Link>
+      .
     </Text>
   );
 }
@@ -80,16 +85,16 @@ export function Example() {
 
 ## Props
 
-| Prop        | Type                                                                            | Default                                             | Description                                                   |
-| ----------- | ------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------- |
-| `href`      | `string`                                                                        | —                                                   | Destination URL                                     |
-| `target`    | `'_self' \| '_blank'`                                                           | `'_self'`                                           | Where to open the URL                               |
-| `rel`       | `string`                                                                        | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                                       |
-| `variant`   | `'default' \| 'subtle' \| 'plain'`                                              | `'default'`                                         | Visual style variant                                |
-| `color`     | `'primary' \| 'secondary' \| 'tertiary'` <br/> `\| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'`; `'secondary'` for `subtle` variant | Text color (semantic tokens) |
-| `as`        | `ElementType`                                                                   | `'a'`                                               | Polymorphic root element (for router links)         |
-| `children`  | `React.ReactNode`                                                               | required                                            | Link text content                                   |
-| `className` | `string`                                                                        | `undefined`                                         | Additional CSS classes                              |
+| Prop        | Type                                                                                                         | Default                                             | Description                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- | ------------------------------------------- |
+| `href`      | `string`                                                                                                     | —                                                   | Destination URL                             |
+| `target`    | `'_self' \| '_blank'`                                                                                        | `'_self'`                                           | Where to open the URL                       |
+| `rel`       | `string`                                                                                                     | auto `'noopener noreferrer'` when `target='_blank'` | Rel attribute                               |
+| `variant`   | `'default' \| 'subtle' \| 'plain'`                                                                           | `'default'`                                         | Visual style variant                        |
+| `color`     | `'primary' \| 'secondary' \| 'tertiary'` <br/> `\| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'` | `'primary'`; `'secondary'` for `subtle` variant     | Text color (semantic tokens)                |
+| `as`        | `ElementType`                                                                                                | `'a'`                                               | Polymorphic root element (for router links) |
+| `children`  | `React.ReactNode`                                                                                            | —                                                   | Link text content                           |
+| `className` | `string`                                                                                                     | `undefined`                                         | Additional CSS classes                      |
 
 ## Variants
 
@@ -98,7 +103,9 @@ export function Example() {
 Colored text with an animated `border-bottom` that appears on hover. Ideal for links inside body text where the hover interaction helps users discover clickable content.
 
 ```tsx
-<Link href="https://example.com" variant="default">Default link</Link>
+<Link href="https://example.com" variant="default">
+  Default link
+</Link>
 ```
 
 ### `subtle`
@@ -106,7 +113,9 @@ Colored text with an animated `border-bottom` that appears on hover. Ideal for l
 Same animated hover behavior as `default`, but defaults to secondary text color. Use for de-emphasized links that shouldn't draw strong visual attention.
 
 ```tsx
-<Link href="https://example.com" variant="subtle">Subtle link</Link>
+<Link href="https://example.com" variant="subtle">
+  Subtle link
+</Link>
 ```
 
 ### `plain`
@@ -114,7 +123,9 @@ Same animated hover behavior as `default`, but defaults to secondary text color.
 No underline. Color only. Use for links inside buttons, badges, or any context where the underline would be visually disruptive.
 
 ```tsx
-<Link href="https://example.com" variant="plain">Plain link</Link>
+<Link href="https://example.com" variant="plain">
+  Plain link
+</Link>
 ```
 
 ## Security — External Links
@@ -151,8 +162,7 @@ The Link component inherits `font-size` and `font-weight` from its parent, makin
 
 ```tsx
 <Text as="p" variant="body-large" weight="semibold">
-  Learn more in our{' '}
-  <Link href="/docs">documentation</Link>
+  Learn more in our <Link href="/docs">documentation</Link>
   {/* Link will be body-large, semibold — inherited from Text */}
 </Text>
 ```
@@ -170,10 +180,7 @@ import { Link, Text } from '@grasdouble/lufa_design-system';
 export function AccessibleLinks() {
   return (
     <Text as="p" variant="body">
-      Read the{' '}
-      <Link href="/terms">Terms of Service</Link>
-      {' '}and{' '}
-      <Link href="/privacy">Privacy Policy</Link>.
+      Read the <Link href="/terms">Terms of Service</Link> and <Link href="/privacy">Privacy Policy</Link>.
     </Text>
   );
 }

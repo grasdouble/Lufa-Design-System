@@ -240,6 +240,7 @@ export const PropColor: Story = {
       { value: 'error' as const, label: 'Error' },
       { value: 'warning' as const, label: 'Warning' },
       { value: 'info' as const, label: 'Info' },
+      { value: 'inverse' as const, label: 'Inverse' },
     ];
 
     return (

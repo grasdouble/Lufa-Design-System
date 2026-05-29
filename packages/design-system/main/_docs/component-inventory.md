@@ -8,7 +8,7 @@
 
 ## Overview
 
-The Lufa Design System v2.0 contains **17 production-ready React components** built on a **role-based component architecture** (foundation → content → interaction → composition → utility) and a **four-level token architecture**. All components are WCAG 2.1 AA compliant, fully typed with TypeScript 5.9, and tested with Playwright Component Testing.
+The Lufa Design System v2.0 contains **8 production-ready React components** in the `content` category, built on a **role-based component architecture** (foundation → content → interaction → composition → utility) and a **four-level token architecture**. All components are WCAG 2.1 AA compliant, fully typed with TypeScript 5.9, and tested with Playwright Component Testing.
 
 **Status**: 8/8 content components complete (100% complete)
 
