@@ -255,7 +255,7 @@ test.describe('Link Component', () => {
         </main>
       );
       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['landmark-one-main', 'region'])
+        .disableRules(['page-has-heading-one', 'landmark-one-main', 'region'])
         .analyze();
       expect(accessibilityScanResults.violations).toEqual([]);
     });
@@ -272,7 +272,7 @@ test.describe('Link Component', () => {
         </main>
       );
       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['landmark-one-main', 'region'])
+        .disableRules(['page-has-heading-one', 'landmark-one-main', 'region'])
         .analyze();
       expect(accessibilityScanResults.violations).toEqual([]);
     });

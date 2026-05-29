@@ -334,13 +334,13 @@ jobs:
           **Run tests locally:**
           \`\`\`bash
           # Run component tests
-          pnpm ds:test:ci
+          pnpm --filter @grasdouble/lufa_design-system-playwright test
 
           # Update snapshots if changes are intentional
-          pnpm ds:test:update-snapshots
+          pnpm --filter @grasdouble/lufa_design-system-playwright test-ct:update-snapshots
 
           # Run tests in UI mode for debugging
-          pnpm ds:test:ui
+          pnpm --filter @grasdouble/lufa_design-system-playwright test-ct:ui
           \`\`\`
 
           EOF
