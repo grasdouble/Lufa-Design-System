@@ -12,4 +12,4 @@ export { Label } from './Label';
 export type { LabelProps } from './Label';
 
 export { Select } from './Select';
-export type { SelectProps, SizeValue as SelectSizeValue } from './Select';
+export type { SelectProps, SelectSizeValue } from './Select';

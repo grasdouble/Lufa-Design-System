@@ -48,7 +48,7 @@ SelectOption.displayName = 'Select.Option';
  * ```
  */
 
-export type SizeValue = 'sm' | 'md' | 'lg';
+export type SelectSizeValue = 'sm' | 'md' | 'lg';
 
 export type SelectProps = {
   /**
@@ -59,7 +59,7 @@ export type SelectProps = {
 
   /**
    * Placeholder text shown when no value is selected.
-   * Rendered as a disabled empty option.
+   * Rendered as a hidden disabled option.
    */
   placeholder?: string;
 
@@ -84,7 +84,7 @@ export type SelectProps = {
    * Size variant
    * @default 'md'
    */
-  size?: SizeValue;
+  size?: SelectSizeValue;
 
   /**
    * Additional CSS classes applied to the select element
@@ -120,7 +120,7 @@ const SelectImpl = forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
         >
           {placeholder !== undefined && (
-            <option value="" disabled>
+            <option value="" disabled hidden>
               {placeholder}
             </option>
           )}
