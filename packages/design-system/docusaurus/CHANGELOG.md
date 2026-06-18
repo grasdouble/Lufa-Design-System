@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-docusaurus
 
+## 1.3.3
+
+### Patch Changes
+
+- 9b72810: fix: docusaurus config
+
 ## 1.3.2
 
 ### Patch Changes
