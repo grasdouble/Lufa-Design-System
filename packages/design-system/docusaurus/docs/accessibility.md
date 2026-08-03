@@ -145,7 +145,7 @@ import { Button } from '@grasdouble/lufa_design-system';
 // Playwright component tests include a11y checks
 test('should have accessible structure', async ({ mount }) => {
   const component = await mount(
-    <Button type="solid" variant="primary">
+    <Button appearance="solid" variant="primary">
       Click me
     </Button>
   );
@@ -292,18 +292,25 @@ All Lufa components have clear focus indicators:
 }
 ```
 
-### Focus Trap
+### Dialog Focus
 
-For modals and overlays:
+Lufa does not currently export a modal component. Use the platform `<dialog>` element or a dedicated accessible dialog library, then compose Lufa controls inside it:
 
 ```tsx
-import { Modal } from '@grasdouble/lufa_design-system';
+const dialogRef = React.useRef<HTMLDialogElement>(null);
 
-<Modal open={isOpen} onClose={handleClose}>
-  <button>First focusable</button>
-  <button>Last focusable</button>
-</Modal>;
+<button type="button" onClick={() => dialogRef.current?.showModal()}>
+  Open settings
+</button>
+<dialog ref={dialogRef} aria-labelledby="settings-title">
+  <h2 id="settings-title">Settings</h2>
+  <button type="button" onClick={() => dialogRef.current?.close()}>
+    Close
+  </button>
+</dialog>;
 ```
+
+Return focus to the opener after closing when your dialog implementation does not do so automatically.
 
 ## Reduced Motion
 
@@ -347,5 +354,5 @@ Respect user's motion preferences:
 - [Testing Guide](/docs/guides/testing) - Test your implementations
 
 :::tip Get Help
-If you encounter accessibility issues or have questions, please [open an issue](https://github.com/grasdouble/Lufa/issues) on GitHub.
+If you encounter accessibility issues or have questions, please [open an issue](https://github.com/grasdouble/Lufa-Design-System/issues) on GitHub.
 :::

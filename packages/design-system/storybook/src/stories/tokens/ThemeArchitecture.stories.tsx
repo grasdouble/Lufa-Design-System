@@ -883,22 +883,22 @@ export const ComponentExamples: Story = {
             border: '1px solid var(--lufa-semantic-ui-border-default)',
           }}
         >
-          <Button type="solid" variant="primary">
+          <Button appearance="solid" variant="primary">
             Primary Button
           </Button>
-          <Button type="solid" variant="secondary">
+          <Button appearance="solid" variant="secondary">
             Secondary Button
           </Button>
-          <Button type="solid" variant="success">
+          <Button appearance="solid" variant="success">
             Success Button
           </Button>
-          <Button type="solid" variant="danger">
+          <Button appearance="solid" variant="danger">
             Danger Button
           </Button>
-          <Button type="outline" variant="primary">
+          <Button appearance="outline" variant="primary">
             Outline Button
           </Button>
-          <Button type="ghost" variant="primary">
+          <Button appearance="ghost" variant="primary">
             Ghost Button
           </Button>
         </div>
@@ -1036,7 +1036,7 @@ export const ComponentExamples: Story = {
               borderRadius: '8px',
               backgroundColor: 'var(--lufa-component-card-background)',
               border: '1px solid var(--lufa-component-card-border)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
             }}
           >
             <div
@@ -1066,7 +1066,7 @@ export const ComponentExamples: Story = {
               borderRadius: '8px',
               backgroundColor: 'var(--lufa-component-card-background)',
               border: '1px solid var(--lufa-component-card-border)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
             }}
           >
             <div

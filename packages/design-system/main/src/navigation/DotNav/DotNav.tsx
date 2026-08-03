@@ -45,6 +45,11 @@ export type DotNavProps = {
  * Pair with `useScrollSpy` to automatically track the active section as the
  * user scrolls.
  *
+ * Accessibility contract: renders a labeled `nav` containing native buttons.
+ * The active button exposes `aria-current="location"` and all dots are keyboard
+ * operable. Visible labels are hidden from assistive technology to avoid
+ * duplicating each button's accessible name.
+ *
  * @example
  * ```tsx
  * <DotNav

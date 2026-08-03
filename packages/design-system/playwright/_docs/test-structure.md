@@ -1,14 +1,26 @@
 # Test Structure
 
-Tests are organized by component category:
+Tests mirror the main package's public categories:
 
+```text
+src/
+├── composition/
+├── content/
+├── documentation/
+├── foundation/
+├── hooks/
+├── interaction/
+└── utility/
 ```
-src/components/
-├── forms/        # Form components (Button, Input, etc.)
-├── layout/       # Layout components (Flex, Grid, Stack, etc.)
-├── display/      # Display components (Avatar, Badge, Card, etc.)
-├── navigation/   # Navigation components (Tabs, Menu, etc.)
-├── feedback/     # Feedback components (Alert, Spinner, etc.)
-├── overlay/      # Overlay components (Modal, etc.)
-└── patterns/     # Patterns (Testimonial, etc.)
-```
+
+Keep harnesses next to the tests that consume them and name them `*.harness.tsx`. Component test files use `*.spec.tsx`.
+
+Each test file should cover the relevant subset of:
+
+1. default rendering
+2. public props and variants
+3. user interaction
+4. keyboard and focus behavior
+5. ARIA semantics and `@axe-core/playwright`
+6. responsive behavior
+7. visual regression

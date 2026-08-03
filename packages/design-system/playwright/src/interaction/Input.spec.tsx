@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/experimental-ct-react';
 
-import { Input } from '@grasdouble/lufa_design-system';
+import { FormField, Input } from '@grasdouble/lufa_design-system';
 
 test.describe('Input', () => {
   test('should pass a11y checks', async ({ mount, page }) => {
@@ -27,6 +27,36 @@ test.describe('Input', () => {
   test('should apply error state', async ({ mount }) => {
     const component = await mount(<Input error placeholder="Error" />);
     await expect(component).toHaveClass(/error/);
+    await expect(component).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  test('should preserve an explicit aria-describedby value', async ({ mount }) => {
+    const component = await mount(<Input aria-describedby="external-help" />);
+    await expect(component).toHaveAttribute('aria-describedby', 'external-help');
+  });
+
+  test('should compose an accessible label, description, and error message', async ({ mount, page }) => {
+    const component = await mount(
+      <FormField
+        label="Email address"
+        description="Use your work email."
+        errorMessage="Enter a valid email address."
+        required
+      >
+        <Input />
+      </FormField>
+    );
+
+    const input = component.getByRole('textbox', { name: 'Email address' });
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAttribute('required', '');
+    await expect(input).toHaveAccessibleDescription('Use your work email. Enter a valid email address.');
+    await expect(component.getByText('Enter a valid email address.')).toBeVisible();
+
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .disableRules(['page-has-heading-one', 'landmark-one-main', 'region'])
+      .analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 
   test('should apply disabled state', async ({ mount }) => {

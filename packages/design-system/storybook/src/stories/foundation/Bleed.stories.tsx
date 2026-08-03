@@ -143,7 +143,7 @@ export const PropInline: Story = {
                   style={{
                     backgroundColor: STORY_COLORS.themed.background.surface,
                     padding: '16px',
-                    border: '1px dashed #ccc',
+                    border: `1px dashed ${STORY_COLORS.themed.border.default}`,
                   }}
                 >
                   <p style={{ fontSize: '12px', marginBottom: '8px', color: STORY_COLORS.themed.text.secondary }}>
@@ -173,7 +173,7 @@ export const PropInline: Story = {
               style={{
                 backgroundColor: STORY_COLORS.themed.background.surface,
                 padding: '16px',
-                border: '1px dashed #ccc',
+                border: `1px dashed ${STORY_COLORS.themed.border.default}`,
               }}
             >
               <p style={{ fontSize: '12px', marginBottom: '8px', color: STORY_COLORS.themed.text.secondary }}>
@@ -185,7 +185,7 @@ export const PropInline: Story = {
                     backgroundColor: STORY_COLORS.primary.green.main,
                     padding: '24px',
                     textAlign: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '16px',
                   }}
                 >
@@ -222,7 +222,15 @@ export const PropBlock: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <PropCard label="Block Bleed (Vertical)">
             <div style={{ backgroundColor: STORY_COLORS.themed.background.surface, padding: '24px' }}>
-              <div style={{ backgroundColor: '#ddd', padding: '16px', marginBottom: '16px' }}>Content above</div>
+              <div
+                style={{
+                  backgroundColor: STORY_COLORS.neutral.backgroundMedium,
+                  padding: '16px',
+                  marginBottom: '16px',
+                }}
+              >
+                Content above
+              </div>
 
               <Bleed inline={16} block={8}>
                 <div
@@ -236,7 +244,15 @@ export const PropBlock: Story = {
                 </div>
               </Bleed>
 
-              <div style={{ backgroundColor: '#ddd', padding: '16px', marginTop: '16px' }}>Content below</div>
+              <div
+                style={{
+                  backgroundColor: STORY_COLORS.neutral.backgroundMedium,
+                  padding: '16px',
+                  marginTop: '16px',
+                }}
+              >
+                Content below
+              </div>
             </div>
           </PropCard>
 
@@ -264,7 +280,7 @@ export const UseCaseContent: Story = {
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <PropCard label="Before: Without Bleed">
-            <Container size="md" style={{ backgroundColor: 'white', padding: '32px' }}>
+            <Container size="md" style={{ backgroundColor: STORY_COLORS.themed.background.surface, padding: '32px' }}>
               <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Article Title</h2>
               <p style={{ marginBottom: '16px', lineHeight: '1.6' }}>
                 This is an article with narrow reading width. Without Bleed, all content including images is constrained
@@ -277,7 +293,7 @@ export const UseCaseContent: Story = {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                   marginBottom: '16px',
                 }}
               >
@@ -288,7 +304,7 @@ export const UseCaseContent: Story = {
           </PropCard>
 
           <PropCard label="After: With Bleed">
-            <Container size="md" style={{ backgroundColor: 'white', padding: '32px' }}>
+            <Container size="md" style={{ backgroundColor: STORY_COLORS.themed.background.surface, padding: '32px' }}>
               <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Article Title</h2>
               <p style={{ marginBottom: '16px', lineHeight: '1.6' }}>
                 This article uses Bleed to break out of the narrow reading width for hero images and featured content,
@@ -304,7 +320,7 @@ export const UseCaseContent: Story = {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '18px',
                   }}
                 >
@@ -320,8 +336,8 @@ export const UseCaseContent: Story = {
               <Bleed inline={24}>
                 <div
                   style={{
-                    backgroundColor: '#fff3cd',
-                    border: '2px solid #ffc107',
+                    backgroundColor: STORY_COLORS.themed.background.warning,
+                    border: `2px solid ${STORY_COLORS.primary.orange.main}`,
                     padding: '16px',
                     borderRadius: '4px',
                   }}
@@ -373,7 +389,7 @@ export const UseCaseMarketing: Story = {
           <PropCard label="Marketing Page with Alternating Sections">
             <Container size="lg" style={{ padding: '0' }}>
               {/* Hero Section */}
-              <div style={{ padding: '32px', backgroundColor: 'white' }}>
+              <div style={{ padding: '32px', backgroundColor: STORY_COLORS.themed.background.surface }}>
                 <h1 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '16px' }}>Product Title</h1>
                 <p style={{ fontSize: '18px', color: STORY_COLORS.themed.text.secondary }}>
                   Transform your workflow with our amazing product
@@ -384,12 +400,12 @@ export const UseCaseMarketing: Story = {
               <Bleed inline="full">
                 <div style={{ backgroundColor: STORY_COLORS.primary.blue.main, padding: '48px' }}>
                   <Container size="lg">
-                    <div style={{ textAlign: 'center', color: 'white' }}>
+                    <div style={{ textAlign: 'center', color: STORY_COLORS.neutral.white }}>
                       <h2 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '16px' }}>Special Offer</h2>
                       <p style={{ fontSize: '16px', marginBottom: '24px' }}>Get started today with 50% off</p>
                       <button
                         style={{
-                          backgroundColor: 'white',
+                          backgroundColor: STORY_COLORS.neutral.white,
                           color: STORY_COLORS.primary.blue.main,
                           padding: '12px 24px',
                           border: 'none',
@@ -407,7 +423,7 @@ export const UseCaseMarketing: Story = {
               </Bleed>
 
               {/* Features Section */}
-              <div style={{ padding: '32px', backgroundColor: 'white' }}>
+              <div style={{ padding: '32px', backgroundColor: STORY_COLORS.themed.background.surface }}>
                 <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Key Features</h2>
                 <Stack spacing="compact">
                   <div>✨ Feature 1: Amazing capability</div>

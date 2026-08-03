@@ -6,9 +6,10 @@ export default [
     ignores: ['dist/**', 'coverage/**', 'tests/**', '*.config.ts'],
   },
   {
+    files: ['src/**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.json', './tsconfig.scripts.json'],
+        project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,
       },
     },

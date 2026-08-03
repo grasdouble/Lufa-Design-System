@@ -40,12 +40,12 @@ function HomepageStatistics() {
       <div className="container">
         <div className={styles.statGrid}>
           <div className={styles.stat}>
-            <h3 className={styles.statNumber}>50+</h3>
+            <h3 className={styles.statNumber}>21</h3>
             <p className={styles.statLabel}>Components</p>
           </div>
           <div className={styles.stat}>
-            <h3 className={styles.statNumber}>WCAG AA</h3>
-            <p className={styles.statLabel}>Compliant</p>
+            <h3 className={styles.statNumber}>WCAG</h3>
+            <p className={styles.statLabel}>Accessibility First</p>
           </div>
           <div className={styles.stat}>
             <h3 className={styles.statNumber}>TypeScript</h3>

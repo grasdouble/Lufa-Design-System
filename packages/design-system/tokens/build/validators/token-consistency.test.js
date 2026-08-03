@@ -29,10 +29,10 @@ function assertThrows(fn, expectedMessage) {
     throw new Error('Expected ValidationError to be thrown');
   } catch (error) {
     if (!(error instanceof ValidationError)) {
-      throw new Error(`Expected ValidationError, got ${error.constructor.name}: ${error.message}`);
+      throw new Error(`Expected ValidationError, got ${error.constructor.name}: ${error.message}`, { cause: error });
     }
     if (expectedMessage && !error.message.includes(expectedMessage)) {
-      throw new Error(`Expected message to include "${expectedMessage}", got "${error.message}"`);
+      throw new Error(`Expected message to include "${expectedMessage}", got "${error.message}"`, { cause: error });
     }
   }
 }

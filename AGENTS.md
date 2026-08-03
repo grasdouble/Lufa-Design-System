@@ -314,6 +314,13 @@ Tests are also listed in the Build & Validation table above.
 
 If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
 
+## JavaScript module tests — Avoid type-only casts without declarations
+
+When a TypeScript test imports a local `.mjs` module without a declaration file, do not add a type-only import solely to cast the imported function. Some lint contexts treat that type binding as unused. Test the observable result directly, or add a real module declaration when compile-time typing is required.
+
+- ✅ `expect(createBuildOptions(true)).toMatchObject({ minify: true })`
+- ❌ `import type * as Esbuild from 'esbuild'` followed only by a cast to `Esbuild.BuildOptions`
+
 ---
 
 ## Accessibility — DS-specific requirements

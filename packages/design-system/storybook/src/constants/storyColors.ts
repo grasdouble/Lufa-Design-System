@@ -8,7 +8,7 @@
  * **Use for:** Story UI containers, text, borders, backgrounds.
  *
  * ## 2. Fixed Decorative Colors (`STORY_COLORS.primary`)
- * Hard-coded colors for visual examples that should remain consistent.
+ * Primitive token colors for visual examples that should remain consistent.
  * **Use for:** Showing color variants, margins/padding visualization, examples.
  *
  * ---
@@ -73,41 +73,33 @@ export type StoryColor = {
  * Primary colors for stories
  *
  * Uses design system primitives where available (blue, green, purple).
- * Additional colors (violet, pink, orange, cyan) use Tailwind CSS color values
- * as they are not yet available in the design system primitives.
- *
- * **Note on Hard-Coded Colors:** The violet, pink, orange, and cyan colors are intentionally
- * hard-coded from Tailwind CSS because:
- * 1. They provide visual variety for story demonstrations
- * 2. They are not yet available in our primitive token set
- * 3. They need to remain consistent across all themes for documentation clarity
- * 4. This is acceptable for Storybook documentation (not production code)
- *
- * @see https://tailwindcss.com/docs/customizing-colors
+ * Aliases retain the familiar story palette names while sourcing every value
+ * from the design system's canonical primitive token scales.
  */
 export const PRIMARY_COLORS = {
   /** Blue - From design system primitives (blue-500 / blue-100) */
   blue: {
     main: tokens.primitive.color.blue['500'], // #3b82f6
     light: tokens.primitive.color.blue['100'], // #dbeafe
+    foreground: tokens.primitive.color.blue['700'], // #1d4ed8
     name: 'Blue',
   },
-  /** Violet - Tailwind violet-500 / violet-100 (not in primitives yet) */
+  /** Violet alias - Purple primitive scale */
   violet: {
-    main: '#8b5cf6',
-    light: '#ede9fe',
+    main: tokens.primitive.color.purple['500'],
+    light: tokens.primitive.color.purple['100'],
     name: 'Violet',
   },
-  /** Pink - Tailwind pink-500 / pink-100 (not in primitives yet) */
+  /** Pink alias - Red primitive scale */
   pink: {
-    main: '#ec4899',
-    light: '#fce7f3',
+    main: tokens.primitive.color.red['400'],
+    light: tokens.primitive.color.red['50'],
     name: 'Pink',
   },
-  /** Orange - Tailwind orange-500 / orange-100 (not in primitives yet) */
+  /** Orange alias - Yellow primitive scale */
   orange: {
-    main: '#f59e0b',
-    light: '#fef3c7',
+    main: tokens.primitive.color.yellow['600'],
+    light: tokens.primitive.color.yellow['100'],
     name: 'Orange',
   },
   /** Green - From design system primitives (green-500 / green-100) */
@@ -116,10 +108,10 @@ export const PRIMARY_COLORS = {
     light: tokens.primitive.color.green['100'], // #dcfce7
     name: 'Green',
   },
-  /** Cyan - Tailwind cyan-500 / cyan-100 (not in primitives yet) */
+  /** Cyan alias - Blue primitive scale */
   cyan: {
-    main: '#06b6d4',
-    light: '#cffafe',
+    main: tokens.primitive.color.blue['300'],
+    light: tokens.primitive.color.blue['50'],
     name: 'Cyan',
   },
   /** Red - From design system primitives (red-600 / red-100) */
@@ -224,10 +216,6 @@ export const AXIS_COLORS = {
  * Uses design system primitives (gray scale).
  * Use these for demonstration containers and content placeholders.
  *
- * **Note:** borderSlate, textSlate, and white are intentionally hard-coded because:
- * - borderSlate/textSlate: Provide visual contrast not available in gray primitives
- * - white: Universal reference color for documentation examples
- *
  * @example
  * ```tsx
  * <div style={{
@@ -246,16 +234,18 @@ export const NEUTRAL_COLORS = {
   bgGray: tokens.primitive.color.gray['100'], // #f3f4f6 (same as backgroundLight)
   /** Medium gray border - From primitives (gray-300) */
   borderMedium: tokens.primitive.color.gray['300'], // #d1d5db
-  /** Slate border - Tailwind slate-200 (not in primitives yet) */
-  borderSlate: '#e2e8f0',
+  /** Slate border alias - Gray primitive scale */
+  borderSlate: tokens.primitive.color.gray['200'],
   /** Dark gray text - From primitives (gray-800) */
   textDark: tokens.primitive.color.gray['800'], // #1f2937
   /** Default text color - Alias for textDark */
   text: tokens.primitive.color.gray['800'], // #1f2937 (same as textDark)
-  /** Slate text - Tailwind slate-500 (not in primitives yet) */
-  textSlate: '#64748b',
-  /** White - Pure white */
-  white: '#ffffff',
+  /** Slate text alias - Gray primitive scale */
+  textSlate: tokens.primitive.color.gray['500'],
+  /** High-contrast white primitive */
+  white: tokens.primitive.color.hc.white,
+  /** High-contrast black primitive */
+  black: tokens.primitive.color.hc.black,
 } as const;
 
 /**
@@ -298,6 +288,12 @@ export const THEMED_COLORS = {
     tertiary: 'var(--lufa-semantic-ui-text-tertiary)',
     /** Success text color (green) */
     success: 'var(--lufa-semantic-ui-text-success)',
+    /** Error text color (red) */
+    error: 'var(--lufa-semantic-ui-text-error)',
+    /** Warning text color */
+    warning: 'var(--lufa-semantic-ui-text-warning)',
+    /** Informational text color */
+    info: 'var(--lufa-semantic-ui-text-info)',
     /** Inverse text color (for dark backgrounds) */
     inverse: 'var(--lufa-semantic-ui-background-on-primary)',
   },

@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
@@ -35,6 +35,12 @@ jobs:
       # Step 5: Build packages (needed for type checking)
       - name: 🏗️ Build packages
         run: pnpm all:build
+
+      - name: 🧪 Test VS Code extension
+        run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run test
+
+      - name: 📦 Build production VS Code extension
+        run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run build:production
 
       # Step 6: Run lint
       - name: 🧹 Run lint

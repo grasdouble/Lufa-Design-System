@@ -1,63 +1,141 @@
 # Outdated Dependencies Report
 
-┌─────────────────────────┬─────────┬────────┬────────────────────────────────┐
-│ Package                 │ Current │ Latest │ Dependents                     │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ @types/node (dev)       │ 25.9.5  │ 26.1.1 │ @grasdouble/lufa_design-       │
-│                         │         │        │ system,                        │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-cli,                    │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-docusaurus,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-playwright,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-themes,                 │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-tokens,                 │
-│                         │         │        │ @grasdouble/lufa_plugin_       │
-│                         │         │        │ vscode_lufa-ds-preview         │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ c8 (dev)                │ 11.0.0  │ 12.0.0 │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-cli                     │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ commander               │ 14.0.3  │ 15.0.0 │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-cli                     │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ concurrently (dev)      │ 9.2.4   │ 10.0.4 │ @grasdouble/lufa               │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ sort-package-json (dev) │ 3.7.1   │ 4.0.0  │ @grasdouble/lufa,              │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system,                        │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-cli,                    │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-docusaurus,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-playwright,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-storybook,              │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-themes,                 │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-tokens,                 │
-│                         │         │        │ @grasdouble/lufa_plugin_       │
-│                         │         │        │ vscode_lufa-ds-preview         │
-├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ typescript (dev)        │ 6.0.3   │ 7.0.2  │ @grasdouble/lufa_design-       │
-│                         │         │        │ system,                        │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-cli,                    │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-docusaurus,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-playwright,             │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-storybook,              │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-themes,                 │
-│                         │         │        │ @grasdouble/lufa_design-       │
-│                         │         │        │ system-tokens,                 │
-│                         │         │        │ @grasdouble/lufa_plugin_       │
-│                         │         │        │ vscode_lufa-ds-preview         │
-└─────────────────────────┴─────────┴────────┴────────────────────────────────┘
+┌─────────────────────────────────────────┬─────────┬─────────┬────────────────────────────────┐
+│ Package                                 │ Current │ Latest  │ Dependents                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @playwright/experimental-ct-react (dev) │ 1.62.0  │ 1.62.1  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright              │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @storybook/addon-docs (dev)             │ 10.5.4  │ 10.5.5  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @storybook/addon-themes (dev)           │ 10.5.4  │ 10.5.5  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @storybook/react-vite (dev)             │ 10.5.4  │ 10.5.5  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @types/react (dev)                      │ 19.2.17 │ 19.2.18 │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @types/react-dom (dev)                  │ 19.2.3  │ 19.2.4  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @vitejs/plugin-react (dev)              │ 6.0.4   │ 6.0.5   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ eslint-plugin-storybook (dev)           │ 10.5.4  │ 10.5.5  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ postcss                                 │ 8.5.23  │ 8.5.25  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ postcss (dev)                           │ 8.5.23  │ 8.5.25  │ @grasdouble/lufa_design-system │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ storybook (dev)                         │ 10.5.4  │ 10.5.5  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @types/vscode (dev)                     │ 1.108.0 │ 1.125.0 │ @grasdouble/lufa_plugin_       │
+│                                         │         │         │ vscode_lufa-ds-preview         │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ globals (dev)                           │ 17.7.0  │ 17.8.0  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ lint-staged (dev)                       │ 17.2.0  │ 17.3.0  │ @grasdouble/lufa               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ lucide-react                            │ 1.27.0  │ 1.28.0  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ lucide-react (dev)                      │ 1.27.0  │ 1.28.0  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright              │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ vite (dev)                              │ 8.1.5   │ 8.2.0   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @csstools/selector-resolve-nested       │ 3.1.0   │ 4.0.1   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @csstools/selector-specificity          │ 5.0.0   │ 6.0.0   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @types/node (dev)                       │ 25.9.5  │ 26.1.2  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli,                    │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-themes,                 │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-tokens,                 │
+│                                         │         │         │ @grasdouble/lufa_plugin_       │
+│                                         │         │         │ vscode_lufa-ds-preview         │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ chalk                                   │ 5.6.2   │ 6.0.0   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ commander                               │ 14.0.3  │ 15.0.0  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli                     │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ concurrently (dev)                      │ 9.2.4   │ 10.0.4  │ @grasdouble/lufa               │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ sort-package-json (dev)                 │ 3.7.1   │ 4.0.0   │ @grasdouble/lufa,              │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli,                    │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook,              │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-themes,                 │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-tokens,                 │
+│                                         │         │         │ @grasdouble/lufa_plugin_       │
+│                                         │         │         │ vscode_lufa-ds-preview         │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ typescript (dev)                        │ 6.0.3   │ 7.0.2   │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system,                        │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-cli,                    │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-playwright,             │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-storybook,              │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-themes,                 │
+│                                         │         │         │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-tokens,                 │
+│                                         │         │         │ @grasdouble/lufa_plugin_       │
+│                                         │         │         │ vscode_lufa-ds-preview         │
+├─────────────────────────────────────────┼─────────┼─────────┼────────────────────────────────┤
+│ @easyops-cn/docusaurus-search-local     │ 0.55.2  │ 0.55.3  │ @grasdouble/lufa_design-       │
+│                                         │         │         │ system-docusaurus              │
+└─────────────────────────────────────────┴─────────┴─────────┴────────────────────────────────┘

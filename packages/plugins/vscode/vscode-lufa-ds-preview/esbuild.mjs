@@ -3,6 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import esbuild from 'esbuild';
 
+import { createBuildOptions } from './esbuild-options.mjs';
+
 const production = process.argv.includes('--production');
 const watch = process.argv.includes('--watch');
 const packageRoot = fileURLToPath(new URL('.', import.meta.url));
@@ -68,19 +70,7 @@ const copyMapsPlugin = {
 };
 
 async function main() {
-  const ctx = await esbuild.context({
-    entryPoints: ['src/index.ts'],
-    bundle: true,
-    format: 'cjs',
-    minify: production,
-    sourcemap: !production,
-    sourcesContent: false,
-    platform: 'node',
-    outfile: 'dist/extension.js',
-    external: ['vscode'],
-    logLevel: 'silent',
-    plugins: [esbuildProblemMatcherPlugin, copyMapsPlugin],
-  });
+  const ctx = await esbuild.context(createBuildOptions(production, [esbuildProblemMatcherPlugin, copyMapsPlugin]));
 
   if (watch) {
     console.log('[watch] Watching for changes...');
@@ -94,5 +84,5 @@ async function main() {
 
 main().catch((e) => {
   console.error(e);
-  process.exit(1);
+  process.exitCode = 1;
 });

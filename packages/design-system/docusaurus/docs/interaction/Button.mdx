@@ -2,7 +2,7 @@
 id: button
 title: Button
 sidebar_label: Button
-description: Interactive action component with type and variant styling.
+description: Interactive action component with appearance and variant styling.
 sidebar_position: 2
 ---
 
@@ -24,7 +24,7 @@ import {
 
 <DarkModeCompatible />
 
-An interactive action element with a two-dimensional variant system (type x variant) for flexible visual styling and semantic meaning.
+An interactive action element with a two-dimensional variant system (appearance x variant) for flexible visual styling and semantic meaning.
 
 ## Overview
 
@@ -40,7 +40,7 @@ Use `Button` when you need:
 <LiveDemoSection
   tabs={[
     { id: 'default', label: 'Default', content: <BrowserOnly>{() => <LiveDemo />}</BrowserOnly> },
-    { id: 'type', label: 'Type', content: <BrowserOnly>{() => <TypeVariantsDemo />}</BrowserOnly> },
+    { id: 'type', label: 'Appearance', content: <BrowserOnly>{() => <TypeVariantsDemo />}</BrowserOnly> },
     { id: 'variant', label: 'Variant', content: <BrowserOnly>{() => <VariantDemo />}</BrowserOnly> },
     { id: 'sizes', label: 'Sizes', content: <BrowserOnly>{() => <SizeVariantsDemo />}</BrowserOnly> },
     { id: 'radius', label: 'Radius', content: <BrowserOnly>{() => <RadiusDemo />}</BrowserOnly> },
@@ -83,19 +83,19 @@ export function ButtonExamples() {
   return (
     <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
       <Button>Click me</Button>
-      <Button type="solid" variant="primary">
+      <Button appearance="solid" variant="primary">
         Save Changes
       </Button>
-      <Button type="outline" variant="secondary">
+      <Button appearance="outline" variant="secondary">
         Cancel
       </Button>
-      <Button type="solid" variant="danger" iconLeft="trash">
+      <Button appearance="solid" variant="danger" iconLeft="trash">
         Delete
       </Button>
-      <Button type="solid" variant="primary" loading>
+      <Button appearance="solid" variant="primary" loading>
         Saving...
       </Button>
-      <Button as="a" href="/home" type="ghost" variant="neutral">
+      <Button as="a" href="/home" appearance="ghost" variant="neutral">
         Go Home
       </Button>
       <Button iconLeft="search" aria-label="Search" />
@@ -106,30 +106,32 @@ export function ButtonExamples() {
 
 ## Props
 
-| Prop        | Type                                                                                    | Default     | Description                                          |
-| ----------- | --------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------- |
-| `type`      | `'solid' \| 'outline' \| 'ghost'`                                                       | `'solid'`   | Visual style type (filled, border-only, or minimal)  |
-| `variant`   | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Semantic color variant                               |
-| `size`      | `'sm' \| 'md' \| 'lg'`                                                                  | `'md'`      | Button size                                          |
-| `radius`    | `'none' \| 'sm' \| 'base' \| 'md' \| 'full'`                                            | `'base'`    | Border radius                                        |
-| `iconLeft`  | `IconName`                                                                              | `undefined` | Icon to display on the left side                     |
-| `iconRight` | `IconName`                                                                              | `undefined` | Icon to display on the right side                    |
-| `loading`   | `boolean`                                                                               | `false`     | Loading state - shows spinner and disables button    |
-| `disabled`  | `boolean`                                                                               | `false`     | Disabled state - prevents interaction                |
-| `fullWidth` | `boolean`                                                                               | `false`     | Makes button stretch to 100% of container width      |
-| `as`        | `'button' \| 'a'`                                                                       | `'button'`  | HTML element to render (polymorphic)                 |
-| `children`  | `ReactNode`                                                                             | `undefined` | Button text content (optional for icon-only buttons) |
-| `className` | `string`                                                                                | `undefined` | Additional CSS classes                               |
+| Prop         | Type                                                                                    | Default     | Description                                          |
+| ------------ | --------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------- |
+| `appearance` | `'solid' \| 'outline' \| 'ghost'`                                                       | `'solid'`   | Visual style (filled, border-only, or minimal)       |
+| `type`       | `'button' \| 'submit' \| 'reset'`                                                       | `'button'`  | Native HTML button type                              |
+| `variant`    | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Semantic color variant                               |
+| `size`       | `'sm' \| 'md' \| 'lg'`                                                                  | `'md'`      | Button size                                          |
+| `radius`     | `'none' \| 'sm' \| 'base' \| 'md' \| 'full'`                                            | `'base'`    | Border radius                                        |
+| `iconLeft`   | `IconName`                                                                              | `undefined` | Icon to display on the left side                     |
+| `iconRight`  | `IconName`                                                                              | `undefined` | Icon to display on the right side                    |
+| `loading`    | `boolean`                                                                               | `false`     | Loading state - shows spinner and disables button    |
+| `disabled`   | `boolean`                                                                               | `false`     | Disabled state - prevents interaction                |
+| `fullWidth`  | `boolean`                                                                               | `false`     | Makes button stretch to 100% of container width      |
+| `as`         | `'button' \| 'a'`                                                                       | `'button'`  | HTML element to render (polymorphic)                 |
+| `children`   | `ReactNode`                                                                             | `undefined` | Button text content (optional for icon-only buttons) |
+| `className`  | `string`                                                                                | `undefined` | Additional CSS classes                               |
 
 Also supports all standard HTML attributes for the underlying element:
 
-- When `as="button"`: all `button` attributes (`onClick`, `type`, `name`, `value`, `form`)
+- When `as="button"`: all `button` attributes (`onClick`, `name`, `value`, `form`)
 - When `as="a"`: all `a` attributes (`href`, `target`, `rel`, `download`)
 - Common attributes: `id`, `aria-*`, `data-*`, `style`, `tabIndex`, `role`
 
 ## Accessibility
 
 - Provide `aria-label` for icon-only buttons.
+- Set `type="submit"` or `type="reset"` explicitly for form actions; the safe default is `button`.
 - Use `as="a"` with `href` for navigation actions.
 - Loading sets `aria-busy` and disables interaction.
 - Focus indicators are provided via `:focus-visible` styles.
@@ -158,8 +160,8 @@ export function AccessibleButtons() {
 
 :::tip Do
 
-- Use `type="solid"` with `variant="primary"` for the most important action on a page.
-- Use `type="outline"` or `type="ghost"` for secondary actions.
+- Use `appearance="solid"` with `variant="primary"` for the most important action on a page.
+- Use `appearance="outline"` or `appearance="ghost"` for secondary actions.
 - Use `variant="danger"` for destructive actions.
 - Provide descriptive labels for all buttons.
 - Use `loading` during async operations.

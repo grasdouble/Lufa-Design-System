@@ -79,13 +79,13 @@ export function TypeVariantsDemo() {
         flexWrap: 'wrap',
       }}
     >
-      <Button type="solid" variant="primary">
+      <Button appearance="solid" variant="primary">
         Solid
       </Button>
-      <Button type="outline" variant="primary">
+      <Button appearance="outline" variant="primary">
         Outline
       </Button>
-      <Button type="ghost" variant="primary">
+      <Button appearance="ghost" variant="primary">
         Ghost
       </Button>
     </div>

@@ -112,7 +112,7 @@ test.describe('Card', () => {
         </Container>
       );
 
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
       await expect(component).toHaveScreenshot('card-all-variants.png');
     });
   });

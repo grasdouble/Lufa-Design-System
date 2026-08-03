@@ -15,7 +15,6 @@ Internal docs help package maintainers understand:
 
 ### Content Management
 
-- **`adding-a-blog-post.md`** - How to add blog posts
 - **`adding-a-new-page.md`** - How to add documentation pages
 
 ### Component Documentation
@@ -31,7 +30,7 @@ Internal docs help package maintainers understand:
 - **Audience:** Package maintainers, contributors
 - **Purpose:** Technical implementation, maintenance guides
 - **Examples:**
-  - How to add blog posts
+  - How to add public documentation pages
   - Component documentation guidelines
 
 ### Public Documentation (`docs/`)

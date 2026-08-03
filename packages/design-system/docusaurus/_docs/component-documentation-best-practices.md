@@ -107,5 +107,5 @@ This guide defines how to write clear, consistent component documentation for th
 
 ## Related Docs
 
-- [Storybook Patterns](../../storybook/_docs/storybook-patterns.md)
+- [Story Writing Guide](../../storybook/_docs/story-guide.md)
 - [Component Inventory](../../main/_docs/component-inventory.md)

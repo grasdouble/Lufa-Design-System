@@ -86,6 +86,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #f0f9ff;
   --lufa-component-button-type-outline-variant-warning-background-active: #f0f9ff;
   --lufa-component-button-type-outline-variant-info-background-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-primary-border-active: #0c4a6e;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #0c4a6e;
+  --lufa-component-button-type-outline-variant-success-border-active: #0c4a6e;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #0c4a6e;
+  --lufa-component-button-type-outline-variant-warning-border-active: #0c4a6e;
+  --lufa-component-button-type-outline-variant-info-border-active: #0c4a6e;
   --lufa-component-button-type-outline-variant-neutral-border-active: #0c4a6e; /* neutral-text-primary on #f0f9ff = 8.87:1 */
 
   /* Glow — subtle blue (light mode) */
@@ -158,6 +164,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #082f49;
   --lufa-component-button-type-outline-variant-warning-background-active: #082f49;
   --lufa-component-button-type-outline-variant-info-background-active: #082f49;
+  --lufa-component-button-type-outline-variant-primary-border-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-success-border-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-warning-border-active: #f0f9ff;
+  --lufa-component-button-type-outline-variant-info-border-active: #f0f9ff;
   --lufa-component-button-type-outline-variant-neutral-border-active: #f0f9ff; /* neutral-text-primary on #082f49 = 13.02:1 */
 
   /* Component overrides — solid primary button hover/active (on-background = #000000, need light bg) */
@@ -234,6 +246,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #000000;
   --lufa-component-button-type-outline-variant-warning-background-active: #000000;
   --lufa-component-button-type-outline-variant-info-background-active: #000000;
+  --lufa-component-button-type-outline-variant-primary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-success-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-warning-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-info-border-active: #ffffff;
   --lufa-component-button-type-outline-variant-neutral-border-active: #ffffff; /* neutral-text-primary on #000000 = 21:1 */
 
   /* Component overrides — solid primary button hover/active (on-background = #000000, need light bg) */

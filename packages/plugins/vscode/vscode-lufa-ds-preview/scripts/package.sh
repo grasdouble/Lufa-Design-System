@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # Parse options
 INSTALL=false
 while [[ $# -gt 0 ]]; do
@@ -17,7 +19,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 echo "📦 Building extension..."
-pnpm run build || exit 1
+pnpm run build:production
 
 echo "📋 Packaging extension..."
 rm -f *.vsix
@@ -26,8 +28,13 @@ rm -f *.vsix
 VERSION=$(node -p "require('./package.json').version")
 VSIX_NAME="lufa-ds-preview-${VERSION}.vsix"
 
-# Create a temporary package.json with simple name for vsce
-cp package.json package.json.bak
+# Temporarily use the unscoped Marketplace extension identifier for vsce.
+ORIGINAL_PACKAGE_JSON=$(cat package.json)
+restore_package_json() {
+  printf '%s\n' "$ORIGINAL_PACKAGE_JSON" > package.json
+}
+trap restore_package_json EXIT
+
 node -e "
 const pkg = require('./package.json');
 pkg.name = 'lufa-ds-preview';
@@ -35,7 +42,8 @@ require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
 "
 
 # Package with vsce
-pnpm exec vsce package --no-dependencies
+VSCE_NODE_MODULES=$(node -e "const path = require('node:path'); console.log(path.resolve(path.dirname(require.resolve('@vscode/vsce/package.json')), '..', '..'));")
+NODE_PATH="${VSCE_NODE_MODULES}${NODE_PATH:+:${NODE_PATH}}" pnpm exec vsce package --no-dependencies --out "$VSIX_NAME"
 
 # Check if VSIX was created
 if [ -f "$VSIX_NAME" ]; then
@@ -43,9 +51,6 @@ if [ -f "$VSIX_NAME" ]; then
 else
   echo "❌ VSIX file not found after packaging"
 fi
-
-# Restore original package.json
-mv package.json.bak package.json
 
 if [ -f "$VSIX_NAME" ]; then
   echo "✅ Package created successfully: $VSIX_NAME"

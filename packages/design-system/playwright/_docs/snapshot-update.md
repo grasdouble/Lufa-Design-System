@@ -311,13 +311,13 @@ gh workflow run "Tools:DS:Playwright:Component-Tests" --ref <your-branch>
 git pull
 
 # Run tests in UI mode to inspect
-pnpm ds:test:ui
+pnpm ds:playwright:ui
 
 # Check specific test
-pnpm ds:test -- MyComponent.spec.tsx
+pnpm --filter @grasdouble/lufa_design-system-playwright test-ct -- MyComponent.spec.tsx
 
 # Generate snapshots locally for comparison
-pnpm ds:test:update-snapshots
+pnpm ds:playwright:update-snapshots
 ```
 
 ### Issue: Label Not Removed
@@ -447,7 +447,7 @@ git diff HEAD~1 -- packages/design-system/playwright/__snapshots__/
 
 ```bash
 # ✅ Good: Update macOS snapshots locally
-pnpm ds:test:update-snapshots
+pnpm ds:playwright:update-snapshots
 git add .
 git commit -m "test: update snapshots"
 git push
@@ -499,9 +499,9 @@ These commits are signed by GitHub and can be verified.
 
 ## Related Documentation
 
-- [Snapshot Management System](./snapshot-management-system.md) - Complete overview
+- [Playwright README](../README.md) - Commands, projects, and focused snapshot guides
 - [Docker Linux Snapshots](./docker-linux-snapshots.md) - Local Docker method
-- [Scripts README](../scripts/README.md) - Compression scripts
+- [Snapshot compression script](../scripts/compress-snapshots-manual.sh)
 - Playwright CT instructions are maintained internally
 
 ## FAQ

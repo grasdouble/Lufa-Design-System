@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  colorToRgba,
   getContrastRatio,
   getRelativeLuminance,
   hexToRgb,
@@ -116,6 +117,29 @@ describe('WCAG Utils', () => {
     it('handles 3-digit hex codes', () => {
       const ratio = getContrastRatio('#000', '#fff');
       expect(ratio).toBe(21);
+    });
+
+    it('supports hex alpha and composites the foreground over an opaque background', () => {
+      expect(getContrastRatio('#00000080', '#ffffff')).toBeCloseTo(4, 1);
+    });
+
+    it('supports rgb, rgba, hsl, and hsla syntaxes', () => {
+      expect(getContrastRatio('rgb(0 0 0)', 'rgb(255, 255, 255)')).toBe(21);
+      expect(getContrastRatio('rgba(0, 0, 0, 0.5)', 'hsl(0 0% 100%)')).toBeCloseTo(3.98, 1);
+      expect(getContrastRatio('hsla(0, 0%, 0%, 50%)', '#fff')).toBeCloseTo(3.98, 1);
+    });
+
+    it('returns null for unsupported colors or translucent backgrounds', () => {
+      expect(getContrastRatio('color(display-p3 1 0 0)', '#fff')).toBeNull();
+      expect(getContrastRatio('#000', 'rgba(255, 255, 255, 0.5)')).toBeNull();
+    });
+  });
+
+  describe('colorToRgba', () => {
+    it('strictly rejects out-of-range or malformed channels', () => {
+      expect(colorToRgba('rgb(256, 0, 0)')).toBeNull();
+      expect(colorToRgba('rgba(0, 0, 0, 1.1)')).toBeNull();
+      expect(colorToRgba('hsl(0 101% 50%)')).toBeNull();
     });
   });
 

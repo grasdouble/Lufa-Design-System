@@ -46,6 +46,7 @@
   --lufa-core-color-neutral-background: #fff5ff;
   --lufa-core-color-neutral-surface-default: #ffe6ff;
   --lufa-core-color-neutral-surface-hover: #ffccff;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #ff99ff; /* Explicit override — prevents HC-leaked value (#374151 post-PR) causing contrast failure: #330033 on #ff99ff = 9.47:1 */
   --lufa-core-color-neutral-border-default: #aa00aa;
   --lufa-core-color-neutral-border-strong: #880088;
@@ -75,6 +76,10 @@
   --lufa-core-color-feedback-info-active: #004f73;
   --lufa-core-color-feedback-info-border: #006b99;
   --lufa-core-color-feedback-info-hover: #005577;
+  --lufa-core-color-feedback-success-on-background: #ffffff;
+  --lufa-core-color-feedback-error-on-background: #ffffff;
+  --lufa-core-color-feedback-warning-on-background: #ffffff;
+  --lufa-core-color-feedback-info-on-background: #ffffff;
 
   /* Glow effects */
   --lufa-semantic-effect-glow-box-primary-default: 0 0 20px rgba(179, 0, 179, 0.2), 0 0 40px rgba(0, 255, 255, 0.15);
@@ -125,6 +130,7 @@
   --lufa-core-color-neutral-background: #0d001a;
   --lufa-core-color-neutral-surface-default: #1a0033;
   --lufa-core-color-neutral-surface-hover: #26004d;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-border-default: #cc00ff;
   --lufa-core-color-neutral-border-strong: #ff00ff;
   --lufa-core-color-neutral-text-primary: #00ffff;
@@ -169,6 +175,11 @@
   /* Component overrides — WCAG AA fixes */
   /* Ghost active: override bg to dark surface instead of neutral_surface_active (HC leak = #d1d5db) */
   --lufa-component-button-type-ghost-background-active: #0d001a;
+  --lufa-component-button-type-ghost-text-hover: #00ffff;
+  --lufa-component-button-type-ghost-variant-primary-text-active: #ff66ff;
+  --lufa-component-button-type-ghost-variant-success-text-active: #00ff9f;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff6699;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #f2ff00;
   /* Solid neutral: override bg-active to fix #00ffff text on #d1d5db (HC leak) */
   --lufa-component-button-type-solid-variant-neutral-background-active: #1a0033;
   /* Outline: fix border-hover (#ff33ff on #ff00ff = 1.07:1) */
@@ -205,6 +216,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #1a0033;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #000000; /* Explicit override — dark HC background prevents HC-leaked value causing contrast failure */
   --lufa-core-color-neutral-border-default: #00ffff;
   --lufa-core-color-neutral-border-strong: #ff00ff;
@@ -245,19 +257,31 @@
   --lufa-semantic-effect-glow-box-focus: 0 0 0 4px rgba(255, 0, 255, 0.4), 0 0 10px rgba(255, 0, 255, 0.3);
 
   /* Component overrides — WCAG AA fixes */
+  --lufa-semantic-interactive-background-active: #660066;
+  --lufa-semantic-interactive-text-active: #ffffff;
+  --lufa-component-button-type-solid-variant-success-background-active: #00ff9f;
+  --lufa-component-button-type-solid-variant-destructive-background-active: #ff006e;
+  --lufa-component-button-type-solid-variant-warning-background-active: #ffd700;
   /* Solid primary: bg-active = #cc00cc, black text = 4.44:1 — fix by upgrading bg-active */
   --lufa-component-button-type-solid-variant-primary-background-active: #ff00ff;
   /* Solid neutral: override bg-active to fix #ffffff text on #d1d5db (HC leak) */
   --lufa-component-button-type-solid-variant-neutral-background-active: #000000;
   /* Ghost active: override bg to dark page surface instead of neutral_surface_active (HC leak = #d1d5db) */
   --lufa-component-button-type-ghost-background-active: #000000;
+  --lufa-component-button-type-ghost-text-hover: #00ffff;
   /* Ghost primary text-active = brand_primary_active = #cc00cc on #000000 = 4.44 (just under 4.5) — use #ff00ff */
   --lufa-component-button-type-ghost-variant-primary-text-active: #ff00ff;
+  --lufa-component-button-type-ghost-variant-success-text-active: #00ff9f;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff006e;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #ffd700;
   /* Outline: fix border-hover (#ff66ff on #ff00ff = 1.28:1) */
   --lufa-component-button-type-outline-border-hover: #000000;
   /* Outline active: border must differ from background — use black for all (info-bg-active = #00f5ff) */
   --lufa-component-button-type-outline-variant-primary-border-active: #000000;
   --lufa-component-button-type-outline-variant-secondary-border-active: #000000;
+  --lufa-component-button-type-outline-variant-success-background-active: #00ff9f;
+  --lufa-component-button-type-outline-variant-destructive-background-active: #ff006e;
+  --lufa-component-button-type-outline-variant-warning-background-active: #ffd700;
   --lufa-component-button-type-outline-variant-success-border-active: #000000;
   --lufa-component-button-type-outline-variant-destructive-border-active: #000000;
   --lufa-component-button-type-outline-variant-warning-border-active: #000000;

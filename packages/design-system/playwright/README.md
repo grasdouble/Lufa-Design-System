@@ -1,52 +1,40 @@
 # Playwright Component Testing
 
-Component tests for the Lufa Design System using [Playwright Component Testing](https://playwright.dev/docs/test-components).
+Component, accessibility, responsive, and visual regression tests for the Lufa Design System.
 
-## 📚 Documentation
+## Configuration
 
-- **[Snapshot Management System](./_docs/snapshot-management-system.md)** - Complete guide to compression, Docker, and GitHub Actions workflows
-- **[Docker Linux Snapshots](./_docs/docker-linux-snapshots.md)** - Cross-platform snapshot generation
-- **[Snapshot Update Guide](./_docs/snapshot-update.md)** - Update snapshots reliably
-- **[Compression Scripts](./scripts/README.md)** - Technical details on snapshot compression
-- **[Snapshot Compression](./_docs/snapshot-compression.md)** - Workflow and requirements
-- **[Test Structure](./_docs/test-structure.md)** - Folder layout and categories
-- **[Configuration](./_docs/configuration.md)** - Config, browsers, files
-- **[Writing Tests](./_docs/writing-tests.md)** - Guidelines and example
-- **[CI/CD](./_docs/ci-cd.md)** - Where tests run
-- **[Troubleshooting](./_docs/troubleshooting.md)** - Common fixes
+- Runner: `@playwright/experimental-ct-react`
+- Accessibility: `@axe-core/playwright`
+- Tests: `src/**/*.spec.tsx`
+- Snapshots: `__snapshots__/src/<category>/<file>.spec.tsx-snapshots/`
+- Projects: `chromium-light` (full suite) and `chromium-dark` (`Visual Regression` tests)
 
-## Quick Start
+See [Configuration](./_docs/configuration.md), [Test Structure](./_docs/test-structure.md), and [Writing Tests](./_docs/writing-tests.md).
+
+## Commands
+
+From this package:
 
 ```bash
-# Run tests
-pnpm test-ct
-
-# Run tests in UI mode (interactive)
+pnpm test
 pnpm test-ct:ui
-
-# Update snapshots
+pnpm test-ct src/content/Link.spec.tsx --project=chromium-light
 pnpm test-ct:update-snapshots
-
-# Compress snapshots (after updating)
-pnpm compress-snapshots
 ```
 
-## Running from Root
+From the repository root:
 
 ```bash
-# Run tests
-pnpm ds:test
-
-# Run tests in UI mode
-pnpm ds:test:ui
-
-# Update snapshots
-pnpm ds:test:update-snapshots
-
-# Compress snapshots
-pnpm ds:playwright:compress-snapshots
+pnpm ds:playwright:ci
+pnpm ds:playwright:ui
+pnpm ds:playwright:update-snapshots
+pnpm ds:playwright:docker:update-snapshots-linux
 ```
 
-## Additional Guides
+## Snapshot guides
 
-Detailed guides are in `./_docs/`.
+- [Updating snapshots](./_docs/snapshot-update.md)
+- [Generating Linux snapshots with Docker](./_docs/docker-linux-snapshots.md)
+- [Snapshot compression](./_docs/snapshot-compression.md)
+- [Troubleshooting](./_docs/troubleshooting.md)

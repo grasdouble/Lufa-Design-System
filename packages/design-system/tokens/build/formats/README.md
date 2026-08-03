@@ -336,7 +336,7 @@ export default {
 ```bash
 npm run build:tokens
 # or
-npx style-dictionary build --config style-dictionary.config.js
+pnpm dlx style-dictionary build --config style-dictionary.config.js
 ```
 
 ---

@@ -34,6 +34,7 @@ import {
   XCircle,
 } from 'lucide-react';
 
+import type { IconSize } from '../../utils/component-values';
 import styles from './Icon.module.css';
 
 /**
@@ -134,8 +135,6 @@ export type IconName = keyof typeof ICON_MAP;
  * Size variant values
  * Maps to: --lufa-semantic-ui-icon-{size}
  */
-type SizeValue = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
 /**
  * Color variant values based on semantic tokens
  * Maps to: --lufa-semantic-ui-text-{color} or currentColor
@@ -164,7 +163,7 @@ export type IconProps<T extends ElementType = 'span'> = {
    * Size variant
    * @default 'md'
    */
-  size?: SizeValue;
+  size?: IconSize;
 
   /**
    * Color variant (semantic colors)
@@ -195,7 +194,11 @@ type IconComponentProps<T extends ElementType> = IconProps<T> & Omit<ComponentPr
 // ============================================
 
 /**
- * Icon component with ref forwarding
+ * Icon component with ref forwarding.
+ *
+ * Accessibility contract: icons without `title` are decorative and hidden from
+ * assistive technology. A titled icon exposes one `img` accessible name; do not
+ * repeat adjacent visible text in `title`.
  */
 const IconImpl = <T extends ElementType = 'span'>(
   { as, name, size = 'md', color = 'currentColor', title, className, ...htmlProps }: IconComponentProps<T>,
@@ -245,7 +248,6 @@ const IconImpl = <T extends ElementType = 'span'>(
       {...htmlProps}
     >
       <LucideIcon strokeWidth={2} aria-hidden="true" />
-      {title && <span className={styles['visually-hidden']}>{title}</span>}
     </Component>
   );
 };

@@ -238,6 +238,16 @@ test.describe('Stack Component', () => {
         await expect(component).toHaveClass(/spacing-compact/);
       });
 
+      test('should neutralize grow when wrapping, matching Flex', async ({ mount }) => {
+        const component = await mount(
+          <Stack grow wrap>
+            Content
+          </Stack>
+        );
+        await expect(component).not.toHaveClass(/grow/);
+        await expect(component).toHaveClass(/wrap-wrap/);
+      });
+
       test('should pass a11y checks when grow={true}', async ({ mount, page }) => {
         await mount(
           <Stack grow>
@@ -1070,8 +1080,7 @@ test.describe('Stack Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('stack-all-variants.png');
     });

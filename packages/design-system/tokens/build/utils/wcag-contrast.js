@@ -102,7 +102,7 @@ export function findCompliantColors(targetHex, allColors, minRatio) {
     .filter((color) => {
       try {
         return meetsWCAGLevel(targetHex, color.value, minRatio);
-      } catch (error) {
+      } catch {
         // Skip invalid colors (e.g., alpha/transparent colors)
         return false;
       }

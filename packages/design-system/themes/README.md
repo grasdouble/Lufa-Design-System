@@ -1,8 +1,8 @@
-[← Back to Design System Overview](../README.md)
+[← Back to Design System Overview](https://github.com/grasdouble/lufa-design-system/tree/main/packages/design-system)
 
 # @grasdouble/lufa_design-system-themes
 
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](../../LICENSE.md)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](./LICENSE.md)
 
 Pre-built theme variants for the Lufa Design System. Each theme provides a full color palette override (Neutral, Brand, Semantic tokens) for light, dark, and high-contrast modes.
 
@@ -22,7 +22,7 @@ pnpm add @grasdouble/lufa_design-system-themes
 
 ```css
 /* Core tokens are required first */
-@import '@grasdouble/lufa_design-system-tokens/style.css';
+@import '@grasdouble/lufa_design-system-tokens/tokens.css';
 
 /* Then import a theme */
 @import '@grasdouble/lufa_design-system-themes/ocean.css';
@@ -30,7 +30,7 @@ pnpm add @grasdouble/lufa_design-system-themes
 
 ### 2. Apply the theme
 
-Use the `data-theme` attribute combined with `data-mode` for light/dark:
+Use the `data-theme` attribute combined with `data-mode` for light, dark, or high-contrast mode:
 
 ```html
 <!-- Ocean theme, dark mode -->
@@ -44,7 +44,7 @@ Use the `data-theme` attribute combined with `data-mode` for light/dark:
 
 ## Available Themes
 
-Each theme includes **31 adaptive tokens** (Neutral, Brand, Semantic) for light, dark, and high-contrast modes.
+Each theme provides adaptive color and component overrides for light, dark, and high-contrast modes.
 
 | Theme            | Personality                  | Key Colors                             |
 | :--------------- | :--------------------------- | :------------------------------------- |
@@ -63,21 +63,15 @@ Each theme includes **31 adaptive tokens** (Neutral, Brand, Semantic) for light,
 
 ## Architecture
 
-Themes override the full set of adaptive tokens. Unlike single-color themes, Lufa themes change:
+Themes override adaptive tokens across several levels. Unlike single-color themes, Lufa themes change:
 
 - **Brand Tokens** — Primary and Secondary colors
 - **Neutral Tokens** — Backgrounds, surfaces, borders, text
 - **Semantic Tokens** — Success, Error, Warning, Info states
+- **Component Tokens** — Interactive state contrast where a theme needs a targeted override
+- **Structural Tokens** — Shape, motion, shadows, and background patterns
 
-Each theme file also includes alpha, shadow, overlay, and glow tokens (cyber themes only).
-
-```
-Token types per theme:
-  --lufa-color-alpha-{color}-{opacity}        transparency (9 levels per color)
-  --lufa-shadow-{size}                  elevation (xs, sm, md, lg, xl)
-  --lufa-overlay-{tone}-{intensity}     layering (light/dark × 3 intensities)
-  --lufa-glow-{type}-{intensity}        neon glow — Matrix & Cyberpunk only
-```
+Some themes also customize glow effects. High-contrast modes disable glow where it could reduce legibility.
 
 ### React hook (with persistence)
 
@@ -139,25 +133,34 @@ function App() {
 pnpm build
 ```
 
-### Validate token conventions
+### Validate
 
 ```bash
-pnpm validate:conventions   # Check naming conventions in TOKENS_CONVENTIONS.md
-pnpm validate:template      # Check _token-template.css is complete
+pnpm test                     # Validate package metadata, docs, and audited overrides
+pnpm validate:theme:all       # Validate all theme CSS
+pnpm validate:token-usage     # Validate token usage
+pnpm lint
+pnpm typecheck
 ```
 
 ### Add a new theme
 
-1. Copy `src/_token-template.css` → `src/your-theme.css`
+1. Copy the closest existing file in `src/` to `src/your-theme.css`
 2. Fill in all token values for all 3 modes (light, dark, high-contrast)
 3. Add to the `themes` array in `scripts/copy-themes.ts`
 4. Export in `package.json`
-5. Run `pnpm build` then `pnpm validate:template`
+5. Run `pnpm test`, `pnpm build`, and `pnpm validate:theme:all`
+
+---
+
+## Package Contents
+
+Each documented `@grasdouble/lufa_design-system-themes/<theme>.css` subpath is an explicit package export backed by a file in `dist/`. The published package also includes this README, the changelog, the MIT license, and an exported `package.json`. There is intentionally no root CSS export: consumers keep importing only the theme they use.
 
 ---
 
 ## Documentation
 
-| File                                                  | Description                |
-| :---------------------------------------------------- | :------------------------- |
-| [Token Architecture](../tokens/_docs/ARCHITECTURE.md) | How the token system works |
+| File                                                                                                                                 | Description                |
+| :----------------------------------------------------------------------------------------------------------------------------------- | :------------------------- |
+| [Token Architecture](https://github.com/grasdouble/lufa-design-system/blob/main/packages/design-system/tokens/_docs/ARCHITECTURE.md) | How the token system works |

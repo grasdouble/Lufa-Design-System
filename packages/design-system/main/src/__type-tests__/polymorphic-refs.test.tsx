@@ -9,10 +9,12 @@
 
 import { useRef } from 'react';
 
+import { Badge } from '../content/Badge/Badge';
 import { Icon } from '../content/Icon/Icon';
 import { Link } from '../content/Link/Link';
 import { Text } from '../content/Text/Text';
 import { Box } from '../foundation/Box/Box';
+import { Container } from '../foundation/Container/Container';
 import { Divider } from '../foundation/Divider/Divider';
 import { Stack } from '../foundation/Stack/Stack';
 import { Button } from '../interaction/Button/Button';
@@ -51,13 +53,13 @@ export function BoxRefTests() {
 export function ButtonRefTests() {
   // ✅ Default element (button)
   const buttonRef = useRef<HTMLButtonElement>(null);
-  <Button ref={buttonRef} type="solid" variant="primary">
+  <Button ref={buttonRef} appearance="solid" variant="primary">
     Click me
   </Button>;
 
   // ✅ As anchor link
   const linkRef = useRef<HTMLAnchorElement>(null);
-  <Button as="a" href="/home" ref={linkRef} type="ghost">
+  <Button as="a" href="/home" ref={linkRef} appearance="ghost">
     Home
   </Button>;
 
@@ -69,10 +71,47 @@ export function ButtonRefTests() {
         const _test: HTMLButtonElement = node;
       }
     }}
-    type="solid"
+    appearance="solid"
   >
     Click
   </Button>;
+}
+
+export function ContainerRefTests() {
+  const divRef = useRef<HTMLDivElement>(null);
+  <Container ref={divRef}>Content</Container>;
+
+  const sectionRef = useRef<HTMLElement>(null);
+  <Container as="section" ref={sectionRef}>
+    Content
+  </Container>;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  <Container as="button" ref={buttonRef}>
+    Content
+  </Container>;
+
+  const wrongRef = useRef<HTMLAnchorElement>(null);
+  // @ts-expect-error Container rendered as button requires an HTMLButtonElement ref.
+  <Container as="button" ref={wrongRef}>
+    Content
+  </Container>;
+}
+
+export function BadgeRefTests() {
+  const spanRef = useRef<HTMLSpanElement>(null);
+  <Badge ref={spanRef}>Status</Badge>;
+
+  const labelRef = useRef<HTMLLabelElement>(null);
+  <Badge as="label" ref={labelRef}>
+    Status
+  </Badge>;
+
+  const wrongRef = useRef<HTMLDivElement>(null);
+  // @ts-expect-error Badge rendered as label requires an HTMLLabelElement ref.
+  <Badge as="label" ref={wrongRef}>
+    Status
+  </Badge>;
 }
 
 /**

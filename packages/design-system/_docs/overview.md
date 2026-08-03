@@ -526,21 +526,17 @@ pnpm ds:all:prettier         # Format all
 | **Development Guide**  | Setup & workflows              | `_docs/development-guide.md`         |
 | **Token Architecture** | Token system details           | `tokens/_docs/token-architecture.md` |
 
-### Generated Documentation
+### Maintained Documentation
 
-This project scan generated the following documentation:
+Use the package documentation that is maintained alongside the implementation:
 
-1. **architecture.md** - System overview, architectural principles, design decisions (15,000+ words)
-2. **development-guide.md** - Setup, workflows, testing, git process (10,000+ words)
-3. **tokens/\_docs/token-architecture.md** - 4-level token system, DTCG compliance, performance (5,000+ words)
-4. **build-configuration.md** - Vite, Style Dictionary, Storybook, Playwright configs (8,000+ words)
-5. **source-tree.md** - Annotated directory tree, entry points, dependencies (7,000+ words)
-6. **main/\_docs/component-inventory.md** - Component catalog with props (4,000+ words)
-7. **playwright/\_docs/testing-strategy.md** - Testing strategy, 5-part structure (4,000+ words)
-8. **storybook/\_docs/storybook-patterns.md** - Storybook CSF3 patterns (10,000+ words)
-9. **overview.md** - This file (overview, getting started)
-
-**Total:** 9 documents, ~60,000+ words
+1. **architecture.md** - System overview and design decisions
+2. **development-guide.md** - Setup and workflows
+3. **tokens/\_docs/token-architecture.md** - Token system
+4. **build-configuration.md** - Build configuration
+5. **main/\_docs/component-inventory.md** - Component inventory
+6. **docusaurus/docs/guides/testing.md** - Playwright testing
+7. **storybook/\_docs/story-guide.md** - Story authoring
 
 ---
 

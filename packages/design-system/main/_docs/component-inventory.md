@@ -244,23 +244,23 @@ All components are now production-ready:
 **Example Usage**:
 
 ```tsx
-<Button type="solid" variant="primary" size="md">
+<Button appearance="solid" variant="primary" size="md">
   Click me
 </Button>
 
-<Button type="outline" variant="secondary">
+<Button appearance="outline" variant="secondary">
   Outline
 </Button>
 
-<Button type="solid" variant="success" iconLeft="check">
+<Button appearance="solid" variant="success" iconLeft="check">
   Save
 </Button>
 
-<Button type="solid" variant="primary" loading>
+<Button appearance="solid" variant="primary" loading>
   Saving...
 </Button>
 
-<Button as="a" href="/home" type="ghost" variant="neutral">
+<Button as="a" href="/home" appearance="ghost" variant="neutral">
   Home
 </Button>
 ```
@@ -426,7 +426,7 @@ Components are designed for composition:
     <Text variant="body" color="secondary">
       Card description
     </Text>
-    <Button type="solid" variant="primary" size="md">
+    <Button appearance="solid" variant="primary" size="md">
       Action
     </Button>
   </Stack>

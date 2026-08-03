@@ -5,8 +5,9 @@ This guide explains how to add a new documentation page to the Docusaurus site.
 ## Where to Put the File
 
 - Use `docs/` for standard documentation pages.
-- Use `blog/` for announcements and release notes.
 - Use `src/pages/` for custom React pages that are not part of the docs sidebar.
+
+The blog plugin is disabled; use package changelogs for release notes.
 
 ## Step-by-Step (Docs Page)
 

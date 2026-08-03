@@ -47,6 +47,23 @@ test.describe('Button Component', () => {
       const component = await mount(<Button>Default</Button>);
       await expect(component).toHaveClass(/_type-solid_/);
       await expect(component).toHaveClass(/_variant-primary_/);
+      await expect(component).toHaveAttribute('type', 'button');
+    });
+
+    test('should expose the native button type without changing its appearance', async ({ mount }) => {
+      const component = await mount(
+        <Button type="submit" appearance="outline">
+          Submit
+        </Button>
+      );
+      await expect(component).toHaveAttribute('type', 'submit');
+      await expect(component).toHaveClass(/_type-outline_/);
+    });
+
+    test('should support native reset buttons', async ({ mount }) => {
+      const component = await mount(<Button type="reset">Reset</Button>);
+      await expect(component).toHaveAttribute('type', 'reset');
+      await expect(component).toHaveClass(/_type-solid_/);
     });
 
     test('should apply custom className', async ({ mount }) => {
@@ -56,7 +73,7 @@ test.describe('Button Component', () => {
 
     test('should combine custom className with utility classes', async ({ mount }) => {
       const component = await mount(
-        <Button type="outline" variant="secondary" className="custom-class">
+        <Button appearance="outline" variant="secondary" className="custom-class">
           Combined classes
         </Button>
       );
@@ -81,11 +98,17 @@ test.describe('Button Component', () => {
       const types = ['solid', 'outline', 'ghost'] as const;
 
       types.forEach((type) => {
-        test(`should apply type="${type}" class`, async ({ mount }) => {
-          const component = await mount(<Button type={type}>Button</Button>);
+        test(`should apply appearance="${type}" class`, async ({ mount }) => {
+          const component = await mount(<Button appearance={type}>Button</Button>);
           await expect(component).toContainText('Button');
           await expect(component).toHaveClass(new RegExp(`_type-${type}_`));
         });
+      });
+
+      test('should preserve deprecated visual type values during migration', async ({ mount }) => {
+        const component = await mount(<Button type="ghost">Legacy visual type</Button>);
+        await expect(component).toHaveAttribute('type', 'button');
+        await expect(component).toHaveClass(/_type-ghost_/);
       });
     });
 
@@ -104,7 +127,7 @@ test.describe('Button Component', () => {
     test.describe('Type + Variant Matrix', () => {
       test('should combine type and variant classes', async ({ mount }) => {
         const component = await mount(
-          <Button type="outline" variant="success">
+          <Button appearance="outline" variant="success">
             Outline Success
           </Button>
         );
@@ -115,7 +138,7 @@ test.describe('Button Component', () => {
       test('should work with all combinations', async ({ mount }) => {
         // Test a subset of combinations to verify the pattern works
         const solidPrimary = await mount(
-          <Button type="solid" variant="primary">
+          <Button appearance="solid" variant="primary">
             solid-primary
           </Button>
         );
@@ -232,7 +255,7 @@ test.describe('Button Component', () => {
       test('should work with all types when disabled', async ({ mount }) => {
         // Test one type to verify disabled works across types
         const component = await mount(
-          <Button type="solid" disabled>
+          <Button appearance="solid" disabled>
             Disabled solid
           </Button>
         );
@@ -454,7 +477,7 @@ test.describe('Button Component', () => {
 
     test('should preserve button styles when rendered as anchor', async ({ mount }) => {
       const component = await mount(
-        <Button as="a" href="#link" type="ghost" variant="primary">
+        <Button as="a" href="#link" appearance="ghost" variant="primary">
           Ghost Link
         </Button>
       );
@@ -477,7 +500,7 @@ test.describe('Button Component', () => {
 
     test('should work with all variants when polymorphic', async ({ mount }) => {
       const component = await mount(
-        <Button as="a" href="/page" type="outline" variant="secondary" size="lg" radius="full">
+        <Button as="a" href="/page" appearance="outline" variant="secondary" size="lg" radius="full">
           Styled Link
         </Button>
       );
@@ -552,7 +575,7 @@ test.describe('Button Component', () => {
                   }}
                 >
                   {variants.map((variant) => (
-                    <Button key={variant} type={type} variant={variant}>
+                    <Button key={variant} appearance={type} variant={variant}>
                       {variant}
                     </Button>
                   ))}
@@ -675,7 +698,7 @@ test.describe('Button Component', () => {
               <Button as="a" href="#link">
                 Button as Link
               </Button>
-              <Button as="a" href="#link" type="outline">
+              <Button as="a" href="#link" appearance="outline">
                 Outline Link
               </Button>
             </div>
@@ -683,8 +706,7 @@ test.describe('Button Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('button-all-variants.png');
     });

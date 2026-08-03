@@ -31,7 +31,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 // ==========================================
 // Configuration
@@ -361,7 +361,7 @@ function writeCSSFile(outputPath, content) {
 
   // Format with prettier
   try {
-    execSync(`npx prettier --write "${outputPath}"`, { stdio: 'ignore' });
+    execFileSync('pnpm', ['exec', 'prettier', '--write', outputPath], { stdio: 'ignore' });
     console.log(`   ✨ Formatted with prettier`);
   } catch (error) {
     console.warn(`   ⚠️  Could not format with prettier: ${error.message}`);

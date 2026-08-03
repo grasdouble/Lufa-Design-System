@@ -50,7 +50,7 @@ export type PaddingVisualizerProps = {
  * ```tsx
  * // With custom color, border and opacity
  * <PaddingVisualizer
- *   color="#ec4899"
+ *   color="var(--lufa-primitive-color-red-400)"
  *   opacity={0.2}
  *   showBorder
  *   showLabel
@@ -94,7 +94,7 @@ export const PaddingVisualizer: React.FC<PaddingVisualizerProps> = ({
     // Validate that hex is a string
     if (!hex || typeof hex !== 'string') {
       console.warn('PaddingVisualizer: Invalid color provided (expected string):', hex);
-      return `rgba(200, 200, 200, ${alpha})`; // Fallback to gray
+      return `color-mix(in srgb, var(--lufa-semantic-ui-background-info) ${alpha * 100}%, transparent)`;
     }
 
     // If it's a CSS variable, use color-mix

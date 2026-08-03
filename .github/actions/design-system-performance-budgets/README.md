@@ -206,7 +206,7 @@ time pnpm exec tsx src/index.ts validate --theme <your-theme.css> --all
 
 ```bash
 cd packages/design-system/main
-npx vite-bundle-visualizer
+pnpm dlx vite-bundle-visualizer
 # or: pnpm add -D rollup-plugin-visualizer and add to vite.config.ts
 ```
 

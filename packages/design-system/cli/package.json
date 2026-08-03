@@ -15,10 +15,11 @@
   "files": [
     "bin",
     "dist",
-    "README.md"
+    "README.md",
+    "_docs"
   ],
   "scripts": {
-    "build": "pnpm clean && tsc",
+    "build": "pnpm clean && tsc -p tsconfig.build.json",
     "build:watch": "tsc --watch",
     "clean": "rm -rf dist",
     "dev": "tsx src/cli.ts",
@@ -30,7 +31,7 @@
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
     "typecheck": "tsc --noEmit",
-    "validate:a11y": "node dist/cli.js a11y",
+    "validate:a11y": "node dist/cli.js theme-validate --a11y --dir ../themes/src",
     "validate:token-usage": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts",
     "validate:token-usage:unused": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --unused",
     "validate:token-usage:verbose": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --verbose"
@@ -51,10 +52,13 @@
     ]
   },
   "dependencies": {
+    "@csstools/selector-resolve-nested": "^3.1.0",
+    "@csstools/selector-specificity": "^5.0.0",
     "@grasdouble/lufa_design-system-tokens": "workspace:^",
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "postcss": "^8.5.23",
+    "postcss-selector-parser": "^7.1.4",
     "postcss-value-parser": "^4.2.0"
   },
   "devDependencies": {
@@ -65,7 +69,6 @@
     "@types/node": "^25.9.5",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
-    "c8": "^11.0.0",
     "eslint": "^10.8.0",
     "prettier": "^3.9.6",
     "sort-package-json": "^3.7.1",

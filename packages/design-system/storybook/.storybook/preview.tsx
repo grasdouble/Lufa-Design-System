@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { Decorator, Parameters, Preview } from '@storybook/react-vite';
 
 import { Breakpoints } from './breakpoints';
@@ -23,6 +19,12 @@ Object.entries(Breakpoints).forEach(([viewport, value]) => {
 });
 
 const parameters: Parameters = {
+  a11y: {
+    test: 'error',
+    options: {
+      runOnly: ['wcag2a', 'wcag2aa'],
+    },
+  },
   options: {
     // @ts-expect-error TS7006: implicit any is intentional (storybook doesn't accept type here)
     storySort: (a, b) => {

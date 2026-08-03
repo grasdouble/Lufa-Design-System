@@ -28,22 +28,23 @@
 
 | Tool        | Version       | Purpose            | Installation                       |
 | ----------- | ------------- | ------------------ | ---------------------------------- |
-| **Node.js** | 24.9.0        | JavaScript runtime | [nodejs.org](https://nodejs.org)   |
-| **pnpm**    | 10.26.x+      | Package manager    | `npm install -g pnpm@10.26`        |
+| **Node.js** | 25.2.1        | JavaScript runtime | [nodejs.org](https://nodejs.org)   |
+| **pnpm**    | 11.4.0        | Package manager    | `asdf install pnpm 11.4.0`         |
 | **Git**     | Latest stable | Version control    | [git-scm.com](https://git-scm.com) |
 
 ### Version Management
 
 **Using `.tool-versions`:**
 
-The project uses `.tool-versions` file (asdf format) to lock Node.js version:
+The project uses `.tool-versions` (asdf format) to lock Node.js and pnpm versions:
 
 ```
 # .tool-versions
-nodejs 24.9.0
+nodejs 25.2.1
+pnpm 11.4.0
 ```
 
-**Recommended:** Use [asdf](https://asdf-vm.com) or [fnm](https://github.com/Schniz/fnm) to automatically switch Node versions.
+**Recommended:** Use [asdf](https://asdf-vm.com) to install both pinned tools automatically.
 
 ---
 
@@ -53,12 +54,12 @@ nodejs 24.9.0
 
 ```bash
 # HTTPS
-git clone https://github.com/grasdouble/Lufa.git
-cd Lufa
+git clone https://github.com/grasdouble/Lufa-Design-System.git
+cd Lufa-Design-System
 
 # SSH (recommended for contributors)
-git clone git@github.com:grasdouble/Lufa.git
-cd Lufa
+git clone git@github.com:grasdouble/Lufa-Design-System.git
+cd Lufa-Design-System
 ```
 
 ### 2. Install Dependencies
@@ -748,7 +749,7 @@ pnpm changeset version
 
 ### Publishing (Automated via CI)
 
-**GitHub Actions workflow** (`.github/workflows/changeset-release.yml`):
+**GitHub Actions workflow** (`.github/workflows/global-release-changeset.yml`):
 
 1. Triggered manually from `main` branch
 2. Runs `pnpm changeset version` (if unpublished changesets exist)
@@ -873,10 +874,10 @@ pnpm outdated --recursive
 pnpm why @grasdouble/lufa_design-system-tokens
 
 # Verify Node.js version
-node -v  # Should be 24.9.0
+node -v  # Should be 25.2.1
 
 # Verify pnpm version
-pnpm -v  # Should be 10.26.x or later
+pnpm -v  # Should be 11.4.0
 ```
 
 ### Getting Help

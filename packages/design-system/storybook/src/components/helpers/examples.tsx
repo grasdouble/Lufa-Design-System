@@ -11,6 +11,7 @@ import type { StoryObj } from '@storybook/react-vite';
 import { Box } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
+import { STORY_COLORS } from '../../constants/storyColors';
 
 // ============================================
 // EXEMPLE 1: Story simple avec PropCard
@@ -81,7 +82,7 @@ export const ExampleSideBySide: StoryObj = {
           <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Small Padding</h3>
           <PropCard label='padding="tight"'>
             <Box padding="tight" background="info" borderRadius="medium">
-              <div style={{ background: 'white', padding: '12px', borderRadius: '6px' }}>
+              <div style={{ background: STORY_COLORS.themed.background.surface, padding: '12px', borderRadius: '6px' }}>
                 Content with tight padding
               </div>
             </Box>
@@ -92,7 +93,7 @@ export const ExampleSideBySide: StoryObj = {
           <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Large Padding</h3>
           <PropCard label='padding="spacious"'>
             <Box padding="spacious" background="success" borderRadius="medium">
-              <div style={{ background: 'white', padding: '12px', borderRadius: '6px' }}>
+              <div style={{ background: STORY_COLORS.themed.background.surface, padding: '12px', borderRadius: '6px' }}>
                 Content with spacious padding
               </div>
             </Box>

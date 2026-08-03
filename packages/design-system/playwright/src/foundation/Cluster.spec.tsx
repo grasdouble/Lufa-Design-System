@@ -199,7 +199,6 @@ test.describe('Cluster Component', () => {
       });
 
       test('should apply height: 100% when grow={true}', async ({ mount }) => {
-        // Mount inside a 200px-tall flex container so height:100% resolves to a computable pixel value.
         const wrapper = await mount(
           <div style={{ height: '200px', display: 'flex' }}>
             <Cluster grow>Content</Cluster>
@@ -834,8 +833,7 @@ test.describe('Cluster Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('cluster-all-variants.png');
     });

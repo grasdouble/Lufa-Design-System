@@ -1,0 +1,86 @@
+---
+id: dot-nav
+title: DotNav
+sidebar_label: DotNav
+description: Vertical section navigation for long, single-page experiences.
+---
+
+# DotNav
+
+`DotNav` renders a fixed navigation landmark whose buttons select sections in a long page. Pair it with [`useScrollSpy`](/docs/hooks/use-scroll-spy) when the active item should follow the viewport.
+
+## Basic usage
+
+```tsx
+import { DotNav, useScrollSpy } from '@grasdouble/lufa_design-system';
+
+const SECTION_IDS = ['intro', 'features', 'contact'] as const;
+const sections = [
+  { id: 'intro', label: 'Introduction' },
+  { id: 'features', label: 'Features' },
+  { id: 'contact', label: 'Contact' },
+];
+
+export function ProductPage() {
+  const { activeId, scrollTo } = useScrollSpy({ ids: SECTION_IDS });
+
+  return (
+    <>
+      <DotNav sections={sections} activeId={activeId} onSelect={scrollTo} />
+      <section id="intro">...</section>
+      <section id="features">...</section>
+      <section id="contact">...</section>
+    </>
+  );
+}
+```
+
+Every `sections[].id` must match the `id` of a rendered target element.
+
+## Props
+
+| Prop        | Type                                    | Default           | Description                                   |
+| ----------- | --------------------------------------- | ----------------- | --------------------------------------------- |
+| `sections`  | `{ id: string; label: string }[]`       | —                 | Ordered targets displayed as navigation dots. |
+| `activeId`  | `string`                                | —                 | ID whose button receives `aria-current`.      |
+| `onSelect`  | `(id: string) => void`                  | —                 | Called when a section button is activated.    |
+| `position`  | `'left' \| 'right'`                     | `'right'`         | Viewport edge used for fixed positioning.     |
+| `ariaLabel` | `string`                                | `'Page sections'` | Accessible name for the navigation landmark.  |
+| `...rest`   | `React.ComponentPropsWithoutRef<'nav'>` | —                 | Native navigation attributes, including `id`. |
+
+The component forwards its ref to the underlying `<nav>`.
+
+## Controlled state
+
+`DotNav` does not inspect the document or manage scrolling. The consumer owns `activeId` and decides what `onSelect` does:
+
+```tsx
+const [activeId, setActiveId] = React.useState('intro');
+
+<DotNav
+  sections={sections}
+  activeId={activeId}
+  onSelect={(id) => {
+    setActiveId(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }}
+/>;
+```
+
+Use `useScrollSpy` instead of this direct example when you need reduced-motion support, observer locking during animation, or a custom scroll container.
+
+## Accessibility
+
+- The root is a named `<nav>` landmark.
+- Each target is a native button with the section label as its accessible name.
+- The active button exposes `aria-current="location"`.
+- Visual labels are hidden from assistive technology to avoid duplicate announcements.
+- Buttons remain keyboard reachable through the normal Tab sequence; Enter and Space use native activation.
+- Motion styling respects `prefers-reduced-motion`.
+
+Choose labels that describe destinations, not visual position. If the page already has another navigation landmark, provide a distinct `ariaLabel`.
+
+## Related API
+
+- [`useScrollSpy`](/docs/hooks/use-scroll-spy) — observe sections and scroll without active-state flicker
+- [Link](/docs/content/link) — inline navigation within text

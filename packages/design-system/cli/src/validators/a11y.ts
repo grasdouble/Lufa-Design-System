@@ -1,36 +1,15 @@
 /**
- * Accessibility (A11y) Validator
- *
- * Validates WCAG 2.2 AA contrast requirements for theme CSS files — official
- * Lufa themes or any custom theme that follows the Lufa token structure.
- *
- * Parses each `data-mode` block independently (light / dark / high-contrast)
- * and checks every color pair for every mode.
- *
- * Color pairs are derived entirely from the design system token metadata via
- * `getColorPairsToCheck()` — a combination of explicit `contrastWith`
- * annotations and a sibling-inference algorithm. No hardcoded pairs.
- *
- * Resolution strategy (mirrors the browser cascade):
- *   1. Load the DS base tokens (tokens.css) — all semantic / component vars
- *      are declared as var() references pointing to core / primitive tokens.
- *   2. Merge the theme overrides per mode — themes redefine core tokens with
- *      hex values (e.g. --lufa-core-color-brand-primary-default: #0e7490).
- *   3. Resolve var() chains until a hex value is reached.
- *
+ * WCAG 2.2 AA contrast validation for Lufa themes.
  */
 
 import { readFileSync } from 'node:fs';
 
+import type { CSSCustomProperty, CSSSpecificity, ThemeMode } from '../utils/parse-css.js';
 import { getColorPairsToCheck } from '../utils/contrast.js';
-import { resolveCSSVarValue } from '../utils/parse-css.js';
+import { parseThemeCSSContent, resolveCSSVarValueDetailed } from '../utils/parse-css.js';
 import { getContrastRatio, meetsWCAG_AA_Text, meetsWCAG_AA_UI } from '../utils/wcag.js';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-export type A11yMode = 'light' | 'dark' | 'high-contrast';
+export type A11yMode = ThemeMode;
 
 export type A11yViolation = {
   foreground: string;
@@ -41,200 +20,198 @@ export type A11yViolation = {
   mode: A11yMode;
 };
 
+export type SkippedContrastCheck = {
+  foreground: string;
+  background: string;
+  reason: string;
+};
+
 export type A11yModeResult = {
   mode: A11yMode;
   valid: boolean;
   violations: A11yViolation[];
   totalChecks: number;
   skipped: number;
+  skippedChecks: SkippedContrastCheck[];
 };
 
 export type A11yResult = {
-  /** True only when ALL modes pass */
   valid: boolean;
   modes: A11yModeResult[];
   totalViolations: number;
+  errors: string[];
 };
 
-// ---------------------------------------------------------------------------
-// Token map type
-// ---------------------------------------------------------------------------
-
-/** varName (with --) → raw value (hex or var() reference) */
 type TokenMap = Map<string, string>;
+type TokenSource = TokenMap | CSSCustomProperty[];
+type ModeTokenSources = Partial<Record<ThemeMode, TokenSource>>;
+type BaseTokens = TokenMap | ModeTokenSources;
+type ColorPair = [string, string, 'text' | 'ui'];
 
-// ---------------------------------------------------------------------------
-// CSS parsers
-// ---------------------------------------------------------------------------
+let baseTokensCache: ModeTokenSources | null = null;
 
-/**
- * Parse a flat CSS file and return all --lufa-* custom property declarations
- * from every rule block, intentionally ignoring selectors (no mode distinction).
- *
- * ## Why selectors are ignored here
- *
- * This function is exclusively used to load `tokens.css` — the DS base layer.
- * `tokens.css` is structured as three blocks:
- *
- *   1. `[data-theme], [data-theme][data-mode='light']`  — 697 vars:
- *        all primitive values + all semantic/component var() chain scaffolding
- *        + light-mode core color hex values as the baseline.
- *   2. `[data-theme][data-mode='dark']`                 — 53 vars:
- *        core color hex overrides for dark mode.
- *   3. `[data-theme][data-mode='high-contrast']`        — 53 vars:
- *        core color hex overrides for high-contrast mode.
- *
- * Flattening all three blocks (last-write-wins) means the 53 core color tokens
- * end up with high-contrast hex values in the resulting map. This is harmless
- * because the base map's purpose here is NOT to supply final color values —
- * it is only used so that `resolveCSSVarValue()` can walk the var() chains
- * (semantic → core → primitive). The actual mode-specific hex values are
- * always provided by the theme file via `parseThemeFileByMode()`, and theme
- * tokens are spread on top of base tokens in the merge step (see `validateA11y`),
- * so they unconditionally overwrite whatever leaked from the dark/HC blocks.
- *
- * ## What this means for theme authors
- *
- * Themes do NOT need to work around this. A theme's `[data-mode='dark']` block
- * always wins over anything in the base map. The flat base map is purely
- * structural scaffolding, not a source of truth for colors.
- */
-function parseFlatCSSTokens(content: string): TokenMap {
-  const stripped = content.replace(/\/\*[\s\S]*?\*\//g, '');
-  const tokens: TokenMap = new Map();
+type CascadeValue = {
+  value: string;
+  important: boolean;
+  layer?: number[];
+  specificity: CSSSpecificity;
+  sourceOrder: number;
+};
 
-  const blockPattern = /[^{]*\{([^}]*)\}/g;
-  let blockMatch: RegExpExecArray | null;
-
-  while ((blockMatch = blockPattern.exec(stripped)) !== null) {
-    const body = blockMatch[1];
-    extractVarsFromBody(body, tokens);
+function compareSpecificity(left: CSSSpecificity, right: CSSSpecificity): number {
+  for (let index = 0; index < left.length; index++) {
+    if (left[index] !== right[index]) return left[index] - right[index];
   }
-
-  return tokens;
+  return 0;
 }
 
-/**
- * Parse a theme CSS file and return a token map per mode.
- *
- * Strategy: scan every CSS rule block. If its selector contains `data-theme`,
- * extract the optional `data-mode` attribute (default: "light") and collect
- * ALL `--lufa-*` variable declarations — both hex literals and var() references.
- */
-function parseThemeFileByMode(content: string): Map<A11yMode, TokenMap> {
-  const stripped = content.replace(/\/\*[\s\S]*?\*\//g, '');
-  const modeMap = new Map<A11yMode, TokenMap>();
+function candidateWins(existing: CascadeValue, candidate: CascadeValue): boolean {
+  if (existing.important !== candidate.important) return candidate.important;
 
-  const blockPattern = /([^{]+)\{([^}]*)\}/g;
-  let match: RegExpExecArray | null;
-
-  while ((match = blockPattern.exec(stripped)) !== null) {
-    const selector = match[1];
-    const body = match[2];
-
-    if (!selector.includes('data-theme')) continue;
-
-    const modeMatch = /data-mode=['"]([^'"]+)['"]/.exec(selector);
-    const rawMode = modeMatch ? modeMatch[1] : 'light';
-    const mode = (['light', 'dark', 'high-contrast'] as const).includes(rawMode as A11yMode)
-      ? (rawMode as A11yMode)
-      : 'light';
-
-    const tokens: TokenMap = modeMap.get(mode) ?? new Map<string, string>();
-    extractVarsFromBody(body, tokens);
-    modeMap.set(mode, tokens);
+  const existingLayered = existing.layer !== undefined;
+  const candidateLayered = candidate.layer !== undefined;
+  if (existingLayered !== candidateLayered) {
+    return existing.important ? candidateLayered : !candidateLayered;
   }
 
-  return modeMap;
-}
-
-/**
- * Extract --lufa-* variable declarations (hex and var() references) from a
- * CSS rule body and add them to the provided map.
- */
-function extractVarsFromBody(body: string, tokens: TokenMap): void {
-  // Hex values (3, 6, or 8-digit)
-  const hexPattern = /--(lufa-[a-z0-9-]+)\s*:\s*(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?)\b/g;
-  let m: RegExpExecArray | null;
-  while ((m = hexPattern.exec(body)) !== null) {
-    tokens.set(`--${m[1]}`, m[2]);
-  }
-
-  // var() references
-  const varRefPattern = /--(lufa-[a-z0-9-]+)\s*:\s*(var\(--[^)]+\))/g;
-  while ((m = varRefPattern.exec(body)) !== null) {
-    // Hex declaration takes precedence
-    if (!tokens.has(`--${m[1]}`)) {
-      tokens.set(`--${m[1]}`, m[2]);
+  if (existingLayered && candidateLayered) {
+    const existingLayer = existing.layer!;
+    const candidateLayer = candidate.layer!;
+    const sharedDepth = Math.min(existingLayer.length, candidateLayer.length);
+    for (let index = 0; index < sharedDepth; index++) {
+      if (existingLayer[index] !== candidateLayer[index]) {
+        return existing.important
+          ? candidateLayer[index] < existingLayer[index]
+          : candidateLayer[index] > existingLayer[index];
+      }
+    }
+    if (existingLayer.length !== candidateLayer.length) {
+      return existing.important
+        ? candidateLayer.length > existingLayer.length
+        : candidateLayer.length < existingLayer.length;
     }
   }
+
+  const specificityOrder = compareSpecificity(candidate.specificity, existing.specificity);
+  if (specificityOrder !== 0) return specificityOrder > 0;
+  return candidate.sourceOrder >= existing.sourceOrder;
 }
 
-// ---------------------------------------------------------------------------
-// Load DS base tokens from the package
-// ---------------------------------------------------------------------------
-
-let _baseTokensCache: TokenMap | null = null;
-
-/**
- * Load the DS base tokens.css once and cache the result.
- * Returns a fresh copy so callers can safely merge without mutating the cache.
- */
-function loadBaseTokens(): TokenMap {
-  if (_baseTokensCache) {
-    return new Map(_baseTokensCache);
+function propertiesToTokenMap(
+  properties: {
+    name: string;
+    value: string;
+    important?: boolean;
+    layer?: number[];
+    modeSpecific?: boolean;
+    specificity?: CSSSpecificity;
+    sourceOrder?: number;
+  }[]
+): TokenMap {
+  const selected = new Map<string, CascadeValue>();
+  for (const [index, property] of properties.entries()) {
+    if (property.name.startsWith('--lufa-') || property.name.startsWith('--')) {
+      const existing = selected.get(property.name);
+      const candidate = {
+        value: property.value,
+        important: property.important ?? false,
+        layer: property.layer,
+        specificity: property.specificity ?? [0, 0, 0],
+        sourceOrder: property.sourceOrder ?? index,
+      };
+      if (existing && !candidateWins(existing, candidate)) continue;
+      selected.set(property.name, candidate);
+    }
   }
-
-  const tokensPath = new URL(import.meta.resolve('@grasdouble/lufa_design-system-tokens/tokens.css'));
-  const content = readFileSync(tokensPath, 'utf-8');
-  _baseTokensCache = parseFlatCSSTokens(content);
-  return new Map(_baseTokensCache);
+  return new Map([...selected].map(([name, declaration]) => [name, declaration.value]));
 }
 
-// ---------------------------------------------------------------------------
-// Per-mode validator
-// ---------------------------------------------------------------------------
+function loadBaseTokens(): ModeTokenSources {
+  if (!baseTokensCache) {
+    const tokensPath = new URL(import.meta.resolve('@grasdouble/lufa_design-system-tokens/tokens.css'));
+    baseTokensCache = Object.fromEntries(parseThemeCSSContent(readFileSync(tokensPath, 'utf-8')));
+  }
+  return baseTokensCache;
+}
 
-function validateMode(
-  mergedTokens: TokenMap,
-  mode: A11yMode,
-  colorPairs: [string, string, 'text' | 'ui'][]
-): A11yModeResult {
+function tokenMapToProperties(tokens: TokenMap): CSSCustomProperty[] {
+  return [...tokens].map(([name, value], sourceOrder) => ({
+    name,
+    value,
+    line: 1,
+    specificity: [0, 0, 0],
+    sourceOrder,
+  }));
+}
+
+function basePropertiesForMode(baseTokens: BaseTokens, mode: ThemeMode): CSSCustomProperty[] {
+  if (baseTokens instanceof Map) return tokenMapToProperties(baseTokens);
+  const source = baseTokens[mode];
+  if (!source) return [];
+  return source instanceof Map ? tokenMapToProperties(source) : source;
+}
+
+function mergeModeTokens(baseTokens: BaseTokens, mode: ThemeMode, themeProperties: CSSCustomProperty[]): TokenMap {
+  const baseProperties = basePropertiesForMode(baseTokens, mode);
+  const lastBaseSourceOrder = baseProperties.reduce(
+    (highest, property, index) => Math.max(highest, property.sourceOrder ?? index),
+    -1
+  );
+  const orderedThemeProperties = themeProperties.map((property, index) => ({
+    ...property,
+    sourceOrder: lastBaseSourceOrder + 1 + (property.sourceOrder ?? index),
+  }));
+  return propertiesToTokenMap([...baseProperties, ...orderedThemeProperties]);
+}
+
+function validateMode(mergedTokens: TokenMap, mode: A11yMode, colorPairs: ColorPair[]): A11yModeResult {
   const violations: A11yViolation[] = [];
-  let skipped = 0;
+  const skippedChecks: SkippedContrastCheck[] = [];
 
-  for (const [fgSuffix, bgSuffix, type] of colorPairs) {
-    const fgName = `--lufa-${fgSuffix}`;
-    const bgName = `--lufa-${bgSuffix}`;
+  for (const [foregroundSuffix, backgroundSuffix, type] of colorPairs) {
+    const foreground = `--lufa-${foregroundSuffix}`;
+    const background = `--lufa-${backgroundSuffix}`;
+    const foregroundRaw = mergedTokens.get(foreground);
+    const backgroundRaw = mergedTokens.get(background);
 
-    const fgRaw = mergedTokens.get(fgName);
-    const bgRaw = mergedTokens.get(bgName);
-
-    if (!fgRaw || !bgRaw) {
-      skipped++;
+    if (foregroundRaw === undefined || backgroundRaw === undefined) {
+      const missing = [foregroundRaw === undefined ? foreground : null, backgroundRaw === undefined ? background : null]
+        .filter(Boolean)
+        .join(', ');
+      skippedChecks.push({ foreground, background, reason: `missing token(s): ${missing}` });
       continue;
     }
 
-    // Resolve var() chains down to hex
-    const fgValue = resolveCSSVarValue(fgRaw, mergedTokens) ?? fgRaw;
-    const bgValue = resolveCSSVarValue(bgRaw, mergedTokens) ?? bgRaw;
+    const foregroundResolution = resolveCSSVarValueDetailed(`var(${foreground})`, mergedTokens);
+    const backgroundResolution = resolveCSSVarValueDetailed(`var(${background})`, mergedTokens);
+    if (foregroundResolution.value === null || backgroundResolution.value === null) {
+      const reasons = [
+        foregroundResolution.value === null ? `${foreground}: ${foregroundResolution.reason}` : null,
+        backgroundResolution.value === null ? `${background}: ${backgroundResolution.reason}` : null,
+      ]
+        .filter(Boolean)
+        .join('; ');
+      skippedChecks.push({ foreground, background, reason: reasons });
+      continue;
+    }
 
-    const ratio = getContrastRatio(fgValue, bgValue);
-
+    const ratio = getContrastRatio(foregroundResolution.value, backgroundResolution.value);
     if (ratio === null) {
-      // Non-hex after resolution — skip (caught by format validator)
-      skipped++;
+      skippedChecks.push({
+        foreground,
+        background,
+        reason: `unsupported contrast colors: "${foregroundResolution.value}" on "${backgroundResolution.value}"`,
+      });
       continue;
     }
 
     const meetsStandard = type === 'text' ? meetsWCAG_AA_Text(ratio) : meetsWCAG_AA_UI(ratio);
-
     if (!meetsStandard) {
       violations.push({
-        foreground: fgName,
-        background: bgName,
+        foreground,
+        background,
         ratio: Math.round(ratio * 100) / 100,
-        required: type === 'text' ? 4.5 : 3.0,
+        required: type === 'text' ? 4.5 : 3,
         type,
         mode,
       });
@@ -245,44 +222,47 @@ function validateMode(
     mode,
     valid: violations.length === 0,
     violations,
-    totalChecks: colorPairs.length - skipped,
-    skipped,
+    totalChecks: colorPairs.length - skippedChecks.length,
+    skipped: skippedChecks.length,
+    skippedChecks,
   };
 }
 
-// ---------------------------------------------------------------------------
-// Public API
-// ---------------------------------------------------------------------------
-
 /**
- * Validate WCAG AA contrast for a theme CSS file across all its modes.
- *
- * @param themePath  Absolute or relative path to the theme CSS file.
+ * Validate theme CSS content with explicit base tokens and metadata pairs.
  */
-export async function validateA11y(themePath: string): Promise<A11yResult> {
-  const colorPairs = await getColorPairsToCheck();
-  const baseTokens = loadBaseTokens();
-
-  const themeContent = readFileSync(themePath, 'utf-8');
-  const themeModeMap = parseThemeFileByMode(themeContent);
-
+export function validateA11yContent(content: string, baseTokens: BaseTokens, colorPairs: ColorPair[]): A11yResult {
+  const themeModes = parseThemeCSSContent(content);
   const modes: A11yModeResult[] = [];
+  const errors: string[] = [];
 
   for (const mode of ['light', 'dark', 'high-contrast'] as const) {
-    const themeTokens = themeModeMap.get(mode);
-    if (!themeTokens) continue; // Mode not present in this file — skip silently
-
-    // Merge: base first, then theme overrides on top (mirrors browser cascade)
-    const merged: TokenMap = new Map([...baseTokens, ...themeTokens]);
-
+    const properties = themeModes.get(mode);
+    if (!properties) continue;
+    const merged = mergeModeTokens(baseTokens, mode, properties);
     modes.push(validateMode(merged, mode, colorPairs));
   }
 
-  const totalViolations = modes.reduce((sum, m) => sum + m.violations.length, 0);
+  if (modes.length === 0) {
+    errors.push('No supported [data-theme] rules found');
+  }
 
+  const totalViolations = modes.reduce((total, mode) => total + mode.violations.length, 0);
   return {
-    valid: modes.every((m) => m.valid),
+    valid: errors.length === 0 && modes.every((mode) => mode.valid),
     modes,
     totalViolations,
+    errors,
   };
+}
+
+/**
+ * Validate WCAG AA contrast for a theme file across every declared mode.
+ */
+export async function validateA11y(themePath: string): Promise<A11yResult> {
+  const [colorPairs, content] = await Promise.all([
+    getColorPairsToCheck(),
+    Promise.resolve(readFileSync(themePath, 'utf-8')),
+  ]);
+  return validateA11yContent(content, loadBaseTokens(), colorPairs);
 }

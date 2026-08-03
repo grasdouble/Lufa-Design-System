@@ -24,11 +24,11 @@
     "cdn:autobuild-server:prettier:check": "pnpm --filter @grasdouble/cdn_autobuild-server run prettier:check",
     "cdn:autobuild-server:prettier:write": "pnpm --filter @grasdouble/cdn_autobuild-server run prettier:write",
     "cdn:autobuild-server:preview": "pnpm --filter @grasdouble/cdn_autobuild-server run preview",
-    "clean": "pnpm clean:node_module && pnpm clean:lib && pnpm clean:cache",
+    "clean": "pnpm clean:lib && pnpm clean:cache:ts && pnpm clean:node_module && pnpm clean:cache",
     "clean:cache": "pnpm store prune",
-    "clean:cache:ts": "pnpm -r exec npx rimraf node_modules/.cache",
-    "clean:lib": "pnpm -r exec npx rimraf dist",
-    "clean:node_module": "pnpm -r exec npx rimraf node_modules && npx rimraf node_modules",
+    "clean:cache:ts": "pnpm exec rimraf --glob \"packages/**/node_modules/.cache\" node_modules/.cache",
+    "clean:lib": "pnpm exec rimraf --glob \"packages/design-system/*/dist\" \"packages/plugins/vscode/*/dist\"",
+    "clean:node_module": "pnpm exec rimraf --glob \"packages/**/node_modules\" node_modules",
     "clean----------------------------": "",
     "deps:audit": "pnpm -r audit",
     "deps:audit:override": "pnpm -r audit --fix=override",
@@ -156,7 +156,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.2.0",
     "prettier": "^3.9.6",
+    "rimraf": "^6.1.3",
     "sort-package-json": "^3.7.1"
   },
-  "packageManager": "pnpm@11.1.2"
+  "packageManager": "pnpm@11.4.0"
 }

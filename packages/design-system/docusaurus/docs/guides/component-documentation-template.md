@@ -424,6 +424,6 @@ Use this checklist when creating component documentation:
 Help us improve this template:
 
 1. Use this template for new component docs
-2. Suggest improvements via [GitHub Issues](https://github.com/grasdouble/Lufa/issues)
+2. Suggest improvements via [GitHub Issues](https://github.com/grasdouble/Lufa-Design-System/issues)
 3. Share examples of excellent component documentation
 4. Provide feedback on what's missing or unclear

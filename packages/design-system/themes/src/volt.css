@@ -50,6 +50,7 @@
   --lufa-core-color-neutral-background: #fdfdfd;
   --lufa-core-color-neutral-surface-default: #f3f4f6;
   --lufa-core-color-neutral-surface-hover: #e5e7eb;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #d1d5db;
   --lufa-core-color-neutral-border-default: #6b7280;
   --lufa-core-color-neutral-border-strong: #000000;
@@ -79,6 +80,10 @@
   --lufa-core-color-feedback-info-border: #2563eb;
   --lufa-core-color-feedback-info-hover: #1d4ed8;
   --lufa-core-color-feedback-info-active: #1e3a8a;
+  --lufa-core-color-feedback-success-on-background: #ffffff;
+  --lufa-core-color-feedback-error-on-background: #ffffff;
+  --lufa-core-color-feedback-warning-on-background: #ffffff;
+  --lufa-core-color-feedback-info-on-background: #ffffff;
 
   /* A11y: semantic-interactive-background-active override
      (neutral-text-primary #111827 vs brand-primary-active #3f6212 = 2.51:1 — dark-on-dark unfixable via core alone) */
@@ -119,6 +124,7 @@
   --lufa-core-color-neutral-background: #0a0a0a;
   --lufa-core-color-neutral-surface-default: #171717;
   --lufa-core-color-neutral-surface-hover: #262626;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #1a1a1a;
   --lufa-core-color-neutral-border-default: #737373;
   --lufa-core-color-neutral-border-strong: #a3e635;
@@ -192,6 +198,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #1a1a1a;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #000000;
   --lufa-core-color-neutral-border-default: #a3e635;
   --lufa-core-color-neutral-border-strong: #a3e635;
@@ -226,6 +233,17 @@
   /* A11y: semantic-interactive-background-active override
      (neutral-text-primary lime #a3e635 vs brand-primary-active lime #84cc16 = 1.31:1 — unfixable via core alone) */
   --lufa-semantic-interactive-background-active: #000000;
+
+  /* Action-state overrides keep black labels and borders readable while retaining electric feedback colors. */
+  --lufa-component-button-type-solid-variant-success-background-active: #76ff03;
+  --lufa-component-button-type-solid-variant-destructive-background-active: #ff1744;
+  --lufa-component-button-type-solid-variant-warning-background-active: #ffea00;
+  --lufa-component-button-type-ghost-variant-success-text-active: #76ff03;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff1744;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #ffea00;
+  --lufa-component-button-type-outline-variant-success-background-active: #76ff03;
+  --lufa-component-button-type-outline-variant-destructive-background-active: #ff1744;
+  --lufa-component-button-type-outline-variant-warning-background-active: #ffea00;
 
   /* A11y: outline button hover border override (border must contrast >=3:1 on hover bg #a3e635) */
   --lufa-component-button-type-outline-border-hover: #000000;

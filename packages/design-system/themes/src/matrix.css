@@ -51,6 +51,7 @@
   --lufa-core-color-neutral-background: #e6ffe6;
   --lufa-core-color-neutral-surface-default: #d9ffd9;
   --lufa-core-color-neutral-surface-hover: #c6f7c6;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   /* FIX: darken border-default — #007800 on #e6ffe6 = 5.37:1, on #d9ffd9 = 5.23:1 ✓ */
   --lufa-core-color-neutral-border-default: #007800;
   --lufa-core-color-neutral-border-strong: #008f11;
@@ -86,6 +87,10 @@
   --lufa-core-color-feedback-error-active: #991b1b;
   --lufa-core-color-feedback-warning-active: #92400e;
   --lufa-core-color-feedback-info-active: #075985;
+  --lufa-core-color-feedback-success-on-background: #ffffff;
+  --lufa-core-color-feedback-error-on-background: #ffffff;
+  --lufa-core-color-feedback-warning-on-background: #ffffff;
+  --lufa-core-color-feedback-info-on-background: #ffffff;
 
   /* FIX: Override neutral-surface-active (#c6f7c6) — ghost text-active (#003b00) = 8.7:1 ✓ */
   --lufa-core-color-neutral-surface-active: #c6f7c6;
@@ -139,6 +144,7 @@
   --lufa-core-color-neutral-background: #0d0208;
   --lufa-core-color-neutral-surface-default: #001100;
   --lufa-core-color-neutral-surface-hover: #002200;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-border-default: #007800;
   --lufa-core-color-neutral-border-strong: #008f11;
   --lufa-core-color-neutral-text-primary: #00ff41;
@@ -186,6 +192,8 @@
   --lufa-semantic-effect-glow-box-focus: 0 0 0 4px rgba(0, 255, 65, 0.3), 0 0 10px rgba(0, 255, 65, 0.2);
 
   /* Component button overrides */
+  --lufa-semantic-interactive-background-active: #001100;
+  --lufa-semantic-interactive-text-active: #00ff41;
   --lufa-component-button-type-solid-variant-primary-background-default: var(--lufa-core-color-brand-primary-default);
   --lufa-component-button-type-solid-variant-primary-background-hover: var(--lufa-core-color-brand-primary-hover);
   /* FIX: override active bg to bright green so #000000 text works on all 3 states */
@@ -197,10 +205,16 @@
   --lufa-component-button-type-solid-variant-secondary-text: #000000;
   /* FIX: solid-secondary-bg-active — #003b00 fails with black text; use #00ff41 = 15.38:1 ✓ */
   --lufa-component-button-type-solid-variant-secondary-background-active: #00ff41;
+  --lufa-component-button-type-solid-variant-success-background-active: #00ff41;
+  --lufa-component-button-type-solid-variant-destructive-background-active: #ff3333;
+  --lufa-component-button-type-solid-variant-warning-background-active: #ffff00;
 
   /* FIX: ghost variant text-active — override to #00ff41 (bright) for contrast on #001100 bg */
   --lufa-component-button-type-ghost-variant-primary-text-active: #00ff41;
   --lufa-component-button-type-ghost-variant-secondary-text-active: #00ff41;
+  --lufa-component-button-type-ghost-variant-success-text-active: #00ff41;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff3333;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #ffff00;
 
   /* FIX: outline-border-hover — black on bright green #00ff41 = 15.38:1 ✓ */
   --lufa-component-button-type-outline-border-hover: #000000;
@@ -211,6 +225,9 @@
   /* FIX: destructive-bg-active = error-active = #ff0000 — use #000000 border (5.25:1 ✓) */
   --lufa-component-button-type-outline-variant-destructive-border-active: #000000;
   --lufa-component-button-type-outline-variant-neutral-border-active: #00ff41;
+  --lufa-component-button-type-outline-variant-success-background-active: #00ff41;
+  --lufa-component-button-type-outline-variant-destructive-background-active: #ff3333;
+  --lufa-component-button-type-outline-variant-warning-background-active: #ffff00;
   /* success-active (#00ff00) and warning-active (#ffff00) are vivid — use black border */
   --lufa-component-button-type-outline-variant-success-border-active: #000000;
   --lufa-component-button-type-outline-variant-warning-border-active: #000000;
@@ -235,6 +252,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #002200;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-border-default: #00ff41;
   --lufa-core-color-neutral-border-strong: #00ff41;
   --lufa-core-color-neutral-text-primary: #00ff41;
@@ -282,12 +300,20 @@
   --lufa-semantic-effect-glow-box-focus: 0 0 0 4px rgba(0, 255, 65, 0.4), 0 0 10px rgba(0, 255, 65, 0.3);
 
   /* FIX: solid-primary-text — need #000000 on all 3 states; override bg-active to bright green */
+  --lufa-semantic-interactive-background-active: #000000;
+  --lufa-semantic-interactive-text-active: #00ff41;
   /* bg-default = #00ff41, bg-hover = #39ff14 — black on both ✓; bg-active override = #00ff41 */
   --lufa-component-button-type-solid-variant-primary-background-active: #00ff41;
   --lufa-component-button-type-solid-variant-primary-text: #000000;
+  --lufa-component-button-type-solid-variant-success-background-active: #00ff41;
+  --lufa-component-button-type-solid-variant-destructive-background-active: #ff3333;
+  --lufa-component-button-type-solid-variant-warning-background-active: #ffff00;
 
   /* FIX: ghost variant text-active — override to #00ff41 on ghost-bg #000000 = 15.38:1 ✓ */
   --lufa-component-button-type-ghost-variant-primary-text-active: #00ff41;
+  --lufa-component-button-type-ghost-variant-success-text-active: #00ff41;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff3333;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #ffff00;
   /* info-active = #00ffff on ghost-bg #000000 = 16.75:1 ✓ (no override needed, resolved by token) */
 
   /* FIX: outline-border-hover — black on bright green #00ff41 = 15.38:1 ✓ */
@@ -300,6 +326,9 @@
   /* FIX: destructive-bg-active = error-active = #ff0000 — use #000000 border (5.25:1 ✓) */
   --lufa-component-button-type-outline-variant-destructive-border-active: #000000;
   --lufa-component-button-type-outline-variant-neutral-border-active: #00ff41;
+  --lufa-component-button-type-outline-variant-success-background-active: #00ff41;
+  --lufa-component-button-type-outline-variant-destructive-background-active: #ff3333;
+  --lufa-component-button-type-outline-variant-warning-background-active: #ffff00;
   /* success-active (#00ff00) and warning-active (#ffff00) are vivid — use black border */
   --lufa-component-button-type-outline-variant-success-border-active: #000000;
   --lufa-component-button-type-outline-variant-warning-border-active: #000000;

@@ -10,22 +10,22 @@ This guide explains how to embed live components in MDX pages.
 
 ## Basic Setup
 
-Import the MDX wrapper and the component you want to render.
+Import `LiveDemoSection` and a real example from `src/dsExamples`.
 
 ```mdx
-import { BrowserWindow } from '@site/src/components/BrowserWindow';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-import { Button } from '@grasdouble/lufa_design-system';
+import { LiveDemoSection } from '../../src/components/LiveDemoSection';
+import { LiveDemo } from '../../src/dsExamples/interaction/button';
 
 # Button Documentation
 
-<BrowserWindow>
-  <Button variant="primary">Click me</Button>
-  <Button variant="secondary">Or me</Button>
-</BrowserWindow>
+<LiveDemoSection>
+  <BrowserOnly>{() => <LiveDemo />}</BrowserOnly>
+</LiveDemoSection>
 ```
 
-If a component is not available in MDX, add it to the MDX scope configuration for this package (usually in `src/theme/MDXComponents` or the MDX provider).
+Keep stateful browser examples in `src/dsExamples` so server rendering remains deterministic.
 
 ## Best Practices
 
@@ -40,7 +40,7 @@ If a component is not available in MDX, add it to the MDX scope configuration fo
 
 ```mdx
 import { LiveDemoSection } from '../../src/components/LiveDemoSection';
-import { LiveDemo, SizeDemo } from '../../src/dsExamples/components/button';
+import { LiveDemo, SizeDemo } from '../../src/dsExamples/interaction/button';
 
 <LiveDemoSection
   tabs={[

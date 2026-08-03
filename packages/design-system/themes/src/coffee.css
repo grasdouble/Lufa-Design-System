@@ -41,6 +41,7 @@
   --lufa-core-color-neutral-background: #faf7f2;
   --lufa-core-color-neutral-surface-default: #f3ece3;
   --lufa-core-color-neutral-surface-hover: #eadecf;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #eadecf;
   --lufa-core-color-neutral-border-default: #896e56;
   --lufa-core-color-neutral-border-strong: #78350f;
@@ -70,6 +71,10 @@
   --lufa-core-color-feedback-info-border: #2563eb;
   --lufa-core-color-feedback-info-hover: #1e40af;
   --lufa-core-color-feedback-info-active: #1e40af;
+  --lufa-core-color-feedback-success-on-background: #ffffff;
+  --lufa-core-color-feedback-error-on-background: #ffffff;
+  --lufa-core-color-feedback-warning-on-background: #ffffff;
+  --lufa-core-color-feedback-info-on-background: #ffffff;
 
   /* Semantic overrides — fix interactive-text-active contrast on interactive-background-active */
   --lufa-semantic-interactive-background-active: #f3ece3;
@@ -84,6 +89,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #faf7f2;
   --lufa-component-button-type-outline-variant-warning-background-active: #faf7f2;
   --lufa-component-button-type-outline-variant-info-background-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-primary-border-active: #2d1610;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #2d1610;
+  --lufa-component-button-type-outline-variant-success-border-active: #2d1610;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #2d1610;
+  --lufa-component-button-type-outline-variant-warning-border-active: #2d1610;
+  --lufa-component-button-type-outline-variant-info-border-active: #2d1610;
   --lufa-component-button-type-outline-variant-neutral-border-active: #2d1610; /* neutral-text-primary on #eadecf = 12.84:1 */
 
   /* Glow — warm amber (light mode) */
@@ -107,6 +118,7 @@
   --lufa-core-color-neutral-background: #1a120b;
   --lufa-core-color-neutral-surface-default: #2d2015;
   --lufa-core-color-neutral-surface-hover: #3d2c1e;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #1a120b;
   --lufa-core-color-neutral-border-default: #a6815e;
   --lufa-core-color-neutral-border-strong: #d97706;
@@ -154,6 +166,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #1a120b;
   --lufa-component-button-type-outline-variant-warning-background-active: #1a120b;
   --lufa-component-button-type-outline-variant-info-background-active: #1a120b;
+  --lufa-component-button-type-outline-variant-primary-border-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-success-border-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-warning-border-active: #faf7f2;
+  --lufa-component-button-type-outline-variant-info-border-active: #faf7f2;
   --lufa-component-button-type-outline-variant-neutral-border-active: #faf7f2; /* neutral-text-primary on #1a120b = 17.31:1 */
 
   /* Glow — warm amber (dark mode) */
@@ -177,6 +195,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #221100;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #221100;
   --lufa-core-color-neutral-border-default: #ca8a04;
   --lufa-core-color-neutral-border-strong: #ca8a04;
@@ -224,6 +243,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #000000;
   --lufa-component-button-type-outline-variant-warning-background-active: #000000;
   --lufa-component-button-type-outline-variant-info-background-active: #000000;
+  --lufa-component-button-type-outline-variant-primary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-success-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-warning-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-info-border-active: #ffffff;
   --lufa-component-button-type-outline-variant-neutral-border-active: #ffffff; /* neutral-text-primary on #221100 = 18.29:1 */
 
   /* Glow — disabled for accessibility */

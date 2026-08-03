@@ -75,17 +75,16 @@ Lufa includes three built-in **modes** for accessibility and user preference:
 ```tsx title="src/App.tsx"
 import '@grasdouble/lufa_design-system/style.css';
 
-import { useState } from 'react';
+import type { ThemeMode } from '@grasdouble/lufa_design-system';
+import { useTheme } from '@grasdouble/lufa_design-system';
 
 function App() {
-  const [mode, setMode] = useState<'light' | 'dark' | 'high-contrast'>('light');
-
-  // Apply mode to document root
-  document.documentElement.setAttribute('data-mode', mode);
+  const { mode, setMode } = useTheme({ defaultMode: 'auto' });
 
   return (
     <div>
-      <select value={mode} onChange={(e) => setMode(e.target.value as any)}>
+      <select value={mode} onChange={(event) => setMode(event.target.value as ThemeMode)}>
+        <option value="auto">System preference</option>
         <option value="light">Light Mode</option>
         <option value="dark">Dark Mode</option>
         <option value="high-contrast">High-Contrast Mode</option>
@@ -98,18 +97,14 @@ function App() {
 
 ### Automatic System Preference Detection
 
-Lufa automatically detects system preferences using CSS media queries:
+Select `auto` in `useTheme` to listen to `prefers-color-scheme` and
+`prefers-contrast`. The shared controller writes the resolved `light`, `dark`, or
+`high-contrast` value to `data-mode`, because the generated token CSS uses
+attribute selectors. It also retains `data-theme=""` for the default theme so
+the base token cascade remains active.
 
-```css
-/* Automatically applies dark mode if user prefers it */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {
-    /* Dark mode tokens applied automatically */
-  }
-}
-```
-
-To respect system preferences, simply don't set `data-mode` explicitly.
+`useThemeMode` remains available as a deprecated compatibility adapter and
+delegates to the same controller, so the two hooks never compete for ownership.
 
 ## Customizing Design Tokens
 
@@ -386,7 +381,7 @@ Use the Lufa CLI to validate your custom themes:
 pnpm add -D @grasdouble/lufa_design-system-cli
 
 # Validate your theme
-npx lufa-ds-cli theme-validate ./src/themes/brand-theme.css
+pnpm dlx @grasdouble/lufa_design-system-cli theme-validate ./src/themes/brand-theme.css
 ```
 
 The validator checks:
@@ -447,25 +442,18 @@ You wouldn't try to change `Math.PI`, and you shouldn't change primitive tokens.
 }
 ```
 
-### Mode vs Theme (Future)
+### Modes and Themes
 
-**Currently Implemented:**
+Modes and themes are orthogonal:
 
-- **Modes** (`data-mode`) - Light, Dark, High-Contrast (for accessibility)
+- **Modes** (`data-mode`) - Light, dark, and high contrast
+- **Themes** (`data-theme`) - Default, Ocean, Forest, and additional brand variants
 
-**Future (Phase 6):**
-
-- **Themes** (`data-theme`) - Ocean, Forest, Custom (for brand variants)
-
-Modes and themes will be orthogonal - you'll be able to combine any mode with any theme:
+You can combine any supported mode with any theme:
 
 - Ocean theme + Dark mode
 - Forest theme + High-contrast mode
 - Default theme + Light mode
-
-:::info Theme Variants Coming Soon
-Ocean 🌊 and Forest 🌲 theme variants are planned for a future release (Phase 6). Currently, only modes (light/dark/high-contrast) are implemented. Watch the [GitHub repository](https://github.com/grasdouble/Lufa) for updates.
-:::
 
 ## Next Steps
 
@@ -475,5 +463,5 @@ Ocean 🌊 and Forest 🌲 theme variants are planned for a future release (Phas
 - [Component Customization](/docs/components/overview) - Component-specific styling
 
 :::tip Need Help?
-Join our community on [GitHub Discussions](https://github.com/grasdouble/Lufa/discussions) for theming questions and examples.
+Join our community on [GitHub Discussions](https://github.com/grasdouble/Lufa-Design-System/discussions) for theming questions and examples.
 :::

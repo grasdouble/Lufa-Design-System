@@ -57,9 +57,7 @@ const patterns = [
   'src/semantic/**/*.json',
   'src/component/**/*.json',
 ];
-const ignorePatterns = ['src/**/index.json'];
-
-const files = patterns.flatMap((pattern) => glob.sync(pattern, { cwd: TOKENS_ROOT, ignore: ignorePatterns }));
+const files = patterns.flatMap((pattern) => glob.sync(pattern, { cwd: TOKENS_ROOT }));
 
 if (files.length === 0) {
   console.error('❌ No token JSON files found in src/');

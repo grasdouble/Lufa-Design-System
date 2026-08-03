@@ -27,7 +27,7 @@
  *
  * @example With custom background color
  * ```tsx
- * <MarginVisualizer color="#ec4899" opacity={0.15}>
+ * <MarginVisualizer color="var(--lufa-primitive-color-red-400)" opacity={0.15}>
  *   <Box marginTop="comfortable">Content</Box>
  * </MarginVisualizer>
  * ```

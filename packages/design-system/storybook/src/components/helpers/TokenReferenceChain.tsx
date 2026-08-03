@@ -138,7 +138,7 @@ export const TokenReferenceChain: React.FC<TokenReferenceChainProps> = ({ title,
                   backgroundColor: 'var(--lufa-semantic-ui-background-surface-default)',
                   minWidth: '200px',
                   flex: '1 1 200px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
                 }}
               >
                 {/* Level Badge */}
@@ -169,7 +169,7 @@ export const TokenReferenceChain: React.FC<TokenReferenceChainProps> = ({ title,
                         value.startsWith('#') || value.startsWith('rgb') ? value : `var(${token.cssVariable})`,
                       borderRadius: '6px',
                       border: '1px solid var(--lufa-semantic-ui-border-default)',
-                      boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)',
+                      boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
                       transition: 'background-color 0.3s ease',
                     }}
                   />

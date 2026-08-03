@@ -1,217 +1,146 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
-/**
- * All available theme names in Lufa Design System.
- * This serves as the single source of truth for the ThemeName type.
- * Includes 'default' plus 10 named theme variants.
- */
-export const THEME_NAMES = [
-  'default',
-  'ocean',
-  'forest',
-  'matrix',
-  'cyberpunk',
-  'sunset',
-  'nordic',
-  'volcano',
-  'coffee',
-  'volt',
-  'steampunk',
-] as const;
+import type { ThemeMode, ThemeName } from './themeValues.js';
+import {
+  getThemeSnapshot,
+  initializeThemeController,
+  refreshThemeDocument,
+  setControlledMode,
+  setControlledTheme,
+  subscribeThemeController,
+} from './themeController.js';
+import { THEME_NAMES } from './themeValues.js';
 
-/**
- * Available theme names
- * - default: Standard design system theme
- * - ocean: Blue/teal with smooth, flowing personality
- * - forest: Green/earth with organic, grounded personality
- * - matrix: Green-on-black digital rain aesthetic
- * - cyberpunk: Neon pink/cyan futuristic aesthetic
- * - sunset: Warm orange/red gradient aesthetic
- * - nordic: Cool grey/blue minimalist aesthetic
- * - volcano: Deep red/orange fiery aesthetic
- * - coffee: Warm brown/cream earthy aesthetic
- * - volt: Electric yellow/green high-energy aesthetic
- * - steampunk: Brass/brown Victorian-industrial aesthetic
- */
-export type ThemeName = (typeof THEME_NAMES)[number];
+export { THEME_NAMES };
+export type { ThemeMode, ThemeName };
 
-/**
- * Type guard for ThemeName — mirrors isValidMode in useThemeMode.ts
- */
-function isThemeName(value: unknown): value is ThemeName {
-  return typeof value === 'string' && (THEME_NAMES as readonly string[]).includes(value);
-}
+/** Configuration for the shared theme controller. */
+export type UseThemeOptions = {
+  /** Initial theme when neither the document nor storage provides one. */
+  defaultTheme?: ThemeName;
+  /** Initial mode when neither the document nor storage provides one. */
+  defaultMode?: ThemeMode;
+  /**
+   * Base localStorage key.
+   * @default 'lufa-theme'
+   */
+  storageKey?: string;
+  /**
+   * Explicit mode storage key used by the `useThemeMode` compatibility adapter.
+   * @default `${storageKey}-mode`
+   */
+  modeStorageKey?: string;
+  /**
+   * Enables persistence. Valid stored values initialize the controller before
+   * existing document attributes.
+   * @default true
+   */
+  enableStorage?: boolean;
+};
 
-/**
- * Theme mode for light/dark variants
- * - light: Light mode (default)
- * - dark: Dark mode
- * - auto: Automatically detect from system preference (prefers-color-scheme)
- */
-export type ThemeMode = 'light' | 'dark' | 'auto';
-
-/**
- * Return type for useTheme hook
- */
+/** Return type for `useTheme`. */
 export type UseThemeReturn = {
-  /** Current theme name */
+  /** Current theme name. */
   theme: ThemeName;
-  /** Current mode setting (may be 'auto') */
+  /** Current shared mode setting. */
   mode: ThemeMode;
-  /** Resolved effective mode (light or dark, never 'auto') */
-  effectiveMode: 'light' | 'dark';
-  /** Change the theme */
+  /** Resolved effective mode; never `auto`. */
+  effectiveMode: Exclude<ThemeMode, 'auto'>;
+  /** Change the theme. */
   setTheme: (theme: ThemeName) => void;
-  /** Change the mode */
+  /** Change the shared color mode. */
   setMode: (mode: ThemeMode) => void;
-  /** Check if system prefers dark mode */
+  /** Whether the system requests a dark color scheme. */
   systemPrefersDark: boolean;
+  /** Whether the system requests increased contrast. */
+  systemPrefersContrast: boolean;
 };
 
 /**
- * Custom hook for managing theme and mode in the Lufa Design System
+ * Manages the design-system theme and the single shared color-mode source of truth.
  *
- * Features:
- * - Theme selection (see {@link THEME_NAMES} for all available themes)
- * - Mode selection (light, dark, auto)
- * - Auto-detection of system preference
- * - Syncs with HTML data attributes
- * - Persistence support via localStorage (optional)
+ * The hook writes `data-theme` and `data-mode` on `<html>`. The default theme
+ * uses an empty `data-theme` value, and `auto` mode resolves system color and
+ * contrast preferences into the matching token selector. All hook instances,
+ * including `useThemeMode`, subscribe to the same controller.
  *
- * @example
- * ```tsx
- * function ThemeSwitcher() {
- *   const { theme, mode, setTheme, setMode, effectiveMode } = useTheme();
- *
- *   return (
- *     <div>
- *       <p>Current: {theme} theme in {effectiveMode} mode</p>
- *
- *       <button onClick={() => setTheme('ocean')}>Ocean</button>
- *       <button onClick={() => setTheme('forest')}>Forest</button>
- *
- *       <button onClick={() => setMode('light')}>☀️ Light</button>
- *       <button onClick={() => setMode('dark')}>🌙 Dark</button>
- *       <button onClick={() => setMode('auto')}>🔄 Auto</button>
- *     </div>
- *   );
- * }
- * ```
- *
- * @param options - Configuration options
- * @param options.defaultTheme - Initial theme (default: 'default')
- * @param options.defaultMode - Initial mode (default: 'auto')
- * @param options.storageKey - localStorage key for persistence (default: 'lufa-theme')
- * @param options.enableStorage - Enable localStorage persistence (default: true)
- * @returns Theme state and setter functions
+ * Accessibility contract: consumers must expose controls that communicate their
+ * selected state and remain keyboard operable; this hook does not render UI.
  */
-export function useTheme(options?: {
-  defaultTheme?: ThemeName;
-  defaultMode?: ThemeMode;
-  storageKey?: string;
-  enableStorage?: boolean;
-}): UseThemeReturn {
+export function useTheme(options: UseThemeOptions = {}): UseThemeReturn {
   const {
     defaultTheme = 'default',
     defaultMode = 'auto',
     storageKey = 'lufa-theme',
+    modeStorageKey = `${storageKey}-mode`,
     enableStorage = true,
-  } = options ?? {};
+  } = options;
 
-  // Initialize from localStorage if enabled
-  const getInitialTheme = (): ThemeName => {
-    if (enableStorage && typeof window !== 'undefined') {
-      const stored = localStorage.getItem(`${storageKey}-name`);
-      if (stored && isThemeName(stored)) {
-        return stored;
-      }
-    }
-    return defaultTheme;
-  };
+  const controllerOptions = useMemo(
+    () => ({
+      defaultTheme,
+      defaultMode,
+      themeStorageKey: `${storageKey}-name`,
+      modeStorageKey,
+      enableStorage,
+    }),
+    [defaultMode, defaultTheme, enableStorage, modeStorageKey, storageKey]
+  );
 
-  const getInitialMode = (): ThemeMode => {
-    if (enableStorage && typeof window !== 'undefined') {
-      const stored = localStorage.getItem(`${storageKey}-mode`);
-      if (stored && ['light', 'dark', 'auto'].includes(stored)) {
-        return stored as ThemeMode;
-      }
-    }
-    return defaultMode;
-  };
+  initializeThemeController(controllerOptions);
 
-  const [theme, setThemeState] = useState<ThemeName>(getInitialTheme);
-  const [mode, setModeState] = useState<ThemeMode>(getInitialMode);
-  const [systemPrefersDark, setSystemPrefersDark] = useState<boolean>(false);
+  const serverSnapshot = useMemo(() => ({ theme: defaultTheme, mode: defaultMode }), [defaultMode, defaultTheme]);
+  const state = useSyncExternalStore(subscribeThemeController, getThemeSnapshot, () => serverSnapshot);
+  const [systemPrefersDark, setSystemPrefersDark] = useState(false);
+  const [systemPrefersContrast, setSystemPrefersContrast] = useState(false);
 
-  // Compute effective mode from current state (no useState needed)
-  const effectiveMode: 'light' | 'dark' = mode === 'auto' ? (systemPrefersDark ? 'dark' : 'light') : mode;
-
-  // Detect system preference
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
+    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const contrastQuery = window.matchMedia('(prefers-contrast: more)');
     const updateSystemPreference = () => {
-      setSystemPrefersDark(mediaQuery.matches);
+      setSystemPrefersDark(darkQuery.matches);
+      setSystemPrefersContrast(contrastQuery.matches);
+      refreshThemeDocument();
     };
-
-    // Initial check
     updateSystemPreference();
-
-    // Listen for changes
-    mediaQuery.addEventListener('change', updateSystemPreference);
-
+    darkQuery.addEventListener('change', updateSystemPreference);
+    contrastQuery.addEventListener('change', updateSystemPreference);
     return () => {
-      mediaQuery.removeEventListener('change', updateSystemPreference);
+      darkQuery.removeEventListener('change', updateSystemPreference);
+      contrastQuery.removeEventListener('change', updateSystemPreference);
     };
   }, []);
 
-  // Sync with HTML data attributes
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
+  const setTheme = useCallback(
+    (theme: ThemeName) => {
+      setControlledTheme(theme, controllerOptions);
+    },
+    [controllerOptions]
+  );
 
-    const root = document.documentElement;
+  const setMode = useCallback(
+    (mode: ThemeMode) => {
+      setControlledMode(mode, controllerOptions);
+    },
+    [controllerOptions]
+  );
 
-    // Set theme attribute
-    if (theme === 'default') {
-      root.removeAttribute('data-theme');
-    } else {
-      root.setAttribute('data-theme', theme);
-    }
-
-    // Set mode attribute
-    if (mode === 'auto') {
-      // Remove data-mode to let @media (prefers-color-scheme) work
-      root.removeAttribute('data-mode');
-    } else {
-      root.setAttribute('data-mode', mode);
-    }
-  }, [theme, mode]);
-
-  // Persist to localStorage
-  useEffect(() => {
-    if (!enableStorage || typeof window === 'undefined') return;
-
-    localStorage.setItem(`${storageKey}-name`, theme);
-    localStorage.setItem(`${storageKey}-mode`, mode);
-  }, [theme, mode, storageKey, enableStorage]);
-
-  // Wrapped setters
-  const setTheme = useCallback((newTheme: ThemeName) => {
-    setThemeState(newTheme);
-  }, []);
-
-  const setMode = useCallback((newMode: ThemeMode) => {
-    setModeState(newMode);
-  }, []);
+  const effectiveMode: Exclude<ThemeMode, 'auto'> =
+    state.mode === 'auto'
+      ? systemPrefersContrast
+        ? 'high-contrast'
+        : systemPrefersDark
+          ? 'dark'
+          : 'light'
+      : state.mode;
 
   return {
-    theme,
-    mode,
+    ...state,
     effectiveMode,
     setTheme,
     setMode,
     systemPrefersDark,
+    systemPrefersContrast,
   };
 }

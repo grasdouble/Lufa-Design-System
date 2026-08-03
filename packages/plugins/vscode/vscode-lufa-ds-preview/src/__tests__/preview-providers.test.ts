@@ -1,7 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { CompletionItemKind } from 'vscode';
 
-import { createCompletionProvider, createDocumentColorProvider, createHoverProvider } from '../preview-providers';
+import {
+  createCompletionProvider,
+  createDocumentColorProvider,
+  createHoverProvider,
+  MAX_DOCUMENT_COLORS,
+  MAX_DOCUMENT_SCAN_CHARACTERS,
+} from '../preview-providers';
 
 vi.mock('vscode', () => {
   class MarkdownString {
@@ -105,6 +111,46 @@ describe('createDocumentColorProvider', () => {
 
     expect(colors).toHaveLength(4);
   });
+
+  it('should cap the number of color decorations returned for a document', () => {
+    const provider = createDocumentColorProvider({
+      loadValuesMap: () => createMap(),
+      isDebugEnabled: () => false,
+      getOutputChannel: () => null,
+    });
+    const token = 'var(--lufa-core-color-brand-500);';
+    const text = token.repeat(MAX_DOCUMENT_COLORS + 1);
+    const document = {
+      fileName: 'many-colors.css',
+      languageId: 'css',
+      getText: () => text,
+      positionAt: (offset: number) => ({ line: 0, character: offset }),
+    };
+
+    const colors = provider.provideDocumentColors(document as never);
+
+    expect(colors).toHaveLength(MAX_DOCUMENT_COLORS);
+  });
+
+  it('should skip documents above the safe scan size', () => {
+    const appendLine = vi.fn();
+    const provider = createDocumentColorProvider({
+      loadValuesMap: () => createMap(),
+      isDebugEnabled: () => true,
+      getOutputChannel: () => ({ appendLine }) as never,
+    });
+    const document = {
+      fileName: 'generated.css',
+      languageId: 'css',
+      getText: () => 'x'.repeat(MAX_DOCUMENT_SCAN_CHARACTERS + 1),
+      positionAt: (offset: number) => ({ line: 0, character: offset }),
+    };
+
+    const colors = provider.provideDocumentColors(document as never);
+
+    expect(colors).toEqual([]);
+    expect(appendLine).toHaveBeenCalledWith(expect.stringContaining('Skipping color scan'));
+  });
 });
 
 describe('createHoverProvider', () => {
@@ -133,8 +179,7 @@ describe('createCompletionProvider', () => {
 
     const text = 'color: var(--lufa-core-color-brand-';
     const document = {
-      getText: () => text,
-      offsetAt: (pos: { character: number }) => pos.character,
+      lineAt: () => ({ text }),
       positionAt: (offset: number) => ({ line: 0, character: offset }),
     };
 
@@ -156,8 +201,7 @@ describe('createCompletionProvider', () => {
 
     const text = "const gap = tokens.spacing['";
     const document = {
-      getText: () => text,
-      offsetAt: (pos: { character: number }) => pos.character,
+      lineAt: () => ({ text }),
       positionAt: (offset: number) => ({ line: 0, character: offset }),
     };
 
@@ -168,5 +212,31 @@ describe('createCompletionProvider', () => {
     );
 
     expect(match?.detail).toBe('0.5rem');
+  });
+
+  it('should inspect only the current line for completion context', () => {
+    const provider = createCompletionProvider({
+      loadValuesMap: () => createMap(),
+    });
+    const line = 'color: var(--lufa-core-color-brand-';
+    const document = {
+      getText: vi.fn(() => {
+        throw new Error('full document read');
+      }),
+      lineAt: vi.fn(() => ({ text: line })),
+      positionAt: (offset: number) => ({ line: 4, character: offset }),
+    };
+
+    const items = provider.provideCompletionItems(
+      document as never,
+      {
+        line: 4,
+        character: line.length,
+      } as never
+    );
+
+    expect(items).toHaveLength(1);
+    expect(document.getText).not.toHaveBeenCalled();
+    expect(document.lineAt).toHaveBeenCalledWith(4);
   });
 });

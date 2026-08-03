@@ -15,10 +15,13 @@
     "./values": "./dist/tokens-values.json",
     "./metadata": "./dist/tokens-metadata.json",
     "./merged": "./dist/tokens-source-merged.json",
+    "./map": "./dist/tokens.map.json",
+    "./statistics": "./dist/token-statistics.json",
     "./themeable": "./dist/themeable-tokens.css",
     "./themeable-starter": "./dist/themeable-tokens-starter.css",
     "./themeable-extended": "./dist/themeable-tokens-extended.css",
-    "./themeable-advanced": "./dist/themeable-tokens-advanced.css"
+    "./themeable-advanced": "./dist/themeable-tokens-advanced.css",
+    "./tokens.map.json": "./dist/tokens.map.json"
   },
   "main": "./dist/tokens-values.json",
   "files": [
@@ -27,25 +30,29 @@
   ],
   "scripts": {
     "prebuild": "pnpm validate:tokens",
-    "build": "pnpm clean && style-dictionary build --config ./style-dictionary.config.js && pnpm check:size && pnpm merge:tokens",
-    "check:size": "node scripts/check-css-size.mjs",
+    "build": "pnpm clean && style-dictionary build --config ./style-dictionary.config.js && pnpm merge:tokens && pnpm stats:generate && pnpm check:size",
+    "check:size": "node scripts/check-package-size.mjs",
     "clean": "rm -rf dist",
+    "lint": "eslint .",
     "merge:tokens": "node scripts/merge-tokens.mjs",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
-    "test": "pnpm test:validator && pnpm test:wcag",
+    "stats:generate": "node scripts/generate-token-statistics.mjs",
+    "stats:update": "node scripts/generate-token-statistics.mjs --write-readme",
+    "test": "pnpm test:validator && pnpm test:wcag && pnpm test:shadow && pnpm test:container-aliases && pnpm test:size && pnpm test:statistics",
+    "test:container-aliases": "node build/validators/container-aliases.test.js",
+    "test:shadow": "node --test build/transforms/shadow-css-shorthand-custom.test.js",
+    "test:size": "node --test scripts/check-package-size.test.mjs",
+    "test:statistics": "node --test scripts/generate-token-statistics.test.mjs",
     "test:validator": "node build/validators/token-consistency.test.js",
     "test:wcag": "node build/utils/wcag-contrast.test.js",
-    "typecheck": "tsc -p tsconfig.typecheck.json --noEmit",
+    "typecheck": "pnpm lint",
     "validate:token-usage": "node scripts/validate-token-usage.js",
     "validate:tokens": "node build/validators/token-consistency.js"
   },
   "lint-staged": {
     "*.{js,ts,mjs,cjs}": [
       "prettier --write"
-    ],
-    "*.{ts}": [
-      "bash -c 'pnpm typecheck'"
     ],
     "package.json": [
       "sort-package-json"

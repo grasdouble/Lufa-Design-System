@@ -27,7 +27,7 @@ runs:
   steps:
     - name: 📦 Cache design system build
       id: cache-build
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: |
           packages/design-system/tokens/dist
@@ -61,7 +61,7 @@ runs:
     - name: 📦 Cache Storybook build
       if: inputs.build-storybook == 'true'
       id: cache-storybook
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: packages/design-system/storybook/storybook-static
         key: storybook-build-${{ runner.os }}-${{ hashFiles('packages/design-system/storybook/**/*', 'packages/design-system/main/dist/**/*') }}
@@ -76,7 +76,7 @@ runs:
     - name: 📦 Cache Docusaurus build
       if: inputs.build-docusaurus == 'true'
       id: cache-docusaurus
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: packages/design-system/docusaurus/build
         key: docusaurus-build-${{ runner.os }}-${{ hashFiles('packages/design-system/docusaurus/**/*', 'packages/design-system/main/dist/**/*') }}

@@ -1,19 +1,22 @@
-import type { ComponentPropsWithoutRef, ElementType } from 'react';
+import type { ElementType } from 'react';
 import { forwardRef } from 'react';
 import type { IconName } from '@content/Icon';
 import { Icon } from '@content/Icon';
 import { clsx } from 'clsx';
 
+import type { ComponentSize } from '../../utils/component-values';
+import type { PolymorphicProps, PolymorphicPropsWithRef } from '../../utils/polymorphic';
+import { CONTROL_ICON_SIZE } from '../../utils/component-values';
 import styles from './Button.module.css';
 
 /**
  * Button Component - Interactive Action Element
  *
- * A versatile button component with multiple types, variants, sizes, and states.
+ * A versatile button component with multiple appearances, variants, sizes, and states.
  * Supports polymorphic rendering for both button and link elements.
  *
  * Features:
- * - Three types (solid, outline, ghost)
+ * - Three appearances (solid, outline, ghost)
  * - Seven variants (primary, secondary, success, danger, warning, info, neutral)
  * - Three sizes (sm, md, lg) with semantic token-based dimensions
  * - Icon support (left, right, or icon-only)
@@ -27,22 +30,22 @@ import styles from './Button.module.css';
  * @example
  * ```tsx
  * // Basic button
- * <Button type="solid" variant="primary" size="md">Click me</Button>
+ * <Button appearance="solid" variant="primary" size="md">Click me</Button>
  *
  * // Outline button
- * <Button type="outline" variant="secondary">Outline</Button>
+ * <Button appearance="outline" variant="secondary">Outline</Button>
  *
  * // Button with icon
- * <Button type="solid" variant="success" iconLeft="check">Save</Button>
+ * <Button appearance="solid" variant="success" iconLeft="check">Save</Button>
  *
  * // Loading state
- * <Button type="solid" variant="primary" loading>Saving...</Button>
+ * <Button appearance="solid" variant="primary" loading>Saving...</Button>
  *
  * // As a link
- * <Button as="a" href="/home" type="ghost" variant="neutral">Home</Button>
+ * <Button as="a" href="/home" appearance="ghost" variant="neutral">Home</Button>
  *
  * // Icon-only button
- * <Button type="ghost" variant="primary" iconLeft="search" aria-label="Search" />
+ * <Button appearance="ghost" variant="primary" iconLeft="search" aria-label="Search" />
  * ```
  */
 
@@ -53,7 +56,10 @@ import styles from './Button.module.css';
 /**
  * Button type values - visual style approach
  */
-type TypeValue = 'solid' | 'outline' | 'ghost';
+export type ButtonAppearance = 'solid' | 'outline' | 'ghost';
+
+/** Native HTML button type values. */
+export type ButtonNativeType = 'button' | 'submit' | 'reset';
 
 /**
  * Button variant values - semantic color intention
@@ -63,11 +69,6 @@ type VariantValue = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' |
 /**
  * Button size values
  */
-type SizeValue = 'sm' | 'md' | 'lg';
-
-/**
- * Button radius values
- */
 type RadiusValue = 'none' | 'sm' | 'base' | 'md' | 'full';
 
 /**
@@ -75,12 +76,21 @@ type RadiusValue = 'none' | 'sm' | 'base' | 'md' | 'full';
  *
  * Generic type T allows proper typing when using `as` prop
  */
-export type ButtonProps<T extends ElementType = 'button'> = {
+type ButtonOwnProps = {
   /**
-   * Visual style type
+   * Visual style.
    * @default 'solid'
    */
-  type?: TypeValue;
+  appearance?: ButtonAppearance;
+
+  /**
+   * Native HTML button type.
+   *
+   * Legacy visual values (`solid`, `outline`, `ghost`) remain accepted during
+   * migration and are interpreted as `appearance`.
+   * @default 'button'
+   */
+  type?: ButtonNativeType | ButtonAppearance;
 
   /**
    * Semantic color variant
@@ -92,7 +102,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
    * Size variant
    * @default 'md'
    */
-  size?: SizeValue;
+  size?: ComponentSize;
 
   /**
    * Border radius variant
@@ -131,12 +141,6 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   fullWidth?: boolean;
 
   /**
-   * HTML element to render
-   * @default 'button'
-   */
-  as?: T;
-
-  /**
    * Button content (text or other React nodes)
    * Optional for icon-only buttons
    */
@@ -152,20 +156,25 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 /**
  * Combined props type including element-specific props
  */
-type ButtonComponentProps<T extends ElementType> = ButtonProps<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>;
+export type ButtonProps<T extends ElementType = 'button'> = PolymorphicProps<T, ButtonOwnProps>;
 
 // ============================================
 // COMPONENT
 // ============================================
 
 /**
- * Button component with ref forwarding
+ * Button component with ref forwarding.
+ *
+ * Accessibility contract: the default render is a native `<button>` with
+ * `type="button"` to avoid accidental form submission. Icon-only buttons must
+ * provide an accessible name. Loading and disabled states expose native and
+ * ARIA state while preventing activation.
  */
 const ButtonImpl = <T extends ElementType = 'button'>(
   {
     as,
-    type = 'solid',
+    appearance: appearanceProp,
+    type = 'button',
     variant = 'primary',
     size = 'md',
     radius,
@@ -177,11 +186,14 @@ const ButtonImpl = <T extends ElementType = 'button'>(
     children,
     className,
     ...htmlProps
-  }: ButtonComponentProps<T>,
+  }: ButtonProps<T>,
   ref: React.ForwardedRef<Element>
 ) => {
   // Determine the element to render
   const Component = as ?? 'button';
+  const legacyAppearance = ['solid', 'outline', 'ghost'].includes(type) ? (type as ButtonAppearance) : undefined;
+  const appearance = appearanceProp ?? legacyAppearance ?? 'solid';
+  const nativeType = ['button', 'submit', 'reset'].includes(type) ? (type as ButtonNativeType) : 'button';
 
   // Compute final disabled state (disabled or loading)
   const isDisabled = disabled || loading;
@@ -191,8 +203,8 @@ const ButtonImpl = <T extends ElementType = 'button'>(
     // Base button class
     styles.button,
 
-    // Type utilities
-    type && styles[`type-${type}`],
+    // Appearance utilities
+    styles[`type-${appearance}`],
 
     // Variant utilities
     variant && styles[`variant-${variant}`],
@@ -218,7 +230,7 @@ const ButtonImpl = <T extends ElementType = 'button'>(
   const elementSpecificProps =
     Component === 'button'
       ? {
-          type: (htmlProps as ComponentPropsWithoutRef<'button'>).type ?? 'button',
+          type: nativeType,
           disabled: isDisabled,
         }
       : {};
@@ -241,20 +253,16 @@ const ButtonImpl = <T extends ElementType = 'button'>(
       {...htmlProps}
     >
       {/* Loading spinner (replaces left icon) */}
-      {loading && <Icon name="loader" size={size === 'sm' ? 'xs' : size === 'lg' ? 'md' : 'sm'} aria-hidden="true" />}
+      {loading && <Icon name="loader" size={CONTROL_ICON_SIZE[size]} aria-hidden="true" />}
 
       {/* Left icon (only if not loading) */}
-      {!loading && iconLeft && (
-        <Icon name={iconLeft} size={size === 'sm' ? 'xs' : size === 'lg' ? 'md' : 'sm'} aria-hidden="true" />
-      )}
+      {!loading && iconLeft && <Icon name={iconLeft} size={CONTROL_ICON_SIZE[size]} aria-hidden="true" />}
 
       {/* Button text content */}
       {children && <span>{children}</span>}
 
       {/* Right icon */}
-      {iconRight && (
-        <Icon name={iconRight} size={size === 'sm' ? 'xs' : size === 'lg' ? 'md' : 'sm'} aria-hidden="true" />
-      )}
+      {iconRight && <Icon name={iconRight} size={CONTROL_ICON_SIZE[size]} aria-hidden="true" />}
 
       {/* Screen reader text for icon-only buttons in loading state */}
       {isIconOnly && loading && <span className={styles['visually-hidden']}>Loading</span>}
@@ -264,6 +272,6 @@ const ButtonImpl = <T extends ElementType = 'button'>(
 
 // Forward ref with generic type support
 export const Button = forwardRef(ButtonImpl) as (<T extends ElementType = 'button'>(
-  props: ButtonComponentProps<T> & { ref?: React.Ref<React.ComponentRef<T>> }
+  props: PolymorphicPropsWithRef<T, ButtonOwnProps>
 ) => React.ReactElement) & { displayName?: string };
 Button.displayName = 'Button';

@@ -41,6 +41,7 @@
   --lufa-core-color-neutral-background: #f0fdf4;
   --lufa-core-color-neutral-surface-default: #dcfce7;
   --lufa-core-color-neutral-surface-hover: #bbf7d0;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #f0fdf4;
   --lufa-core-color-neutral-border-default: #059669;
   --lufa-core-color-neutral-border-strong: #059669;
@@ -105,6 +106,7 @@
   --lufa-core-color-neutral-background: #022c22;
   --lufa-core-color-neutral-surface-default: #064e3b;
   --lufa-core-color-neutral-surface-hover: #065f46;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #022c22;
   --lufa-core-color-neutral-border-default: #34d399;
   --lufa-core-color-neutral-border-strong: #10b981;
@@ -169,6 +171,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #002200;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #000000;
   --lufa-core-color-neutral-border-default: #00ff00;
   --lufa-core-color-neutral-border-strong: #00ff00;

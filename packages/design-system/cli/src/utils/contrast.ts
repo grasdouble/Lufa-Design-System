@@ -23,25 +23,9 @@
  * performed by `a11y.ts`.
  */
 
-import { readFile } from 'fs/promises';
+import { camelToKebab, dotPathToCSSVarSuffix, loadTokenMetadata } from './token-metadata.js';
 
 type ColorPair = [string, string, 'text' | 'ui'];
-
-/**
- * Convert camelCase to kebab-case
- */
-function camelToKebab(str: string): string {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
-/**
- * Convert a dot-notation token path (as used in sources / metadata keys) to a CSS var suffix.
- * e.g. "semantic.ui.background.page" → "semantic-ui-background-page"
- * Each segment is individually converted from camelCase to kebab-case, then joined with "-".
- */
-function dotPathToCssSuffix(dotPath: string): string {
-  return dotPath.split('.').map(camelToKebab).join('-');
-}
 
 type TokenMetadata = {
   value: unknown;
@@ -80,7 +64,7 @@ function extractFromMetadata(
         if (lufaExt?.contrastWith && Array.isArray(lufaExt.contrastWith)) {
           const contrastType = lufaExt.contrastType ?? 'text';
           for (const bgDotPath of lufaExt.contrastWith) {
-            const bgSuffix = dotPathToCssSuffix(bgDotPath);
+            const bgSuffix = dotPathToCSSVarSuffix(bgDotPath);
             explicitPairs.push([currentPath, bgSuffix, contrastType]);
           }
         }
@@ -201,9 +185,7 @@ function buildColorPairs(explicitPairs: ColorPair[], siblingPairs: ColorPair[]):
  */
 export async function getColorPairsToCheck(): Promise<ColorPair[]> {
   try {
-    const metadataPath = new URL(import.meta.resolve('@grasdouble/lufa_design-system-tokens/metadata'));
-    const metadataContent = await readFile(metadataPath, 'utf-8');
-    const tokensMetadata = JSON.parse(metadataContent) as Record<string, unknown>;
+    const tokensMetadata = await loadTokenMetadata();
 
     const { colorPaths, explicitPairs } = extractFromMetadata(tokensMetadata);
 

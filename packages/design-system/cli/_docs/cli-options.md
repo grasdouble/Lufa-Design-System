@@ -13,12 +13,15 @@ Options:
   --format                     Run format check only
   --completeness               Run completeness check only
   -d, --dir <directory>        Validate all *.css files in a directory
+  --level <level>              Completeness level: starter (default), extended, advanced
   -V, --version                Output the version number
   -h, --help                   Display help for command
 ```
 
 When no option is passed, all three checks run (completeness + format + a11y).
 Options `--a11y`, `--format`, and `--completeness` are mutually exclusive.
+Provide either `theme-file` or `--dir`, never both. Directory files are
+validated in deterministic file-name order.
 
 ## `theme-template`
 
@@ -30,6 +33,11 @@ Arguments:
 
 Options:
   -o, --output-name <name>     Output file name without the .css extension
-                               Prompted interactively if not provided
+                               Prompted only when stdin is an interactive TTY
+  -f, --force                  Overwrite an existing output file
   -h, --help                   Display help for command
 ```
+
+Output names are restricted to a single safe file-name segment without
+whitespace or a `.css` extension. Existing files are never overwritten unless
+`--force` is provided.

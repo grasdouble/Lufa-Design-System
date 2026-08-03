@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef, ElementType } from 'react';
 import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
+import type { SemanticSpacing } from '../../utils/component-values';
 import type { ResponsiveVisibilityProps } from '../../utils/responsive-visibility';
 import { getResponsiveVisibilityClasses } from '../../utils/responsive-visibility';
 import styles from './Stack.module.css';
@@ -69,8 +70,6 @@ type DirectionValue = 'vertical' | 'horizontal';
  * Spacing values based on semantic tokens
  * Maps to: gap using --semantic-ui-spacing-{value}
  */
-type SpacingValue = 'none' | 'tight' | 'compact' | 'default' | 'comfortable' | 'spacious';
-
 /**
  * Alignment of children on cross-axis
  * Maps to: align-items
@@ -105,7 +104,7 @@ export type StackProps<T extends ElementType = 'div'> = {
    * Spacing between children (uses gap property)
    * @default 'default'
    */
-  spacing?: SpacingValue;
+  spacing?: SemanticSpacing;
 
   /**
    * Alignment of children on cross-axis
@@ -162,7 +161,11 @@ type StackComponentProps<T extends ElementType> = StackProps<T> &
 // ============================================
 
 /**
- * Stack component with ref forwarding
+ * Stack component with ref forwarding.
+ *
+ * Accessibility contract: choose a semantic `as` element that matches the
+ * content. Stack adds no role or keyboard behavior. `grow` is neutralized while
+ * wrapping to prevent layout overflow, matching `Flex`.
  */
 const StackImpl = <T extends ElementType = 'div'>(
   {
@@ -187,6 +190,7 @@ const StackImpl = <T extends ElementType = 'div'>(
 ) => {
   // Determine the element to render
   const Component = as ?? 'div';
+  const effectiveGrow = grow && !wrap;
 
   if (import.meta.env.DEV && grow && wrap) {
     console.warn(
@@ -225,7 +229,7 @@ const StackImpl = <T extends ElementType = 'div'>(
     !wrap && styles[`wrap-nowrap`],
 
     // Grow utility
-    grow && styles.grow,
+    effectiveGrow && styles.grow,
 
     // Responsive visibility utilities
     ...visibilityClasses,

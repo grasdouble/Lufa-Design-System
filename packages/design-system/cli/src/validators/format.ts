@@ -6,6 +6,7 @@
 
 import type { CSSCustomProperty } from '../utils/parse-css.js';
 import { isCSSVarReference, isValidDimension, isValidDuration, isValidHexColor } from '../utils/parse-css.js';
+import { colorToRgba } from '../utils/wcag.js';
 
 export type FormatError = {
   token: string;
@@ -69,6 +70,10 @@ function getExpectedFormat(tokenName: string): string | null {
     return 'number (e.g., 1.5) or dimension (e.g., 24px) or CSS variable reference';
   }
 
+  if (tokenName.includes('-opacity-')) {
+    return 'number between 0 and 1 or CSS variable reference';
+  }
+
   // Easing tokens
   if (tokenName.includes('-easing-')) {
     return 'cubic-bezier() or CSS variable reference';
@@ -89,6 +94,15 @@ function validateTokenFormat(property: CSSCustomProperty): FormatError | null {
   const { name, value, line } = property;
   const expectedFormat = getExpectedFormat(name);
 
+  if (!value.trim()) {
+    return {
+      token: name,
+      value,
+      expectedFormat: expectedFormat ?? 'non-empty CSS value',
+      line,
+    };
+  }
+
   // If no specific format is expected, it's valid
   if (!expectedFormat) {
     return null;
@@ -101,7 +115,7 @@ function validateTokenFormat(property: CSSCustomProperty): FormatError | null {
 
   // Validate based on token type
   if (name.includes('-color-')) {
-    if (!isValidHexColor(value) && !value.startsWith('rgba(') && !value.startsWith('rgb(')) {
+    if (!isValidHexColor(value) && !colorToRgba(value)) {
       return { token: name, value, expectedFormat, line };
     }
   } else if (name.includes('-spacing-') || name.includes('-radius-')) {
@@ -118,13 +132,19 @@ function validateTokenFormat(property: CSSCustomProperty): FormatError | null {
       return { token: name, value, expectedFormat, line };
     }
   } else if (name.includes('-font-weight-')) {
-    const weight = parseInt(value, 10);
-    if (isNaN(weight) || weight < 100 || weight > 900) {
+    if (!/^\d+$/.test(value) || Number(value) < 100 || Number(value) > 900) {
       return { token: name, value, expectedFormat, line };
     }
   } else if (name.includes('-z-index-')) {
-    const zIndex = parseInt(value, 10);
-    if (isNaN(zIndex)) {
+    if (!/^-?\d+$/.test(value)) {
+      return { token: name, value, expectedFormat, line };
+    }
+  } else if (name.includes('-line-height-')) {
+    if (!/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(value) && !isValidDimension(value)) {
+      return { token: name, value, expectedFormat, line };
+    }
+  } else if (name.includes('-opacity-')) {
+    if (!/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(value) || Number(value) < 0 || Number(value) > 1) {
       return { token: name, value, expectedFormat, line };
     }
   }

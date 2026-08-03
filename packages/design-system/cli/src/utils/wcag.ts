@@ -1,128 +1,200 @@
 /**
- * WCAG Contrast Utilities
- *
- * Implements WCAG 2.1 contrast ratio calculations
- * https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
+ * WCAG contrast utilities.
  */
 
-/**
- * Convert hex color to RGB
- */
+import valueParser from 'postcss-value-parser';
+
+export type RGBAColor = { r: number; g: number; b: number; a: number };
+
 export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-  // Remove # if present
-  hex = hex.replace(/^#/, '');
-
-  // Support 3-digit hex (#FFF -> #FFFFFF)
-  if (hex.length === 3) {
-    hex = hex
+  let digits = hex.replace(/^#/, '');
+  if (digits.length === 3) {
+    digits = digits
       .split('')
-      .map((char) => char + char)
+      .map((character) => character.repeat(2))
       .join('');
   }
+  if (!/^[0-9a-f]{6}$/i.test(digits)) return null;
+  return {
+    r: parseInt(digits.slice(0, 2), 16),
+    g: parseInt(digits.slice(2, 4), 16),
+    b: parseInt(digits.slice(4, 6), 16),
+  };
+}
 
-  if (hex.length !== 6) {
-    return null;
+function parseChannel(value: string): number | null {
+  if (value.endsWith('%')) {
+    const percentage = Number(value.slice(0, -1));
+    return Number.isFinite(percentage) && percentage >= 0 && percentage <= 100 ? (percentage / 100) * 255 : null;
+  }
+  const channel = Number(value);
+  return Number.isFinite(channel) && channel >= 0 && channel <= 255 ? channel : null;
+}
+
+function parseAlpha(value: string | undefined): number | null {
+  if (value === undefined) return 1;
+  if (value.endsWith('%')) {
+    const percentage = Number(value.slice(0, -1));
+    return Number.isFinite(percentage) && percentage >= 0 && percentage <= 100 ? percentage / 100 : null;
+  }
+  const alpha = Number(value);
+  return Number.isFinite(alpha) && alpha >= 0 && alpha <= 1 ? alpha : null;
+}
+
+function parseFunctionArguments(value: string): { channels: string[]; alpha?: string } | null {
+  if (value.includes(',')) {
+    const parts = value.split(',').map((part) => part.trim());
+    if (parts.some((part) => !part) || (parts.length !== 3 && parts.length !== 4)) return null;
+    return { channels: parts.slice(0, 3), alpha: parts[3] };
   }
 
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
+  const slashParts = value.split('/').map((part) => part.trim());
+  if (slashParts.length > 2 || slashParts.some((part) => !part)) return null;
+  const channels = slashParts[0].split(/\s+/);
+  return channels.length === 3 ? { channels, alpha: slashParts[1] } : null;
+}
 
-  if (isNaN(r) || isNaN(g) || isNaN(b)) {
-    return null;
-  }
+function hueToDegrees(value: string): number | null {
+  const match = /^([+-]?(?:\d+(?:\.\d+)?|\.\d+))(deg|grad|rad|turn)?$/i.exec(value);
+  if (!match) return null;
+  const amount = Number(match[1]);
+  const unit = match[2]?.toLowerCase();
+  if (unit === 'grad') return amount * 0.9;
+  if (unit === 'rad') return (amount * 180) / Math.PI;
+  if (unit === 'turn') return amount * 360;
+  return amount;
+}
 
-  return { r, g, b };
+function hslToRgb(hue: number, saturation: number, lightness: number): { r: number; g: number; b: number } {
+  const h = ((hue % 360) + 360) % 360;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const x = chroma * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = lightness - chroma / 2;
+
+  let rgb: [number, number, number];
+  if (h < 60) rgb = [chroma, x, 0];
+  else if (h < 120) rgb = [x, chroma, 0];
+  else if (h < 180) rgb = [0, chroma, x];
+  else if (h < 240) rgb = [0, x, chroma];
+  else if (h < 300) rgb = [x, 0, chroma];
+  else rgb = [chroma, 0, x];
+
+  return {
+    r: (rgb[0] + m) * 255,
+    g: (rgb[1] + m) * 255,
+    b: (rgb[2] + m) * 255,
+  };
 }
 
 /**
- * Calculate relative luminance of a color
- * Formula: https://www.w3.org/WAI/GL/wiki/Relative_luminance
+ * Parse #RGB, #RRGGBB, #RRGGBBAA, rgb(a), and hsl(a).
  */
+export function colorToRgba(color: string): RGBAColor | null {
+  const normalized = color.trim();
+  const hexMatch = /^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.exec(normalized);
+  if (hexMatch) {
+    let digits = hexMatch[1];
+    if (digits.length === 3) {
+      digits = digits
+        .split('')
+        .map((character) => character.repeat(2))
+        .join('');
+    }
+    return {
+      r: parseInt(digits.slice(0, 2), 16),
+      g: parseInt(digits.slice(2, 4), 16),
+      b: parseInt(digits.slice(4, 6), 16),
+      a: digits.length === 8 ? parseInt(digits.slice(6, 8), 16) / 255 : 1,
+    };
+  }
+
+  const parsed = valueParser(normalized);
+  const nodes = parsed.nodes.filter((node) => node.type !== 'space' && node.type !== 'comment');
+  if (nodes.length !== 1 || nodes[0].type !== 'function') return null;
+
+  const functionName = nodes[0].value.toLowerCase();
+  const args = parseFunctionArguments(valueParser.stringify(nodes[0].nodes));
+  if (!args) return null;
+
+  if (functionName === 'rgb' || functionName === 'rgba') {
+    const channels = args.channels.map(parseChannel);
+    const alpha = parseAlpha(args.alpha);
+    if (channels.some((channel) => channel === null) || alpha === null) return null;
+    return { r: channels[0]!, g: channels[1]!, b: channels[2]!, a: alpha };
+  }
+
+  if (functionName !== 'hsl' && functionName !== 'hsla') return null;
+  const hue = hueToDegrees(args.channels[0]);
+  const saturationMatch = /^(\d+(?:\.\d+)?|\.\d+)%$/.exec(args.channels[1]);
+  const lightnessMatch = /^(\d+(?:\.\d+)?|\.\d+)%$/.exec(args.channels[2]);
+  const saturation = saturationMatch ? Number(saturationMatch[1]) : Number.NaN;
+  const lightness = lightnessMatch ? Number(lightnessMatch[1]) : Number.NaN;
+  const alpha = parseAlpha(args.alpha);
+
+  if (
+    hue === null ||
+    !Number.isFinite(saturation) ||
+    !Number.isFinite(lightness) ||
+    saturation < 0 ||
+    saturation > 100 ||
+    lightness < 0 ||
+    lightness > 100 ||
+    alpha === null
+  ) {
+    return null;
+  }
+  return { ...hslToRgb(hue, saturation / 100, lightness / 100), a: alpha };
+}
+
 export function getRelativeLuminance(rgb: { r: number; g: number; b: number }): number {
-  // Normalize RGB values (0-1)
-  const rsRGB = rgb.r / 255;
-  const gsRGB = rgb.g / 255;
-  const bsRGB = rgb.b / 255;
-
-  // Apply gamma correction
-  const r = rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
-  const g = gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
-  const b = bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
-
-  // Calculate relative luminance
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  const transform = (channel: number) => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  };
+  return 0.2126 * transform(rgb.r) + 0.7152 * transform(rgb.g) + 0.0722 * transform(rgb.b);
 }
 
-/**
- * Calculate contrast ratio between two colors
- * Formula: (L1 + 0.05) / (L2 + 0.05)
- * Where L1 is the lighter color's luminance and L2 is the darker
- */
-export function getContrastRatio(color1: string, color2: string): number | null {
-  const rgb1 = hexToRgb(color1);
-  const rgb2 = hexToRgb(color2);
+export function getContrastRatio(foregroundColor: string, backgroundColor: string): number | null {
+  const foreground = colorToRgba(foregroundColor);
+  const background = colorToRgba(backgroundColor);
+  if (!foreground || !background || background.a < 1) return null;
 
-  if (!rgb1 || !rgb2) {
-    return null;
-  }
-
-  const lum1 = getRelativeLuminance(rgb1);
-  const lum2 = getRelativeLuminance(rgb2);
-
-  const lighter = Math.max(lum1, lum2);
-  const darker = Math.min(lum1, lum2);
-
+  const compositedForeground = {
+    r: foreground.r * foreground.a + background.r * (1 - foreground.a),
+    g: foreground.g * foreground.a + background.g * (1 - foreground.a),
+    b: foreground.b * foreground.a + background.b * (1 - foreground.a),
+  };
+  const foregroundLuminance = getRelativeLuminance(compositedForeground);
+  const backgroundLuminance = getRelativeLuminance(background);
+  const lighter = Math.max(foregroundLuminance, backgroundLuminance);
+  const darker = Math.min(foregroundLuminance, backgroundLuminance);
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-/**
- * WCAG Conformance Levels
- */
 export const WCAG_LEVELS = {
-  AA_NORMAL_TEXT: 4.5, // WCAG AA for normal text (< 18pt or < 14pt bold)
-  AA_LARGE_TEXT: 3.0, // WCAG AA for large text (≥ 18pt or ≥ 14pt bold)
-  AAA_NORMAL_TEXT: 7.0, // WCAG AAA for normal text
-  AAA_LARGE_TEXT: 4.5, // WCAG AAA for large text
-  UI_COMPONENTS: 3.0, // WCAG AA for UI components and graphics
+  AA_NORMAL_TEXT: 4.5,
+  AA_LARGE_TEXT: 3,
+  AAA_NORMAL_TEXT: 7,
+  AAA_LARGE_TEXT: 4.5,
+  UI_COMPONENTS: 3,
 } as const;
 
-/**
- * Check if contrast ratio meets WCAG AA standard for text
- */
 export function meetsWCAG_AA_Text(contrastRatio: number): boolean {
   return contrastRatio >= WCAG_LEVELS.AA_NORMAL_TEXT;
 }
 
-/**
- * Check if contrast ratio meets WCAG AA standard for UI components
- */
 export function meetsWCAG_AA_UI(contrastRatio: number): boolean {
   return contrastRatio >= WCAG_LEVELS.UI_COMPONENTS;
 }
 
-/**
- * Check if contrast ratio meets WCAG AAA standard
- */
 export function meetsWCAG_AAA(contrastRatio: number): boolean {
   return contrastRatio >= WCAG_LEVELS.AAA_NORMAL_TEXT;
 }
 
-/**
- * Get human-readable WCAG level for a contrast ratio
- */
 export function getWCAGLevel(contrastRatio: number): string {
-  if (contrastRatio >= WCAG_LEVELS.AAA_NORMAL_TEXT) {
-    return 'AAA (Normal Text)';
-  }
-  if (contrastRatio >= WCAG_LEVELS.AA_NORMAL_TEXT) {
-    return 'AA (Normal Text)';
-  }
-  if (contrastRatio >= WCAG_LEVELS.AAA_LARGE_TEXT) {
-    return 'AAA (Large Text) / AA (Normal Text - Fail)';
-  }
-  if (contrastRatio >= WCAG_LEVELS.AA_LARGE_TEXT) {
-    return 'AA (Large Text) / AA (Normal Text - Fail)';
-  }
+  if (contrastRatio >= WCAG_LEVELS.AAA_NORMAL_TEXT) return 'AAA (Normal Text)';
+  if (contrastRatio >= WCAG_LEVELS.AA_NORMAL_TEXT) return 'AA (Normal Text)';
+  if (contrastRatio >= WCAG_LEVELS.AAA_LARGE_TEXT) return 'AAA (Large Text) / AA (Normal Text - Fail)';
+  if (contrastRatio >= WCAG_LEVELS.AA_LARGE_TEXT) return 'AA (Large Text) / AA (Normal Text - Fail)';
   return 'Fail (Does not meet WCAG standards)';
 }

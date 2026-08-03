@@ -3,101 +3,70 @@
 # Lufa Design System Documentation
 
 [![Docusaurus](https://img.shields.io/badge/Docusaurus-3.x-3ECC5F?style=flat-square&logo=docusaurus)](https://docusaurus.io)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](../../LICENSE.md)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](../../../LICENSE.md)
 
-> Comprehensive documentation site for learning and using the Lufa Design System
+Public API, token, accessibility, testing, migration, and contribution documentation for the Lufa Design System.
 
-**Part of the [Lufa Design System](../README.md)** - Documentation & Learning Resources
+## Commands
 
-## Overview
-
-This Docusaurus site provides everything you need to understand, implement, and contribute to the Lufa Design System. From getting started guides to detailed component specifications, it's your central resource for all design system knowledge.
-
-### What You'll Find
-
-- **Getting Started** - Installation, setup, and first steps
-- **Design Principles** - Philosophy, accessibility, and design approach
-- **Component Guide** - Detailed documentation for every component
-- **Token Reference** - Complete design token specifications
-- **Patterns** - Common UI patterns and best practices
-- **Migration Guides** - Upgrading between versions
-- **Tutorials** - Step-by-step learning paths
-- **Blog** - Updates, releases, and announcements
-
-## Quick Start
+From the repository root:
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Start dev server (port 3000)
-pnpm ds:documentation:dev
-
-# Build for production
-pnpm ds:documentation:build
-
-# Preview build
-pnpm ds:documentation:serve
+pnpm ds:docusaurus:dev
+pnpm ds:docusaurus:build
+pnpm ds:docusaurus:lint
+pnpm ds:docusaurus:typecheck
 ```
 
-Visit `http://localhost:3000` to view the site.
+From this package:
 
-## Writing Documentation
-
-Use these guides when authoring documentation:
-
-- [Component Documentation Best Practices](./_docs/component-documentation-best-practices.md)
-- [Adding a New Page](./_docs/adding-a-new-page.md)
-- [Adding a Blog Post](./_docs/adding-a-blog-post.md)
-- [Using Live Components](./_docs/using-live-components.md)
-- [Writing Code Examples](./_docs/writing-code-examples.md)
-
-## Site Structure
-
+```bash
+pnpm dev
+pnpm build
+pnpm serve
 ```
+
+The development server uses `http://localhost:3000`.
+
+## Site structure
+
+```text
 docs/
-├── getting-started/     # Installation and setup
-├── components/          # Component documentation
-├── design-tokens/       # Token reference
-├── patterns/            # UI patterns
-├── guides/              # How-to guides
-└── migration/           # Version migration
-
-blog/                    # Release notes and updates
+├── getting-started/
+├── tokens/
+├── foundation/
+├── content/
+├── interaction/
+├── composition/
+├── navigation/
+├── utility/
+├── hooks/
+└── guides/
 src/
-├── components/          # Custom MDX components
-├── pages/               # Custom pages
-└── css/                 # Custom styles
+├── components/   # Shared documentation UI
+├── dsExamples/   # Browser-only component examples
+├── pages/        # Landing page and playground
+└── css/
 ```
 
-## Configuration
+The Docusaurus blog plugin is disabled. Release history comes from package changelogs and the public changelog page.
 
-Customize in `docusaurus.config.ts`:
+## Authoring documentation
 
-- **Site metadata** - Title, tagline, URL
-- **Theme** - Colors, fonts, dark mode
-- **Navbar** - Navigation items and logo
-- **Footer** - Links and copyright
-- **Plugins** - Search, analytics, etc.
+- [Component documentation best practices](./_docs/component-documentation-best-practices.md)
+- [Adding a page](./_docs/adding-a-new-page.md)
+- [Using live components](./_docs/using-live-components.md)
+- [Writing code examples](./_docs/writing-code-examples.md)
+
+Add public pages to `sidebars.ts`, use only exported APIs in examples, and run `pnpm build` so broken links fail locally.
 
 ## Deployment
 
-Automatically deployed via GitHub Actions:
-
-- Pull requests → Preview deployments
-- Main branch → Production site
-
-Manual deployment:
-
-```bash
-pnpm ds:documentation:build
-# Upload ./build to hosting service
-```
+The production workflow `.github/workflows/ds-release-lufa-prod-publish.yml` is manually dispatched with the `documentation` target. It builds `packages/design-system/docusaurus/build/` before deployment.
 
 ## Resources
 
-- [Docusaurus Documentation](https://docusaurus.io/docs)
-- [MDX Documentation](https://mdxjs.com)
-- [Design System Components](../main/)
-- [Storybook](../storybook/)
-- [Contributing Guide](../../../CONTRIBUTING.md)
+- [Docusaurus documentation](https://docusaurus.io/docs)
+- [Design system package](../main/)
+- [Storybook package](../storybook/)
+- [Contributing guide](./docs/guides/contributing.md)

@@ -25,7 +25,7 @@ function App() {
           Welcome to Lufa
         </Text>
         <Text>Start building with our components.</Text>
-        <Button type="solid" variant="primary" size="md">
+        <Button appearance="solid" variant="primary" size="md">
           Get Started
         </Button>
       </Stack>

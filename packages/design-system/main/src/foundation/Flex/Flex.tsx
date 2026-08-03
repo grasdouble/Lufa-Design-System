@@ -4,6 +4,7 @@ import type { BoxComponentProps } from '@foundation/Box/Box';
 import { Box } from '@foundation/Box/Box';
 import { clsx } from 'clsx';
 
+import type { SemanticSpacing } from '../../utils/component-values';
 import styles from './Flex.module.css';
 
 export type FlexProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
@@ -26,7 +27,7 @@ export type FlexProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
   /**
    * Shorthand for gap (using semantic spacing tokens)
    */
-  gap?: 'none' | 'tight' | 'compact' | 'default' | 'comfortable' | 'spacious';
+  gap?: SemanticSpacing;
   /**
    * If true, sets display to inline-flex
    */
@@ -38,6 +39,10 @@ export type FlexProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
  *
  * A layout primitive that extends Box with Flexbox properties.
  * Inherits all Box props including responsive visibility controls.
+ *
+ * Accessibility contract: choose a semantic `as` element matching the content.
+ * Flex adds no role or keyboard behavior, and neutralizes `grow` while wrapping
+ * to prevent overflow.
  *
  * @example
  * ```tsx

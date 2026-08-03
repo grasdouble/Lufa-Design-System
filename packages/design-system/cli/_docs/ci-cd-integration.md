@@ -18,7 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install -g @grasdouble/lufa_design-system-cli
+      - uses: pnpm/action-setup@v4
+      - run: pnpm add --global @grasdouble/lufa_design-system-cli
       - run: lufa-ds-cli theme-validate src/theme.css
 ```
 
@@ -27,7 +28,7 @@ jobs:
 ```bash
 # .husky/pre-commit
 #!/bin/sh
-npx lufa-ds-cli theme-validate src/theme.css || exit 1
+pnpm exec lufa-ds-cli theme-validate src/theme.css || exit 1
 ```
 
 ## NPM Script
@@ -36,7 +37,7 @@ npx lufa-ds-cli theme-validate src/theme.css || exit 1
 {
   "scripts": {
     "validate-theme": "lufa-ds-cli theme-validate src/theme.css",
-    "prebuild": "npm run validate-theme"
+    "prebuild": "pnpm run validate-theme"
   }
 }
 ```

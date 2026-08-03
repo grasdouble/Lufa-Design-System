@@ -70,6 +70,12 @@
   cursor: pointer;
 }
 
+.tabButton:focus-visible,
+.tabButtonActive:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
 .body {
   padding: 14px;
   border-radius: 12px;

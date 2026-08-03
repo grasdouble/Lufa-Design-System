@@ -697,8 +697,7 @@ test.describe('Bleed Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('bleed-all-variants.png');
     });

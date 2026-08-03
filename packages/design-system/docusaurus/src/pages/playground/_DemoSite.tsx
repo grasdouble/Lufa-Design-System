@@ -37,20 +37,20 @@ export default function DemoSite() {
             </Text>
             <Cluster spacing="default" align="center">
               <Cluster spacing="compact" className={styles.navLinks}>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Features
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Pricing
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Docs
                 </Button>
               </Cluster>
-              <Button type="outline" variant="primary" size="sm">
+              <Button appearance="outline" variant="primary" size="sm">
                 Sign In
               </Button>
-              <Button type="solid" variant="primary" size="sm">
+              <Button appearance="solid" variant="primary" size="sm">
                 Get Started
               </Button>
             </Cluster>
@@ -76,10 +76,10 @@ export default function DemoSite() {
                 components that adapt to your brand.
               </Text>
               <Cluster spacing="default">
-                <Button type="solid" variant="primary" size="lg">
+                <Button appearance="solid" variant="primary" size="lg">
                   Start Building
                 </Button>
-                <Button type="outline" variant="secondary" size="lg">
+                <Button appearance="outline" variant="secondary" size="lg">
                   View Documentation
                 </Button>
               </Cluster>
@@ -164,7 +164,7 @@ export default function DemoSite() {
                         {feature.icon} {feature.title}
                       </Text>
                       <Text color="secondary">{feature.description}</Text>
-                      <Button type="ghost" variant="primary" size="sm">
+                      <Button appearance="ghost" variant="primary" size="sm">
                         Learn More →
                       </Button>
                     </Stack>
@@ -266,7 +266,7 @@ export default function DemoSite() {
                       <Text>✓ Advanced templates</Text>
                     </Stack>
 
-                    <Button type="solid" variant="primary" fullWidth onClick={() => setSelectedPlan('pro')}>
+                    <Button appearance="solid" variant="primary" fullWidth onClick={() => setSelectedPlan('pro')}>
                       {selectedPlan === 'pro' ? 'Selected ✓' : 'Start Pro Trial'}
                     </Button>
                   </Stack>
@@ -342,7 +342,7 @@ export default function DemoSite() {
                           fullWidth
                         />
                       </Box>
-                      <Button type="solid" variant="primary">
+                      <Button appearance="solid" variant="primary">
                         Subscribe
                       </Button>
                     </Stack>
@@ -366,52 +366,52 @@ export default function DemoSite() {
             <Grid columns={4} gap="default" className={styles.responsiveGrid4}>
               <Stack direction="vertical" spacing="compact">
                 <Text weight="bold">Product</Text>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Features
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Pricing
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Roadmap
                 </Button>
               </Stack>
 
               <Stack direction="vertical" spacing="compact">
                 <Text weight="bold">Resources</Text>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Documentation
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Examples
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Blog
                 </Button>
               </Stack>
 
               <Stack direction="vertical" spacing="compact">
                 <Text weight="bold">Company</Text>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   About
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Careers
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Contact
                 </Button>
               </Stack>
 
               <Stack direction="vertical" spacing="compact">
                 <Text weight="bold">Legal</Text>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Privacy
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Terms
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   License
                 </Button>
               </Stack>
@@ -424,13 +424,13 @@ export default function DemoSite() {
                 © 2026 Lufa Design System. All rights reserved.
               </Text>
               <Cluster spacing="compact">
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   GitHub
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Twitter
                 </Button>
-                <Button type="ghost" variant="neutral" size="sm">
+                <Button appearance="ghost" variant="neutral" size="sm">
                   Discord
                 </Button>
               </Cluster>

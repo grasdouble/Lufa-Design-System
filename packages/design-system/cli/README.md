@@ -4,7 +4,7 @@ Command-line tools for validating custom themes in the Lufa Design System.
 
 The CLI validates themes for:
 
-- **Completeness** - All required tokens are defined
+- **Completeness** - All metadata-defined tokens for the selected theme level are present in every mode
 - **Accessibility** - WCAG AA contrast ratios
 - **Format** - Valid CSS syntax and values
 - **Multi-mode support** - Light, dark, and high-contrast themes
@@ -14,23 +14,21 @@ The CLI validates themes for:
 Node.js 20+ is required.
 
 ```bash
-npm install @grasdouble/lufa_design-system-cli
-# or
-pnpm add @grasdouble/lufa_design-system-cli
+pnpm add --save-dev @grasdouble/lufa_design-system-cli
 ```
 
 ## Usage
 
 ```bash
-# Validate a custom theme file
-npx lufa-ds-cli theme-validate ./my-custom-theme.css
+# Validate a custom theme file at the starter level
+pnpm exec lufa-ds-cli theme-validate ./my-custom-theme.css
 
-# Output starter theme template (default)
-npx lufa-ds-cli theme-template > my-theme.css
+# Create my-theme.css from the starter template (default)
+pnpm exec lufa-ds-cli theme-template --output-name my-theme
 
-# Output extended or advanced template
-npx lufa-ds-cli theme-template extended > my-theme.css
-npx lufa-ds-cli theme-template advanced > my-theme.css
+# Create extended or advanced templates
+pnpm exec lufa-ds-cli theme-template extended --output-name my-theme
+pnpm exec lufa-ds-cli theme-template advanced --output-name my-theme --force
 ```
 
 ## CLI Documentation
@@ -41,21 +39,20 @@ npx lufa-ds-cli theme-template advanced > my-theme.css
 - [CLI Options](./_docs/cli-options.md)
 - [CI/CD Integration](./_docs/ci-cd-integration.md)
 - [Development](./_docs/development.md)
-- [Token Role Metadata](./_docs/token-role-metadata.md)
 
 ## Related Packages
 
-- `@grasdouble/lufa_design-system-tokens` - Core design tokens
-- `@grasdouble/lufa_design-system-main` - React components
-- `@grasdouble/lufa_design-system-themes` - Pre-built theme templates
+- [`@grasdouble/lufa_design-system-tokens`](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/tokens) - Core design tokens
+- [`@grasdouble/lufa_design-system`](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/main) - React components
+- [`@grasdouble/lufa_design-system-themes`](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/themes) - Pre-built themes
 
 ## Related Documentation
 
 For more information about theming and token architecture:
 
-- [Theme Switching Guide](../themes/_docs/theme-switching-guide.md)
-- [Token Architecture](../tokens/_docs/token-architecture.md)
-- [Design System Overview](../_docs/overview.md)
+- [Themes package](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/themes)
+- [Token architecture](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/tokens/_docs/ARCHITECTURE.md)
+- [Design System overview](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/_docs/overview.md)
 
 ## License
 

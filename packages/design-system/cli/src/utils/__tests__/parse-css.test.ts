@@ -65,6 +65,12 @@ describe('CSS Parser Utils', () => {
       expect(result[0].value).toBe('16px');
     });
 
+    it('preserves whitespace inside quoted values', () => {
+      const css = ':root { --font-family: "A  B",   sans-serif; }';
+
+      expect(parseCSSContent(css)[0].value).toBe('"A  B", sans-serif');
+    });
+
     it('removes CSS comments', () => {
       const css = `
         :root {
@@ -108,6 +114,32 @@ describe('CSS Parser Utils', () => {
       expect(result).toHaveLength(2);
       expect(result[1].value).toBe('var(--primary)');
     });
+
+    it('parses declarations inside nested at-rules without corrupting complex values', () => {
+      const css = `
+        @layer theme {
+          @media (prefers-contrast: more) {
+            :root {
+              --gradient: linear-gradient(to right, #000 0%, #fff 100%);
+              --fallback: var(--missing, rgb(255 255 255 / 80%));
+            }
+          }
+        }
+      `;
+
+      expect(parseCSSContent(css)).toEqual([
+        {
+          name: '--gradient',
+          value: 'linear-gradient(to right, #000 0%, #fff 100%)',
+          line: 5,
+        },
+        {
+          name: '--fallback',
+          value: 'var(--missing, rgb(255 255 255 / 80%))',
+          line: 6,
+        },
+      ]);
+    });
   });
 
   describe('tokenNameFromCSSVar', () => {
@@ -149,14 +181,17 @@ describe('CSS Parser Utils', () => {
       expect(isCSSVarReference('var(--color)')).toBe(true);
       expect(isCSSVarReference('var(--lufa-primitive-color-blue-500)')).toBe(true);
       expect(isCSSVarReference('  var(--spacing)  ')).toBe(true);
+      expect(isCSSVarReference('var( --color )')).toBe(true);
+      expect(isCSSVarReference('var(--color, #fff)')).toBe(true);
+      expect(isCSSVarReference('var(--color, var(--fallback))')).toBe(true);
     });
 
     it('rejects invalid var() references', () => {
       expect(isCSSVarReference('#ffffff')).toBe(false);
       expect(isCSSVarReference('16px')).toBe(false);
       expect(isCSSVarReference('var()')).toBe(false);
-      expect(isCSSVarReference('var(--color, #fff)')).toBe(false); // with fallback
       expect(isCSSVarReference('var(color)')).toBe(false); // missing --
+      expect(isCSSVarReference('calc(var(--color) + 1px)')).toBe(false);
     });
   });
 
@@ -164,12 +199,13 @@ describe('CSS Parser Utils', () => {
     it('extracts variable name from var() reference', () => {
       expect(extractCSSVarName('var(--color)')).toBe('--color');
       expect(extractCSSVarName('var(--lufa-primitive-color-blue-500)')).toBe('--lufa-primitive-color-blue-500');
+      expect(extractCSSVarName('var( --color , #fff )')).toBe('--color');
     });
 
     it('returns null for invalid var() references', () => {
       expect(extractCSSVarName('#ffffff')).toBeNull();
       expect(extractCSSVarName('var()')).toBeNull();
-      expect(extractCSSVarName('var(--color, #fff)')).toBeNull();
+      expect(extractCSSVarName('var(color, #fff)')).toBeNull();
     });
   });
 
@@ -222,9 +258,24 @@ describe('CSS Parser Utils', () => {
       expect(resolveCSSVarValue('var(--self)', props)).toBeNull();
     });
 
+    it('does not use a fallback declared inside a cyclic custom property', () => {
+      const props = new Map([['--self', 'var(--self, #fff)']]);
+
+      expect(resolveCSSVarValue('var(--self)', props)).toBeNull();
+      expect(resolveCSSVarValue('var(--self, #000)', props)).toBe('#000');
+    });
+
     it('returns null for undefined variables', () => {
       const props = new Map([['--defined', '#ffffff']]);
       expect(resolveCSSVarValue('var(--undefined)', props)).toBeNull();
+    });
+
+    it('resolves whitespace and fallback values', () => {
+      const props = new Map([['--defined', 'rgb(1 2 3)']]);
+
+      expect(resolveCSSVarValue('var( --defined , #fff )', props)).toBe('rgb(1 2 3)');
+      expect(resolveCSSVarValue('var(--undefined, #fff)', props)).toBe('#fff');
+      expect(resolveCSSVarValue('var(--undefined, var(--defined))', props)).toBe('rgb(1 2 3)');
     });
 
     it('resolves real Lufa token chains', () => {
@@ -249,6 +300,11 @@ describe('CSS Parser Utils', () => {
       expect(isValidHexColor('#fff')).toBe(true);
       expect(isValidHexColor('#000')).toBe(true);
       expect(isValidHexColor('#abc')).toBe(true);
+    });
+
+    it('validates 8-digit hex colors', () => {
+      expect(isValidHexColor('#00000080')).toBe(true);
+      expect(isValidHexColor('#abcdefFF')).toBe(true);
     });
 
     it('rejects invalid hex colors', () => {
