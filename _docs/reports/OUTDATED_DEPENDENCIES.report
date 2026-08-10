@@ -3,7 +3,7 @@
 ┌─────────────────────────┬─────────┬────────┬────────────────────────────────┐
 │ Package                 │ Current │ Latest │ Dependents                     │
 ├─────────────────────────┼─────────┼────────┼────────────────────────────────┤
-│ @types/node (dev)       │ 25.9.5  │ 26.1.2 │ @grasdouble/lufa_design-       │
+│ @types/node (dev)       │ 25.9.5  │ 26.2.0 │ @grasdouble/lufa_design-       │
 │                         │         │        │ system,                        │
 │                         │         │        │ @grasdouble/lufa_design-       │
 │                         │         │        │ system-cli,                    │
