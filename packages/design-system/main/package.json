@@ -61,7 +61,7 @@
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.30.0"
+    "lucide-react": "^1.31.0"
   },
   "devDependencies": {
     "@grasdouble/lufa_config_eslint": "^0.1.11",
@@ -79,7 +79,7 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "sort-package-json": "^3.7.1",
-    "tsx": "^4.23.11",
+    "tsx": "^4.23.12",
     "typescript": "^6.0.3",
     "vite": "^8.2.1",
     "vite-plugin-compression": "^0.5.1",
