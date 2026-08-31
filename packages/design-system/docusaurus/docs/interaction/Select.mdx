@@ -1,0 +1,122 @@
+---
+id: select
+title: Select
+sidebar_label: Select
+description: Native select dropdown for form inputs with design system styling.
+sidebar_position: 9
+---
+
+import { Label, Select } from '@grasdouble/lufa_design-system';
+
+import { DarkModeCompatible } from '../../src/components/DarkModeCompatible';
+import { LiveDemoSection } from '../../src/components/LiveDemoSection';
+import { DisabledDemo, ErrorDemo, FullWidthDemo, LiveDemo, SizesDemo } from '../../src/dsExamples/interaction/select';
+
+# Select
+
+<DarkModeCompatible />
+
+## Overview
+
+**Select** is a native dropdown component for form inputs. It matches the visual design of **Input** and supports placeholder text, error messages, disabled state, full width layout, and three size variants.
+
+### Live Demo
+
+<LiveDemoSection
+  tabs={[
+    { id: 'default', label: 'Default', content: <LiveDemo /> },
+    { id: 'error', label: 'Error', content: <ErrorDemo /> },
+    { id: 'disabled', label: 'Disabled', content: <DisabledDemo /> },
+    { id: 'full', label: 'Full width', content: <FullWidthDemo /> },
+    { id: 'sizes', label: 'Sizes', content: <SizesDemo /> },
+  ]}
+/>
+
+## Anatomy
+
+- **Root**: A `<div>` wrapper containing the `<select>` element and optional error message.
+- **Select**: The native `<select>` element with design token styling.
+- **Option**: The `Select.Option` sub-component, which renders a native `<option>` element.
+- **Error message**: An accessible `<span>` shown below the select when `error` is provided.
+
+## Usage
+
+```tsx
+import { Label, Select } from '@grasdouble/lufa_design-system';
+
+export function Example() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <>
+      <Label htmlFor="model">AI Model</Label>
+      <Select
+        id="model"
+        value={value}
+        onChange={setValue}
+        placeholder="Select a model"
+        defaultValue=""
+      >
+        <Select.Option value="gpt-4">GPT-4</Select.Option>
+        <Select.Option value="gpt-3.5">GPT-3.5 Turbo</Select.Option>
+        <Select.Option value="claude-3">Claude 3</Select.Option>
+      </Select>
+    </>
+  );
+}
+```
+
+## Props
+
+### Select
+
+| Prop          | Type                        | Default     | Description                                                        |
+| ------------- | --------------------------- | ----------- | ------------------------------------------------------------------ |
+| `onChange`    | `(value: string) => void`   | `undefined` | Callback fired when the selected value changes.                    |
+| `placeholder` | `string`                    | `undefined` | Placeholder text shown as a disabled empty option.                 |
+| `error`       | `string`                    | `undefined` | Error message. Applies error styling and displays the message.     |
+| `disabled`    | `boolean`                   | `false`     | Disables interaction and applies disabled styling.                 |
+| `fullWidth`   | `boolean`                   | `false`     | Stretches the select to 100% of container width.                   |
+| `size`        | `'sm' \| 'md' \| 'lg'`     | `'md'`      | Size variant.                                                      |
+| `className`   | `string`                    | `undefined` | Additional CSS classes applied to the select element.              |
+| `...props`    | `SelectHTMLAttributes`      | -           | All standard select attributes (value, defaultValue, name, etc.). |
+
+### Select.Option
+
+| Prop       | Type     | Default     | Description                                |
+| ---------- | -------- | ----------- | ------------------------------------------ |
+| `value`    | `string` | -           | The option value.                          |
+| `...props` | `OptionHTMLAttributes` | - | All standard option attributes.          |
+
+## Accessibility
+
+- Always associate a `<Label>` with the select using `htmlFor` and `id`.
+- When `error` is provided, the select receives `aria-invalid="true"` and `aria-describedby` pointing to the error message element.
+- Keyboard navigation (arrow keys, Enter, Escape) is handled natively by the browser.
+
+## Theming & Tokens
+
+Select reuses the Input component tokens for visual consistency. These tokens are theme‑aware.
+
+| Token                                       | Usage              |
+| ------------------------------------------- | ------------------ |
+| `--lufa-component-input-background-default` | Background         |
+| `--lufa-component-input-border-default`     | Border             |
+| `--lufa-component-input-border-focus`       | Focus border       |
+| `--lufa-component-input-border-error`       | Error border       |
+| `--lufa-component-input-text-default`       | Text color         |
+
+## Do / Don't
+
+:::tip Do
+Use **Select** with **Label** for accessible form fields. Show an error message when validation fails.
+:::
+
+:::warning Don't
+Avoid using **Select** for very long option lists—consider a searchable autocomplete instead.
+:::
+
+## Related Components
+
+- [Input](/docs/interaction/input)
+- [Label](/docs/interaction/label)
