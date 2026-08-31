@@ -61,7 +61,7 @@
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.33.0"
+    "lucide-react": "^1.37.0"
   },
   "devDependencies": {
     "@grasdouble/lufa_config_eslint": "^0.1.11",
@@ -71,15 +71,15 @@
     "@playwright/experimental-ct-react": "^1.62.1",
     "@types/node": "^25.9.5",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@vitejs/plugin-react": "^6.1.0",
-    "eslint": "^10.9.0",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^10.9.1",
     "postcss": "^8.5.26",
     "prettier": "^3.9.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "sort-package-json": "^3.7.1",
-    "tsx": "^4.23.12",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.3",
     "vite": "^8.2.2",
     "vite-plugin-compression": "^0.5.1",

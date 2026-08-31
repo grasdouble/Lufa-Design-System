@@ -84,7 +84,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.28.2",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6",
     "sort-package-json": "^3.7.1",
     "typescript": "^6.0.3",

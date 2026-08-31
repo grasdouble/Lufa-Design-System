@@ -65,7 +65,7 @@
     "@grasdouble/lufa_design-system-tokens": "workspace:^",
     "@mdx-js/react": "^3.1.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.33.0",
+    "lucide-react": "^1.37.0",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -80,10 +80,10 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@types/node": "^25.9.5",
     "@types/react": "^19.2.18",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6",
     "sort-package-json": "^3.7.1",
-    "tsx": "^4.23.12",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.3"
   },
   "engines": {
