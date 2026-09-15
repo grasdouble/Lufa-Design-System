@@ -1,5 +1,15 @@
 # @grasdouble/lufa_design-system-themes
 
+## 1.1.8
+
+### Patch Changes
+
+- d2f0ca5: fix: complete starter theme declarations, repair strict WCAG contrast across affected modes, and align published theme documentation and files
+- d2f0ca5: chore: harden CI, align pnpm tooling, repair package linting, and resolve audited dependencies
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+  - @grasdouble/lufa_design-system-tokens@1.2.8
+
 ## 1.1.7
 
 ### Patch Changes

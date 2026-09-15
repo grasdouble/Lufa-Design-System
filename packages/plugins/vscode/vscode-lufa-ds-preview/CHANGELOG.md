@@ -1,5 +1,17 @@
 # @grasdouble/lufa_plugin_vscode_lufa-ds-preview
 
+## 0.4.12
+
+### Patch Changes
+
+- d2f0ca5: fix: secure workspace map resolution, bound scans, and optimize production extension packaging
+
+  test: add typed full-source Vitest v8 coverage thresholds and lifecycle, provider, cache, fallback, and watcher regression tests
+
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+  - @grasdouble/lufa_design-system-tokens@1.2.8
+
 ## 0.4.11
 
 ### Patch Changes

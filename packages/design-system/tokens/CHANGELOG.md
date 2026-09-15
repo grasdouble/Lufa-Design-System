@@ -1,5 +1,15 @@
 # @grasdouble/lufa_design-system-tokens
 
+## 1.2.8
+
+### Patch Changes
+
+- d2f0ca5: fix: harden token exports, generated statistics, payload budgets, aliases, and shadow serialization
+
+  fix: let token-usage validation exclude synthetic fixture directories while continuing to scan production sources
+
+- d2f0ca5: chore: harden CI, align pnpm tooling, repair package linting, and resolve audited dependencies
+
 ## 1.2.7
 
 ### Patch Changes

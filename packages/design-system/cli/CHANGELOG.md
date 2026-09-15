@@ -1,5 +1,22 @@
 # @grasdouble/lufa_design-system-cli
 
+## 1.2.0
+
+### Minor Changes
+
+- d2f0ca5: feat: add metadata-driven completeness checks and harden theme parsing, contrast diagnostics, and template file handling
+
+  fix: exclude synthetic CLI test fixtures from production token-usage validation
+
+  test: typecheck the Vitest configuration against the installed API and enforce honest full-source v8 coverage thresholds
+
+### Patch Changes
+
+- d2f0ca5: chore: harden CI, align pnpm tooling, repair package linting, and resolve audited dependencies
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+  - @grasdouble/lufa_design-system-tokens@1.2.8
+
 ## 1.1.6
 
 ### Patch Changes

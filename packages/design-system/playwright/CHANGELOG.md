@@ -1,5 +1,19 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.3
+
+### Patch Changes
+
+- d2f0ca5: feat: improve component API safety, theme state ownership, and accessible form composition
+
+  style: normalize Text source formatting required by the repository formatter
+
+- d2f0ca5: fix: repair design-system documentation, accessible documentation controls, Storybook accessibility checks, and deterministic Playwright visual coverage
+
+  fix: keep Docusaurus-local color aliases outside the reserved Lufa token namespace
+
+- d2f0ca5: chore: harden CI, align pnpm tooling, repair package linting, and resolve audited dependencies
+
 ## 1.3.2
 
 ### Patch Changes
