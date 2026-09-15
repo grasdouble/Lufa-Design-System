@@ -19,7 +19,7 @@ runs:
   steps:
     - name: Find or create comment
       id: comment
-      uses: actions/github-script@v8
+      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
       env:
         COMMENT_MARKER: ${{ inputs.comment-marker }}
         COMMENT_BODY: ${{ inputs.comment-body }}

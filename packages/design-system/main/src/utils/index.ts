@@ -6,4 +6,6 @@
  */
 
 export * from './accessibility';
+export * from './component-values';
+export * from './polymorphic';
 export * from './responsive-visibility';

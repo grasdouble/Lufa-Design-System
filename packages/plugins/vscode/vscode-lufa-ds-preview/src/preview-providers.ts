@@ -47,6 +47,8 @@ type CompletionDocumentation = {
 };
 
 const MAX_COMPLETION_ITEMS = 200;
+const MAX_DOCUMENT_COLORS = 1_000;
+const MAX_DOCUMENT_SCAN_CHARACTERS = 1_000_000;
 
 const toRgb = converter('rgb');
 const tokenHoverRe = new RegExp(`${cssVarNameRe.source}|${tokenPathRe.source}`);
@@ -73,11 +75,21 @@ const createDocumentColorProvider = (deps: DocumentColorProviderDeps): vscode.Do
       const text = document.getText();
       const colors: vscode.ColorInformation[] = [];
 
+      if (text.length > MAX_DOCUMENT_SCAN_CHARACTERS) {
+        if (debug && outputChannel) {
+          outputChannel.appendLine(
+            `lufa: Skipping color scan for ${document.fileName}; ${text.length} characters exceeds the ${MAX_DOCUMENT_SCAN_CHARACTERS} character limit.`
+          );
+        }
+        return colors;
+      }
+
       const cssColorVarInVarRe = createCssColorVarInVarRe();
       const cssColorVarDirectRe = createCssColorVarDirectRe();
       const oklchColorRe = createOklchColorRe();
 
       for (const match of text.matchAll(cssColorVarInVarRe)) {
+        if (colors.length >= MAX_DOCUMENT_COLORS) break;
         if (match.index === undefined) continue;
         const varName = match[1];
         const value = map.css[varName];
@@ -94,6 +106,7 @@ const createDocumentColorProvider = (deps: DocumentColorProviderDeps): vscode.Do
       }
 
       for (const match of text.matchAll(cssColorVarDirectRe)) {
+        if (colors.length >= MAX_DOCUMENT_COLORS) break;
         if (match.index === undefined) continue;
         const varName = match[1];
         const value = map.css[varName];
@@ -110,20 +123,19 @@ const createDocumentColorProvider = (deps: DocumentColorProviderDeps): vscode.Do
       }
 
       for (const match of text.matchAll(oklchColorRe)) {
+        if (colors.length >= MAX_DOCUMENT_COLORS) break;
         if (match.index === undefined) continue;
         const value = match[0];
         addColor(colors, document, match.index, match.index + match[0].length, value, value, debug, outputChannel);
       }
 
       const colorPathRe = createColorPathRe();
-
-      if (debug && outputChannel) {
-        const allMatches = [...text.matchAll(colorPathRe)];
-        outputChannel.appendLine(`lufa:   Found ${allMatches.length} color path references`);
-      }
+      let colorPathMatchCount = 0;
 
       for (const match of text.matchAll(colorPathRe)) {
+        if (colors.length >= MAX_DOCUMENT_COLORS) break;
         if (match.index === undefined) continue;
+        colorPathMatchCount += 1;
         const pathName = match[0];
         const lookupKeys = getPathCandidates(pathName);
         const value = lookupValue(map.paths, lookupKeys);
@@ -140,6 +152,10 @@ const createDocumentColorProvider = (deps: DocumentColorProviderDeps): vscode.Do
       }
 
       if (debug && outputChannel) {
+        outputChannel.appendLine(`lufa:   Found ${colorPathMatchCount} color path references`);
+        if (colors.length >= MAX_DOCUMENT_COLORS) {
+          outputChannel.appendLine(`lufa: Color results capped at ${MAX_DOCUMENT_COLORS}.`);
+        }
         outputChannel.appendLine(`lufa: Total colors found: ${colors.length}\n`);
       }
 
@@ -219,27 +235,26 @@ const createCompletionProvider = (deps: CompletionProviderDeps): vscode.Completi
 };
 
 const getCompletionMatch = (document: vscode.TextDocument, position: vscode.Position): CompletionMatch | null => {
-  const text = document.getText();
-  const offset = document.offsetAt(position);
-  const scanText = text.slice(Math.max(0, offset - 200), offset);
+  const lineText = document.lineAt(position.line).text;
+  const scanText = lineText.slice(Math.max(0, position.character - 200), position.character);
 
   const cssMatch = /--lufa-(?:primitive|core|semantic|component|tokens)-[a-zA-Z0-9-]*$/.exec(scanText);
   if (cssMatch) {
-    const start = offset - cssMatch[0].length;
+    const start = position.character - cssMatch[0].length;
     return {
       kind: 'css',
       prefix: cssMatch[0],
-      range: new vscode.Range(document.positionAt(start), position),
+      range: new vscode.Range(position.line, start, position.line, position.character),
     };
   }
 
   const pathMatch = /\b(?:tokens|primitive|core|semantic|component)\.[A-Za-z0-9_$.[\]'"]*$/.exec(scanText);
   if (pathMatch) {
-    const start = offset - pathMatch[0].length;
+    const start = position.character - pathMatch[0].length;
     return {
       kind: 'path',
       prefix: pathMatch[0],
-      range: new vscode.Range(document.positionAt(start), position),
+      range: new vscode.Range(position.line, start, position.line, position.character),
     };
   }
 
@@ -334,7 +349,7 @@ const safeToRgb = (
         `lufa: Error parsing color "${value}"${tokenName ? ` (token: ${tokenName})` : ''}: ${errorMsg}`
       );
     }
-    return null;
+    return undefined;
   }
 };
 
@@ -374,4 +389,10 @@ const buildPathCompletionItems = (valuesMap: TokenMap, match: CompletionMatch): 
   return items;
 };
 
-export { createDocumentColorProvider, createHoverProvider, createCompletionProvider };
+export {
+  createCompletionProvider,
+  createDocumentColorProvider,
+  createHoverProvider,
+  MAX_DOCUMENT_COLORS,
+  MAX_DOCUMENT_SCAN_CHARACTERS,
+};

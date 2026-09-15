@@ -13,6 +13,7 @@
  * 2. Variants - All prop combinations (variant, color, target, rel, polymorphic)
  * 3. Security - rel="noopener noreferrer" auto-injection
  * 4. Accessibility - ARIA attributes, semantic HTML, keyboard focus
+ * 5. Visual Regression - Variants and colors in light and dark modes
  */
 
 import AxeBuilder from '@axe-core/playwright';
@@ -254,6 +255,61 @@ test.describe('Link Component', () => {
       const component = await mount(<Link href="https://example.com">Focusable link</Link>);
       await page.keyboard.press('Tab');
       await expect(component).toBeFocused();
+    });
+  });
+
+  test.describe('Visual Regression', () => {
+    test('should match all variants and colors', async ({ mount }) => {
+      const component = await mount(
+        <main
+          style={{
+            width: '720px',
+            padding: '32px',
+            color: 'var(--lufa-semantic-ui-text-primary)',
+            backgroundColor: 'var(--lufa-semantic-ui-background-page)',
+          }}
+        >
+          <h1 style={{ margin: '0 0 24px', fontSize: '28px' }}>Link variants</h1>
+
+          <section style={{ marginBottom: '24px' }}>
+            <h2 style={{ margin: '0 0 12px', fontSize: '20px' }}>Underline</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}>
+              {(['primary', 'secondary', 'tertiary'] as const).map((color) => (
+                <Link key={color} href={`#${color}`} color={color}>
+                  {color}
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section
+            style={{
+              marginBottom: '24px',
+              padding: '16px',
+              backgroundColor: 'var(--lufa-primitive-color-blue-700)',
+            }}
+          >
+            <Link href="#inverse" color="inverse">
+              inverse
+            </Link>
+          </section>
+
+          <section>
+            <h2 style={{ margin: '0 0 12px', fontSize: '20px' }}>Plain and external</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}>
+              <Link href="#plain" variant="plain">
+                Plain link
+              </Link>
+              <Link href="https://example.com" target="_blank">
+                External link
+              </Link>
+            </div>
+          </section>
+        </main>
+      );
+
+      await component.page().evaluate(() => document.fonts.ready);
+      await expect(component).toHaveScreenshot('link-all-variants.png');
     });
   });
 });

@@ -53,17 +53,7 @@ import styles from './Text.module.css';
  * Maps to: --lufa-semantic-typography-{variant}
  */
 type VariantValue =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'body-large'
-  | 'body'
-  | 'body-small'
-  | 'caption'
-  | 'label';
+  'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body-large' | 'body' | 'body-small' | 'caption' | 'label';
 
 /**
  * Text color values based on semantic tokens

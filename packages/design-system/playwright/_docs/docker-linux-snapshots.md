@@ -47,7 +47,7 @@ Run Docker script on your local machine:
 
 ```bash
 # From repository root
-pnpm ds:test:docker:update-snapshots-linux
+pnpm ds:playwright:docker:update-snapshots-linux
 
 # Or from Playwright package
 cd packages/design-system/playwright
@@ -127,7 +127,7 @@ When tests run, Playwright picks the correct snapshot for the current OS.
   - Check: `asdf list pnpm` (asdf users)
   - Install: `asdf install pnpm 10.28.0` (or version in `.tool-versions`)
 
-  **Why?** When you run `pnpm ds:test:docker:update-snapshots-linux`, your local pnpm needs to exist first to execute the npm script. The Docker container will use its own pnpm version from `.tool-versions`.
+  **Why?** When you run `pnpm ds:playwright:docker:update-snapshots-linux`, your local pnpm starts the script before Docker uses the repository tool versions.
 
 ### Verify Installation
 
@@ -150,7 +150,7 @@ asdf reshim pnpm
 
 ```bash
 # From repository root (most convenient)
-pnpm ds:test:docker:update-snapshots-linux
+pnpm ds:playwright:docker:update-snapshots-linux
 
 # From Playwright package directory
 cd packages/design-system/playwright
@@ -174,10 +174,10 @@ bash scripts/docker-update-snapshots-linux.sh
 
 ```bash
 # 1. Ensure you have the latest macOS snapshots
-pnpm ds:test
+pnpm ds:playwright:ci
 
 # 2. Generate Linux snapshots using Docker
-pnpm ds:test:docker:update-snapshots-linux
+pnpm ds:playwright:docker:update-snapshots-linux
 
 # 3. Compress all snapshots (both macOS and Linux)
 pnpm ds:playwright:compress-snapshots
@@ -322,7 +322,7 @@ jobs:
         run: cd packages/design-system/playwright && pnpm exec playwright install chromium --with-deps
 
       - name: Run Playwright tests
-        run: pnpm ds:test
+        run: pnpm ds:playwright:ci
 
       # Linux snapshots will be used automatically since CI runs on ubuntu-latest
 ```
@@ -333,7 +333,7 @@ jobs:
 
 ### "No version is set for command pnpm"
 
-**Error**: When running `pnpm ds:test:docker:update-snapshots-linux`:
+**Error**: When running `pnpm ds:playwright:docker:update-snapshots-linux`:
 ```
 No version is set for command pnpm
 Consider adding one of the following versions in your config file at .tool-versions
@@ -349,7 +349,7 @@ asdf install pnpm $(grep '^pnpm' .tool-versions | awk '{print $2}')
 asdf reshim pnpm
 
 # Then try again
-pnpm ds:test:docker:update-snapshots-linux
+pnpm ds:playwright:docker:update-snapshots-linux
 
 # Option 2: Run the script directly (bypasses local pnpm)
 bash packages/design-system/playwright/scripts/docker-update-snapshots-linux.sh
@@ -463,7 +463,7 @@ Run Playwright natively in a Linux environment:
 
 ```bash
 # WSL2 (Windows) or Linux
-pnpm ds:test:update-snapshots
+pnpm ds:playwright:update-snapshots
 ```
 
 **Pros**: Native performance
@@ -475,7 +475,7 @@ Use GitHub Codespaces, GitPod, or similar:
 
 ```bash
 # In cloud-based Linux environment
-pnpm ds:test:update-snapshots
+pnpm ds:playwright:update-snapshots
 ```
 
 **Pros**: No local setup
@@ -504,10 +504,10 @@ Regenerate **both** macOS and Linux snapshots:
 
 ```bash
 # 1. Update macOS snapshots
-pnpm ds:test:update-snapshots
+pnpm ds:playwright:update-snapshots
 
 # 2. Update Linux snapshots
-pnpm ds:test:docker:update-snapshots-linux
+pnpm ds:playwright:docker:update-snapshots-linux
 
 # 3. Compress all
 pnpm ds:playwright:compress-snapshots
@@ -534,7 +534,7 @@ Before committing new Linux snapshots:
 ```bash
 # Compare macOS vs Linux snapshots visually
 # Use image diff tools or Playwright trace viewer
-pnpm ds:test:ui
+pnpm ds:playwright:ui
 ```
 
 Expect minor differences (font rendering, anti-aliasing), but layout should match.
@@ -565,7 +565,7 @@ A: Possible but not recommended - Docker execution takes 3-5 minutes, which may 
 ## Related Documentation
 
 - [Playwright Component Testing README](../README.md)
-- [Snapshot Compression Scripts](../scripts/README.md)
+- [Snapshot compression script](../scripts/compress-snapshots-manual.sh)
 - [Playwright Docker Documentation](https://playwright.dev/docs/docker)
 - [AGENTS.md - Testing Instructions](../../../../AGENTS.md#testing-instructions)
 

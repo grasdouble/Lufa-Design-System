@@ -1,238 +1,86 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
-/**
- * Theme mode values matching accessibility preferences
- */
+import { hydrateStoredMode } from './themeController.js';
+import { isThemeMode } from './themeValues.js';
+import { useTheme } from './useTheme.js';
+
+/** Accessibility modes supported by the compatibility adapter. */
 export type ThemeMode = 'light' | 'dark' | 'high-contrast';
 
-/**
- * System preference detected from media queries
- * null if autoDetect is disabled
- */
+/** System preference detected from media queries. */
 export type SystemPreference = ThemeMode | null;
 
-/**
- * Configuration options for useThemeMode hook
- */
+/** Configuration options for `useThemeMode`. */
 export type UseThemeModeOptions = {
-  /**
-   * Initial mode to use
-   * @default 'light'
-   */
+  /** Initial explicit mode. */
   defaultMode?: ThemeMode;
-
-  /**
-   * Enable automatic detection from system preferences
-   * Uses prefers-color-scheme and prefers-contrast media queries
-   * @default true
-   */
+  /** Enables automatic system preference detection. */
   autoDetect?: boolean;
-
   /**
-   * localStorage key for persistence
+   * Legacy mode storage key.
    * @default 'lufa-theme-mode'
    */
   storageKey?: string;
-
-  /**
-   * Enable localStorage persistence
-   * @default true
-   */
+  /** Enables localStorage persistence. */
   enableStorage?: boolean;
 };
 
-/**
- * Return value from useThemeMode hook
- */
+/** Return value from `useThemeMode`. */
 export type UseThemeModeReturn = {
-  /**
-   * Current active mode
-   */
+  /** Current resolved accessibility mode. */
   mode: ThemeMode;
-
-  /**
-   * Update the current mode
-   * Persists to localStorage if enableStorage is true
-   * Updates data-mode attribute on <html>
-   */
+  /** Updates the shared color-mode controller. */
   setMode: (mode: ThemeMode) => void;
-
-  /**
-   * Whether system prefers dark color scheme
-   * Based on prefers-color-scheme: dark media query
-   */
+  /** Whether the system requests a dark color scheme. */
   systemPrefersDark: boolean;
-
-  /**
-   * Whether system prefers high contrast
-   * Based on prefers-contrast: more media query
-   */
+  /** Whether the system requests increased contrast. */
   systemPrefersContrast: boolean;
-
-  /**
-   * Detected system preference (null if autoDetect disabled)
-   * Priority: high-contrast > dark > light
-   */
+  /** Detected system preference, or `null` when detection is disabled. */
   systemPreference: SystemPreference;
 };
 
 /**
- * Type guard for ThemeMode
+ * Compatibility adapter for the shared `useTheme` color-mode controller.
+ *
+ * @deprecated Prefer `useTheme`, which now includes `high-contrast` and is the
+ * only owner of `data-mode` and theme persistence. This adapter remains
+ * backward compatible and delegates all writes to that shared controller.
  */
-function isValidMode(value: unknown): value is ThemeMode {
-  return typeof value === 'string' && ['light', 'dark', 'high-contrast'].includes(value);
-}
-
-/**
- * Hook for managing accessibility color modes (light/dark/high-contrast)
- *
- * @example
- * ```typescript
- * function App() {
- *   const { mode, setMode } = useThemeMode();
- *
- *   return (
- *     <button onClick={() => setMode('dark')}>
- *       Switch to Dark Mode
- *     </button>
- *   );
- * }
- * ```
- *
- * @example With options
- * ```typescript
- * const { mode, setMode, systemPreference } = useThemeMode({
- *   defaultMode: 'light',
- *   autoDetect: true,
- *   storageKey: 'my-app-theme-mode',
- *   enableStorage: true,
- * });
- * ```
- */
-export function useThemeMode(options?: UseThemeModeOptions): UseThemeModeReturn {
-  const {
-    defaultMode = 'light',
-    autoDetect = true,
-    storageKey = 'lufa-theme-mode',
-    enableStorage = true,
-  } = options ?? {};
-
-  /**
-   * Determine initial mode on mount
-   */
-  function getInitialMode(): ThemeMode {
-    // SSR safety - always return default on server
-    if (typeof window === 'undefined') {
-      return defaultMode;
-    }
-
-    // Check localStorage first (explicit user preference)
-    if (enableStorage) {
-      const stored = localStorage.getItem(storageKey);
-      if (stored && isValidMode(stored)) {
-        return stored;
-      }
-    }
-
-    // Auto-detect from system preferences
-    if (autoDetect) {
-      // Priority 1: High contrast
-      if (window.matchMedia('(prefers-contrast: more)').matches) {
-        return 'high-contrast';
-      }
-      // Priority 2: Dark mode
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
-      // Priority 3: Light mode (default)
-      return 'light';
-    }
-
-    // Fallback to default
-    return defaultMode;
-  }
-
-  // Initialize mode state
-  const [mode, setModeState] = useState<ThemeMode>(() => getInitialMode());
-
-  // System preference state
-  const [systemPrefersDark, setSystemPrefersDark] = useState(false);
-  const [systemPrefersContrast, setSystemPrefersContrast] = useState(false);
-
-  /**
-   * Listen to system preference changes
-   */
+export function useThemeMode(options: UseThemeModeOptions = {}): UseThemeModeReturn {
+  const { defaultMode = 'light', autoDetect = true, storageKey = 'lufa-theme-mode', enableStorage = true } = options;
+  const theme = useTheme({
+    defaultMode: autoDetect ? 'auto' : defaultMode,
+    modeStorageKey: storageKey,
+    enableStorage,
+  });
+  const { mode: sharedMode, setMode: setSharedMode } = theme;
+  const appliedConfiguration = useRef<string | null>(null);
   useEffect(() => {
-    if (typeof window === 'undefined' || !autoDetect) return;
+    const configuration = `${storageKey}:${enableStorage}:${autoDetect}:${defaultMode}`;
+    if (appliedConfiguration.current === configuration) return;
+    appliedConfiguration.current = configuration;
 
-    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const contrastQuery = window.matchMedia('(prefers-contrast: more)');
-
-    const updateDark = (e: MediaQueryListEvent | MediaQueryList) => {
-      setSystemPrefersDark(e.matches);
-    };
-
-    const updateContrast = (e: MediaQueryListEvent | MediaQueryList) => {
-      setSystemPrefersContrast(e.matches);
-    };
-
-    // Set initial values
-    updateDark(darkQuery);
-    updateContrast(contrastQuery);
-
-    // Listen for changes
-    darkQuery.addEventListener('change', updateDark);
-    contrastQuery.addEventListener('change', updateContrast);
-
-    return () => {
-      darkQuery.removeEventListener('change', updateDark);
-      contrastQuery.removeEventListener('change', updateContrast);
-    };
-  }, [autoDetect]);
-
-  /**
-   * Sync mode to HTML attribute
-   */
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    document.documentElement.setAttribute('data-mode', mode);
-  }, [mode]);
-
-  /**
-   * Persist mode to localStorage
-   */
-  useEffect(() => {
-    if (!enableStorage || typeof window === 'undefined') return;
-    localStorage.setItem(storageKey, mode);
-  }, [mode, storageKey, enableStorage]);
-
-  /**
-   * Public API to change mode
-   */
-  const setMode = useCallback((newMode: ThemeMode) => {
-    if (!isValidMode(newMode)) {
-      console.warn('[useThemeMode] Invalid mode:', newMode);
-      return;
+    const storedMode = enableStorage && typeof window !== 'undefined' ? window.localStorage.getItem(storageKey) : null;
+    if (isThemeMode(storedMode) && storedMode !== 'auto') {
+      hydrateStoredMode(storedMode, storageKey);
+    } else if (!autoDetect && sharedMode === 'auto') {
+      setSharedMode(defaultMode);
     }
-    setModeState(newMode);
-  }, []);
+  }, [autoDetect, defaultMode, enableStorage, setSharedMode, sharedMode, storageKey]);
 
-  /**
-   * Compute system preference
-   */
-  const systemPreference: SystemPreference = autoDetect
-    ? systemPrefersContrast
-      ? 'high-contrast'
-      : systemPrefersDark
-        ? 'dark'
-        : 'light'
-    : null;
+  const systemPreference = useMemo<SystemPreference>(() => {
+    if (!autoDetect) return null;
+    if (theme.systemPrefersContrast) return 'high-contrast';
+    return theme.systemPrefersDark ? 'dark' : 'light';
+  }, [autoDetect, theme.systemPrefersContrast, theme.systemPrefersDark]);
+
+  const mode: ThemeMode = sharedMode === 'auto' ? (systemPreference ?? defaultMode) : sharedMode;
 
   return {
     mode,
-    setMode,
-    systemPrefersDark,
-    systemPrefersContrast,
+    setMode: setSharedMode,
+    systemPrefersDark: autoDetect && theme.systemPrefersDark,
+    systemPrefersContrast: autoDetect && theme.systemPrefersContrast,
     systemPreference,
   };
 }

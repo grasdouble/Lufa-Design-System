@@ -34,6 +34,7 @@ Display components for text, icons, badges, and visual elements.
 - **[Text](/docs/content/text)** - Typography component with semantic variants and accessibility features
 - **[Icon](/docs/content/icon)** - SVG icon wrapper with semantic sizing and colors (Lucide React integration)
 - **[Badge](/docs/content/badge)** - Status and labeling component
+- **[Link](/docs/content/link)** - Inline anchor with token-based states and safe external-link defaults
 
 ### Interaction
 
@@ -55,6 +56,14 @@ Technical helpers and accessibility utilities.
 
 - **[Portal](/docs/utility/portal)** - Renders children into a portal outside of the DOM hierarchy
 - **[VisuallyHidden](/docs/utility/visually-hidden)** - Hides content visually but leaves it available to screen readers
+
+### Navigation
+
+- **[DotNav](/docs/navigation/dot-nav)** - Controlled vertical navigation for long, section-based pages
+
+### Hooks
+
+- **[useScrollSpy](/docs/hooks/use-scroll-spy)** - Tracks active sections and coordinates programmatic scrolling
 
 ## Design Principles
 
@@ -126,33 +135,36 @@ function UserCard({ name, email, role }) {
 
 ## Component Status
 
-| Component      | Status    | Category    | Tests | Docs | Storybook |
-| -------------- | --------- | ----------- | ----- | ---- | --------- |
-| Box            | ✅ Stable | Foundation  | 120   | ✅   | ✅        |
-| Stack          | ✅ Stable | Foundation  | 86    | ✅   | ✅        |
-| Flex           | ✅ Stable | Foundation  | 42    | ✅   | ✅        |
-| Grid           | ✅ Stable | Foundation  | 38    | ✅   | ✅        |
-| Container      | ✅ Stable | Foundation  | 28    | ✅   | ✅        |
-| Center         | ✅ Stable | Foundation  | 14    | ✅   | ✅        |
-| Divider        | ✅ Stable | Foundation  | 74    | ✅   | ✅        |
-| AspectRatio    | ✅ Stable | Foundation  | 28    | ✅   | ✅        |
-| Cluster        | ✅ Stable | Foundation  | 67    | ✅   | ✅        |
-| Bleed          | ✅ Stable | Foundation  | 23    | ✅   | ✅        |
-| Text           | ✅ Stable | Content     | 107   | ✅   | ✅        |
-| Icon           | ✅ Stable | Content     | 106   | ✅   | ✅        |
-| Badge          | ✅ Stable | Content     | 88    | ✅   | ✅        |
-| Button         | ✅ Stable | Interaction | 94    | ✅   | ✅        |
-| Input          | ✅ Stable | Interaction | 12    | ✅   | ✅        |
-| Label          | ✅ Stable | Interaction | 8     | ✅   | ✅        |
-| Card           | ✅ Stable | Composition | 16    | ✅   | ✅        |
-| Portal         | ✅ Stable | Utility     | 4     | ✅   | ✅        |
-| VisuallyHidden | ✅ Stable | Utility     | 4     | ✅   | ✅        |
+| API            | Status    | Category    | Playwright | Docs | Storybook  |
+| -------------- | --------- | ----------- | ---------- | ---- | ---------- |
+| Box            | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Stack          | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Flex           | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Grid           | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Container      | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Center         | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Divider        | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| AspectRatio    | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Cluster        | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Bleed          | ✅ Stable | Foundation  | ✅         | ✅   | ✅         |
+| Text           | ✅ Stable | Content     | ✅         | ✅   | ✅         |
+| Icon           | ✅ Stable | Content     | ✅         | ✅   | ✅         |
+| Badge          | ✅ Stable | Content     | ✅         | ✅   | ✅         |
+| Link           | ✅ Stable | Content     | ✅         | ✅   | ✅         |
+| Button         | ✅ Stable | Interaction | ✅         | ✅   | ✅         |
+| Input          | ✅ Stable | Interaction | ✅         | ✅   | ✅         |
+| Label          | ✅ Stable | Interaction | ✅         | ✅   | ✅         |
+| Card           | ✅ Stable | Composition | ✅         | ✅   | ✅         |
+| Portal         | ✅ Stable | Utility     | ✅         | ✅   | ✅         |
+| VisuallyHidden | ✅ Stable | Utility     | ✅         | ✅   | ✅         |
+| DotNav         | ✅ Stable | Navigation  | —          | ✅   | ✅         |
+| useScrollSpy   | ✅ Stable | Hook        | ✅         | ✅   | Via DotNav |
 
 ## Next Steps
 
 - Explore individual component documentation in the sidebar
 - Learn about [design tokens](/docs/tokens/colors)
-- Check out [Storybook](https://storybook.lufa-ds.grasdouble.com) for interactive examples
+- Browse the [Storybook source](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/storybook) for interactive examples
 
 :::note Work in Progress
 This design system is actively being developed. More components and features will be added regularly.

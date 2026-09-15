@@ -60,38 +60,38 @@ function ComponentShowcase() {
         </Text>
         <Stack direction="vertical" spacing="comfortable">
           <Cluster spacing="default">
-            <Button type="solid" variant="primary">
+            <Button appearance="solid" variant="primary">
               Primary Solid
             </Button>
-            <Button type="outline" variant="primary">
+            <Button appearance="outline" variant="primary">
               Primary Outlined
             </Button>
-            <Button type="ghost" variant="primary">
+            <Button appearance="ghost" variant="primary">
               Primary Ghost
             </Button>
           </Cluster>
           <Cluster spacing="default">
-            <Button type="solid" variant="secondary">
+            <Button appearance="solid" variant="secondary">
               Secondary Solid
             </Button>
-            <Button type="outline" variant="secondary">
+            <Button appearance="outline" variant="secondary">
               Secondary Outlined
             </Button>
-            <Button type="ghost" variant="secondary">
+            <Button appearance="ghost" variant="secondary">
               Secondary Ghost
             </Button>
           </Cluster>
           <Cluster spacing="default">
-            <Button type="solid" variant="success">
+            <Button appearance="solid" variant="success">
               Success
             </Button>
-            <Button type="solid" variant="danger">
+            <Button appearance="solid" variant="danger">
               Danger
             </Button>
-            <Button type="solid" variant="warning">
+            <Button appearance="solid" variant="warning">
               Warning
             </Button>
-            <Button type="solid" variant="info">
+            <Button appearance="solid" variant="info">
               Info
             </Button>
           </Cluster>
@@ -241,7 +241,7 @@ function ComponentShowcase() {
               <Text variant="body-small">
                 This is a card component that automatically adapts to the selected theme mode.
               </Text>
-              <Button type="solid" variant="primary" size="sm">
+              <Button appearance="solid" variant="primary" size="sm">
                 Action
               </Button>
             </Stack>
@@ -253,10 +253,10 @@ function ComponentShowcase() {
               </Text>
               <Text variant="body-small">Count: {count}</Text>
               <Cluster spacing="compact">
-                <Button type="solid" variant="primary" size="sm" onClick={() => setCount(count + 1)}>
+                <Button appearance="solid" variant="primary" size="sm" onClick={() => setCount(count + 1)}>
                   Increment
                 </Button>
-                <Button type="outline" variant="primary" size="sm" onClick={() => setCount(0)}>
+                <Button appearance="outline" variant="primary" size="sm" onClick={() => setCount(0)}>
                   Reset
                 </Button>
               </Cluster>

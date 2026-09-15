@@ -208,12 +208,12 @@ StyleDictionary.registerFormat({
  */
 StyleDictionary.registerFormat({
   name: 'css/variables-with-modes',
-  format: ({ dictionary, options, file }) => {
+  format: ({ dictionary, options }) => {
     const prefix = options.prefix || 'lufa';
     const { outputReferences } = options;
 
     // Helper: Resolve token value or reference (handles multiple {ref} in one value)
-    const formatValue = (token, dictionary) => {
+    const formatValue = (token) => {
       if (
         outputReferences &&
         token.original.$value &&
@@ -259,7 +259,7 @@ StyleDictionary.registerFormat({
     // Tokens without modes (immutable - always same value)
     tokensWithoutModes.forEach((token) => {
       const cssVarName = `--${prefix}-${token.path.join('-')}`;
-      const value = formatValue(token, dictionary);
+      const value = formatValue(token);
       const comment = token.$description ? ` /** ${token.$description} */` : '';
       output += `  ${cssVarName}: ${value};${comment}\n`;
     });
@@ -267,7 +267,7 @@ StyleDictionary.registerFormat({
     // Tokens with modes (light mode = $value)
     tokensWithModes.forEach(({ token }) => {
       const cssVarName = `--${prefix}-${token.path.join('-')}`;
-      const value = formatValue(token, dictionary); // Light = $value (implicit)
+      const value = formatValue(token); // Light = $value (implicit)
       const comment = token.$description ? ` /** ${token.$description} */` : '';
       output += `  ${cssVarName}: ${value};${comment}\n`;
     });
@@ -283,7 +283,7 @@ StyleDictionary.registerFormat({
 
         if (!darkValue) {
           console.warn(`⚠️  Token ${token.path.join('.')} has modes but missing 'dark' - using $value`);
-          darkValue = formatValue(token, dictionary);
+          darkValue = formatValue(token);
         }
 
         // Resolve reference if needed (handles multiple {ref} in one value)
@@ -332,13 +332,7 @@ export default {
   },
   // Preprocessors run before building (enrich tokens)
   preprocessors: ['add-wcag-metadata'],
-  source: [
-    'src/primitives/**/*.json',
-    'src/core/**/*.json',
-    'src/semantic/**/*.json',
-    'src/component/**/*.json',
-    '!src/**/index.json', // Exclude index.json files to avoid metadata collisions
-  ],
+  source: ['src/primitives/**/*.json', 'src/core/**/*.json', 'src/semantic/**/*.json', 'src/component/**/*.json'],
   platforms: {
     css: {
       // No transformGroup - use explicit transforms list to avoid built-in size/rem

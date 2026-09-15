@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef, ElementType } from 'react';
 import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
+import type { SemanticSpacing } from '../../utils/component-values';
 import type { ResponsiveVisibilityProps } from '../../utils/responsive-visibility';
 import { getResponsiveVisibilityClasses } from '../../utils/responsive-visibility';
 import styles from './Box.module.css';
@@ -57,8 +58,6 @@ import styles from './Box.module.css';
  * Spacing values based on semantic tokens
  * Maps to: --semantic-ui-spacing-{value}
  */
-type SpacingValue = 'none' | 'tight' | 'compact' | 'default' | 'comfortable' | 'spacious';
-
 /**
  * Background color values based on semantic tokens
  * Includes pattern "on-X" for WCAG AAA contrast
@@ -120,43 +119,43 @@ export type BoxProps<T extends ElementType = 'div'> = {
    * Padding on all sides
    * @default undefined
    */
-  padding?: SpacingValue;
+  padding?: SemanticSpacing;
 
   /**
    * Horizontal padding (left + right)
    * @default undefined
    */
-  paddingX?: SpacingValue;
+  paddingX?: SemanticSpacing;
 
   /**
    * Vertical padding (top + bottom)
    * @default undefined
    */
-  paddingY?: SpacingValue;
+  paddingY?: SemanticSpacing;
 
   /**
    * Padding top
    * @default undefined
    */
-  paddingTop?: SpacingValue;
+  paddingTop?: SemanticSpacing;
 
   /**
    * Padding right
    * @default undefined
    */
-  paddingRight?: SpacingValue;
+  paddingRight?: SemanticSpacing;
 
   /**
    * Padding bottom
    * @default undefined
    */
-  paddingBottom?: SpacingValue;
+  paddingBottom?: SemanticSpacing;
 
   /**
    * Padding left
    * @default undefined
    */
-  paddingLeft?: SpacingValue;
+  paddingLeft?: SemanticSpacing;
 
   // ==========================================
   // SPACING - Margin
@@ -166,43 +165,43 @@ export type BoxProps<T extends ElementType = 'div'> = {
    * Margin on all sides
    * @default undefined
    */
-  margin?: SpacingValue;
+  margin?: SemanticSpacing;
 
   /**
    * Horizontal margin (left + right)
    * @default undefined
    */
-  marginX?: SpacingValue;
+  marginX?: SemanticSpacing;
 
   /**
    * Vertical margin (top + bottom)
    * @default undefined
    */
-  marginY?: SpacingValue;
+  marginY?: SemanticSpacing;
 
   /**
    * Margin top
    * @default undefined
    */
-  marginTop?: SpacingValue;
+  marginTop?: SemanticSpacing;
 
   /**
    * Margin right
    * @default undefined
    */
-  marginRight?: SpacingValue;
+  marginRight?: SemanticSpacing;
 
   /**
    * Margin bottom
    * @default undefined
    */
-  marginBottom?: SpacingValue;
+  marginBottom?: SemanticSpacing;
 
   /**
    * Margin left
    * @default undefined
    */
-  marginLeft?: SpacingValue;
+  marginLeft?: SemanticSpacing;
 
   // ==========================================
   // BACKGROUND
@@ -280,7 +279,10 @@ export type BoxComponentProps<T extends ElementType> = BoxProps<T> &
 // ============================================
 
 /**
- * Box component with ref forwarding
+ * Box component with ref forwarding.
+ *
+ * Accessibility contract: choose a semantic `as` element matching the content.
+ * Box adds no role, accessible name, or keyboard behavior.
  */
 const BoxImpl = <T extends ElementType = 'div'>(
   {

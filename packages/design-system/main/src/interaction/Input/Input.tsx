@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
+import { useFormFieldContext } from '../FormField/FormFieldContext';
 import styles from './Input.module.css';
 
 /**
@@ -41,22 +42,53 @@ export type InputProps = {
   className?: string;
 } & Omit<ComponentPropsWithoutRef<'input'>, 'size'>; // Omit size to avoid conflict with potential size prop
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ className, error, fullWidth, disabled, ...props }, ref) => {
-  return (
-    <input
-      ref={ref}
-      disabled={disabled}
-      className={clsx(
-        styles.input,
-        error && styles.error,
-        fullWidth && styles.fullWidth,
-        disabled && styles.disabled,
-        className
-      )}
-      {...props}
-    />
-  );
-});
+/**
+ * Renders a native text input and forwards its ref.
+ *
+ * Accessibility contract: consumers must provide a visible label or `aria-label`.
+ * `error` sets `aria-invalid`; native `aria-describedby` is supported directly.
+ * Inside `FormField`, label, description, error, required, and invalid state are
+ * connected automatically.
+ */
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      className,
+      error = false,
+      fullWidth,
+      disabled,
+      id,
+      required,
+      'aria-describedby': ariaDescribedBy,
+      'aria-invalid': ariaInvalid,
+      ...props
+    },
+    ref
+  ) => {
+    const field = useFormFieldContext();
+    const describedBy = [field?.describedBy, ariaDescribedBy].filter(Boolean).join(' ') || undefined;
+    const invalid = ariaInvalid ?? (error || field?.invalid ? true : undefined);
+
+    return (
+      <input
+        ref={ref}
+        id={id ?? field?.inputId}
+        required={required ?? field?.required}
+        disabled={disabled}
+        aria-describedby={describedBy}
+        aria-invalid={invalid}
+        className={clsx(
+          styles.input,
+          (error || field?.invalid) && styles.error,
+          fullWidth && styles.fullWidth,
+          disabled && styles.disabled,
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 
 Input.displayName = 'Input';
 

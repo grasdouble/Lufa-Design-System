@@ -1,8 +1,8 @@
 /**
  * Cache and watcher management for tokens maps and config resolution.
  */
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { isAbsolute, join } from 'node:path';
+import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import * as vscode from 'vscode';
 
 import type { LufaPreviewConfig } from './preview-config';
@@ -24,6 +24,39 @@ type LogOnce = (message: string) => void;
 type MapCacheState = {
   path: string | null;
   mtime: number;
+};
+
+/**
+ * Check whether a candidate is the workspace root or one of its descendants.
+ */
+const isPathInsideWorkspace = (candidatePath: string, workspacePath: string): boolean => {
+  const relativePath = relative(workspacePath, candidatePath);
+  return (
+    relativePath === '' || (relativePath !== '..' && !relativePath.startsWith(`..${sep}`) && !isAbsolute(relativePath))
+  );
+};
+
+const canonicalizePath = (inputPath: string): string => {
+  let currentPath = resolve(inputPath);
+  const missingSegments: string[] = [];
+
+  while (true) {
+    try {
+      return resolve(realpathSync(currentPath), ...missingSegments);
+    } catch (error) {
+      if (!error || typeof error !== 'object' || !('code' in error) || error.code !== 'ENOENT') {
+        throw error;
+      }
+
+      const parentPath = dirname(currentPath);
+      if (parentPath === currentPath) {
+        throw error;
+      }
+
+      missingSegments.unshift(basename(currentPath));
+      currentPath = parentPath;
+    }
+  }
 };
 
 /**
@@ -73,10 +106,14 @@ const createValuesMapStore = (logOnce: LogOnce): ValuesMapStore => {
   /**
    * Ensure a path is within a workspace folder to avoid unsafe access.
    */
-  const isPathInWorkspace = (path: string): boolean => {
+  const resolvePathInWorkspace = (path: string): string | null => {
     const folders = vscode.workspace.workspaceFolders;
-    if (!folders || folders.length === 0) return false;
-    return folders.some((folder) => path.startsWith(folder.uri.fsPath));
+    if (!folders || folders.length === 0) return null;
+
+    const canonicalPath = canonicalizePath(path);
+    return folders.some((folder) => isPathInsideWorkspace(canonicalPath, canonicalizePath(folder.uri.fsPath)))
+      ? canonicalPath
+      : null;
   };
 
   /**
@@ -93,12 +130,21 @@ const createValuesMapStore = (logOnce: LogOnce): ValuesMapStore => {
 
     const resolvedPath = isAbsolute(configured) ? configured : join(folders[0].uri.fsPath, configured);
 
-    if (!isAbsolute(configured) && !isPathInWorkspace(resolvedPath)) {
+    let workspacePath: string | null;
+    try {
+      workspacePath = resolvePathInWorkspace(resolvedPath);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logOnce(`lufa: Cannot resolve custom ${label} path ${resolvedPath}: ${errorMessage}.`);
+      return null;
+    }
+
+    if (!workspacePath) {
       logOnce(`lufa: Security warning - Custom ${label} path is outside workspace: ${resolvedPath}`);
       return null;
     }
 
-    return resolvedPath;
+    return workspacePath;
   };
 
   /**
@@ -301,5 +347,5 @@ const createValuesMapStore = (logOnce: LogOnce): ValuesMapStore => {
   };
 };
 
-export { createValuesMapStore };
+export { createValuesMapStore, isPathInsideWorkspace };
 export type { ValuesMapStore };

@@ -17,6 +17,14 @@ import { expect, test } from '@playwright/experimental-ct-react';
 // JSX resolve to the live namespace instead of importRef objects → mount error.
 import { MinimalHarness, NoOpScrollHarness, OnScrollTrackerHarness, ScrollSpyHarness } from './useScrollSpy.harness';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- Window declarations require interface merging.
+  interface Window {
+    animationFrameCalls: number;
+    originalRequestAnimationFrame: typeof window.requestAnimationFrame;
+  }
+}
+
 // -----------------------------------------------------------------------------
 // TEST SUITE: Initialization
 // -----------------------------------------------------------------------------
@@ -59,17 +67,23 @@ test.describe('useScrollSpy', () => {
     });
 
     test('should not run built-in scroll animation when onScroll is provided', async ({ mount, page }) => {
-      // Capture baseline after mount so the component's layout doesn't skew the assertion.
       const component = await mount(<NoOpScrollHarness />);
-      const scrollYBefore = await page.evaluate(() => window.scrollY);
+      await page.evaluate(() => {
+        window.animationFrameCalls = 0;
+        window.originalRequestAnimationFrame = window.requestAnimationFrame;
+        window.requestAnimationFrame = (...args) => {
+          window.animationFrameCalls += 1;
+          return window.originalRequestAnimationFrame(...args);
+        };
+      });
 
       await component.getByTestId('go-b').click();
 
-      // Give RAF a chance to fire if it were running
-      await page.waitForTimeout(100);
-
-      const scrollYAfter = await page.evaluate(() => window.scrollY);
-      expect(scrollYAfter).toBe(scrollYBefore);
+      const animationFrameCalls = await page.evaluate(() => {
+        window.requestAnimationFrame = window.originalRequestAnimationFrame;
+        return window.animationFrameCalls;
+      });
+      expect(animationFrameCalls).toBe(0);
     });
   });
 

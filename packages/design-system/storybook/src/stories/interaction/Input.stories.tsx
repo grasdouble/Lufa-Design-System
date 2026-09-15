@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { Input } from '@grasdouble/lufa_design-system';
+import { FormField, Input } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 import { STORY_COLORS } from '../../constants/storyColors';
@@ -17,6 +17,7 @@ import { STORY_COLORS } from '../../constants/storyColors';
  * - ✅ Semantic token usage for borders and backgrounds
  * - ✅ Layout options: Full width or default
  * - ✅ Accessible focus rings
+ * - ✅ Accessible label, description, and error composition with `FormField`
  */
 const meta = {
   title: '6. Interaction/Input',
@@ -134,6 +135,36 @@ export const States: Story = {
       </StoryContainer>
     );
   },
+};
+
+export const AccessibleFormField: Story = {
+  name: 'Composition: FormField',
+  render: () => (
+    <StoryContainer>
+      <div style={{ maxWidth: '500px' }}>
+        <FormField
+          label="Email address"
+          description="Use the address associated with your account."
+          errorMessage="Enter a valid email address."
+          required
+        >
+          <Input type="email" defaultValue="invalid" />
+        </FormField>
+        <CodeBlock
+          code={`<FormField
+  label="Email address"
+  description="Use the address associated with your account."
+  errorMessage="Enter a valid email address."
+  required
+>
+  <Input type="email" />
+</FormField>`}
+          language="jsx"
+          title="JSX"
+        />
+      </div>
+    </StoryContainer>
+  ),
 };
 
 // ============================================

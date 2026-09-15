@@ -138,7 +138,7 @@ export const Playground: Story = {
             style={{
               padding: '16px',
               background: STORY_COLORS.primary.blue.main,
-              color: 'white',
+              color: STORY_COLORS.neutral.white,
               borderRadius: '8px',
               fontWeight: 600,
               textAlign: 'center',
@@ -150,7 +150,7 @@ export const Playground: Story = {
             style={{
               padding: '16px',
               background: STORY_COLORS.primary.violet.main,
-              color: 'white',
+              color: STORY_COLORS.neutral.white,
               borderRadius: '8px',
               fontWeight: 600,
               textAlign: 'center',
@@ -162,7 +162,7 @@ export const Playground: Story = {
             style={{
               padding: '16px',
               background: STORY_COLORS.primary.pink.main,
-              color: 'white',
+              color: STORY_COLORS.neutral.white,
               borderRadius: '8px',
               fontWeight: 600,
               textAlign: 'center',
@@ -208,7 +208,7 @@ export const PropDirection: Story = {
                     style={{
                       padding: '16px',
                       background: getColorByIndex(i - 1).main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '8px',
                       fontWeight: 600,
                       textAlign: 'center',
@@ -227,7 +227,7 @@ export const PropDirection: Story = {
                     style={{
                       padding: '16px',
                       background: getColorByIndex(i - 1).main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '8px',
                       fontWeight: 600,
                       textAlign: 'center',
@@ -291,7 +291,7 @@ export const PropSpacing: Story = {
                       style={{
                         padding: '12px',
                         background: color,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontSize: '13px',
                         fontWeight: 600,
@@ -348,7 +348,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.blue.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '40px',
@@ -362,7 +362,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.violet.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '60px',
@@ -376,7 +376,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.pink.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '50px',
@@ -442,7 +442,7 @@ export const PropJustify: Story = {
                           style={{
                             padding: '12px 16px',
                             background: color.main,
-                            color: 'white',
+                            color: STORY_COLORS.neutral.white,
                             borderRadius: '6px',
                             fontWeight: 600,
                             fontSize: '13px',
@@ -499,7 +499,7 @@ export const PropWrap: Story = {
                       style={{
                         padding: '12px 16px',
                         background: getColorByIndex(i - 1).main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         whiteSpace: 'nowrap',
@@ -522,7 +522,7 @@ export const PropWrap: Story = {
                       style={{
                         padding: '12px 16px',
                         background: getColorByIndex(i - 1).main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         whiteSpace: 'nowrap',
@@ -591,7 +591,7 @@ export const PropGrow: Story = {
                     style={{
                       padding: '8px 12px',
                       background: STORY_COLORS.primary.blue.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '6px',
                       fontWeight: 600,
                     }}
@@ -626,7 +626,7 @@ export const PropGrow: Story = {
                     style={{
                       padding: '8px 12px',
                       background: STORY_COLORS.primary.violet.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '6px',
                       fontWeight: 600,
                     }}
@@ -647,7 +647,7 @@ export const PropGrow: Story = {
                     style={{
                       padding: '8px 12px',
                       background: STORY_COLORS.primary.pink.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '6px',
                       fontWeight: 600,
                     }}
@@ -822,7 +822,7 @@ export const CombinedVariants: Story = {
                   style={{
                     padding: '24px',
                     background: getColorByIndex(i - 1).main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     borderRadius: '12px',
                     fontWeight: 600,
                     minWidth: '150px',
@@ -845,7 +845,7 @@ export const CombinedVariants: Story = {
                   borderRadius: '6px',
                   border: 'none',
                   background: STORY_COLORS.primary.blue.main,
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                   fontWeight: 600,
                   cursor: 'pointer',
                 }}

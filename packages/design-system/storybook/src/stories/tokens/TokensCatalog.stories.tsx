@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import tokensMetadata from '../../../../tokens/dist/tokens-metadata.json';
 import { StoryContainer } from '../../components/helpers';
+import { STORY_COLORS } from '../../constants/storyColors';
 
 /**
  * Tokens Catalog - Interactive Token Browser
@@ -76,7 +77,7 @@ function valueToString(value: unknown): string {
     // Handle shadow objects
     if ('offsetX' in value && 'offsetY' in value) {
       const shadow = value as ShadowValue;
-      return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur ?? '0'} ${shadow.spread ?? '0'} ${shadow.color ?? 'rgba(0,0,0,0.1)'}`;
+      return `${shadow.offsetX} ${shadow.offsetY} ${shadow.blur ?? '0'} ${shadow.spread ?? '0'} ${shadow.color ?? 'var(--lufa-semantic-ui-overlay-backdrop)'}`;
     }
     // Handle other objects
     return JSON.stringify(value);
@@ -151,7 +152,7 @@ const ColorPreview = ({ value }: { value: string }) => (
       height: '48px',
       backgroundColor: value,
       borderRadius: '4px',
-      border: '1px solid rgba(0, 0, 0, 0.1)',
+      border: `1px solid ${STORY_COLORS.themed.border.default}`,
     }}
   />
 );
@@ -163,11 +164,13 @@ const SpacingPreview = ({ value }: { value: string }) => (
       style={{
         width: value,
         height: '24px',
-        backgroundColor: '#3B82F6',
+        backgroundColor: STORY_COLORS.primary.blue.main,
         borderRadius: '2px',
       }}
     />
-    <span style={{ fontSize: '12px', color: '#6B7280', fontFamily: 'monospace' }}>{value}</span>
+    <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary, fontFamily: 'monospace' }}>
+      {value}
+    </span>
   </div>
 );
 
@@ -177,7 +180,7 @@ const ShadowPreview = ({ value }: { value: string }) => (
     style={{
       width: '100%',
       height: '48px',
-      backgroundColor: '#ffffff',
+      backgroundColor: STORY_COLORS.themed.background.surface,
       borderRadius: '4px',
       boxShadow: value,
     }}
@@ -197,14 +200,21 @@ const TypographyPreview = ({ value, type }: { value: string; type: string }) => 
   }
   if (type === 'lineHeight') {
     return (
-      <div style={{ fontSize: '12px', lineHeight: value, border: '1px solid #E5E7EB', padding: '4px' }}>
+      <div
+        style={{
+          fontSize: '12px',
+          lineHeight: value,
+          border: `1px solid ${STORY_COLORS.themed.border.default}`,
+          padding: '4px',
+        }}
+      >
         <div>Line 1</div>
         <div>Line 2</div>
         <div>Line 3</div>
       </div>
     );
   }
-  return <span style={{ fontSize: '12px', color: '#6B7280' }}>{value}</span>;
+  return <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary }}>{value}</span>;
 };
 
 // Border radius preview
@@ -213,7 +223,7 @@ const RadiusPreview = ({ value }: { value: string }) => (
     style={{
       width: '48px',
       height: '48px',
-      backgroundColor: '#3B82F6',
+      backgroundColor: STORY_COLORS.primary.blue.main,
       borderRadius: value,
     }}
   />
@@ -221,12 +231,12 @@ const RadiusPreview = ({ value }: { value: string }) => (
 
 // Dimension preview (for generic dimensions)
 const DimensionPreview = ({ value }: { value: string }) => (
-  <div style={{ fontSize: '12px', color: '#6B7280', fontFamily: 'monospace' }}>{value}</div>
+  <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary, fontFamily: 'monospace' }}>{value}</div>
 );
 
 // Duration/Easing preview
 const MotionPreview = ({ value, type }: { value: string; type: string }) => (
-  <div style={{ fontSize: '12px', color: '#6B7280', fontFamily: 'monospace' }}>
+  <div style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary, fontFamily: 'monospace' }}>
     {type === 'duration' ? `${value}` : value}
   </div>
 );
@@ -257,7 +267,11 @@ const TokenPreview = ({ token }: { token: TokenMetadata }) => {
     return <DimensionPreview value={value} />;
   }
 
-  return <span style={{ fontSize: '12px', color: '#6B7280', fontFamily: 'monospace' }}>{value}</span>;
+  return (
+    <span style={{ fontSize: '12px', color: STORY_COLORS.themed.text.secondary, fontFamily: 'monospace' }}>
+      {value}
+    </span>
+  );
 };
 
 // Copy to clipboard with toast
@@ -279,10 +293,10 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
   return (
     <div
       style={{
-        border: '1px solid #E5E7EB',
+        border: `1px solid ${STORY_COLORS.themed.border.default}`,
         borderRadius: '8px',
         padding: '16px',
-        backgroundColor: '#ffffff',
+        backgroundColor: STORY_COLORS.themed.background.surface,
         display: 'flex',
         flexDirection: 'column',
         gap: '12px',
@@ -303,45 +317,55 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
             fontSize: '13px',
             fontWeight: 600,
             fontFamily: 'monospace',
-            color: '#111827',
+            color: STORY_COLORS.themed.text.primary,
             marginBottom: '4px',
           }}
         >
           {token.name}
         </div>
-        <div
+        <button
+          type="button"
           style={{
             fontSize: '11px',
             fontFamily: 'monospace',
-            color: '#6B7280',
+            color: STORY_COLORS.themed.text.secondary,
             cursor: 'pointer',
-            display: 'inline-flex',
+            display: 'flex',
             alignItems: 'center',
             gap: '4px',
+            border: 0,
+            padding: 0,
+            background: 'transparent',
           }}
           onClick={() => onCopy(token.cssVar)}
           title="Click to copy"
         >
           {token.cssVar}
-          <span style={{ fontSize: '10px' }}>📋</span>
-        </div>
+          <span style={{ fontSize: '10px' }} aria-hidden="true">
+            📋
+          </span>
+        </button>
       </div>
 
       {/* Value */}
       <div>
-        <div style={{ fontSize: '11px', color: '#9CA3AF', marginBottom: '2px' }}>Value</div>
-        <div
+        <div style={{ fontSize: '11px', color: STORY_COLORS.themed.text.tertiary, marginBottom: '2px' }}>Value</div>
+        <button
+          type="button"
           style={{
             fontSize: '12px',
             fontFamily: 'monospace',
-            color: '#374151',
+            color: STORY_COLORS.themed.text.secondary,
             cursor: 'pointer',
+            border: 0,
+            padding: 0,
+            background: 'transparent',
           }}
           onClick={() => onCopy(token.value)}
           title="Click to copy"
         >
           {token.value}
-        </div>
+        </button>
       </div>
 
       {/* Metadata */}
@@ -351,8 +375,8 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
             fontSize: '10px',
             padding: '2px 6px',
             borderRadius: '4px',
-            backgroundColor: '#EFF6FF',
-            color: '#1E40AF',
+            backgroundColor: STORY_COLORS.primary.blue.light,
+            color: STORY_COLORS.primary.blue.foreground,
             fontWeight: 600,
           }}
         >
@@ -363,8 +387,8 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
             fontSize: '10px',
             padding: '2px 6px',
             borderRadius: '4px',
-            backgroundColor: '#F3F4F6',
-            color: '#4B5563',
+            backgroundColor: STORY_COLORS.neutral.backgroundLight,
+            color: STORY_COLORS.neutral.textDark,
           }}
         >
           {token.type}
@@ -375,8 +399,8 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
               fontSize: '10px',
               padding: '2px 6px',
               borderRadius: '4px',
-              backgroundColor: '#F3F4F6',
-              color: '#4B5563',
+              backgroundColor: STORY_COLORS.neutral.backgroundLight,
+              color: STORY_COLORS.neutral.textDark,
             }}
           >
             {token.category}
@@ -386,20 +410,26 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
 
       {/* Description */}
       {token.description && (
-        <div style={{ fontSize: '11px', color: '#6B7280', lineHeight: '1.4' }}>{token.description}</div>
+        <div style={{ fontSize: '11px', color: STORY_COLORS.themed.text.secondary, lineHeight: '1.4' }}>
+          {token.description}
+        </div>
       )}
 
       {/* Use Case */}
       {token.useCase && (
         <div>
-          <div style={{ fontSize: '10px', color: '#9CA3AF', marginBottom: '2px' }}>Use Case</div>
-          <div style={{ fontSize: '11px', color: '#6B7280', lineHeight: '1.4' }}>{token.useCase}</div>
+          <div style={{ fontSize: '10px', color: STORY_COLORS.themed.text.tertiary, marginBottom: '2px' }}>
+            Use Case
+          </div>
+          <div style={{ fontSize: '11px', color: STORY_COLORS.themed.text.secondary, lineHeight: '1.4' }}>
+            {token.useCase}
+          </div>
         </div>
       )}
 
       {/* WCAG Info */}
       {(token.wcagAALarge ?? token.wcagAAA) && (
-        <div style={{ fontSize: '10px', color: '#059669', fontWeight: 600 }}>
+        <div style={{ fontSize: '10px', color: STORY_COLORS.themed.text.success, fontWeight: 600 }}>
           ✓ WCAG {token.wcagAAA ? 'AAA' : 'AA Large'}
         </div>
       )}
@@ -410,17 +440,19 @@ const TokenCard = ({ token, onCopy }: { token: TokenMetadata; onCopy: (text: str
 // Toast notification
 const Toast = ({ message }: { message: string }) => (
   <div
+    role="status"
+    aria-live="polite"
     style={{
       position: 'fixed',
       bottom: '24px',
       right: '24px',
-      backgroundColor: '#111827',
-      color: '#ffffff',
+      backgroundColor: STORY_COLORS.neutral.black,
+      color: STORY_COLORS.neutral.white,
       padding: '12px 16px',
       borderRadius: '8px',
       fontSize: '14px',
       fontWeight: 500,
-      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      boxShadow: STORY_COLORS.themed.shadow.md,
       zIndex: 9999,
       display: 'flex',
       alignItems: 'center',
@@ -499,28 +531,40 @@ export const InteractiveCatalog: Story = {
     };
 
     return (
-      <div style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
+      <div style={{ backgroundColor: STORY_COLORS.themed.background.page, minHeight: '100vh' }}>
         <StoryContainer>
           {/* Header */}
           <div style={{ marginBottom: '32px' }}>
-            <h1 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '8px', color: '#111827' }}>Tokens Catalog</h1>
-            <p style={{ fontSize: '16px', color: '#6B7280', marginBottom: '16px' }}>
+            <h1
+              style={{
+                fontSize: '32px',
+                fontWeight: 700,
+                marginBottom: '8px',
+                color: STORY_COLORS.themed.text.primary,
+              }}
+            >
+              Tokens Catalog
+            </h1>
+            <p style={{ fontSize: '16px', color: STORY_COLORS.themed.text.secondary, marginBottom: '16px' }}>
               Browse and explore all {stats.total} design tokens in the Lufa Design System
             </p>
 
             {/* Stats */}
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <div style={{ fontSize: '14px', color: '#6B7280' }}>
-                <span style={{ fontWeight: 600, color: '#3B82F6' }}>{stats.primitive}</span> Primitive
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
+                <span style={{ fontWeight: 600, color: STORY_COLORS.primary.blue.main }}>{stats.primitive}</span>{' '}
+                Primitive
               </div>
-              <div style={{ fontSize: '14px', color: '#6B7280' }}>
-                <span style={{ fontWeight: 600, color: '#8B5CF6' }}>{stats.core}</span> Core
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
+                <span style={{ fontWeight: 600, color: STORY_COLORS.primary.violet.main }}>{stats.core}</span> Core
               </div>
-              <div style={{ fontSize: '14px', color: '#6B7280' }}>
-                <span style={{ fontWeight: 600, color: '#10B981' }}>{stats.semantic}</span> Semantic
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
+                <span style={{ fontWeight: 600, color: STORY_COLORS.primary.green.main }}>{stats.semantic}</span>{' '}
+                Semantic
               </div>
-              <div style={{ fontSize: '14px', color: '#6B7280' }}>
-                <span style={{ fontWeight: 600, color: '#F59E0B' }}>{stats.component}</span> Component
+              <div style={{ fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
+                <span style={{ fontWeight: 600, color: STORY_COLORS.primary.orange.main }}>{stats.component}</span>{' '}
+                Component
               </div>
             </div>
           </div>
@@ -528,8 +572,8 @@ export const InteractiveCatalog: Story = {
           {/* Search and Filters */}
           <div
             style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #E5E7EB',
+              backgroundColor: STORY_COLORS.themed.background.surface,
+              border: `1px solid ${STORY_COLORS.themed.border.default}`,
               borderRadius: '8px',
               padding: '24px',
               marginBottom: '32px',
@@ -539,6 +583,7 @@ export const InteractiveCatalog: Story = {
             <div style={{ marginBottom: '16px' }}>
               <input
                 type="text"
+                aria-label="Search design tokens"
                 placeholder="Search tokens by name, value, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -546,7 +591,7 @@ export const InteractiveCatalog: Story = {
                   width: '100%',
                   padding: '12px 16px',
                   fontSize: '14px',
-                  border: '1px solid #D1D5DB',
+                  border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
                   borderRadius: '6px',
                   outline: 'none',
                 }}
@@ -558,19 +603,27 @@ export const InteractiveCatalog: Story = {
               {/* Level Filter */}
               <div>
                 <label
-                  style={{ fontSize: '12px', fontWeight: 600, color: '#6B7280', display: 'block', marginBottom: '6px' }}
+                  htmlFor="token-level-filter"
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    color: STORY_COLORS.themed.text.secondary,
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}
                 >
                   Level
                 </label>
                 <select
+                  id="token-level-filter"
                   value={selectedLevel}
                   onChange={(e) => setSelectedLevel(e.target.value)}
                   style={{
                     padding: '8px 12px',
                     fontSize: '14px',
-                    border: '1px solid #D1D5DB',
+                    border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
                     borderRadius: '6px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: STORY_COLORS.themed.background.surface,
                     cursor: 'pointer',
                   }}
                 >
@@ -585,19 +638,27 @@ export const InteractiveCatalog: Story = {
               {/* Category Filter */}
               <div>
                 <label
-                  style={{ fontSize: '12px', fontWeight: 600, color: '#6B7280', display: 'block', marginBottom: '6px' }}
+                  htmlFor="token-category-filter"
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    color: STORY_COLORS.themed.text.secondary,
+                    display: 'block',
+                    marginBottom: '6px',
+                  }}
                 >
                   Category
                 </label>
                 <select
+                  id="token-category-filter"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   style={{
                     padding: '8px 12px',
                     fontSize: '14px',
-                    border: '1px solid #D1D5DB',
+                    border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
                     borderRadius: '6px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: STORY_COLORS.themed.background.surface,
                     cursor: 'pointer',
                   }}
                 >
@@ -614,6 +675,7 @@ export const InteractiveCatalog: Story = {
               {(searchQuery || selectedLevel !== 'all' || selectedCategory !== 'all') && (
                 <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <button
+                    type="button"
                     onClick={() => {
                       setSearchQuery('');
                       setSelectedLevel('all');
@@ -622,11 +684,11 @@ export const InteractiveCatalog: Story = {
                     style={{
                       padding: '8px 12px',
                       fontSize: '14px',
-                      border: '1px solid #D1D5DB',
+                      border: `1px solid ${STORY_COLORS.neutral.borderMedium}`,
                       borderRadius: '6px',
-                      backgroundColor: '#ffffff',
+                      backgroundColor: STORY_COLORS.themed.background.surface,
                       cursor: 'pointer',
-                      color: '#6B7280',
+                      color: STORY_COLORS.themed.text.secondary,
                     }}
                   >
                     Clear Filters
@@ -636,9 +698,9 @@ export const InteractiveCatalog: Story = {
             </div>
 
             {/* Results count */}
-            <div style={{ marginTop: '16px', fontSize: '14px', color: '#6B7280' }}>
-              Showing <span style={{ fontWeight: 600, color: '#111827' }}>{stats.filtered}</span> of {stats.total}{' '}
-              tokens
+            <div style={{ marginTop: '16px', fontSize: '14px', color: STORY_COLORS.themed.text.secondary }}>
+              Showing <span style={{ fontWeight: 600, color: STORY_COLORS.themed.text.primary }}>{stats.filtered}</span>{' '}
+              of {stats.total} tokens
             </div>
           </div>
 
@@ -661,7 +723,7 @@ export const InteractiveCatalog: Story = {
               style={{
                 textAlign: 'center',
                 padding: '64px 32px',
-                color: '#9CA3AF',
+                color: STORY_COLORS.themed.text.tertiary,
               }}
             >
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>

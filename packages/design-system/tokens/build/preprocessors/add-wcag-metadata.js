@@ -67,7 +67,7 @@ export function addWCAGMetadata(tokens) {
   let enrichedCount = 0;
 
   // For each color, calculate which other colors meet WCAG requirements
-  solidColors.forEach(({ value, token, name, path }) => {
+  solidColors.forEach(({ value, token }) => {
     // Generate WCAG metadata
     const wcagData = generateWCAGMetadata(value, solidColors);
 

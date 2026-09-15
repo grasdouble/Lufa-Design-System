@@ -98,7 +98,7 @@ test.describe('Visual Regression', () => {
       </div>
     );
 
-    await component.page().waitForTimeout(100);
+    await component.page().evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('label-all-variants.png');
   });
 });

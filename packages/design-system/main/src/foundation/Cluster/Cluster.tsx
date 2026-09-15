@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef, ElementType } from 'react';
 import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
+import type { SemanticSpacing } from '../../utils/component-values';
 import styles from './Cluster.module.css';
 
 /**
@@ -54,8 +55,6 @@ import styles from './Cluster.module.css';
  * Spacing values based on semantic tokens
  * Maps to: gap using --semantic-ui-spacing-{value}
  */
-type SpacingValue = 'tight' | 'compact' | 'default' | 'comfortable' | 'spacious';
-
 /**
  * Alignment of children on cross-axis
  * Maps to: align-items
@@ -84,7 +83,7 @@ export type ClusterProps<T extends ElementType = 'div'> = {
    * Spacing between children (uses gap property)
    * @default 'default'
    */
-  spacing?: SpacingValue;
+  spacing?: Exclude<SemanticSpacing, 'none'>;
 
   /**
    * Alignment of children on cross-axis
@@ -109,9 +108,6 @@ export type ClusterProps<T extends ElementType = 'div'> = {
    * Applies `flex: 1 1 auto`, `height: 100%`, `min-height: 0`, and `min-width: 0`.
    * Useful when Cluster is inside a height-constrained flex container.
    *
-   * **Note:** Cluster always uses `flex-wrap: wrap`. Using `grow` on a wrapping flex container
-   * is unsupported — it cannot reliably fill 100% height and may overflow its parent.
-   *
    * **Note:** When using the `as` prop with a custom component that also accepts a `grow` prop,
    * this component's `grow` is consumed here and will **not** be forwarded to the rendered element.
    * @default false
@@ -134,7 +130,10 @@ type ClusterComponentProps<T extends ElementType> = ClusterProps<T> &
 // ============================================
 
 /**
- * Cluster component with ref forwarding
+ * Cluster component with ref forwarding.
+ *
+ * Accessibility contract: choose a semantic `as` element for the collection.
+ * Cluster adds no role or keyboard behavior.
  */
 const ClusterImpl = <T extends ElementType = 'div'>(
   {
@@ -152,13 +151,6 @@ const ClusterImpl = <T extends ElementType = 'div'>(
   // Determine the element to render
   const Component = as ?? 'div';
 
-  if (import.meta.env.DEV && grow) {
-    console.warn(
-      '[Cluster] Using `grow` on Cluster is unsupported. ' +
-        'Cluster always uses `flex-wrap: wrap`, so a growing Cluster cannot reliably fill 100% height and may overflow its parent.'
-    );
-  }
-
   // Build className from utility props
   const clusterClassName = clsx(
     // Base flexbox display with wrap (always present)
@@ -173,7 +165,7 @@ const ClusterImpl = <T extends ElementType = 'div'>(
     // Justification utilities
     justify && styles[`justify-${justify}`],
 
-    // Grow utility
+    // Fill available space when requested
     grow && styles.grow,
 
     // Custom className

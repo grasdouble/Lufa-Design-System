@@ -26,6 +26,12 @@
   transform: translateY(-1px);
 }
 
+.trigger:focus-visible,
+.themeOption:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
 .trigger:active {
   transform: translateY(0);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -127,7 +133,7 @@
 .themeOption.active {
   background: var(--ifm-color-primary);
   border-color: var(--ifm-color-primary-dark);
-  color: #fff;
+  color: var(--lufa-docusaurus-primary-foreground, #ffffff);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -139,6 +145,11 @@
 .themeName {
   font-family: var(--ifm-heading-font-family, inherit);
   letter-spacing: 0.02em;
+}
+
+.selectedIndicator {
+  margin-left: auto;
+  font-weight: 700;
 }
 
 /* Responsive */
@@ -156,5 +167,21 @@
 
   .label {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .themeOption {
+    transition: none;
+  }
+
+  .trigger:hover,
+  .themeOption:hover {
+    transform: none;
+  }
+
+  .dropdown {
+    animation: none;
   }
 }

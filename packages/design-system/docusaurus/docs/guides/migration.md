@@ -126,9 +126,9 @@ Update dependencies and rebuild your project.
 
 For changes in earlier versions, please refer to:
 
-- [Design System Changelog](https://github.com/grasdouble/Lufa/blob/main/packages/design-system/main/CHANGELOG.md)
-- [Tokens Changelog](https://github.com/grasdouble/Lufa/blob/main/packages/design-system/tokens/CHANGELOG.md)
-- [Primitives Changelog](https://github.com/grasdouble/Lufa/blob/main/packages/design-system/primitives/CHANGELOG.md)
+- [Design System Changelog](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/main/CHANGELOG.md)
+- [Tokens Changelog](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/tokens/CHANGELOG.md)
+- [Themes Changelog](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/themes/CHANGELOG.md)
 
 ## Common Migration Scenarios
 
@@ -216,7 +216,7 @@ We plan to provide automated migration tools (codemods) for major version upgrad
 
 ```bash
 # Future: Automated migration script
-npx @grasdouble/lufa-migrate v0.x.x to v1.0.0
+pnpm dlx @grasdouble/lufa-migrate v0.x.x to v1.0.0
 ```
 
 These tools will:
@@ -286,9 +286,9 @@ pnpm add @grasdouble/lufa_design-system@0.5.0
 If you encounter migration issues:
 
 1. **Check Documentation**: Review [Changelog](../changelog.md) and [Contributing Guide](./contributing.md)
-2. **Search Issues**: Look for existing [GitHub Issues](https://github.com/grasdouble/Lufa/issues)
-3. **Ask Questions**: Open a [Discussion](https://github.com/grasdouble/Lufa/discussions)
-4. **Report Bugs**: If you find migration bugs, [open an issue](https://github.com/grasdouble/Lufa/issues/new)
+2. **Search Issues**: Look for existing [GitHub Issues](https://github.com/grasdouble/Lufa-Design-System/issues)
+3. **Ask Questions**: Open a [Discussion](https://github.com/grasdouble/Lufa-Design-System/discussions)
+4. **Report Bugs**: If you find migration bugs, [open an issue](https://github.com/grasdouble/Lufa-Design-System/issues/new)
 
 ## Migration Checklist
 
@@ -310,8 +310,8 @@ Use this checklist when upgrading:
 
 Help us improve these migration guides:
 
-1. If you find a breaking change not documented, [open an issue](https://github.com/grasdouble/Lufa/issues/new)
-2. Share your migration experience in [Discussions](https://github.com/grasdouble/Lufa/discussions)
+1. If you find a breaking change not documented, [open an issue](https://github.com/grasdouble/Lufa-Design-System/issues/new)
+2. Share your migration experience in [Discussions](https://github.com/grasdouble/Lufa-Design-System/discussions)
 3. Submit PRs to improve migration instructions
 
 ## Related Resources
@@ -319,4 +319,4 @@ Help us improve these migration guides:
 - [Changelog](../changelog.md) - Version history and release notes
 - [Contributing Guide](./contributing.md) - How to contribute changes
 - [Semantic Versioning](https://semver.org/) - Version numbering explained
-- [GitHub Releases](https://github.com/grasdouble/Lufa/releases) - Detailed release notes
+- [GitHub Releases](https://github.com/grasdouble/Lufa-Design-System/releases) - Detailed release notes

@@ -98,7 +98,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
         backgroundColor: 'var(--lufa-semantic-ui-background-surface-default)',
         minWidth: '280px',
         flex: '1 1 280px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
       }}
     >
       {/* Visual Preview (for colors) */}
@@ -111,7 +111,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
               computedValue.startsWith('#') || computedValue.startsWith('rgb') ? computedValue : `var(${cssVariable})`,
             borderRadius: '6px',
             border: '1px solid var(--lufa-semantic-ui-border-default)',
-            boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
+            boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
           }}
         />
       )}

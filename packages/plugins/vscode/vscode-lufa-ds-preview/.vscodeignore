@@ -12,21 +12,16 @@ vitest.config.ts
 
 # Dependencies
 node_modules/**
-!node_modules/@grasdouble/
-node_modules/@grasdouble/**
-!node_modules/@grasdouble/lufa_design-system-primitives/
-!node_modules/@grasdouble/lufa_design-system-primitives/package.json
-!node_modules/@grasdouble/lufa_design-system-primitives/dist/**
-!node_modules/@grasdouble/lufa_design-system-tokens/
-!node_modules/@grasdouble/lufa_design-system-tokens/package.json
-!node_modules/@grasdouble/lufa_design-system-tokens/dist/**
 
 # Config files
+.prettierignore
 .prettierrc
 .eslintrc*
 eslint.config.mjs
 prettier.config.mjs
 esbuild.mjs
+esbuild-options.mjs
+tsconfig*.json
 
 # Scripts
 scripts/
@@ -40,5 +35,3 @@ scripts/
 .DS_Store
 coverage/
 *.vsix
-*.bak
-package.json.bak

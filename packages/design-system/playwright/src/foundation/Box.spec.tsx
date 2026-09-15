@@ -1056,8 +1056,7 @@ test.describe('Box Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('box-all-variants.png');
     });

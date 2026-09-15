@@ -3,11 +3,21 @@ import lufaReactConfig from '@grasdouble/lufa_config_eslint/react.mjs';
 export default [
   ...lufaReactConfig,
   {
+    files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,
       },
+    },
+  },
+  {
+    files: ['src/**/*.harness.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
     },
   },
   {
@@ -18,7 +28,9 @@ export default [
       'playwright/index.tsx',
       'test-results/**',
       '__snapshots__/**',
+      'eslint.config.mjs',
       '*.config.ts', // Ignore vite config files
+      '**/*.config.mjs',
     ],
   },
   {

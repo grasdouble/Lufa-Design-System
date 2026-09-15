@@ -32,7 +32,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'grasdouble', // Usually your GitHub org/user name.
-  projectName: 'Lufa', // Usually your repo name.
+  projectName: 'Lufa-Design-System',
 
   onBrokenLinks: 'throw',
 
@@ -89,7 +89,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/grasdouble/Lufa/tree/main/packages/design-system/docusaurus/',
+          editUrl: 'https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/docusaurus/',
           sidebarCollapsible: true,
           sidebarCollapsed: false,
           // Future: Enable versioning when reaching v1.0.0
@@ -134,7 +134,6 @@ const config: Config = {
   plugins: [resolve(configDir, './plugins/rspack-disable-minimizers.js')],
 
   themeConfig: {
-    // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
       defaultMode: 'light',
@@ -162,7 +161,7 @@ const config: Config = {
           dropdownActiveClassDisabled: true,
         },
         {
-          href: 'https://github.com/grasdouble/Lufa',
+          href: 'https://github.com/grasdouble/Lufa-Design-System',
           label: 'GitHub',
           position: 'right',
         },
@@ -210,7 +209,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/grasdouble/Lufa',
+              href: 'https://github.com/grasdouble/Lufa-Design-System',
             },
             {
               label: 'Contributing',

@@ -9,18 +9,18 @@
 
 ## 📋 Quick Navigation
 
-| Document                                                               | Purpose                                  | Audience                 | Est. Reading Time |
-| ---------------------------------------------------------------------- | ---------------------------------------- | ------------------------ | ----------------- |
-| **[Project Overview](./overview.md)**                                  | High-level introduction, getting started | Everyone                 | 15 min            |
-| **[Development Policies](./development-policies.md)** ⭐               | Policies for current refactoring phase   | Developers, AI Agents    | 10 min            |
-| **[Architecture](./architecture.md)**                                  | System design, decisions, principles     | Architects, Developers   | 45 min            |
-| **[Development Guide](./development-guide.md)**                        | Setup, workflows, troubleshooting        | Developers, Contributors | 30 min            |
-| **[Token Architecture](../tokens/_docs/token-architecture.md)**        | 4-level token system details             | Designers, Developers    | 20 min            |
-| **[Build Configuration](./build-configuration.md)**                    | Vite, Style Dictionary, Playwright       | DevOps, Build Engineers  | 25 min            |
-| **[Source Tree Analysis](./source-tree.md)**                           | Directory structure, entry points        | Developers, Onboarding   | 20 min            |
-| **[Component Inventory](../main/_docs/component-inventory.md)**        | Component catalog with props             | Developers, Designers    | 15 min            |
-| **[Testing Strategy](../playwright/_docs/testing-strategy.md)**        | Playwright CT, 5-part structure          | QA, Developers           | 15 min            |
-| **[Documentation Patterns](../storybook/_docs/storybook-patterns.md)** | Storybook CSF3 patterns                  | Docs Writers, Developers | 30 min            |
+| Document                                                        | Purpose                                  | Audience                 | Est. Reading Time |
+| --------------------------------------------------------------- | ---------------------------------------- | ------------------------ | ----------------- |
+| **[Project Overview](./overview.md)**                           | High-level introduction, getting started | Everyone                 | 15 min            |
+| **[Development Policies](./development-policies.md)** ⭐        | Policies for current refactoring phase   | Developers, AI Agents    | 10 min            |
+| **[Architecture](./architecture.md)**                           | System design, decisions, principles     | Architects, Developers   | 45 min            |
+| **[Development Guide](./development-guide.md)**                 | Setup, workflows, troubleshooting        | Developers, Contributors | 30 min            |
+| **[Token Architecture](../tokens/_docs/token-architecture.md)** | 4-level token system details             | Designers, Developers    | 20 min            |
+| **[Build Configuration](./build-configuration.md)**             | Vite, Style Dictionary, Playwright       | DevOps, Build Engineers  | 25 min            |
+| **[Source Tree Analysis](./source-tree.md)**                    | Directory structure, entry points        | Developers, Onboarding   | 20 min            |
+| **[Component Inventory](../main/_docs/component-inventory.md)** | Component catalog with props             | Developers, Designers    | 15 min            |
+| **[Testing Guide](../docusaurus/docs/guides/testing.md)**       | Playwright CT, accessibility, snapshots  | QA, Developers           | 15 min            |
+| **[Story Writing Guide](../storybook/_docs/story-guide.md)**    | Storybook CSF3 and accessibility         | Docs Writers, Developers | 15 min            |
 
 ---
 
@@ -116,11 +116,10 @@ pnpm ds:storybook:dev  # Visit localhost:6006
   - Usage examples
   - Composition patterns
 
-- **[Documentation Patterns](../storybook/_docs/storybook-patterns.md)** - Storybook guide
-  - CSF3 format
-  - 46+ story examples
-  - Helper components (PropCard, CodeBlock)
-  - Data-driven rendering patterns
+- **[Story Writing Guide](../storybook/_docs/story-guide.md)** - Canonical Storybook guide
+  - CSF3 format and naming
+  - Token-backed colors
+  - Helper components and accessibility checklist
 
 </details>
 
@@ -147,7 +146,7 @@ pnpm ds:storybook:dev  # Visit localhost:6006
 <details>
 <summary><strong>Testing & Quality</strong></summary>
 
-- **[Testing Strategy](../playwright/_docs/testing-strategy.md)** - Test design
+- **[Testing Guide](../docusaurus/docs/guides/testing.md)** - Test design
   - Playwright Component Testing
   - 5-part test structure
   - 554 test cases
@@ -168,8 +167,8 @@ pnpm ds:storybook:dev  # Visit localhost:6006
 
 1. **[Development Guide > Common Workflows](./development-guide.md#common-workflows)** - Development servers
 2. **[Architecture > Extension Points > Adding New Components](./architecture.md#adding-new-components)** - Step-by-step process
-3. **[Documentation Patterns](../storybook/_docs/storybook-patterns.md)** - Storybook story patterns
-4. **[Testing Strategy](../playwright/_docs/testing-strategy.md)** - Test structure
+3. **[Story Writing Guide](../storybook/_docs/story-guide.md)** - Storybook story patterns
+4. **[Testing Guide](../docusaurus/docs/guides/testing.md)** - Test structure
 
 **Workflow summary:**
 
@@ -220,7 +219,7 @@ pnpm ds:storybook:dev  # Visit localhost:6006
 
 **Read these sections:**
 
-1. **[Testing Strategy > Visual Regression](../playwright/_docs/testing-strategy.md#visual-regression-strategy)** - Snapshot management
+1. **[Testing Guide > Visual Regression](../docusaurus/docs/guides/testing.md#visual-regression)** - Snapshot management
 2. **[Development Guide > Testing > Updating Visual Snapshots](./development-guide.md#updating-visual-snapshots)** - Commands
 
 **Commands:**
@@ -280,8 +279,8 @@ All files generated on **2026-01-24** by BMM Document Project Workflow (Deep Sca
 5. ✅ `build-configuration.md` (8,000+ words)
 6. ✅ `source-tree.md` (7,000+ words)
 7. ✅ `main/_docs/component-inventory.md` (4,000+ words)
-8. ✅ `playwright/_docs/testing-strategy.md` (4,000+ words)
-9. ✅ `storybook/_docs/storybook-patterns.md` (10,000+ words)
+8. `docusaurus/docs/guides/testing.md`
+9. `storybook/_docs/story-guide.md`
 10. ✅ `index.md` (this file)
 
 ### Maintenance
@@ -361,7 +360,7 @@ git commit -m "chore: add changeset"
 2. Read: [Development Guide > Setup](./development-guide.md#initial-setup) (15 min)
 3. Read: [Component Inventory > Box](../main/_docs/component-inventory.md#box-layout-primitive) (10 min)
 4. Practice: Build a simple component using Box + Text
-5. Read: [Testing Strategy](../playwright/_docs/testing-strategy.md) (15 min)
+5. Read: [Testing Guide](../docusaurus/docs/guides/testing.md) (15 min)
 6. Practice: Write tests for your component
 
 **Time:** 2-3 hours (including practice)
@@ -373,7 +372,7 @@ git commit -m "chore: add changeset"
 1. Complete Path 1
 2. Read: [Token Architecture](../tokens/_docs/token-architecture.md) (20 min)
 3. Read: [Architecture > Component Architecture](./architecture.md#component-architecture) (20 min)
-4. Read: [Documentation Patterns](../storybook/_docs/storybook-patterns.md) (30 min)
+4. Read: [Story Writing Guide](../storybook/_docs/story-guide.md) (15 min)
 5. Practice: Build Button-like component with variants
 6. Practice: Write comprehensive Storybook story
 

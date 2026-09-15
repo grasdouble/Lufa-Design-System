@@ -1,8 +1,8 @@
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import type { WorkspaceFolder } from 'vscode';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { createValuesMapStore } from '../values-map-store';
+import { createValuesMapStore, isPathInsideWorkspace } from '../values-map-store';
 
 const vscodeMocks = vi.hoisted(() => {
   const state = {
@@ -43,6 +43,7 @@ vi.mock('vscode', () => ({
 vi.mock('node:fs', () => ({
   existsSync: vi.fn(),
   readFileSync: vi.fn(),
+  realpathSync: vi.fn(),
   statSync: vi.fn(),
 }));
 
@@ -63,6 +64,8 @@ describe('createValuesMapStore', () => {
   beforeEach(() => {
     vi.mocked(existsSync).mockReset();
     vi.mocked(readFileSync).mockReset();
+    vi.mocked(realpathSync).mockReset();
+    vi.mocked(realpathSync).mockImplementation((path) => path);
     vi.mocked(statSync).mockReset();
     vscodeMocks.getConfiguration.mockClear();
 
@@ -116,5 +119,54 @@ describe('createValuesMapStore', () => {
     };
 
     expect(store.isDebugEnabled()).toBe(true);
+  });
+});
+
+describe('isPathInsideWorkspace', () => {
+  it('should reject a sibling path that shares the workspace prefix', () => {
+    expect(isPathInsideWorkspace('/repo-other/tokens.json', '/repo')).toBe(false);
+  });
+
+  it('should accept the workspace root and nested paths', () => {
+    expect(isPathInsideWorkspace('/repo', '/repo')).toBe(true);
+    expect(isPathInsideWorkspace('/repo/maps/tokens.json', '/repo')).toBe(true);
+  });
+
+  it('should reject paths that traverse outside the workspace', () => {
+    expect(isPathInsideWorkspace('/outside/tokens.json', '/repo')).toBe(false);
+  });
+});
+
+describe('configured path canonicalization', () => {
+  it('should accept an existing workspace path with different filesystem casing', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+
+    vscodeMocks.state.workspaceFolders.push({ uri: { fsPath: '/Users/repo' } } as WorkspaceFolder);
+    vscodeMocks.state.configState.flatConfig = {
+      tokensMapPath: '/users/repo/tokens.json',
+    };
+    vi.mocked(realpathSync).mockImplementation((path) => String(path).replace('/users/repo', '/Users/repo'));
+    vi.mocked(statSync).mockReturnValue({ mtimeMs: 1 } as ReturnType<typeof statSync>);
+    vi.mocked(readFileSync).mockReturnValue(JSON.stringify(tokensMap));
+
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    expect(logOnce).not.toHaveBeenCalledWith(expect.stringContaining('outside workspace'));
+  });
+
+  it('should reject a workspace symlink that resolves outside the workspace', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+    vi.mocked(readFileSync).mockClear();
+
+    vscodeMocks.state.workspaceFolders.push({ uri: { fsPath: '/repo' } } as WorkspaceFolder);
+    vscodeMocks.state.configState.flatConfig = {
+      tokensMapPath: '/repo/link/tokens.json',
+    };
+    vi.mocked(realpathSync).mockImplementation((path) => String(path).replace('/repo/link', '/outside'));
+
+    expect(store.loadValuesMap()).toBeNull();
+    expect(readFileSync).not.toHaveBeenCalled();
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('outside workspace'));
   });
 });

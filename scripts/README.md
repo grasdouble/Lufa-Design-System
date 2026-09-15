@@ -88,7 +88,7 @@ The script runs automatically via GitHub Actions:
 - Can be triggered manually via workflow_dispatch
 - **Blocking**: PRs with token validation errors cannot be merged
 
-See [.github/workflows/validate-tokens.yml](../.github/workflows/validate-tokens.yml)
+See [.github/workflows/ds-tools-packages-ci.yml](../.github/workflows/ds-tools-packages-ci.yml)
 
 **GitHub Actions Bot**:
 

@@ -1,0 +1,109 @@
+---
+id: use-scroll-spy
+title: useScrollSpy
+sidebar_label: useScrollSpy
+description: Track the active page section and coordinate programmatic scrolling.
+---
+
+# useScrollSpy
+
+`useScrollSpy` observes section elements by ID and returns controlled state plus a `scrollTo` helper. It is designed to pair with [`DotNav`](/docs/navigation/dot-nav), but can drive any section navigation.
+
+## Basic usage
+
+```tsx
+import { DotNav, useScrollSpy } from '@grasdouble/lufa_design-system';
+
+const ids = ['overview', 'details', 'examples'] as const;
+
+export function DocumentationPage() {
+  const { activeId, scrollTo } = useScrollSpy({ ids });
+
+  return (
+    <>
+      <DotNav
+        sections={[
+          { id: 'overview', label: 'Overview' },
+          { id: 'details', label: 'Details' },
+          { id: 'examples', label: 'Examples' },
+        ]}
+        activeId={activeId}
+        onSelect={scrollTo}
+      />
+      <section id="overview">...</section>
+      <section id="details">...</section>
+      <section id="examples">...</section>
+    </>
+  );
+}
+```
+
+Render the target elements before the effect runs and keep the IDs in document order.
+
+## Options
+
+| Option           | Type                             | Default                | Description                                             |
+| ---------------- | -------------------------------- | ---------------------- | ------------------------------------------------------- |
+| `ids`            | `readonly string[]`              | —                      | Element IDs to observe, in document order.              |
+| `rootMargin`     | `string`                         | `'-45% 0px -45% 0px'`  | Intersection Observer active zone.                      |
+| `onScroll`       | `(element: HTMLElement) => void` | built-in window scroll | Custom scrolling strategy, such as an overflow element. |
+| `scrollDuration` | `number`                         | `650`                  | Built-in animation duration in milliseconds.            |
+
+Negative, non-finite, and zero durations produce an immediate jump. The built-in animation also jumps immediately when `prefers-reduced-motion: reduce` is active.
+
+## Return value
+
+| Value         | Type                    | Description                                                          |
+| ------------- | ----------------------- | -------------------------------------------------------------------- |
+| `activeId`    | `string`                | Current observed section; initially the first ID or an empty string. |
+| `setActiveId` | `(id: string) => void`  | Manually overrides the active section.                               |
+| `lockFor`     | `(ms?: number) => void` | Temporarily ignores observer updates; defaults to 700 ms.            |
+| `scrollTo`    | `(id: string) => void`  | Activates and scrolls to an existing target element.                 |
+
+Calling `scrollTo` with an unknown ID has no effect.
+
+## Custom scroll containers
+
+Provide `onScroll` when the target sections live inside an overflow container:
+
+```tsx
+const containerRef = React.useRef<HTMLDivElement>(null);
+
+const { activeId, scrollTo } = useScrollSpy({
+  ids,
+  scrollDuration: 300,
+  onScroll: (element) => {
+    containerRef.current?.scrollTo({
+      top: element.offsetTop,
+      behavior: 'smooth',
+    });
+  },
+});
+```
+
+The hook still updates `activeId` immediately and locks observation for the configured duration. Your callback is responsible for respecting reduced-motion preferences when it adds custom animation.
+
+## Observer tuning
+
+`rootMargin` defines the viewport band that marks a section active. The default leaves a narrow band around the viewport center:
+
+```tsx
+const spy = useScrollSpy({
+  ids,
+  rootMargin: '-35% 0px -55% 0px',
+});
+```
+
+Use a less negative top margin when headings should activate earlier.
+
+## Lifecycle and accessibility
+
+- Observers, timers, and animation frames are cleaned up on unmount.
+- A newer `scrollTo` call cancels the in-flight built-in animation.
+- Horizontal scroll position is preserved.
+- The hook does not render semantics; use it with a named navigation landmark such as `DotNav`.
+- Section IDs must be unique and stable.
+
+## Related API
+
+- [`DotNav`](/docs/navigation/dot-nav) — accessible section navigation UI

@@ -4,14 +4,6 @@ name: DS:Tools:Docusaurus:Update Changelog Documentation
 # Documentation: packages/design-system/docusaurus/scripts/README.md
 
 on:
-  # NOTE: /!\ Disabled for now because current solution will generate too many files in the repo after multiple releases.
-  # Trigger when the changeset release workflow runs
-  # workflow_run:
-  #   workflows: ['Release:Changesets']
-  #   types:
-  #     - completed
-
-  # Allow manual trigger
   workflow_dispatch:
 
 permissions:
@@ -21,12 +13,9 @@ permissions:
 jobs:
   update-changelog-docs:
     runs-on: ubuntu-latest
-    # Only run if release workflow succeeded or triggered manually
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
-
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
           ref: main
@@ -92,7 +81,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.check_changes.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'docs(changelog): update changelog documentation from package CHANGELOG'

@@ -4,8 +4,10 @@
 
 Installed Storybook addons:
 
-- **@storybook/addon-themes** - Theme switcher
+- **@storybook/addon-a11y** - WCAG 2 A/AA checks in the accessibility panel
 - **@storybook/addon-docs** - Documentation with MDX
+
+The custom theme and mode toolbar remains responsible for visual theme switching.
 
 ## Deployment
 
@@ -16,22 +18,14 @@ Storybook is automatically deployed on pull requests and merges to main.
 ```
 storybook/
 ├── src/
-│   ├── stories/              # Story files
-│   │   ├── primitives/       # Primitive components (Box, etc.)
-│   │   └── components/       # Complex components
+│   ├── stories/              # Stories grouped by design-system category
 │   ├── components/
-│   │   └── helpers/          # Helper components for stories
-│   │       ├── StoryContainer.tsx
-│   │       ├── PropCard.tsx
-│   │       ├── CodeBlock.tsx
-│   │       ├── MarginVisualizer.tsx
-│   │       └── README.md     # Helper documentation
+│   │   └── helpers/          # Shared story-only components
 │   └── constants/
-│       └── storyColors.ts    # Standardized story colors
+│       └── storyColors.ts    # Token-backed story colors
 ├── _docs/
-│   ├── story-guide.md        # Complete guide (start here)
-│   ├── story-rules.md        # Rules and standards
-│   ├── story-template.md     # Copy-paste templates
+│   ├── story-guide.md        # Canonical authoring guide
+│   └── operational-notes.md  # Addons and deployment
 ├── CHANGELOG.md              # Managed by changeset
 └── README.md                 # This file
 ```
@@ -47,4 +41,4 @@ Before submitting a story:
 - [ ] Follows naming conventions
 - [ ] TypeScript compiles without errors
 
-**Full checklist:** See [Story Guide](./story-guide.md#story-writing-checklist)
+**Full checklist:** See the [Story Writing Guide](./story-guide.md#review-checklist).

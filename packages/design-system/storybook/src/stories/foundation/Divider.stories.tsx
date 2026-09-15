@@ -927,7 +927,7 @@ export const UseCases: Story = {
                   style={{
                     padding: '6px 12px',
                     background: STORY_COLORS.primary.blue.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     border: 'none',
                     borderRadius: '4px',
                     cursor: 'pointer',
