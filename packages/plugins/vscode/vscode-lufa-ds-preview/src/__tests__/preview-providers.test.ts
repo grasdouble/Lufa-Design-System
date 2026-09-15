@@ -92,6 +92,20 @@ const createMap = () => ({
 });
 
 describe('createDocumentColorProvider', () => {
+  it('should return no colors or presentations when the map is unavailable', () => {
+    const provider = createDocumentColorProvider({
+      loadValuesMap: () => null,
+      isDebugEnabled: () => false,
+      getOutputChannel: () => null,
+    });
+    const document = {
+      getText: () => 'var(--lufa-core-color-brand-500)',
+    };
+
+    expect(provider.provideDocumentColors(document as never)).toEqual([]);
+    expect(provider.provideColorPresentations?.({} as never, {} as never)).toEqual([]);
+  });
+
   it('should return colors for CSS vars and token paths', () => {
     const provider = createDocumentColorProvider({
       loadValuesMap: () => createMap(),
@@ -151,6 +165,33 @@ describe('createDocumentColorProvider', () => {
     expect(colors).toEqual([]);
     expect(appendLine).toHaveBeenCalledWith(expect.stringContaining('Skipping color scan'));
   });
+
+  it('should log unresolved and invalid color references in debug mode', () => {
+    const appendLine = vi.fn();
+    const provider = createDocumentColorProvider({
+      loadValuesMap: () => ({
+        version: 1,
+        css: {
+          '--lufa-core-color-invalid': 'not-a-color',
+        },
+        paths: {},
+      }),
+      isDebugEnabled: () => true,
+      getOutputChannel: () => ({ appendLine }) as never,
+    });
+    const document = {
+      fileName: 'invalid.css',
+      languageId: 'css',
+      getText: () =>
+        'color: var(--lufa-core-color-missing); background: var(--lufa-core-color-invalid); tokens.color.missing;',
+      positionAt: (offset: number) => ({ line: 0, character: offset }),
+    };
+
+    expect(provider.provideDocumentColors(document as never)).toEqual([]);
+    expect(appendLine).toHaveBeenCalledWith(expect.stringContaining('CSS var not found'));
+    expect(appendLine).toHaveBeenCalledWith(expect.stringContaining('Failed to parse color'));
+    expect(appendLine).toHaveBeenCalledWith(expect.stringContaining('Color path not found'));
+  });
 });
 
 describe('createHoverProvider', () => {
@@ -169,9 +210,50 @@ describe('createHoverProvider', () => {
 
     expect(hover).toBeTruthy();
   });
+
+  it('should return no hover when the range or token value is missing', () => {
+    const provider = createHoverProvider({
+      loadValuesMap: () => createMap(),
+    });
+
+    expect(
+      provider.provideHover(
+        {
+          getWordRangeAtPosition: () => undefined,
+        } as never,
+        {} as never
+      )
+    ).toBeUndefined();
+
+    expect(
+      provider.provideHover(
+        {
+          getWordRangeAtPosition: () => ({ start: {}, end: {} }),
+          getText: () => 'tokens.color.missing',
+        } as never,
+        {} as never
+      )
+    ).toBeUndefined();
+  });
 });
 
 describe('createCompletionProvider', () => {
+  it('should return no completions when the map or completion context is missing', () => {
+    const noMapProvider = createCompletionProvider({
+      loadValuesMap: () => null,
+    });
+    const noMatchProvider = createCompletionProvider({
+      loadValuesMap: () => createMap(),
+    });
+    const document = {
+      lineAt: () => ({ text: 'const value = plainText' }),
+    };
+    const position = { line: 0, character: 23 };
+
+    expect(noMapProvider.provideCompletionItems(document as never, position as never)).toBeUndefined();
+    expect(noMatchProvider.provideCompletionItems(document as never, position as never)).toBeUndefined();
+  });
+
   it('should provide completion details for css vars', () => {
     const provider = createCompletionProvider({
       loadValuesMap: () => createMap(),
@@ -212,6 +294,55 @@ describe('createCompletionProvider', () => {
     );
 
     expect(match?.detail).toBe('0.5rem');
+  });
+
+  it('should respect double-quote preference and preserve non-color completion kinds', () => {
+    const provider = createCompletionProvider({
+      loadValuesMap: () => createMap(),
+    });
+    const text = 'const gap = tokens.spacing["';
+    const document = {
+      lineAt: () => ({ text }),
+    };
+
+    const items = provider.provideCompletionItems(
+      document as never,
+      {
+        line: 0,
+        character: text.length,
+      } as never
+    );
+    const match = (items as { label: string; detail?: string; kind?: number }[]).find(
+      (item) => item.label === 'tokens.spacing["sm-md"]'
+    );
+
+    expect(match).toMatchObject({
+      detail: '0.5rem',
+      kind: CompletionItemKind.Constant,
+    });
+  });
+
+  it('should cap large completion result sets', () => {
+    const css = Object.fromEntries(
+      Array.from({ length: 205 }, (_, index) => [`--lufa-core-color-${index}`, 'rgb(255 0 0)'])
+    );
+    const provider = createCompletionProvider({
+      loadValuesMap: () => ({ version: 1, css, paths: {} }),
+    });
+    const text = '--lufa-core-color-';
+    const document = {
+      lineAt: () => ({ text }),
+    };
+
+    const items = provider.provideCompletionItems(
+      document as never,
+      {
+        line: 0,
+        character: text.length,
+      } as never
+    );
+
+    expect(items).toHaveLength(200);
   });
 
   it('should inspect only the current line for completion context', () => {

@@ -68,6 +68,7 @@ describe('createValuesMapStore', () => {
     vi.mocked(realpathSync).mockImplementation((path) => path);
     vi.mocked(statSync).mockReset();
     vscodeMocks.getConfiguration.mockClear();
+    vscodeMocks.createFileSystemWatcher.mockReset();
 
     vscodeMocks.state.workspaceFolders.length = 0;
     vscodeMocks.state.configState.objectConfig = undefined;
@@ -119,6 +120,106 @@ describe('createValuesMapStore', () => {
     };
 
     expect(store.isDebugEnabled()).toBe(true);
+  });
+
+  it('should reuse a cached map until the cache is reset', () => {
+    const store = createValuesMapStore(vi.fn());
+    vscodeMocks.state.workspaceFolders.push({ uri: { fsPath: '/repo' } } as WorkspaceFolder);
+    vscodeMocks.state.configState.flatConfig = { tokensMapPath: 'tokens.json' };
+    vi.mocked(statSync).mockReturnValue({ mtimeMs: 1 } as ReturnType<typeof statSync>);
+    vi.mocked(readFileSync).mockReturnValue(JSON.stringify(tokensMap));
+
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    expect(readFileSync).toHaveBeenCalledTimes(1);
+
+    store.resetAllCache();
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    expect(readFileSync).toHaveBeenCalledTimes(2);
+  });
+
+  it('should report invalid and unreadable token maps', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+    vscodeMocks.state.workspaceFolders.push({ uri: { fsPath: '/repo' } } as WorkspaceFolder);
+    vscodeMocks.state.configState.flatConfig = { tokensMapPath: 'tokens.json' };
+    vi.mocked(statSync).mockReturnValue({ mtimeMs: 1 } as ReturnType<typeof statSync>);
+    vi.mocked(readFileSync).mockReturnValueOnce('{}').mockReturnValueOnce('{');
+
+    expect(store.loadValuesMap()).toBeNull();
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('Invalid tokens map structure'));
+
+    store.resetAllCache();
+    expect(store.loadValuesMap()).toBeNull();
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('Error loading tokens map'));
+  });
+
+  it('should fall back to the packaged map when a configured map is missing', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+    const packagedPath = '/extension/dist/maps/tokens.map.json';
+    vscodeMocks.state.workspaceFolders.push({ uri: { fsPath: '/repo' } } as WorkspaceFolder);
+    vscodeMocks.state.configState.flatConfig = { tokensMapPath: 'custom.json' };
+    vi.mocked(existsSync).mockImplementation((path) => path === packagedPath);
+    vi.mocked(statSync).mockImplementation((path) => {
+      if (path === '/repo/custom.json') {
+        throw Object.assign(new Error('missing'), { code: 'ENOENT' });
+      }
+      return { mtimeMs: 2 } as ReturnType<typeof statSync>;
+    });
+    vi.mocked(readFileSync).mockReturnValue(JSON.stringify(tokensMap));
+    store.setExtensionRootPath('/extension');
+
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('Tokens map not found'));
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('Falling back to packaged tokens map'));
+  });
+
+  it('should invalidate cached maps on watcher changes and dispose watcher resources', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+    const callbacks: { change?: () => void; delete?: () => void } = {};
+    const watcher = {
+      onDidChange: vi.fn((callback: () => void) => {
+        callbacks.change = callback;
+      }),
+      onDidCreate: vi.fn(),
+      onDidDelete: vi.fn((callback: () => void) => {
+        callbacks.delete = callback;
+      }),
+      dispose: vi.fn(),
+    };
+    vscodeMocks.createFileSystemWatcher.mockReturnValue(watcher);
+    vi.mocked(existsSync).mockReturnValue(true);
+    vi.mocked(statSync).mockReturnValue({ mtimeMs: 1 } as ReturnType<typeof statSync>);
+    vi.mocked(readFileSync).mockReturnValue(JSON.stringify(tokensMap));
+    store.setExtensionRootPath('/extension');
+    const context = { subscriptions: [] } as never;
+
+    store.setupMapWatchers(context);
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    callbacks.change?.();
+    expect(store.loadValuesMap()).toEqual(tokensMap);
+    callbacks.delete?.();
+    expect(readFileSync).toHaveBeenCalledTimes(2);
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('cache invalidated'));
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('map deleted'));
+
+    store.dispose();
+    expect(watcher.dispose).toHaveBeenCalledTimes(1);
+  });
+
+  it('should report watcher setup failures without throwing', () => {
+    const logOnce = vi.fn();
+    const store = createValuesMapStore(logOnce);
+    vi.mocked(existsSync).mockReturnValue(true);
+    vscodeMocks.createFileSystemWatcher.mockImplementation(() => {
+      throw new Error('watch denied');
+    });
+    store.setExtensionRootPath('/extension');
+
+    expect(() => store.setupMapWatchers({ subscriptions: [] } as never)).not.toThrow();
+    expect(logOnce).toHaveBeenCalledWith(expect.stringContaining('Failed to setup tokens file watcher'));
   });
 });
 
