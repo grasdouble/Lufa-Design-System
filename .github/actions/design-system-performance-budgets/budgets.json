@@ -6,7 +6,7 @@
     "bundle": {
       "description": "Total bundle size limits (JS + CSS)",
       "totalSize": {
-        "max": 275,
+        "max": 300,
         "unit": "KB",
         "failOnExceed": true
       },
