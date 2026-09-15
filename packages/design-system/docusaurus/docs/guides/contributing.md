@@ -15,7 +15,7 @@ Contributions should preserve the design system's public API, token architecture
 The versions used by the repository are recorded in `.tool-versions`:
 
 - Node.js 25.2.1
-- pnpm 11.4.0
+- pnpm 12.4.2
 - Git
 
 Use pnpm only.

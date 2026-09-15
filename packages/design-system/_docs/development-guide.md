@@ -29,7 +29,7 @@
 | Tool        | Version       | Purpose            | Installation                       |
 | ----------- | ------------- | ------------------ | ---------------------------------- |
 | **Node.js** | 25.2.1        | JavaScript runtime | [nodejs.org](https://nodejs.org)   |
-| **pnpm**    | 11.4.0        | Package manager    | `asdf install pnpm 11.4.0`         |
+| **pnpm**    | 12.4.2        | Package manager    | `asdf install pnpm 12.4.2`         |
 | **Git**     | Latest stable | Version control    | [git-scm.com](https://git-scm.com) |
 
 ### Version Management
@@ -41,7 +41,7 @@ The project uses `.tool-versions` (asdf format) to lock Node.js and pnpm version
 ```
 # .tool-versions
 nodejs 25.2.1
-pnpm 11.4.0
+pnpm 12.4.2
 ```
 
 **Recommended:** Use [asdf](https://asdf-vm.com) to install both pinned tools automatically.
@@ -877,7 +877,7 @@ pnpm why @grasdouble/lufa_design-system-tokens
 node -v  # Should be 25.2.1
 
 # Verify pnpm version
-pnpm -v  # Should be 11.4.0
+pnpm -v  # Should be 12.4.2
 ```
 
 ### Getting Help
