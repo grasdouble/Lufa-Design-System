@@ -33,26 +33,28 @@ npm run check:size
 
 ### `validate-token-usage.js`
 
-**Purpose:** Analyzes token usage across the design system to identify unused tokens.
+**Purpose:** Verifies that referenced `--lufa-*` custom properties exist in the generated token CSS.
 
 **Usage:**
 
 ```bash
-node scripts/validate-token-usage.js
+pnpm validate:token-usage -- --dir ../main --ext .css,.ts,.tsx
+pnpm validate:token-usage -- --dir ../cli --ext .css,.ts --exclude-dir __tests__
 ```
 
 **Features:**
 
-- Scans all token files
-- Checks component usage in Storybook
-- Identifies potentially unused tokens
-- Helps maintain a clean token system
+- Scans selected source extensions recursively
+- Reports references missing from `dist/tokens.css`
+- Supports `--exclude-dir` for synthetic fixtures that intentionally use invalid names
+- Optionally reports unused tokens with `--unused`
+- Provides per-file diagnostics with `--verbose`
 
 **When to use:**
 
 - During token cleanup reviews
-- Before removing deprecated tokens
-- To understand token adoption
+- Before removing or renaming tokens
+- In package CI to reject invalid production references
 
 ---
 
@@ -70,6 +72,7 @@ Runs the core test suites:
 
 - Token consistency validator tests (35 tests covering all 9 ADR-013 rules)
 - WCAG contrast calculation tests
+- Token usage file-discovery tests
 
 ### Individual Test Suites
 

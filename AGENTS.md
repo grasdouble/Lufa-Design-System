@@ -314,6 +314,20 @@ Tests are also listed in the Build & Validation table above.
 
 If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
 
+## JavaScript module tests — Avoid type-only casts without declarations
+
+When a TypeScript test imports a local `.mjs` module without a declaration file, do not add a type-only import solely to cast the imported function. Some lint contexts treat that type binding as unused. Test the observable result directly, or add a real module declaration when compile-time typing is required.
+
+- ✅ `expect(createBuildOptions(true)).toMatchObject({ minify: true })`
+- ❌ `import type * as Esbuild from 'esbuild'` followed only by a cast to `Esbuild.BuildOptions`
+
+## Vitest configuration — Typecheck against the installed API
+
+Include every `vitest.config.ts` in a package typecheck and use only options supported by the installed Vitest version. After Vitest upgrades or config edits, run that package's `pnpm typecheck`; never restore removed options or cast the config to silence incompatibilities.
+
+- ✅ Include `vitest.config.ts` in the package config TypeScript project and use `coverage.include` with explicit thresholds supported by Vitest 4
+- ❌ Add removed `coverage.all` or hide it behind `as CoverageOptions`, `as any`, or another cast
+
 ---
 
 ## Accessibility — DS-specific requirements

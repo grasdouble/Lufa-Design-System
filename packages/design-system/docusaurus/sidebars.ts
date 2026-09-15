@@ -23,7 +23,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Guides',
-      items: ['guides/contributing', 'guides/migration', 'guides/component-documentation-template'],
+      items: ['guides/contributing', 'guides/testing', 'guides/migration', 'guides/component-documentation-template'],
     },
     {
       type: 'category',
@@ -52,7 +52,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Content',
           collapsed: false,
-          items: ['content/badge', 'content/icon', 'content/text'],
+          items: ['content/badge', 'content/icon', 'content/link', 'content/text'],
         },
         {
           type: 'category',
@@ -68,11 +68,22 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
+          label: 'Navigation',
+          collapsed: false,
+          items: ['navigation/dot-nav'],
+        },
+        {
+          type: 'category',
           label: 'Utility',
           collapsed: false,
           items: ['utility/portal', 'utility/visually-hidden'],
         },
       ],
+    },
+    {
+      type: 'category',
+      label: 'Hooks',
+      items: ['hooks/use-scroll-spy'],
     },
     'changelog',
   ],

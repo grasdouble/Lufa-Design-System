@@ -10,6 +10,7 @@
  * Usage:
  *   node path/to/validate-token-usage.js --dir <path>
  *   node path/to/validate-token-usage.js --dir <path> --ext .css,.ts,.tsx,.cjs
+ *   node path/to/validate-token-usage.js --dir <path> --exclude-dir __tests__,fixtures
  *   node path/to/validate-token-usage.js --dir <path> --verbose
  *   node path/to/validate-token-usage.js --dir <path> --unused
  *
@@ -17,12 +18,15 @@
  *   --dir <path>   Directory to scan (required). Can be absolute or relative to cwd.
  *   --ext <list>   Comma-separated list of file extensions to scan.
  *                  Defaults to: .css,.ts,.tsx
+ *   --exclude-dir  Comma-separated directory names to exclude recursively.
  *   --verbose, -v  Also list a per-file token breakdown.
  *   --unused,  -u  Also report tokens defined in tokens.css but not referenced.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import { collectFiles } from './token-usage-files.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,16 +44,27 @@ function getArg(flag) {
 
 const dirArg = getArg('--dir');
 const extArg = getArg('--ext');
+const excludeDirArg = getArg('--exclude-dir');
 const VERBOSE = args.includes('--verbose') || args.includes('-v');
 const SHOW_UNUSED = args.includes('--unused') || args.includes('-u');
 
 if (!dirArg) {
-  console.error('Usage: node validate-token-usage.js --dir <path> [--ext .css,.ts,.tsx] [--verbose] [--unused]');
+  console.error(
+    'Usage: node validate-token-usage.js --dir <path> [--ext .css,.ts,.tsx] [--exclude-dir __tests__,fixtures] [--verbose] [--unused]'
+  );
   process.exit(1);
 }
 
 const SCAN_DIR = path.resolve(process.cwd(), dirArg);
 const EXTENSIONS = extArg ? extArg.split(',').map((e) => e.trim()) : ['.css', '.ts', '.tsx'];
+const EXCLUDED_DIRECTORIES = new Set(
+  excludeDirArg
+    ? excludeDirArg
+        .split(',')
+        .map((directory) => directory.trim())
+        .filter(Boolean)
+    : []
+);
 
 // ──────────────────────────────────────────────
 // Paths
@@ -60,20 +75,6 @@ const TOKENS_CSS = path.join(__dirname, '../dist/tokens.css');
 // ──────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────
-
-/** Recursively collect files matching given extensions */
-function collectFiles(dir, extensions) {
-  const results = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...collectFiles(fullPath, extensions));
-    } else if (extensions.some((ext) => entry.name.endsWith(ext))) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 /** Extract all unique --lufa-* token names from a string.
  * Strips block comments and line comments before scanning to avoid false positives
@@ -118,7 +119,8 @@ console.log(
   `${CYAN}${BOLD}Token Usage Validator${RESET}\n` +
     `${DIM}tokens.css : ${path.relative(process.cwd(), TOKENS_CSS)}${RESET}\n` +
     `${DIM}scan dir   : ${path.relative(process.cwd(), SCAN_DIR)}${RESET}\n` +
-    `${DIM}extensions : ${EXTENSIONS.join(', ')}${RESET}\n`
+    `${DIM}extensions : ${EXTENSIONS.join(', ')}${RESET}\n` +
+    `${DIM}excluded   : ${[...EXCLUDED_DIRECTORIES].join(', ') || 'none'}${RESET}\n`
 );
 
 console.log(`  ${GREEN}✓ ${definedTokens.size} tokens defined in tokens.css${RESET}\n`);
@@ -127,7 +129,7 @@ console.log(`  ${GREEN}✓ ${definedTokens.size} tokens defined in tokens.css${R
 // 2. Scan files
 // ──────────────────────────────────────────────
 
-const FILES_TO_SCAN = collectFiles(SCAN_DIR, EXTENSIONS);
+const FILES_TO_SCAN = collectFiles(SCAN_DIR, EXTENSIONS, EXCLUDED_DIRECTORIES);
 
 const usedTokenMap = new Map(); // token → Set<relativeFilePath>
 

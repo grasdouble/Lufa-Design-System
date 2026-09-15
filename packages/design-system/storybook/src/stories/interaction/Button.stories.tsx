@@ -12,8 +12,9 @@ import { STORY_COLORS } from '../../constants/storyColors';
  * visual styling and semantic meaning.
  *
  * ## Features
- * - ✅ Two-dimensional variants: `type` (visual style) + `variant` (semantic color)
- * - ✅ Three types: solid, outline, ghost
+ * - ✅ Two-dimensional variants: `appearance` (visual style) + `variant` (semantic color)
+ * - ✅ Three appearances: solid, outline, ghost
+ * - ✅ Native `type`: button, submit, reset
  * - ✅ Seven semantic variants: primary, secondary, success, danger, warning, info, neutral
  * - ✅ Icon support (left, right, or icon-only)
  * - ✅ Loading state with spinner animation
@@ -29,14 +30,24 @@ const meta = {
   },
   argTypes: {
     // Two-dimensional variant system
-    type: {
+    appearance: {
       control: 'select',
       options: ['solid', 'outline', 'ghost'],
-      description: 'Visual style type',
+      description: 'Visual appearance',
       table: {
         category: 'Variants',
-        type: { summary: 'TypeValue' },
+        type: { summary: 'ButtonAppearance' },
         defaultValue: { summary: 'solid' },
+      },
+    },
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
+      description: 'Native HTML button type',
+      table: {
+        category: 'HTML',
+        type: { summary: 'ButtonNativeType' },
+        defaultValue: { summary: 'button' },
       },
     },
     variant: {
@@ -159,11 +170,11 @@ export const Default: Story = {
 };
 
 // ============================================
-// PROP: TYPE (Visual Style)
+// PROP: APPEARANCE (Visual Style)
 // ============================================
 
-export const PropType: Story = {
-  name: 'Prop: type',
+export const PropAppearance: Story = {
+  name: 'Prop: appearance',
   render: () => {
     const types = [
       { value: 'solid', label: 'solid', description: 'Filled background (default)' },
@@ -171,9 +182,9 @@ export const PropType: Story = {
       { value: 'ghost', label: 'ghost', description: 'No border, transparent background' },
     ] as const;
 
-    const generateCode = (type: string): string => {
-      return `<Button type="${type}" variant="primary">
-  ${type.charAt(0).toUpperCase() + type.slice(1)} Button
+    const generateCode = (appearance: string): string => {
+      return `<Button appearance="${appearance}" variant="primary">
+  ${appearance.charAt(0).toUpperCase() + appearance.slice(1)} Button
 </Button>`;
     };
 
@@ -190,7 +201,7 @@ export const PropType: Story = {
           >
             {types.map((typeItem) => {
               return (
-                <PropCard key={typeItem.value} label={`type="${typeItem.label}"`}>
+                <PropCard key={typeItem.value} label={`appearance="${typeItem.label}"`}>
                   <div
                     style={{
                       padding: '24px',
@@ -201,7 +212,7 @@ export const PropType: Story = {
                       alignItems: 'center',
                     }}
                   >
-                    <Button type={typeItem.value} variant="primary">
+                    <Button appearance={typeItem.value} variant="primary">
                       {typeItem.label}
                     </Button>
                     <div
@@ -245,7 +256,7 @@ export const PropVariant: Story = {
 
     const generateCode = (variant: string): string => {
       const label = variant.charAt(0).toUpperCase() + variant.slice(1);
-      return `<Button type="solid" variant="${variant}">
+      return `<Button appearance="solid" variant="${variant}">
   ${label}
 </Button>`;
     };
@@ -274,7 +285,7 @@ export const PropVariant: Story = {
                       alignItems: 'center',
                     }}
                   >
-                    <Button type="solid" variant={variantItem.value}>
+                    <Button appearance="solid" variant={variantItem.value}>
                       {variantItem.label}
                     </Button>
                     <div
@@ -311,7 +322,7 @@ export const TypeVariantMatrix: Story = {
 
     {
       /* 
-      💡 TOKEN EDUCATION: 21 Button Combinations (3 types × 7 variants)
+      💡 TOKEN EDUCATION: 21 Button Combinations (3 appearances × 7 variants)
       
       Each combination uses component-specific tokens:
       
@@ -340,8 +351,8 @@ export const TypeVariantMatrix: Story = {
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          {types.map((type) => (
-            <div key={type}>
+          {types.map((appearance) => (
+            <div key={appearance}>
               <h3
                 style={{
                   fontSize: '14px',
@@ -352,7 +363,7 @@ export const TypeVariantMatrix: Story = {
                   marginBottom: '16px',
                 }}
               >
-                Type: {type}
+                Appearance: {appearance}
               </h3>
               <div
                 style={{
@@ -362,7 +373,7 @@ export const TypeVariantMatrix: Story = {
                 }}
               >
                 {variants.map((variant) => (
-                  <Button key={variant} type={type} variant={variant}>
+                  <Button key={variant} appearance={appearance} variant={variant}>
                     {variant}
                   </Button>
                 ))}
@@ -371,10 +382,10 @@ export const TypeVariantMatrix: Story = {
           ))}
 
           <CodeBlock
-            code={`{/* 21 combinations: 3 types × 7 variants */}
-<Button type="solid" variant="primary">Primary</Button>
-<Button type="outline" variant="danger">Delete</Button>
-<Button type="ghost" variant="neutral">Cancel</Button>`}
+            code={`{/* 21 combinations: 3 appearances × 7 variants */}
+<Button appearance="solid" variant="primary">Primary</Button>
+<Button appearance="outline" variant="danger">Delete</Button>
+<Button appearance="ghost" variant="neutral">Cancel</Button>`}
             language="jsx"
             title="JSX"
           />
@@ -614,9 +625,9 @@ export const PropStates: Story = {
               Disabled State
             </h3>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              {types.map((type) => (
-                <Button key={type} type={type} disabled>
-                  Disabled {type}
+              {types.map((appearance) => (
+                <Button key={appearance} appearance={appearance} disabled>
+                  Disabled {appearance}
                 </Button>
               ))}
             </div>
@@ -637,9 +648,9 @@ export const PropStates: Story = {
               Loading State
             </h3>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              {types.map((type) => (
-                <Button key={type} type={type} loading>
-                  Loading {type}
+              {types.map((appearance) => (
+                <Button key={appearance} appearance={appearance} loading>
+                  Loading {appearance}
                 </Button>
               ))}
             </div>
@@ -762,7 +773,7 @@ export const PropAs: Story = {
                   justifyContent: 'center',
                 }}
               >
-                <Button as="a" href="#link" type="ghost" variant="primary">
+                <Button as="a" href="#link" appearance="ghost" variant="primary">
                   Anchor Element
                 </Button>
               </div>
@@ -808,10 +819,10 @@ export const UseCases: Story = {
                 justifyContent: 'center',
               }}
             >
-              <Button type="solid" variant="primary" size="lg" iconRight="arrow-right">
+              <Button appearance="solid" variant="primary" size="lg" iconRight="arrow-right">
                 Get Started
               </Button>
-              <Button type="outline" variant="primary" size="lg">
+              <Button appearance="outline" variant="primary" size="lg">
                 Learn More
               </Button>
             </div>
@@ -840,10 +851,10 @@ export const UseCases: Story = {
                 justifyContent: 'flex-end',
               }}
             >
-              <Button type="ghost" variant="neutral">
+              <Button appearance="ghost" variant="neutral">
                 Cancel
               </Button>
-              <Button type="solid" variant="primary" iconLeft="check">
+              <Button appearance="solid" variant="primary" iconLeft="check">
                 Save Changes
               </Button>
             </div>
@@ -872,10 +883,10 @@ export const UseCases: Story = {
                 justifyContent: 'center',
               }}
             >
-              <Button type="outline" variant="neutral">
+              <Button appearance="outline" variant="neutral">
                 Keep
               </Button>
-              <Button type="solid" variant="danger" iconLeft="trash">
+              <Button appearance="solid" variant="danger" iconLeft="trash">
                 Delete
               </Button>
             </div>
@@ -904,18 +915,18 @@ export const UseCases: Story = {
                 justifyContent: 'center',
               }}
             >
-              <Button type="ghost" variant="neutral" iconLeft="search" aria-label="Search" />
-              <Button type="ghost" variant="neutral" iconLeft="settings" aria-label="Settings" />
-              <Button type="ghost" variant="neutral" iconLeft="heart" aria-label="Favorite" />
-              <Button type="ghost" variant="neutral" iconLeft="save" aria-label="Save" />
+              <Button appearance="ghost" variant="neutral" iconLeft="search" aria-label="Search" />
+              <Button appearance="ghost" variant="neutral" iconLeft="settings" aria-label="Settings" />
+              <Button appearance="ghost" variant="neutral" iconLeft="heart" aria-label="Favorite" />
+              <Button appearance="ghost" variant="neutral" iconLeft="save" aria-label="Save" />
             </div>
           </div>
 
           <CodeBlock
             code={`{/* CTA */}
-<Button 
-  type="solid" 
-  variant="primary" 
+<Button
+  appearance="solid"
+  variant="primary"
   size="lg"
   iconRight="arrow-right"
 >
@@ -923,20 +934,20 @@ export const UseCases: Story = {
 </Button>
 
 {/* Form actions */}
-<Button type="ghost" variant="neutral">Cancel</Button>
-<Button type="solid" variant="primary">Save</Button>
+<Button appearance="ghost" variant="neutral">Cancel</Button>
+<Button appearance="solid" variant="primary">Save</Button>
 
 {/* Destructive */}
-<Button type="solid" variant="danger" iconLeft="trash">
+<Button appearance="solid" variant="danger" iconLeft="trash">
   Delete
 </Button>
 
 {/* Icon toolbar */}
-<Button 
-  type="ghost" 
-  variant="neutral" 
-  iconLeft="search" 
-  aria-label="Search" 
+<Button
+  appearance="ghost"
+  variant="neutral"
+  iconLeft="search"
+  aria-label="Search"
 />`}
             language="jsx"
             title="JSX"

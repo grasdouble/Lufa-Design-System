@@ -37,11 +37,13 @@ Browse our collection of accessible React components.
 
 - **[Button](./interaction/button)** - Primary interaction component
 - **[Badge](./content/badge)** - Status and label indicator
+- **[Link](./content/link)** - Inline navigation component
 - **[Box](./foundation/box)** - Universal layout primitive
+- **[DotNav](./navigation/dot-nav)** - Section navigation for long pages
 - [View all components →](./components/overview)
 
 ## Resources
 
-- **[Storybook](https://lufa-design.sebastien-lemouillour.fr)** - Interactive component catalog
-- **[GitHub](https://github.com/grasdouble/Lufa)** - Source code and issues
+- **[Storybook source](https://github.com/grasdouble/Lufa-Design-System/tree/main/packages/design-system/storybook)** - Interactive component catalog
+- **[GitHub](https://github.com/grasdouble/Lufa-Design-System)** - Source code and issues
 - **[Contributing](./guides/contributing)** - Help us improve Lufa

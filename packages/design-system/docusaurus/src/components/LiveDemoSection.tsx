@@ -16,8 +16,15 @@ type LiveDemoSectionProps = {
   defaultTabId?: string;
 };
 
+/**
+ * Displays live examples, optionally as an automatically activated tab set.
+ *
+ * Keyboard: Left/Right Arrow wraps through tabs, while Home/End move to the
+ * first/last tab. The active tab and panel are linked with ARIA tab semantics.
+ */
 export function LiveDemoSection({ title = 'Live demo', children, tabs, defaultTabId }: LiveDemoSectionProps) {
   const sectionId = React.useId();
+  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
   const { colorMode } = useColorMode();
   const dataMode = colorMode === 'dark' ? 'dark' : 'light';
   const resolvedTabs = tabs?.filter((tab) => tab?.content != null) ?? [];
@@ -29,6 +36,35 @@ export function LiveDemoSection({ title = 'Live demo', children, tabs, defaultTa
       )
     : 0;
   const [activeIndex, setActiveIndex] = React.useState(initialIndex);
+
+  const activateTab = (index: number) => {
+    setActiveIndex(index);
+    tabRefs.current[index]?.focus();
+  };
+
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number | undefined;
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        nextIndex = (index - 1 + resolvedTabs.length) % resolvedTabs.length;
+        break;
+      case 'ArrowRight':
+        nextIndex = (index + 1) % resolvedTabs.length;
+        break;
+      case 'Home':
+        nextIndex = 0;
+        break;
+      case 'End':
+        nextIndex = resolvedTabs.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    activateTab(nextIndex);
+  };
 
   return (
     <section className={styles.section}>
@@ -47,14 +83,19 @@ export function LiveDemoSection({ title = 'Live demo', children, tabs, defaultTa
 
               return (
                 <button
+                  ref={(element) => {
+                    tabRefs.current[index] = element;
+                  }}
                   key={tabId}
                   id={buttonId}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
                   aria-controls={panelId}
+                  tabIndex={isActive ? 0 : -1}
                   className={isActive ? styles.tabButtonActive : styles.tabButton}
                   onClick={() => setActiveIndex(index)}
+                  onKeyDown={(event) => handleTabKeyDown(event, index)}
                 >
                   {tab.label}
                 </button>
@@ -66,6 +107,7 @@ export function LiveDemoSection({ title = 'Live demo', children, tabs, defaultTa
             role="tabpanel"
             id={`${sectionId}-${resolvedTabs[activeIndex]?.id ?? `tab-${activeIndex}`}-panel`}
             aria-labelledby={`${sectionId}-${resolvedTabs[activeIndex]?.id ?? `tab-${activeIndex}`}`}
+            tabIndex={0}
             data-theme=""
             data-mode={dataMode}
           >

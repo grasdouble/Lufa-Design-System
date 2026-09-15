@@ -15,10 +15,11 @@
   "files": [
     "bin",
     "dist",
-    "README.md"
+    "README.md",
+    "_docs"
   ],
   "scripts": {
-    "build": "pnpm clean && tsc",
+    "build": "pnpm clean && tsc -p tsconfig.build.json",
     "build:watch": "tsc --watch",
     "clean": "rm -rf dist",
     "dev": "tsx src/cli.ts",
@@ -26,14 +27,16 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "test": "vitest",
-    "test:coverage": "vitest --coverage",
+    "test:coverage": "vitest run --coverage",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "typecheck": "tsc --noEmit",
-    "validate:a11y": "node dist/cli.js a11y",
-    "validate:token-usage": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts",
-    "validate:token-usage:unused": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --unused",
-    "validate:token-usage:verbose": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --verbose"
+    "typecheck": "pnpm typecheck:src && pnpm typecheck:config",
+    "typecheck:config": "tsc -p tsconfig.scripts.json --noEmit",
+    "typecheck:src": "tsc --noEmit",
+    "validate:a11y": "node dist/cli.js theme-validate --a11y --dir ../themes/src",
+    "validate:token-usage": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --exclude-dir __tests__",
+    "validate:token-usage:unused": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --exclude-dir __tests__ --unused",
+    "validate:token-usage:verbose": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.ts --exclude-dir __tests__ --verbose"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -51,10 +54,13 @@
     ]
   },
   "dependencies": {
+    "@csstools/selector-resolve-nested": "^3.1.0",
+    "@csstools/selector-specificity": "^5.0.0",
     "@grasdouble/lufa_design-system-tokens": "workspace:^",
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "postcss": "^8.5.28",
+    "postcss-selector-parser": "^7.1.6",
     "postcss-value-parser": "^4.2.0"
   },
   "devDependencies": {

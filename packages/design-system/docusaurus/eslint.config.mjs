@@ -3,7 +3,7 @@ import lufaReactConfig from '@grasdouble/lufa_config_eslint/react.mjs';
 export default [
   ...lufaReactConfig,
   {
-    ignores: ['scripts/**/*.js'],
+    ignores: ['.docusaurus/**', 'scripts/**/*.js', 'eslint.config.mjs', 'prettier.config.mjs'],
   },
   {
     languageOptions: {
@@ -28,6 +28,8 @@ export default [
   {
     files: ['docusaurus.config.ts', 'sidebars.ts', 'src/pages/**/*.{ts,tsx}'],
     rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/prefer-nullish-coalescing': 'off',
     },
   },

@@ -179,8 +179,8 @@ packages/design-system/
 │   └── token-architecture.md           # Token structure details
 ├── themes/_docs/
 │   └── theme-switching-guide.md        # Theme implementation guide
-├── playwright/_docs/
-│   └── testing-strategy.md             # Testing approach
+├── docusaurus/docs/guides/
+│   └── testing.md                      # Testing approach
 └── _docs/brainstorming/architecture-decisions.md       # This file
 ```
 

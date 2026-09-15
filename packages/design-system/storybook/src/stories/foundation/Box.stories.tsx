@@ -470,7 +470,7 @@ export const PropPaddingXY: Story = {
                   <div
                     style={{
                       backgroundColor: STORY_COLORS.axis.x.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontSize: '14px',
                       fontWeight: 600,
                       textAlign: 'center',
@@ -489,7 +489,7 @@ export const PropPaddingXY: Story = {
                   <div
                     style={{
                       backgroundColor: STORY_COLORS.axis.y.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontSize: '14px',
                       fontWeight: 600,
                       textAlign: 'center',
@@ -510,7 +510,7 @@ export const PropPaddingXY: Story = {
                   <div
                     style={{
                       backgroundColor: STORY_COLORS.axis.combined.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontSize: '14px',
                       fontWeight: 600,
                       textAlign: 'center',
@@ -564,7 +564,7 @@ export const PropPaddingIndividual: Story = {
                     <div
                       style={{
                         backgroundColor: main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         fontSize: '13px',
                         fontWeight: 600,
                         textAlign: 'center',
@@ -644,7 +644,7 @@ export const PropMargin: Story = {
                         padding="default"
                         style={{
                           backgroundColor: storyColor.main,
-                          color: 'white',
+                          color: STORY_COLORS.neutral.white,
                           fontSize: '13px',
                           fontWeight: 600,
                           textAlign: 'center',
@@ -719,7 +719,7 @@ export const PropMarginXY: Story = {
                     borderRadius="default"
                     style={{
                       backgroundColor: STORY_COLORS.axis.x.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontWeight: 600,
                       textAlign: 'center',
                       fontSize: '14px',
@@ -752,7 +752,7 @@ export const PropMarginXY: Story = {
                     borderRadius="default"
                     style={{
                       backgroundColor: STORY_COLORS.axis.y.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontWeight: 600,
                       textAlign: 'center',
                       fontSize: '14px',
@@ -786,7 +786,7 @@ export const PropMarginXY: Story = {
                     borderRadius="default"
                     style={{
                       backgroundColor: STORY_COLORS.axis.combined.main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontWeight: 600,
                       textAlign: 'center',
                       fontSize: '14px',
@@ -854,7 +854,7 @@ export const PropMarginIndividual: Story = {
                       borderRadius="default"
                       style={{
                         backgroundColor: main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         fontSize: '13px',
                         fontWeight: 600,
                         textAlign: 'center',
@@ -1203,7 +1203,7 @@ export const PropDisplay: Story = {
                 style={{
                   backgroundColor: STORY_COLORS.primary.blue.main,
                   textAlign: 'center',
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                   fontWeight: 600,
                 }}
               >
@@ -1216,7 +1216,7 @@ export const PropDisplay: Story = {
                 style={{
                   backgroundColor: STORY_COLORS.primary.violet.main,
                   textAlign: 'center',
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                   fontWeight: 600,
                 }}
               >
@@ -1235,7 +1235,7 @@ export const PropDisplay: Story = {
                   backgroundColor: STORY_COLORS.primary.green.main,
                   verticalAlign: 'middle',
                   fontWeight: 600,
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                 }}
               >
                 inline-block
@@ -1260,7 +1260,7 @@ export const PropDisplay: Story = {
                     backgroundColor: STORY_COLORS.primary.pink.main,
                     borderRadius: '6px',
                     flex: 1,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontWeight: 600,
                     textAlign: 'center',
                   }}
@@ -1286,7 +1286,7 @@ export const PropDisplay: Story = {
                     padding: '20px',
                     backgroundColor: STORY_COLORS.primary.orange.main,
                     borderRadius: '6px',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontWeight: 600,
                     textAlign: 'center',
                   }}
@@ -1359,7 +1359,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.green.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1377,7 +1377,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.blue.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1395,7 +1395,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.orange.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1437,7 +1437,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.violet.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1455,7 +1455,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.pink.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1473,7 +1473,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.cyan.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1584,7 +1584,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.green.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1602,7 +1602,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.violet.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',
@@ -1620,7 +1620,7 @@ export const ResponsiveVisibility: Story = {
                   borderRadius="default"
                   style={{
                     backgroundColor: STORY_COLORS.primary.pink.main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     textAlign: 'center',
                     fontWeight: 600,
                     fontSize: '14px',

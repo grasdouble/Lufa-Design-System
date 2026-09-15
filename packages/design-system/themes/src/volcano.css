@@ -57,6 +57,7 @@
   --lufa-core-color-neutral-background: #fffafa;
   --lufa-core-color-neutral-surface-default: #fef2f2;
   --lufa-core-color-neutral-surface-hover: #fee2e2;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #fef2f2;
   --lufa-core-color-neutral-border-default: #ef4444;
   --lufa-core-color-neutral-border-strong: #dc2626;
@@ -126,6 +127,7 @@
   --lufa-core-color-neutral-background: #0f0505;
   --lufa-core-color-neutral-surface-default: #1a0a0a;
   --lufa-core-color-neutral-surface-hover: #2d1212;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #0f0505;
   --lufa-core-color-neutral-border-default: #dc2626;
   --lufa-core-color-neutral-border-strong: #f87171;
@@ -199,6 +201,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #220505;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #000000;
   --lufa-core-color-neutral-border-default: #ff3300;
   --lufa-core-color-neutral-border-strong: #ff3300;
@@ -232,6 +235,17 @@
 
   /* Semantic overrides — interactive background-active uses dark red so white text-active passes 4.5:1 */
   --lufa-semantic-interactive-background-active: #440000;
+
+  /* Action-state overrides keep black labels and borders readable while retaining vivid feedback colors. */
+  --lufa-component-button-type-solid-variant-success-background-active: #76ff03;
+  --lufa-component-button-type-solid-variant-destructive-background-active: #ff1744;
+  --lufa-component-button-type-solid-variant-warning-background-active: #ff9100;
+  --lufa-component-button-type-ghost-variant-success-text-active: #76ff03;
+  --lufa-component-button-type-ghost-variant-destructive-text-active: #ff1744;
+  --lufa-component-button-type-ghost-variant-warning-text-active: #ff9100;
+  --lufa-component-button-type-outline-variant-success-background-active: #76ff03;
+  --lufa-component-button-type-outline-variant-destructive-background-active: #ff1744;
+  --lufa-component-button-type-outline-variant-warning-background-active: #ff9100;
 
   /* Outline button active border — different value from background to satisfy 3:1 UI contrast */
   --lufa-component-button-type-outline-variant-primary-border-active: #000000;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import type { ThemeName } from '@grasdouble/lufa_design-system';
-import { Button, Typography, useThemeMode } from '@grasdouble/lufa_design-system';
+import { Button, Typography, useTheme } from '@grasdouble/lufa_design-system';
 
 import styles from './ThemeSwitcher.module.css';
 
@@ -56,10 +56,15 @@ export function ThemeSwitcher({
   showLabel = true,
   showModeSwitcher = true,
 }: ThemeSwitcherProps) {
-  const { mode, setMode, systemPreference } = useThemeMode({
+  const {
+    mode: configuredMode,
+    setMode,
+    effectiveMode,
+  } = useTheme({
     defaultMode,
     enableStorage: true,
   });
+  const mode = configuredMode === 'auto' ? effectiveMode : configuredMode;
 
   // Notify parent components of changes
   useEffect(() => {
@@ -93,11 +98,6 @@ export function ThemeSwitcher({
               <option value="dark">🌙 Dark</option>
               <option value="high-contrast">◐ High Contrast</option>
             </select>
-            {systemPreference && (
-              <Typography variant="bodySmall" color="secondary" style={{ marginLeft: '0.5rem' }}>
-                (System: {systemPreference})
-              </Typography>
-            )}
           </>
         )}
       </div>
@@ -111,35 +111,30 @@ export function ThemeSwitcher({
           <>
             <div className={styles.tabs}>
               <Button
-                variant={mode === 'light' ? 'solid' : 'ghost'}
-                size="small"
+                appearance={mode === 'light' ? 'solid' : 'ghost'}
+                size="sm"
                 onClick={() => handleModeChange('light')}
                 title="Light mode"
               >
                 ☀️ Light
               </Button>
               <Button
-                variant={mode === 'dark' ? 'solid' : 'ghost'}
-                size="small"
+                appearance={mode === 'dark' ? 'solid' : 'ghost'}
+                size="sm"
                 onClick={() => handleModeChange('dark')}
                 title="Dark mode"
               >
                 🌙 Dark
               </Button>
               <Button
-                variant={mode === 'high-contrast' ? 'solid' : 'ghost'}
-                size="small"
+                appearance={mode === 'high-contrast' ? 'solid' : 'ghost'}
+                size="sm"
                 onClick={() => handleModeChange('high-contrast')}
                 title="High contrast mode"
               >
                 ◐ High Contrast
               </Button>
             </div>
-            {systemPreference && (
-              <Typography variant="bodySmall" color="secondary">
-                System preference: {systemPreference}
-              </Typography>
-            )}
           </>
         )}
       </div>
@@ -158,35 +153,30 @@ export function ThemeSwitcher({
               </Typography>
             )}
             <Button
-              variant={mode === 'light' ? 'solid' : 'outlined'}
-              size="small"
+              appearance={mode === 'light' ? 'solid' : 'outline'}
+              size="sm"
               onClick={() => handleModeChange('light')}
               title="Light mode"
             >
               ☀️ Light
             </Button>
             <Button
-              variant={mode === 'dark' ? 'solid' : 'outlined'}
-              size="small"
+              appearance={mode === 'dark' ? 'solid' : 'outline'}
+              size="sm"
               onClick={() => handleModeChange('dark')}
               title="Dark mode"
             >
               🌙 Dark
             </Button>
             <Button
-              variant={mode === 'high-contrast' ? 'solid' : 'outlined'}
-              size="small"
+              appearance={mode === 'high-contrast' ? 'solid' : 'outline'}
+              size="sm"
               onClick={() => handleModeChange('high-contrast')}
               title="High contrast mode"
             >
               ◐ High Contrast
             </Button>
           </div>
-          {systemPreference && (
-            <Typography variant="bodySmall" color="secondary">
-              System preference: {systemPreference}
-            </Typography>
-          )}
         </>
       )}
     </div>

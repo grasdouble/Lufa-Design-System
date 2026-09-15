@@ -197,6 +197,12 @@ test.describe('Icon Component', () => {
         await expect(component).toHaveAttribute('aria-label', 'Success');
       });
 
+      test('should expose accessible text only once', async ({ mount }) => {
+        const component = await mount(<Icon name="check" title="Success" />);
+        await expect(component).toHaveAccessibleName('Success');
+        await expect(component.locator('span')).toHaveCount(0);
+      });
+
       test('should add role="img" when title provided', async ({ mount }) => {
         const component = await mount(<Icon name="check" title="Success" />);
         await expect(component).toHaveAttribute('role', 'img');
@@ -702,9 +708,7 @@ test.describe('Icon Component', () => {
         </div>
       );
 
-      // Wait for fonts to load and rendering to stabilize
       await component.page().evaluate(() => document.fonts.ready);
-      await component.page().waitForTimeout(500);
 
       await expect(component).toHaveScreenshot('icon-all-variants.png');
     });

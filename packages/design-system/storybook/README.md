@@ -34,31 +34,15 @@ pnpm ds:storybook:build
 # Lint stories
 pnpm ds:storybook:lint
 
-# Format stories
-pnpm ds:storybook:prettier
+# Check story formatting
+pnpm ds:storybook:prettier:check
 ```
 
-## 📖 Story Documentation
+## Story Documentation
 
-**Complete story writing guide:**
-
-| Document                                        | Purpose                          | Use When                           |
-| ----------------------------------------------- | -------------------------------- | ---------------------------------- |
-| **[Story Guide](./_docs/story-guide.md)**       | Complete guide with explanations | Learning how to write stories      |
-| **[Story Rules](./_docs/story-rules.md)**       | All rules and standards          | Quick reference during development |
-| **[Story Template](./_docs/story-template.md)** | Copy-paste templates             | Starting a new story               |
-
-### Quick Start
-
-1. **New to story writing?** → Start with [Story Guide](./_docs/story-guide.md)
-2. **Need a template?** → Check [Story Template](./_docs/story-template.md)
-3. **Quick rule lookup?** → See [Story Rules](./_docs/story-rules.md)
-
-### Writing Guides
-
-- [Storybook Conventions](./_docs/storybook-conventions.md)
-- [Writing Stories](./_docs/writing-stories.md)
-- [Operational Notes](./_docs/operational-notes.md)
+- [Story Writing Guide](./_docs/story-guide.md) - Canonical templates, conventions, colors, accessibility, and review checklist
+- [Operational Notes](./_docs/operational-notes.md) - Addons, deployment, and package structure
+- [Story Helper Reference](./src/components/helpers/README.md) - Shared story-only components
 
 ## Related Packages
 
@@ -70,9 +54,8 @@ pnpm ds:storybook:prettier
 
 ## Contributing
 
-See [CONTRIBUTING.md](../../../CONTRIBUTING.md) and the internal design system instructions for development guidelines.
+See the [design system contributing guide](../docusaurus/docs/guides/contributing.md) and the repository `AGENTS.md` for development guidelines.
 
 ---
 
-**Status:** ✅ Production Ready  
-**Last Updated:** January 23, 2026
+**Status:** Production Ready

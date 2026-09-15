@@ -72,6 +72,28 @@ describe('Format Validator', () => {
     expect(result.errors.filter((e) => e.token.includes('color'))).toHaveLength(3);
   });
 
+  it('accepts all documented CSS color functions and 8-digit hex colors', () => {
+    const properties: CSSCustomProperty[] = [
+      { name: '--lufa-color-a', value: '#112233cc', line: 1 },
+      { name: '--lufa-color-b', value: 'rgb(10, 20, 30)', line: 2 },
+      { name: '--lufa-color-c', value: 'rgba(10, 20, 30, 0.5)', line: 3 },
+      { name: '--lufa-color-d', value: 'hsl(200 50% 40%)', line: 4 },
+      { name: '--lufa-color-e', value: 'hsla(200, 50%, 40%, 25%)', line: 5 },
+    ];
+
+    expect(validateFormat(properties)).toMatchObject({ valid: true, errors: [] });
+  });
+
+  it('rejects malformed color functions instead of accepting by prefix', () => {
+    const properties: CSSCustomProperty[] = [
+      { name: '--lufa-color-a', value: 'rgb(not-a-color)', line: 1 },
+      { name: '--lufa-color-b', value: 'rgba(300, 0, 0, 2)', line: 2 },
+      { name: '--lufa-color-c', value: 'hsl(20, nope, 50%)', line: 3 },
+    ];
+
+    expect(validateFormat(properties).errors).toHaveLength(3);
+  });
+
   it('detects invalid spacing formats', () => {
     const properties: CSSCustomProperty[] = [
       { name: '--lufa-primitive-spacing-4', value: '16', line: 1 }, // Missing unit
@@ -124,6 +146,17 @@ describe('Format Validator', () => {
     const result = validateFormat(properties);
     expect(result.valid).toBe(true);
     expect(result.errors).toHaveLength(0);
+  });
+
+  it('strictly validates numeric token values', () => {
+    const properties: CSSCustomProperty[] = [
+      { name: '--lufa-font-weight-invalid', value: '400bold', line: 1 },
+      { name: '--lufa-z-index-invalid', value: '10.5', line: 2 },
+      { name: '--lufa-line-height-invalid', value: '1.5text', line: 3 },
+      { name: '--lufa-opacity-invalid', value: '1.1', line: 4 },
+    ];
+
+    expect(validateFormat(properties).errors).toHaveLength(4);
   });
 
   it('accepts font family strings', () => {
@@ -228,16 +261,13 @@ describe('Format Validator', () => {
     const properties: CSSCustomProperty[] = [{ name: '--lufa-primitive-color-gray-50', value: '', line: 1 }];
 
     const result = validateFormat(properties);
-    // Format validator is lenient - empty values pass validation
-    // (They would be caught by completeness validator instead)
-    expect(result).toBeDefined();
+    expect(result.valid).toBe(false);
   });
 
   it('handles whitespace-only value', () => {
     const properties: CSSCustomProperty[] = [{ name: '--lufa-primitive-color-gray-50', value: '   ', line: 1 }];
 
     const result = validateFormat(properties);
-    // Format validator is lenient - whitespace values pass validation
-    expect(result).toBeDefined();
+    expect(result.valid).toBe(false);
   });
 });

@@ -65,7 +65,7 @@ const TokenColumn: React.FC<TokenColumnProps> = ({ label, token, value, isThemea
         backgroundColor: value.startsWith('#') || value.startsWith('rgb') ? value : `var(${token.cssVariable})`,
         borderRadius: '6px',
         border: '1px solid var(--lufa-semantic-ui-border-default)',
-        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)',
+        boxShadow: 'var(--lufa-semantic-ui-shadow-small)',
         transition: 'background-color 0.3s ease',
       }}
     />

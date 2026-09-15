@@ -45,6 +45,7 @@
   --lufa-core-color-neutral-background: #f8fafc;
   --lufa-core-color-neutral-surface-default: #f1f5f9;
   --lufa-core-color-neutral-surface-hover: #e2e8f0;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #cbd5e1; /* explicit: prevents HC gray-300 fallback */
   --lufa-core-color-neutral-border-default: #64748b;
   --lufa-core-color-neutral-border-strong: #0284c7;
@@ -120,6 +121,7 @@
   --lufa-core-color-neutral-background: #0f172a;
   --lufa-core-color-neutral-surface-default: #1e293b;
   --lufa-core-color-neutral-surface-hover: #334155;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #1e293b; /* ghost-bg-active; dark enough for all ghost text-active */
   --lufa-core-color-neutral-border-default: #64748b;
   --lufa-core-color-neutral-border-strong: #38bdf8;
@@ -161,6 +163,7 @@
   --lufa-semantic-interactive-text-active: #f8fafc; /* 13.98:1 on bg-active, 17.06:1 on page */
 
   /* Ghost secondary text-active: secondary-active (#708090) on ghost-bg (#1e293b) = 3.66 (fails) */
+  --lufa-component-button-type-ghost-variant-primary-text-active: #7dd3fc;
   --lufa-component-button-type-ghost-variant-secondary-text-active: #94a3b8; /* 5.71:1 on #1e293b */
 
   /* Outline button border-active — fix 1:1 ratio */
@@ -192,6 +195,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #112233;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #0a1929; /* ghost-bg-active; #ff1744 on #0a1929 = 4.61:1 ✓ */
   --lufa-core-color-neutral-border-default: #00ccff;
   --lufa-core-color-neutral-border-strong: #00ccff;
@@ -231,6 +235,7 @@
      Override bg-active to #000000 so text (#ffffff) passes 21:1 on both. */
   --lufa-semantic-interactive-background-active: #000000; /* #ffffff on #000000 = 21:1 ✓ */
   --lufa-semantic-interactive-text-active: #ffffff; /* 21:1 on bg-active and page */
+  --lufa-component-button-type-ghost-variant-primary-text-active: #00ccff;
 
   /* Outline button border-active — fix 1:1 ratio */
   --lufa-component-button-type-outline-variant-primary-border-active: #000000;

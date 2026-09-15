@@ -686,8 +686,7 @@ test.describe('Badge Component', () => {
         </div>
       );
 
-      // Wait for rendering to stabilize
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
 
       await expect(component).toHaveScreenshot('badge-all-variants.png');
     });
@@ -734,7 +733,7 @@ test.describe('Badge Component', () => {
         </div>
       );
 
-      await component.page().waitForTimeout(100);
+      await component.page().evaluate(() => document.fonts.ready);
       await expect(component).toHaveScreenshot('badge-high-contrast.png');
 
       await page.evaluate(() => {

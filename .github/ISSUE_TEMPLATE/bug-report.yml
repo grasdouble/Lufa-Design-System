@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible problem in Lufa Design System
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. For security vulnerabilities, use the private reporting link in SECURITY.md.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide a minimal reproduction or exact steps.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Affected version
+      placeholder: 3.4.0
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include browser, operating system, Node.js, pnpm, and framework versions where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add screenshots, logs, or other useful context. Remove secrets and personal data.

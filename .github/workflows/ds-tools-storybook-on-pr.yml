@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: 📦 Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
@@ -44,7 +44,7 @@ jobs:
           build-docusaurus: 'false'
 
       - name: 🚀 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packages/design-system/storybook/storybook-static
@@ -53,7 +53,7 @@ jobs:
           cname: ''
 
       - name: 💬 Add comment with Storybook link
-        uses: peter-evans/create-or-update-comment@v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -61,7 +61,7 @@ jobs:
             🎉 The Storybook for this PR has been published! You can view it [here](https://grasdouble.github.io/Lufa-Design-System/pr-${{ github.event.pull_request.number }}/).
 
       - name: 🏷️ Remove 'publish-storybook' label
-        uses: actions-ecosystem/action-remove-labels@v1
+        uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: publish-storybook
@@ -85,7 +85,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: 🌿 Checkout gh-pages branch
         run: |

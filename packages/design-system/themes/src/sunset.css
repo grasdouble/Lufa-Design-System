@@ -46,6 +46,7 @@
   --lufa-core-color-neutral-background: #fff7ed;
   --lufa-core-color-neutral-surface-default: #ffedd5;
   --lufa-core-color-neutral-surface-hover: #fed7aa;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #fff7ed;
   --lufa-core-color-neutral-border-default: #9a3412;
   --lufa-core-color-neutral-border-strong: #9a3412;
@@ -95,6 +96,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #fff7ed;
   --lufa-component-button-type-outline-variant-warning-background-active: #fff7ed;
   --lufa-component-button-type-outline-variant-info-background-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-primary-border-active: #431407;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #431407;
+  --lufa-component-button-type-outline-variant-success-border-active: #431407;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #431407;
+  --lufa-component-button-type-outline-variant-warning-border-active: #431407;
+  --lufa-component-button-type-outline-variant-info-border-active: #431407;
   --lufa-component-button-type-outline-variant-neutral-border-active: #431407; /* neutral-text-primary on #fff7ed = 14.74:1 */
 
   /* Glow — warm orange (light mode) */
@@ -118,6 +125,7 @@
   --lufa-core-color-neutral-background: #1c0c08;
   --lufa-core-color-neutral-surface-default: #2d1610;
   --lufa-core-color-neutral-surface-hover: #432018;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #1c0c08;
   --lufa-core-color-neutral-border-default: #c2410c;
   --lufa-core-color-neutral-border-strong: #f97316;
@@ -167,6 +175,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #4c0519;
   --lufa-component-button-type-outline-variant-warning-background-active: #451a03;
   --lufa-component-button-type-outline-variant-info-background-active: #1e1b4b;
+  --lufa-component-button-type-outline-variant-primary-border-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-success-border-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-warning-border-active: #fff7ed;
+  --lufa-component-button-type-outline-variant-info-border-active: #fff7ed;
   --lufa-component-button-type-outline-variant-neutral-border-active: #fff7ed; /* neutral-text-primary on #1c0c08 = 17.89:1 */
 
   /* Glow — warm orange (dark mode) */
@@ -190,6 +204,7 @@
   --lufa-core-color-neutral-background: #000000;
   --lufa-core-color-neutral-surface-default: #000000;
   --lufa-core-color-neutral-surface-hover: #221100;
+  --lufa-core-color-neutral-surface-raised: var(--lufa-core-color-neutral-surface-hover);
   --lufa-core-color-neutral-surface-active: #000000;
   --lufa-core-color-neutral-border-default: #ff8000;
   --lufa-core-color-neutral-border-strong: #ff8000;
@@ -239,6 +254,12 @@
   --lufa-component-button-type-outline-variant-destructive-background-active: #000000;
   --lufa-component-button-type-outline-variant-warning-background-active: #000000;
   --lufa-component-button-type-outline-variant-info-background-active: #000000;
+  --lufa-component-button-type-outline-variant-primary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-secondary-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-success-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-destructive-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-warning-border-active: #ffffff;
+  --lufa-component-button-type-outline-variant-info-border-active: #ffffff;
   --lufa-component-button-type-outline-variant-neutral-border-active: #ffffff; /* neutral-text-primary on #000000 = 21:1 */
 
   /* HC: ghost secondary active — override to use brighter secondary color for text legibility */

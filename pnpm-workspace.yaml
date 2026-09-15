@@ -14,7 +14,9 @@ minimumReleaseAgeExclude:
 publicHoistPattern:
   - '@storybook/react-vite'
 overrides:
+  brace-expansion@<1.1.17: 1.1.17
   serialize-javascript: ^7.0.5
+  uuid@<11.1.1: 11.1.1
 allowBuilds:
   '@swc/core': true
   '@vscode/vsce-sign': true

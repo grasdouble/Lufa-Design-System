@@ -88,7 +88,7 @@ The script runs automatically via GitHub Actions:
 - Can be triggered manually via workflow_dispatch
 - **Blocking**: PRs with token validation errors cannot be merged
 
-See [.github/workflows/validate-tokens.yml](../.github/workflows/validate-tokens.yml)
+See [.github/workflows/ds-tools-packages-ci.yml](../.github/workflows/ds-tools-packages-ci.yml)
 
 **GitHub Actions Bot**:
 
@@ -136,55 +136,40 @@ To make token creation easier, use the provided VSCode snippets:
 
 ## validate-ai-docs.sh
 
-**Purpose**: Validates consistency across AI documentation files to prevent desynchronization.
+**Purpose**: Validates the canonical agent instructions and any optional tool-specific instruction files.
 
 **Usage**:
 
 ```bash
-# Via npm script (recommended)
+# Validate repository instructions
 pnpm validate:docs
 
-# Or directly
-bash scripts/validate-ai-docs.sh
+# Run validator regression tests
+pnpm validate:docs:test
 ```
 
 **What it validates**:
 
-1. **Three-layer architecture consistency**
-   - Ensures `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` all document the same three-layer architecture
-   - Validates that "Layer 3: Components" sections are present
+1. **Canonical instructions**
+   - Requires `AGENTS.md`
+   - Verifies generated shared-rule markers and repository-specific validation, testing, accessibility, and component sections
+   - Checks the root `pnpm all:lint`, `pnpm all:build`, and `pnpm all:typecheck` commands
+   - Requires optional `CLAUDE.md` and `.github/copilot-instructions.md` files to reference `AGENTS.md`
 
-2. **Critical rules consistency**
-   - Verifies all files reference `@grasdouble/lufa_design-system-tokens`
-   - Checks that primitives import restrictions are documented
-   - Ensures critical design system rules are consistent
-
-3. **Build commands consistency**
-   - Validates that build order commands are present in all files:
-     - `pnpm ds:tokens:build`
-     - `pnpm ds:main:build`
-     - `pnpm ds:all:build`
-
-4. **YAML frontmatter validity**
+2. **YAML frontmatter validity**
    - Checks `.instructions.md` files for unsupported YAML fields
    - GitHub Copilot only supports: `description`, `applyTo`, `name`
    - Warns if other fields are present
 
-5. **Markdown links**
+3. **Markdown links**
    - Validates all relative markdown links point to existing files
-   - Checks links in `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `config.toml`
+   - Checks the canonical, optional, and path-specific instruction files
 
-6. **File sizes**
-   - Warns if `CLAUDE.md` exceeds 300 lines (token limit concerns)
-   - Recommended to keep under 250 lines for optimal AI context
+4. **File sizes**
+   - Warns when an instruction file exceeds 800 lines and should move supporting guidance elsewhere
 
-7. **config.toml references**
-   - Ensures `config.toml` references key documentation files
-   - Validates `AGENTS.md` and `CLAUDE.md` are referenced
-
-8. **Package scope consistency**
-   - Verifies `@grasdouble/` scope is present in all documentation
-   - Ensures package naming conventions are consistent
+5. **Optional config**
+   - Requires `config.toml` to reference `AGENTS.md` when that optional file exists
 
 **Exit codes**:
 
@@ -203,71 +188,26 @@ See [.github/workflows/validate-docs.yml](../.github/workflows/validate-docs.yml
 
 **Common errors and fixes**:
 
-| Error                            | Fix                                                             |
-| -------------------------------- | --------------------------------------------------------------- |
-| Three-layer architecture differs | Ensure all three files have identical architecture descriptions |
-| Build commands missing           | Add missing build commands to the affected file                 |
-| Broken markdown link             | Fix the link path or create the missing file                    |
-| Token package reference missing  | Add `@grasdouble/lufa_design-system-tokens` reference           |
-| Unsupported YAML field           | Remove unsupported fields from `.instructions.md` frontmatter   |
-
-**Example output**:
-
-```bash
-🔍 Validating AI documentation consistency...
-
-Checking three-layer architecture consistency...
-✅ Three-layer architecture present in all files
-
-Checking critical rules consistency...
-✅ Token package referenced in all files
-✅ Primitives restrictions documented in all files
-
-Checking build commands consistency...
-✅ Build commands consistent across all files
-
-Validating YAML frontmatter in .instructions.md files...
-✅ All YAML frontmatter valid
-
-Checking markdown links...
-✅ All markdown links valid
-
-Checking file sizes for token limits...
-✅ CLAUDE.md size acceptable (215 lines)
-
-Checking config.toml references...
-✅ config.toml references documentation files
-
-Checking package scope consistency...
-✅ Package scope consistent in all files
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ All validations passed!
-
-📊 Summary:
-  - Three-layer architecture: consistent
-  - Critical rules: documented
-  - Build commands: consistent
-  - YAML frontmatter: valid
-  - Markdown links: valid
-  - File sizes: acceptable
-  - Config references: valid
-  - Package scope: consistent
-```
+| Error                                  | Fix                                                             |
+| -------------------------------------- | --------------------------------------------------------------- |
+| `AGENTS.md` is required                | Restore or generate the repository's canonical instruction file |
+| Required marker, section, or command   | Restore the missing contract in `AGENTS.md`                     |
+| Optional instructions lack a reference | Link the tool-specific file back to canonical `AGENTS.md`       |
+| Broken markdown link                   | Fix the relative path or restore the linked file                |
+| Unsupported YAML field                 | Remove unsupported fields from `.instructions.md` frontmatter   |
 
 **Maintenance**:
 
 When adding new critical information to AI documentation:
 
-1. Update all three files simultaneously (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`)
-2. Run `pnpm validate:docs` locally before committing
-3. Consider adding new validation checks to the script if needed
+1. Update canonical `AGENTS.md`
+2. Keep optional tool-specific files linked to `AGENTS.md`
+3. Update `validate-ai-docs.test.sh` before changing validator behavior
+4. Run `pnpm validate:docs:test` and `pnpm validate:docs`
 
 **Related documentation**:
 
 - [AGENTS.md](../AGENTS.md) - Primary AI documentation
-- [CLAUDE.md](../CLAUDE.md) - Claude Code quick reference
 - [.github/copilot-instructions.md](../.github/copilot-instructions.md) - GitHub Copilot instructions
 
 ---

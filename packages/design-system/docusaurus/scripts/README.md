@@ -30,5 +30,5 @@ pnpm --filter @grasdouble/lufa_design-system-docusaurus update-changelog
 **Related Files:**
 
 - Script: [`update-changelog.js`](./update-changelog.js)
-- Workflow: [`.github/workflows/tools-ds-docusaurus-update-changelog-docs.yml`](../../../.github/workflows/tools-ds-docusaurus-update-changelog-docs.yml)
+- Workflow: [`.github/workflows/ds-tools-docusaurus-update-changelog-docs.yml`](../../../../.github/workflows/ds-tools-docusaurus-update-changelog-docs.yml)
 - Full Documentation: [`UPDATE_CHANGELOG.md`](./UPDATE_CHANGELOG.md)

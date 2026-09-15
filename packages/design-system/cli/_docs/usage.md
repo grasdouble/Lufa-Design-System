@@ -15,6 +15,9 @@ lufa-ds-cli theme-validate ./my-theme.css --format
 # Run only the completeness check
 lufa-ds-cli theme-validate ./my-theme.css --completeness
 
+# Require every starter + extended token in each mode
+lufa-ds-cli theme-validate ./my-theme.css --completeness --level extended
+
 # Run all checks on every CSS file in a directory
 lufa-ds-cli theme-validate --dir ./themes/src
 
@@ -33,7 +36,13 @@ lufa-ds-cli theme-template extended --output-name my-theme
 
 # Available levels: starter (default), extended, advanced
 lufa-ds-cli theme-template advanced -o my-brand-theme
+
+# Existing files are protected unless overwrite is explicit
+lufa-ds-cli theme-template advanced -o my-brand-theme --force
 ```
+
+Without `--output-name`, the template command prompts only when stdin is an
+interactive TTY. In scripts and CI, `--output-name` is required.
 
 ## Exit Codes
 

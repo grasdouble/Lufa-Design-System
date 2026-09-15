@@ -43,8 +43,8 @@
 
 .dot-nav-dot {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: var(--lufa-semantic-ui-spacing-compact);
+  height: var(--lufa-semantic-ui-spacing-compact);
   border-radius: var(--lufa-semantic-ui-border-radius-full);
   background: var(--lufa-semantic-ui-border-default);
   border: none;
@@ -91,7 +91,7 @@
   position: absolute;
   right: calc(100% + var(--lufa-semantic-ui-spacing-compact));
   font-size: var(--lufa-semantic-ui-typography-caption);
-  font-weight: 500;
+  font-weight: var(--lufa-primitive-typography-font-weight-medium);
   color: var(--lufa-semantic-ui-text-primary);
   background: var(--lufa-semantic-ui-background-page);
   border: var(--lufa-semantic-ui-border-width-thin) solid var(--lufa-semantic-ui-border-default);

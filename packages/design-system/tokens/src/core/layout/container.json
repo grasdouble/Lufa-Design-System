@@ -2,6 +2,18 @@
   "core": {
     "layout": {
       "container": {
+        "xs": {
+          "$value": "{primitive.breakpoint.xs}",
+          "$type": "dimension",
+          "$description": "Extra small container max-width (320px)",
+          "$extensions": {
+            "lufa": {
+              "category": "layout-container",
+              "useCase": "Mobile portrait content containers",
+              "themeable": false
+            }
+          }
+        },
         "sm": {
           "$value": "{primitive.breakpoint.sm}",
           "$type": "dimension",

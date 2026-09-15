@@ -40,7 +40,9 @@ export const shadowCssShorthandCustom = {
 function formatShadow(shadow) {
   const { offsetX = '0', offsetY = '0', blur = '0', spread = '0', color = 'transparent', inset = false } = shadow;
 
-  const parts = [inset ? 'inset' : null, offsetX, offsetY, blur, spread, color].filter(Boolean);
+  const parts = [inset ? 'inset' : null, offsetX, offsetY, blur, spread, color].filter(
+    (part) => part !== null && part !== undefined
+  );
 
   return parts.join(' ');
 }

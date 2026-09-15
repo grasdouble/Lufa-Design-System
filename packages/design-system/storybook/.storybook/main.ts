@@ -7,6 +7,7 @@ const config: StorybookConfig = {
   },
   addons: [
     // '@storybook/addon-themes', // Disabled - using custom theme/mode implementation
+    '@storybook/addon-a11y',
     '@storybook/addon-docs',
   ],
 

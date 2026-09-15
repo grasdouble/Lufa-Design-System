@@ -6,6 +6,8 @@ declare module 'culori' {
    * RGB color representation with values in the range [0, 1]
    */
   export type Rgb = {
+    /** Culori color-space discriminator. */
+    mode: 'rgb';
     /** Red channel: 0-1 */
     r: number;
     /** Green channel: 0-1 */
@@ -17,9 +19,9 @@ declare module 'culori' {
   };
 
   /**
-   * Creates a converter function for the specified color space
-   * @param space - Color space name (e.g., 'rgb', 'hsl', 'lab')
-   * @returns Converter function that parses color strings to the specified space
+   * Creates the RGB converter used by the extension.
+   * @param space - RGB is the only supported output space.
+   * @returns Converter function; invalid colors return undefined.
    */
-  export function converter(space: string): (input: string) => Rgb | null;
+  export function converter(space: 'rgb'): (input: string) => Rgb | undefined;
 }

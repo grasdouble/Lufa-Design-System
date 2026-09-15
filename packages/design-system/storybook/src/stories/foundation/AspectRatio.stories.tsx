@@ -69,11 +69,11 @@ export const Default: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: `linear-gradient(135deg, ${STORY_COLORS.primary.blue.main} 0%, ${STORY_COLORS.primary.violet.main} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '16px',
                     fontWeight: '600',
                   }}
@@ -154,11 +154,11 @@ export const PropRatio: Story = {
                           style={{
                             width: '100%',
                             height: '100%',
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            background: `linear-gradient(135deg, ${STORY_COLORS.primary.blue.main} 0%, ${STORY_COLORS.primary.violet.main} 100%)`,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: 'white',
+                            color: STORY_COLORS.neutral.white,
                             fontSize: '12px',
                             fontWeight: '600',
                           }}
@@ -266,11 +266,11 @@ export const PropAs: Story = {
                           style={{
                             width: '100%',
                             height: '100%',
-                            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                            background: `linear-gradient(135deg, ${STORY_COLORS.primary.pink.main} 0%, ${STORY_COLORS.primary.red.main} 100%)`,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: 'white',
+                            color: STORY_COLORS.neutral.white,
                             fontSize: '12px',
                             fontWeight: '600',
                           }}
@@ -343,11 +343,11 @@ export const UseCases: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: '#000',
+                    background: STORY_COLORS.neutral.black,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '14px',
                   }}
                 >
@@ -385,11 +385,13 @@ export const UseCases: Story = {
                     style={{
                       width: '100%',
                       height: '100%',
-                      background: `linear-gradient(135deg, ${i % 2 === 0 ? '#667eea' : '#f093fb'} 0%, ${i % 2 === 0 ? '#764ba2' : '#f5576c'} 100%)`,
+                      background: `linear-gradient(135deg, ${
+                        i % 2 === 0 ? STORY_COLORS.primary.blue.main : STORY_COLORS.primary.pink.main
+                      } 0%, ${i % 2 === 0 ? STORY_COLORS.primary.violet.main : STORY_COLORS.primary.red.main} 100%)`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       fontSize: '14px',
                       fontWeight: '600',
                     }}
@@ -428,11 +430,11 @@ export const UseCases: Story = {
                     style={{
                       width: '100%',
                       height: '100%',
-                      background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                      background: `linear-gradient(135deg, ${STORY_COLORS.primary.orange.light} 0%, ${STORY_COLORS.primary.pink.light} 100%)`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#8b4513',
+                      color: STORY_COLORS.neutral.textDark,
                       fontSize: '16px',
                       fontWeight: '600',
                     }}
@@ -502,11 +504,23 @@ export const UseCases: Story = {
                       style={{
                         width: '100%',
                         height: '100%',
-                        background: `linear-gradient(180deg, ${i === 1 ? '#fa709a' : i === 2 ? '#667eea' : '#feca57'} 0%, ${i === 1 ? '#fee140' : i === 2 ? '#764ba2' : '#ee5a6f'} 100%)`,
+                        background: `linear-gradient(180deg, ${
+                          i === 1
+                            ? STORY_COLORS.primary.pink.main
+                            : i === 2
+                              ? STORY_COLORS.primary.blue.main
+                              : STORY_COLORS.primary.orange.main
+                        } 0%, ${
+                          i === 1
+                            ? STORY_COLORS.primary.orange.light
+                            : i === 2
+                              ? STORY_COLORS.primary.violet.main
+                              : STORY_COLORS.primary.red.main
+                        } 100%)`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         fontSize: '14px',
                         fontWeight: '600',
                       }}
@@ -539,11 +553,11 @@ export const UseCases: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(90deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+                    background: `linear-gradient(90deg, ${STORY_COLORS.neutral.black} 0%, ${STORY_COLORS.primary.blue.main} 50%, ${STORY_COLORS.primary.cyan.main} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '18px',
                     fontWeight: '600',
                   }}
@@ -581,11 +595,11 @@ export const UseCases: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: `linear-gradient(135deg, ${STORY_COLORS.primary.blue.main} 0%, ${STORY_COLORS.primary.violet.main} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '12px',
                   }}
                 >
@@ -597,11 +611,11 @@ export const UseCases: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                    background: `linear-gradient(135deg, ${STORY_COLORS.primary.pink.main} 0%, ${STORY_COLORS.primary.red.main} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '12px',
                   }}
                 >
@@ -613,11 +627,11 @@ export const UseCases: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                    background: `linear-gradient(135deg, ${STORY_COLORS.primary.orange.light} 0%, ${STORY_COLORS.primary.pink.light} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#8b4513',
+                    color: STORY_COLORS.neutral.textDark,
                     fontSize: '12px',
                   }}
                 >
@@ -688,12 +702,12 @@ export const Playground: Story = {
                   style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: `linear-gradient(135deg, ${STORY_COLORS.primary.blue.main} 0%, ${STORY_COLORS.primary.violet.main} 100%)`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexDirection: 'column',
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     fontSize: '16px',
                     fontWeight: '600',
                     gap: '8px',

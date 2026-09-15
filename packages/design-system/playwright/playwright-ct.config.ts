@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 
 /**
@@ -33,6 +34,13 @@ export default defineConfig({
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
+    ctViteConfig: {
+      resolve: {
+        alias: {
+          '@docusaurus/theme-common': resolve(__dirname, 'src/documentation/docusaurus-theme-common.mock.ts'),
+        },
+      },
+    },
   },
 
   /* Expect configuration for assertions */

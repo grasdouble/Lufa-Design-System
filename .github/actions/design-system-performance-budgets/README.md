@@ -20,7 +20,7 @@ This composite action measures design system performance metrics and checks them
 - Total bundle size
 - Gzipped size (compression ratio)
 
-**Budget:** Total uncompressed **< 275 KB** — Gzipped **< 50 KB**
+**Budget:** Total uncompressed **< 300 KB** — Gzipped **< 50 KB**
 
 **Why it matters:** Large bundles slow down page loads and hurt user experience, especially on slower networks.
 
@@ -106,7 +106,7 @@ Budgets are defined in `budgets.json`, co-located with the action:
 {
   "budgets": {
     "bundle": {
-      "totalSize": { "max": 275 }, // KB, fails on exceed
+      "totalSize": { "max": 300 }, // KB, fails on exceed
       "gzipped": { "max": 50 }, // KB, fails on exceed
     },
     "timing": {
@@ -127,7 +127,7 @@ Budgets are defined in `budgets.json`, co-located with the action:
 {
   "budgets": {
     "bundle": {
-      "totalSize": { "max": 300 }, // Increased from 275
+      "totalSize": { "max": 350 }, // Increased from 300
       "gzipped": { "max": 60 }, // Increased from 50
     },
     "timing": {
@@ -156,7 +156,7 @@ The action posts (or updates) a comment on the PR with marker `<!-- performance-
 
 | Metric          | Current   | Budget | Status  |
 |-----------------|-----------|--------|---------|
-| Bundle Size     | 145.32 KB | 275 KB | ✅ Pass |
+| Bundle Size     | 145.32 KB | 300 KB | ✅ Pass |
 | JS Size         | 125.18 KB | —      | ℹ️ Info |
 | CSS Size        | 20.14 KB  | —      | ℹ️ Info |
 | Gzipped Size    | 42.67 KB  | 50 KB  | ✅ Pass |
@@ -173,7 +173,7 @@ The action posts (or updates) a comment on the PR with marker `<!-- performance-
 
 | Metric          | Current   | Budget | Status  |
 |-----------------|-----------|--------|---------|
-| Bundle Size     | 290.48 KB | 275 KB | ❌ Fail |
+| Bundle Size     | 390.48 KB | 300 KB | ❌ Fail |
 | Gzipped Size    | 58.34 KB  | 50 KB  | ❌ Fail |
 | Build Time      | 25.12s    | 30s    | ✅ Pass |
 | CSS Cascade     | 15ms      | 1000ms | ✅ Pass |
@@ -206,7 +206,7 @@ time pnpm exec tsx src/index.ts validate --theme <your-theme.css> --all
 
 ```bash
 cd packages/design-system/main
-npx vite-bundle-visualizer
+pnpm dlx vite-bundle-visualizer
 # or: pnpm add -D rollup-plugin-visualizer and add to vite.config.ts
 ```
 

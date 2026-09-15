@@ -1,7 +1,9 @@
-import type { ComponentPropsWithoutRef, ElementType } from 'react';
+import type { ElementType } from 'react';
 import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
+import type { ComponentSize } from '../../utils/component-values';
+import type { PolymorphicProps, PolymorphicPropsWithRef } from '../../utils/polymorphic';
 import styles from './Badge.module.css';
 
 /**
@@ -49,8 +51,6 @@ type VariantValue = 'default' | 'success' | 'danger' | 'warning' | 'info';
 /**
  * Badge size values
  */
-type SizeValue = 'sm' | 'md' | 'lg';
-
 /**
  * Valid HTML elements for polymorphic rendering
  */
@@ -61,7 +61,7 @@ type ValidBadgeElements = 'span' | 'div' | 'label';
  *
  * Generic type T allows proper typing when using `as` prop
  */
-export type BadgeProps<T extends ElementType = 'span'> = {
+type BadgeOwnProps = {
   /**
    * Semantic color variant
    * @default 'default'
@@ -72,7 +72,7 @@ export type BadgeProps<T extends ElementType = 'span'> = {
    * Size variant
    * @default 'md'
    */
-  size?: SizeValue;
+  size?: ComponentSize;
 
   /**
    * Show dot indicator (for notifications/status)
@@ -89,19 +89,12 @@ export type BadgeProps<T extends ElementType = 'span'> = {
    * Custom CSS class
    */
   className?: string;
-
-  /**
-   * Element type to render as
-   * @default 'span'
-   */
-  as?: T;
 };
 
 /**
  * Infer props from the element type
  */
-type PolymorphicBadgeProps<T extends ElementType> = BadgeProps<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof BadgeProps<T>>;
+export type BadgeProps<T extends ValidBadgeElements = 'span'> = PolymorphicProps<T, BadgeOwnProps>;
 
 // ============================================
 // COMPONENT
@@ -112,34 +105,40 @@ type PolymorphicBadgeProps<T extends ElementType> = BadgeProps<T> &
  *
  * A versatile badge component for status, labels, and notifications.
  * Uses CSS utility classes generated from badge.utilities.config.cjs.
+ *
+ * Accessibility contract: the dot is decorative and hidden from assistive
+ * technology; consumers must provide textual status content. Choose `as="label"`
+ * only when the badge labels a form control.
  */
-export const Badge = forwardRef(
-  <T extends ValidBadgeElements = 'span'>(
-    { variant = 'default', size = 'md', dot = false, children, className, as, ...props }: PolymorphicBadgeProps<T>,
-    ref: React.ForwardedRef<HTMLElement>
-  ) => {
-    // Determine the element to render
-    const Component = (as ?? 'span') as ElementType;
+const BadgeImpl = <T extends ValidBadgeElements = 'span'>(
+  { variant = 'default', size = 'md', dot = false, children, className, as, ...props }: BadgeProps<T>,
+  ref: React.ForwardedRef<Element>
+) => {
+  // Determine the element to render
+  const Component = (as ?? 'span') as ElementType;
 
-    // Build className
-    const badgeClassName = clsx(
-      styles.badge,
-      styles[`variant-${variant}`],
-      styles[`size-${size}`],
-      {
-        [styles['badge-with-dot']]: dot,
-      },
-      className
-    );
+  // Build className
+  const badgeClassName = clsx(
+    styles.badge,
+    styles[`variant-${variant}`],
+    styles[`size-${size}`],
+    {
+      [styles['badge-with-dot']]: dot,
+    },
+    className
+  );
 
-    return (
-      <Component ref={ref} className={badgeClassName} {...props}>
-        {dot && <span className={styles['badge-dot']} aria-hidden="true" />}
-        <span className={styles['badge-content']}>{children}</span>
-      </Component>
-    );
-  }
-);
+  return (
+    <Component ref={ref as React.Ref<never>} className={badgeClassName} {...props}>
+      {dot && <span className={styles['badge-dot']} aria-hidden="true" />}
+      <span className={styles['badge-content']}>{children}</span>
+    </Component>
+  );
+};
+
+export const Badge = forwardRef(BadgeImpl) as (<T extends ValidBadgeElements = 'span'>(
+  props: PolymorphicPropsWithRef<T, BadgeOwnProps>
+) => React.ReactElement) & { displayName?: string };
 
 // Set displayName for React DevTools
 Badge.displayName = 'Badge';

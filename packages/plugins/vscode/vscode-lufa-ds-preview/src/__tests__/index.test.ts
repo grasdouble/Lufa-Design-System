@@ -1,24 +1,35 @@
-import type { ExtensionContext } from 'vscode';
+import type { CompletionItemProvider, DocumentColorProvider, ExtensionContext, HoverProvider } from 'vscode';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { activate, deactivate } from '../index';
 
 const vscodeMocks = vi.hoisted(() => {
-  let outputChannel: { appendLine: ReturnType<typeof vi.fn>; dispose: ReturnType<typeof vi.fn> } | null = null;
+  const createMockOutputChannel = () => ({
+    appendLine: vi.fn<(message: string) => void>(),
+    dispose: vi.fn<() => void>(),
+  });
+  let outputChannel: ReturnType<typeof createMockOutputChannel> | null = null;
+  let configurationListener: ((event: { affectsConfiguration: (section: string) => boolean }) => void) | null = null;
 
   const createOutputChannel = vi.fn(() => {
-    outputChannel = {
-      appendLine: vi.fn(),
-      dispose: vi.fn(),
-    };
+    outputChannel = createMockOutputChannel();
 
     return outputChannel;
   });
 
-  const registerColorProvider = vi.fn(() => ({ dispose: vi.fn() }));
-  const registerHoverProvider = vi.fn(() => ({ dispose: vi.fn() }));
-  const registerCompletionItemProvider = vi.fn(() => ({ dispose: vi.fn() }));
-  const onDidChangeConfiguration = vi.fn(() => ({ dispose: vi.fn() }));
+  const registerColorProvider = vi.fn((_selector: unknown, _provider: DocumentColorProvider) => ({
+    dispose: vi.fn(),
+  }));
+  const registerHoverProvider = vi.fn((_selector: unknown, _provider: HoverProvider) => ({ dispose: vi.fn() }));
+  const registerCompletionItemProvider = vi.fn((_selector: unknown, _provider: CompletionItemProvider) => ({
+    dispose: vi.fn(),
+  }));
+  const onDidChangeConfiguration = vi.fn(
+    (listener: (event: { affectsConfiguration: (section: string) => boolean }) => void) => {
+      configurationListener = listener;
+      return { dispose: vi.fn() };
+    }
+  );
   const createFileSystemWatcher = vi.fn(() => ({
     onDidChange: vi.fn(),
     onDidCreate: vi.fn(),
@@ -38,6 +49,7 @@ const vscodeMocks = vi.hoisted(() => {
     createFileSystemWatcher.mockClear();
     getConfiguration.mockClear();
     outputChannel = null;
+    configurationListener = null;
   };
 
   return {
@@ -49,8 +61,38 @@ const vscodeMocks = vi.hoisted(() => {
     createFileSystemWatcher,
     getConfiguration,
     getOutputChannel: () => outputChannel,
+    getConfigurationListener: () => configurationListener,
     reset,
   };
+});
+
+const valuesMapStoreMocks = vi.hoisted(() => {
+  const store = {
+    loadValuesMap: vi.fn(() => ({
+      version: 1,
+      css: { '--lufa-core-color-brand-500': 'rgb(255 0 0)' },
+      paths: { 'tokens.color.text.primary': 'rgb(0 0 255)' },
+    })),
+    setupMapWatchers: vi.fn(),
+    resetAllCache: vi.fn(),
+    dispose: vi.fn(),
+    setExtensionRootPath: vi.fn(),
+    isDebugEnabled: vi.fn(() => true),
+  };
+  const createValuesMapStore = vi.fn(() => store);
+
+  const reset = () => {
+    createValuesMapStore.mockClear();
+    Object.values(store).forEach((mock) => mock.mockClear());
+    store.loadValuesMap.mockImplementation(() => ({
+      version: 1,
+      css: { '--lufa-core-color-brand-500': 'rgb(255 0 0)' },
+      paths: { 'tokens.color.text.primary': 'rgb(0 0 255)' },
+    }));
+    store.isDebugEnabled.mockReturnValue(true);
+  };
+
+  return { createValuesMapStore, reset, store };
 });
 
 vi.mock('vscode', () => ({
@@ -94,6 +136,20 @@ vi.mock('vscode', () => ({
       void args;
     }
   },
+  CompletionItem: class {
+    constructor(...args: unknown[]) {
+      void args;
+    }
+  },
+  CompletionItemKind: {
+    Variable: 1,
+    Constant: 2,
+    Color: 3,
+  },
+}));
+
+vi.mock('../values-map-store', () => ({
+  createValuesMapStore: valuesMapStoreMocks.createValuesMapStore,
 }));
 
 const createContext = (): ExtensionContext => {
@@ -106,6 +162,7 @@ const createContext = (): ExtensionContext => {
 describe('extension activation', () => {
   beforeEach(() => {
     vscodeMocks.reset();
+    valuesMapStoreMocks.reset();
   });
 
   afterEach(() => {
@@ -141,9 +198,68 @@ describe('extension activation', () => {
     expect(typeof hoverProvider.provideHover).toBe('function');
     expect(typeof completionProvider.provideCompletionItems).toBe('function');
     expect(context.subscriptions.length).toBe(5);
+    expect(valuesMapStoreMocks.store.setExtensionRootPath).toHaveBeenCalledWith('/__missing__');
+    expect(valuesMapStoreMocks.store.setupMapWatchers).toHaveBeenCalledWith(context);
   });
 
-  it('should dispose the output channel on deactivate', () => {
+  it('should wire provider callbacks to the shared map store and output channel', () => {
+    const context = createContext();
+    activate(context);
+
+    const [, colorProvider] = vscodeMocks.registerColorProvider.mock.calls[0];
+    const [, hoverProvider] = vscodeMocks.registerHoverProvider.mock.calls[0];
+    const [, completionProvider] = vscodeMocks.registerCompletionItemProvider.mock.calls[0];
+    const range = { start: {}, end: {} };
+
+    colorProvider.provideDocumentColors({
+      fileName: 'tokens.css',
+      languageId: 'css',
+      getText: () => '',
+    } as never);
+    hoverProvider.provideHover(
+      {
+        getWordRangeAtPosition: () => range,
+        getText: () => 'tokens.color.text.primary',
+      } as never,
+      {} as never
+    );
+    completionProvider.provideCompletionItems(
+      {
+        lineAt: () => ({ text: '--lufa-core-color-brand-' }),
+      } as never,
+      { line: 0, character: 24 } as never
+    );
+
+    expect(valuesMapStoreMocks.store.loadValuesMap).toHaveBeenCalledTimes(3);
+    expect(valuesMapStoreMocks.store.isDebugEnabled).toHaveBeenCalledTimes(1);
+    expect(vscodeMocks.getOutputChannel()?.appendLine).toHaveBeenCalledWith(
+      expect.stringContaining('Processing tokens.css')
+    );
+  });
+
+  it('should reset watchers only for relevant configuration changes and deduplicate status logs', () => {
+    const context = createContext();
+    activate(context);
+
+    const listener = vscodeMocks.getConfigurationListener();
+    expect(listener).not.toBeNull();
+
+    listener?.({ affectsConfiguration: () => false });
+    expect(valuesMapStoreMocks.store.resetAllCache).not.toHaveBeenCalled();
+
+    listener?.({ affectsConfiguration: (section) => section === 'lufaDsPreview' });
+    listener?.({ affectsConfiguration: (section) => section === 'lufaDsPreview' });
+
+    expect(valuesMapStoreMocks.store.resetAllCache).toHaveBeenCalledTimes(2);
+    expect(valuesMapStoreMocks.store.setupMapWatchers).toHaveBeenCalledTimes(3);
+
+    const configurationMessages = vscodeMocks
+      .getOutputChannel()
+      ?.appendLine.mock.calls.filter(([message]) => message.includes('Configuration changed'));
+    expect(configurationMessages).toHaveLength(1);
+  });
+
+  it('should dispose the map store and output channel on deactivate', () => {
     const context = createContext();
 
     activate(context);
@@ -153,6 +269,7 @@ describe('extension activation', () => {
 
     deactivate();
 
+    expect(valuesMapStoreMocks.store.dispose).toHaveBeenCalledTimes(1);
     expect(outputChannel?.dispose).toHaveBeenCalledTimes(1);
   });
 });

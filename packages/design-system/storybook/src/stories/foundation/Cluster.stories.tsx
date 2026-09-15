@@ -153,7 +153,7 @@ export const Playground: Story = {
               style={{
                 padding: '12px 16px',
                 background: getColorByIndex(i - 1).main,
-                color: 'white',
+                color: STORY_COLORS.neutral.white,
                 borderRadius: '8px',
                 fontWeight: 600,
                 textAlign: 'center',
@@ -209,7 +209,7 @@ export const PropSpacing: Story = {
                       style={{
                         padding: '6px 12px',
                         background: color,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '16px',
                         fontSize: '12px',
                         fontWeight: 600,
@@ -265,7 +265,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.blue.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '40px',
@@ -279,7 +279,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.violet.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '60px',
@@ -293,7 +293,7 @@ export const PropAlign: Story = {
                       style={{
                         padding: '12px',
                         background: STORY_COLORS.primary.pink.main,
-                        color: 'white',
+                        color: STORY_COLORS.neutral.white,
                         borderRadius: '6px',
                         fontWeight: 600,
                         height: '50px',
@@ -355,7 +355,7 @@ export const PropJustify: Story = {
                           style={{
                             padding: '10px 14px',
                             background: color.main,
-                            color: 'white',
+                            color: STORY_COLORS.neutral.white,
                             borderRadius: '6px',
                             fontWeight: 600,
                             fontSize: '13px',
@@ -407,7 +407,7 @@ export const UseCases: Story = {
                     style={{
                       padding: '6px 14px',
                       background: getColorByIndex(idx).main,
-                      color: 'white',
+                      color: STORY_COLORS.neutral.white,
                       borderRadius: '16px',
                       fontSize: '13px',
                       fontWeight: 600,
@@ -442,7 +442,7 @@ export const UseCases: Story = {
                   borderRadius: '6px',
                   border: 'none',
                   background: STORY_COLORS.primary.blue.main,
-                  color: 'white',
+                  color: STORY_COLORS.neutral.white,
                   fontWeight: 600,
                   cursor: 'pointer',
                 }}
@@ -506,7 +506,7 @@ export const UseCases: Story = {
                   style={{
                     padding: '4px 10px',
                     background: color,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     borderRadius: '4px',
                     fontSize: '12px',
                     fontWeight: 600,
@@ -598,8 +598,8 @@ export const MigrationFromChakra: Story = {
                 <div
                   style={{
                     padding: '8px 12px',
-                    background: '#fee2e2',
-                    color: '#991b1b',
+                    background: STORY_COLORS.themed.background.error,
+                    color: STORY_COLORS.themed.text.error,
                     borderRadius: '6px 6px 0 0',
                     fontSize: '13px',
                     fontWeight: 600,
@@ -628,8 +628,8 @@ export const MigrationFromChakra: Story = {
                 <div
                   style={{
                     padding: '8px 12px',
-                    background: '#d1fae5',
-                    color: '#065f46',
+                    background: STORY_COLORS.themed.background.success,
+                    color: STORY_COLORS.themed.text.success,
                     borderRadius: '6px 6px 0 0',
                     fontSize: '13px',
                     fontWeight: 600,
@@ -821,7 +821,7 @@ export const MigrationFromChakra: Story = {
                   style={{
                     padding: '6px 14px',
                     background: getColorByIndex(idx).main,
-                    color: 'white',
+                    color: STORY_COLORS.neutral.white,
                     borderRadius: '16px',
                     fontSize: '13px',
                     fontWeight: 600,

@@ -1,0 +1,18 @@
+.field {
+  display: grid;
+  gap: var(--lufa-semantic-ui-spacing-tight);
+}
+
+.description,
+.error {
+  margin: 0;
+  font-size: var(--lufa-semantic-ui-typography-caption);
+}
+
+.description {
+  color: var(--lufa-semantic-ui-text-secondary);
+}
+
+.error {
+  color: var(--lufa-semantic-ui-text-error);
+}

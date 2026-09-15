@@ -309,5 +309,5 @@ The 8xl token (96px maximum) has intentional behavior where fluid scaling only e
 - [Spacing Tokens](/docs/tokens/spacing) - Layout spacing system
 
 :::note Updated Documentation
-This documentation has been updated to include the extended type scale (6xl-8xl) tokens. These tokens were added as part of ADR-010 to support marketing, hero sections, and display typography use cases. See the [Extended Type Scale Storybook story](https://storybook.lufa-ds.grasdouble.com/?path=/story/tokens-typography--extended-type-scale) for interactive examples and responsive behavior.
+The extended type scale (6xl-8xl) supports marketing, hero, and display typography. See the [Typography story source](https://github.com/grasdouble/Lufa-Design-System/blob/main/packages/design-system/storybook/src/stories/tokens/Typography.stories.tsx) for interactive examples and responsive behavior.
 :::

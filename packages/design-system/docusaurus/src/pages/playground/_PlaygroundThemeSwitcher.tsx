@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 
 import styles from './PlaygroundThemeSwitcher.module.css';
@@ -48,8 +48,16 @@ type PlaygroundThemeSwitcherProps = {
  * Isolated ThemeSwitcher for the playground.
  * Applies the color theme to the playground container only.
  * Color mode (light/dark) is driven by Docusaurus's own toggle in the navbar.
+ *
+ * The trigger follows the disclosure pattern. Enter/Space use native button
+ * behavior, Escape closes the options and restores trigger focus, and each
+ * theme button exposes its selected state with `aria-pressed`.
  */
 export default function PlaygroundThemeSwitcher({ containerRef }: PlaygroundThemeSwitcherProps): React.JSX.Element {
+  const switcherRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownId = useId();
+  const titleId = useId();
   const [currentTheme, setCurrentTheme] = useState<ThemeName>(() => {
     if (typeof window === 'undefined') return 'default';
     const stored = localStorage.getItem('lufa-playground-theme');
@@ -80,6 +88,19 @@ export default function PlaygroundThemeSwitcher({ containerRef }: PlaygroundThem
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!switcherRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [isOpen]);
+
   const handleThemeChange = (theme: ThemeName) => {
     setCurrentTheme(theme);
     applyTheme(theme);
@@ -87,37 +108,68 @@ export default function PlaygroundThemeSwitcher({ containerRef }: PlaygroundThem
     setIsOpen(false);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Escape' || !isOpen) return;
+
+    event.preventDefault();
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
   const currentThemeData = THEMES.find((t) => t.name === currentTheme) || THEMES[0];
 
   return (
-    <div className={styles.themeSwitcher}>
+    <div ref={switcherRef} className={styles.themeSwitcher} onKeyDown={handleKeyDown}>
       <button
+        ref={triggerRef}
+        type="button"
         className={styles.trigger}
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={dropdownId}
         aria-label={`${currentThemeData.label} theme - Switch playground theme`}
         title={`Current theme: ${currentThemeData.label}. Click to switch theme.`}
       >
-        <span className={styles.icon}>{currentThemeData.icon}</span>
+        <span className={styles.icon} aria-hidden="true">
+          {currentThemeData.icon}
+        </span>
         <span className={styles.label}>{currentThemeData.label}</span>
-        <span className={styles.arrow}>{isOpen ? '▲' : '▼'}</span>
+        <span className={styles.arrow} aria-hidden="true">
+          {isOpen ? '▲' : '▼'}
+        </span>
       </button>
 
       {isOpen && (
-        <div className={styles.dropdown}>
+        <div id={dropdownId} className={styles.dropdown} role="group" aria-labelledby={titleId}>
           <div className={styles.section}>
-            <h4 className={styles.sectionTitle}>Color Theme</h4>
+            <h4 id={titleId} className={styles.sectionTitle}>
+              Color theme
+            </h4>
             <div className={styles.themeGrid}>
-              {THEMES.map((theme) => (
-                <button
-                  key={theme.name}
-                  className={`${styles.themeOption} ${currentTheme === theme.name ? styles.active : ''}`}
-                  onClick={() => handleThemeChange(theme.name)}
-                  title={theme.description}
-                >
-                  <span className={styles.themeIcon}>{theme.icon}</span>
-                  <span className={styles.themeName}>{theme.label}</span>
-                </button>
-              ))}
+              {THEMES.map((theme) => {
+                const isSelected = currentTheme === theme.name;
+
+                return (
+                  <button
+                    key={theme.name}
+                    type="button"
+                    className={`${styles.themeOption} ${isSelected ? styles.active : ''}`}
+                    onClick={() => handleThemeChange(theme.name)}
+                    aria-pressed={isSelected}
+                    title={theme.description}
+                  >
+                    <span className={styles.themeIcon} aria-hidden="true">
+                      {theme.icon}
+                    </span>
+                    <span className={styles.themeName}>{theme.label}</span>
+                    {isSelected && (
+                      <span className={styles.selectedIndicator} aria-hidden="true">
+                        ✓
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>

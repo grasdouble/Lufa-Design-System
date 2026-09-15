@@ -179,16 +179,16 @@ export const ThemeShowcase: Story = {
               These buttons automatically use the active theme's brand colors
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Button type="solid" variant="primary" size="md">
+              <Button appearance="solid" variant="primary" size="md">
                 Primary Button
               </Button>
-              <Button type="solid" variant="secondary" size="md">
+              <Button appearance="solid" variant="secondary" size="md">
                 Secondary Button
               </Button>
-              <Button type="outline" variant="primary" size="md">
+              <Button appearance="outline" variant="primary" size="md">
                 Outline Button
               </Button>
-              <Button type="ghost" variant="primary" size="md">
+              <Button appearance="ghost" variant="primary" size="md">
                 Ghost Button
               </Button>
             </div>
@@ -278,7 +278,7 @@ export const ThemeShowcase: Story = {
               >
                 This card has a brand-colored accent border on the left that updates with the active theme.
               </div>
-              <Button type="solid" variant="primary" size="sm">
+              <Button appearance="solid" variant="primary" size="sm">
                 Card Action
               </Button>
             </div>
