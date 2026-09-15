@@ -3,3 +3,5 @@
 ---
 
 feat: add metadata-driven completeness checks and harden theme parsing, contrast diagnostics, and template file handling
+
+fix: exclude synthetic CLI test fixtures from production token-usage validation

@@ -133,7 +133,7 @@
 .themeOption.active {
   background: var(--ifm-color-primary);
   border-color: var(--ifm-color-primary-dark);
-  color: var(--lufa-docusaurus-primary-foreground, #ffffff);
+  color: var(--docusaurus-primary-foreground, #ffffff);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 

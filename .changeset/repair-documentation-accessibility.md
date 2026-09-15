@@ -5,3 +5,5 @@
 ---
 
 fix: repair design-system documentation, accessible documentation controls, Storybook accessibility checks, and deterministic Playwright visual coverage
+
+fix: keep Docusaurus-local color aliases outside the reserved Lufa token namespace

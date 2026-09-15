@@ -128,7 +128,8 @@
     "tools:---------------------------------------------": "",
     "tools:generate-outdated-report": "node .github/actions/dependency-update/generateOutdatedReport.js",
     "validate:------------------------------------------": "",
-    "validate:docs": "bash scripts/validate-ai-docs.sh"
+    "validate:docs": "bash scripts/validate-ai-docs.sh",
+    "validate:docs:test": "bash scripts/validate-ai-docs.test.sh"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
