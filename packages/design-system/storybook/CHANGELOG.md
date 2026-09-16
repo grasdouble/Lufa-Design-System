@@ -1,5 +1,26 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.5
+
+### Patch Changes
+
+- d2f0ca5: feat: improve component API safety, theme state ownership, and accessible form composition
+
+  style: normalize Text source formatting required by the repository formatter
+
+- d2f0ca5: fix: repair design-system documentation, accessible documentation controls, Storybook accessibility checks, and deterministic Playwright visual coverage
+
+  fix: keep Docusaurus-local color aliases outside the reserved Lufa token namespace
+
+- d2f0ca5: chore: harden CI, align pnpm tooling, repair package linting, and resolve audited dependencies
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+- Updated dependencies [d2f0ca5]
+  - @grasdouble/lufa_design-system-themes@1.1.8
+  - @grasdouble/lufa_design-system-tokens@1.2.8
+  - @grasdouble/lufa_design-system@3.5.0
+
 ## 1.3.4
 
 ### Patch Changes
