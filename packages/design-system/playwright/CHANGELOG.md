@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.4
+
+### Patch Changes
+
+- 8e0452a: fix: Keep shared themes and the legacy mode adapter usable when browser storage access, reads, or writes fail, with browser regression tests. Also cover the Storybook theme switcher variants.
+
 ## 1.3.3
 
 ### Patch Changes
