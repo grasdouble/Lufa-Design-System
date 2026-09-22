@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import type { AspectRatioProps } from '@grasdouble/lufa_design-system';
 import { AspectRatio } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
@@ -691,7 +690,7 @@ export const Playground: Story = {
     ratio: 16 / 9,
     as: 'div',
   },
-  render: (args: AspectRatioProps) => {
+  render: (args) => {
     return (
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -714,7 +713,9 @@ export const Playground: Story = {
                   }}
                 >
                   <div>Ratio: {args.ratio?.toFixed(4)}</div>
-                  <div style={{ fontSize: '12px', opacity: 0.9 }}>Element: &lt;{args.as ?? 'div'}&gt;</div>
+                  <div style={{ fontSize: '12px', opacity: 0.9 }}>
+                    Element: &lt;{typeof args.as === 'string' ? args.as : 'div'}&gt;
+                  </div>
                 </div>
               </AspectRatio>
             </div>

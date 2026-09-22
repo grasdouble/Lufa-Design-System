@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { StoryContainer } from '../../components/helpers';
@@ -71,7 +70,7 @@ const OverlayTile = ({ token, label }: { token: string; label: string }) => (
 
 export const Overview: Story = {
   render: () => (
-    <StoryContainer title="Alpha Tokens">
+    <StoryContainer>
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', marginBottom: '16px', color: 'var(--lufa-semantic-ui-text-primary)' }}>
           Primitive Alpha - Black

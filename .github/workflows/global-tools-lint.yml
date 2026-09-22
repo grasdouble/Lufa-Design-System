@@ -36,6 +36,9 @@ jobs:
       - name: 🏗️ Build packages
         run: pnpm all:build
 
+      - name: 🧪 Test CLI with coverage
+        run: pnpm --filter @grasdouble/lufa_design-system-cli run test:coverage
+
       - name: 🧪 Test VS Code extension
         run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run test
 

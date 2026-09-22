@@ -85,7 +85,7 @@ const meta = {
       table: {
         category: 'Layout',
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     grow: {
@@ -94,7 +94,7 @@ const meta = {
       table: {
         category: 'Layout',
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
 

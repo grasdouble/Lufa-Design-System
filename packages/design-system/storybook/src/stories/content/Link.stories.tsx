@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Link, Text } from '@grasdouble/lufa_design-system';
@@ -172,7 +171,7 @@ export const PropVariant: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '32px' }}>
           {variants.map(({ value, description }) => (
             <div key={value} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <PropCard>
+              <PropCard label="">
                 <Text as="p" variant="body">
                   Example with{' '}
                   <Link href="https://example.com" variant={value}>
@@ -269,7 +268,7 @@ export const PropTarget: Story = {
       <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '32px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <PropCard>
+            <PropCard label="">
               <Text as="p" variant="body">
                 Internal link:{' '}
                 <Link href="https://example.com" target="_self">
@@ -283,7 +282,7 @@ export const PropTarget: Story = {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <PropCard>
+            <PropCard label="">
               <Text as="p" variant="body">
                 External link:{' '}
                 <Link href="https://github.com" target="_blank">

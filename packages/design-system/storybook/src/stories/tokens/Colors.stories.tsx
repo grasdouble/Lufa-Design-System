@@ -146,7 +146,7 @@ const ColorScale = ({ colorName, shades }: { colorName: string; shades: number[]
  */
 export const Overview: Story = {
   render: () => (
-    <StoryContainer title="Color Tokens">
+    <StoryContainer>
       {/* Primitive Colors */}
       <ColorCategory title="Primitive Colors">
         <div style={{ width: '100%' }}>
@@ -690,7 +690,7 @@ export const Overview: Story = {
  */
 export const PrimitiveColors: Story = {
   render: () => (
-    <StoryContainer title="Primitive Colors">
+    <StoryContainer>
       <ColorScale colorName="gray" shades={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]} />
       <ColorScale colorName="blue" shades={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]} />
       <ColorScale colorName="red" shades={[50, 100, 200, 300, 400, 500, 600, 700, 800, 900]} />
@@ -708,7 +708,7 @@ export const PrimitiveColors: Story = {
  */
 export const SemanticColors: Story = {
   render: () => (
-    <StoryContainer title="Semantic Colors">
+    <StoryContainer>
       <ColorCategory title="Success">
         <ColorSwatch token="--lufa-semantic-ui-text-success" name="success" />
         <ColorSwatch token="--lufa-semantic-ui-background-success" name="success-background" />
@@ -751,7 +751,7 @@ export const SemanticColors: Story = {
  */
 export const ComponentColors: Story = {
   render: () => (
-    <StoryContainer title="Component Colors">
+    <StoryContainer>
       <ColorCategory title="Button - Primary">
         <ColorSwatch token="--lufa-component-button-type-solid-variant-primary-background-default" name="primary-bg" />
         <ColorSwatch
