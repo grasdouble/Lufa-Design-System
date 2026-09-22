@@ -64,7 +64,8 @@ runs:
       uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: packages/design-system/storybook/storybook-static
-        key: storybook-build-${{ runner.os }}-${{ hashFiles('packages/design-system/storybook/**/*', 'packages/design-system/*/dist/**/*', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', '.tool-versions', '.npmrc') }}
+        # The VS Code token map contains generatedAt; documentation uses the stable token artifacts.
+        key: storybook-build-${{ runner.os }}-${{ hashFiles('packages/design-system/storybook/**/*', 'packages/design-system/*/dist/**/*', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', '.tool-versions', '.npmrc', '!packages/design-system/tokens/dist/tokens.map.json') }}
         restore-keys: |
           storybook-build-${{ runner.os }}-
 
@@ -79,7 +80,8 @@ runs:
       uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
       with:
         path: packages/design-system/docusaurus/build
-        key: docusaurus-build-${{ runner.os }}-${{ hashFiles('packages/design-system/docusaurus/**/*', 'packages/design-system/*/dist/**/*', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', '.tool-versions', '.npmrc') }}
+        # The VS Code token map contains generatedAt; documentation uses the stable token artifacts.
+        key: docusaurus-build-${{ runner.os }}-${{ hashFiles('packages/design-system/docusaurus/**/*', 'packages/design-system/*/dist/**/*', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', '.tool-versions', '.npmrc', '!packages/design-system/tokens/dist/tokens.map.json') }}
         restore-keys: |
           docusaurus-build-${{ runner.os }}-
 
