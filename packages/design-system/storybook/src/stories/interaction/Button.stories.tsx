@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+import type { IconName } from '@grasdouble/lufa_design-system';
 import { Button } from '@grasdouble/lufa_design-system';
 
 import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
@@ -531,7 +532,12 @@ export const PropRadius: Story = {
 export const PropIcons: Story = {
   name: 'Prop: iconLeft / iconRight',
   render: () => {
-    const iconExamples = [
+    const iconExamples: {
+      config: { iconLeft?: IconName; iconRight?: IconName };
+      label: string;
+      children?: string;
+      ariaLabel?: string;
+    }[] = [
       { config: { iconLeft: 'check' }, label: 'iconLeft="check"', children: 'Save' },
       { config: { iconRight: 'arrow-right' }, label: 'iconRight="arrow-right"', children: 'Next' },
       {

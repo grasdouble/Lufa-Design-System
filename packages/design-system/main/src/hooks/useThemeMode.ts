@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-import { hydrateStoredMode } from './themeController.js';
+import { hydrateStoredMode, readStoredValue } from './themeController.js';
 import { isThemeMode } from './themeValues.js';
 import { useTheme } from './useTheme.js';
 
@@ -60,7 +60,7 @@ export function useThemeMode(options: UseThemeModeOptions = {}): UseThemeModeRet
     if (appliedConfiguration.current === configuration) return;
     appliedConfiguration.current = configuration;
 
-    const storedMode = enableStorage && typeof window !== 'undefined' ? window.localStorage.getItem(storageKey) : null;
+    const storedMode = enableStorage && typeof window !== 'undefined' ? readStoredValue(storageKey) : null;
     if (isThemeMode(storedMode) && storedMode !== 'auto') {
       hydrateStoredMode(storedMode, storageKey);
     } else if (!autoDetect && sharedMode === 'auto') {

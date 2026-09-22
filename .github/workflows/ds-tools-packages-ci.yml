@@ -30,6 +30,14 @@ jobs:
         with:
           filters: |
             packages:
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - '.tool-versions'
+              - '.npmrc'
+              - '*config*'
+              - '.github/actions/setup-node-pnpm/**'
+              - '.github/actions/design-system-build/**'
               - 'packages/design-system/main/**'
               - 'packages/design-system/tokens/**'
               - 'packages/design-system/themes/**'
@@ -40,6 +48,14 @@ jobs:
               - '.github/actions/design-system-checks/**'
               - '.github/workflows/ds-tools-packages-ci.yml'
             perf:
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - '.tool-versions'
+              - '.npmrc'
+              - '*config*'
+              - '.github/actions/setup-node-pnpm/**'
+              - '.github/actions/design-system-build/**'
               - 'packages/design-system/main/src/**'
               - 'packages/design-system/tokens/**/*.json'
               - 'packages/design-system/main/vite.config.ts'

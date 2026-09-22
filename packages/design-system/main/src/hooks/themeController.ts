@@ -25,12 +25,21 @@ let snapshot: ThemeSnapshot = {
   mode: 'auto',
 };
 
-function readStoredValue(key: string): string | null {
-  return window.localStorage.getItem(key);
+export function readStoredValue(key: string): string | null {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    // Storage can be denied by browser policies; retain the document/default state.
+    return null;
+  }
 }
 
 function writeStoredValue(key: string, value: string): void {
-  window.localStorage.setItem(key, value);
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // Persistence is best effort; the shared state and document remain usable.
+  }
 }
 
 function registerStorageKeys(options: ThemeControllerOptions, syncTheme: boolean, syncMode: boolean): void {

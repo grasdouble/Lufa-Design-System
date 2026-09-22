@@ -29,9 +29,9 @@ runs:
       run: |
         echo "::group::Build time measurement"
         BUILD_START=$(date +%s%3N)
-        pnpm --filter @grasdouble/lufa_design-system-tokens build > /dev/null 2>&1 || true
-        pnpm --filter @grasdouble/lufa_design-system-themes build > /dev/null 2>&1 || true
-        pnpm --filter @grasdouble/lufa_design-system build > /dev/null 2>&1 || true
+        pnpm --filter @grasdouble/lufa_design-system-tokens build
+        pnpm --filter @grasdouble/lufa_design-system-themes build
+        pnpm --filter @grasdouble/lufa_design-system build
         BUILD_END=$(date +%s%3N)
         BUILD_TIME_MS=$((BUILD_END - BUILD_START))
         BUILD_TIME_SEC=$(echo "scale=2; $BUILD_TIME_MS / 1000" | bc)
@@ -50,16 +50,16 @@ runs:
           JS_BYTES=$(stat -c%s "${DIST}/lufa-ui.mjs" 2>/dev/null || stat -f%z "${DIST}/lufa-ui.mjs")
           JS_KB=$(echo "scale=2; $JS_BYTES / 1024" | bc)
         else
-          JS_KB=0
-          echo "⚠️ lufa-ui.mjs not found"
+          echo "::error::lufa-ui.mjs not found"
+          exit 1
         fi
 
         if [ -f "${DIST}/style.css" ]; then
           CSS_BYTES=$(stat -c%s "${DIST}/style.css" 2>/dev/null || stat -f%z "${DIST}/style.css")
           CSS_KB=$(echo "scale=2; $CSS_BYTES / 1024" | bc)
         else
-          CSS_KB=0
-          echo "⚠️ style.css not found"
+          echo "::error::style.css not found"
+          exit 1
         fi
 
         TOTAL_KB=$(echo "${JS_KB} + ${CSS_KB}" | bc)
@@ -85,26 +85,8 @@ runs:
       id: css-cascade
       shell: bash
       run: |
-        echo "::group::CSS cascade measurement"
-        cat > /tmp/test-theme.css << 'THEMEEOF'
-        [data-mode="light"] {
-          --lufa-semantic-ui-text-primary: var(--lufa-core-color-neutral-text-primary);
-          --lufa-semantic-ui-bg-primary: var(--lufa-core-color-neutral-bg-primary);
-          --lufa-core-color-neutral-text-primary: var(--lufa-primitive-color-gray-900);
-          --lufa-core-color-neutral-bg-primary: var(--lufa-primitive-color-white);
-          --lufa-primitive-color-gray-900: #111827;
-          --lufa-primitive-color-white: #ffffff;
-        }
-        THEMEEOF
-
-        CASCADE_START=$(date +%s%3N)
-        pnpm --filter @grasdouble/lufa_design-system-cli exec tsx src/index.ts validate --theme /tmp/test-theme.css --all > /tmp/cascade-output.txt 2>&1 || true
-        CASCADE_END=$(date +%s%3N)
-        CASCADE_MS=$((CASCADE_END - CASCADE_START))
-
-        echo "value_ms=${CASCADE_MS}" >> $GITHUB_OUTPUT
-        echo "CSS cascade validation: ${CASCADE_MS}ms"
-        echo "::endgroup::"
+        node --test "$GITHUB_ACTION_PATH/measure-css-cascade.test.mjs"
+        node "$GITHUB_ACTION_PATH/measure-css-cascade.mjs"
 
     # ── Budget checks ─────────────────────────────────────────────────────────
 

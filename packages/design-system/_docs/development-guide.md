@@ -40,7 +40,7 @@ The project uses `.tool-versions` (asdf format) to lock Node.js and pnpm version
 
 ```
 # .tool-versions
-nodejs 25.2.1
+nodejs 26.8.1
 pnpm 12.4.2
 ```
 
