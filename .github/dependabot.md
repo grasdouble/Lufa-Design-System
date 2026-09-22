@@ -48,6 +48,8 @@ All GitHub Actions updates are grouped together to simplify review and merging. 
 - `changesets/action`
 - Custom actions used in workflows
 
+Major updates to `changesets/action` are ignored pending a coordinated compatibility review. The repository uses action v2 with Changesets CLI v3; future major upgrades must review the CLI, workflow inputs, authentication, and private-package versioning together before revisiting the ignore rule. Minor and patch updates remain enabled.
+
 **PR Limit**: Maximum 5 open PRs at a time to avoid overwhelming the review queue.
 
 ## Pull Request Details

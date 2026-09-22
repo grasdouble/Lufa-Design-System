@@ -314,6 +314,14 @@ Tests are also listed in the Build & Validation table above.
 
 If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
 
+## Changesets — Verify action and CLI compatibility together
+
+The release workflow must use an action major compatible with the installed Changesets CLI; a version comment does not prove which release a pinned SHA executes.
+
+- ✅ With `@changesets/cli` v3, pin `changesets/action` to a verified v2 release SHA, pass the custom write token through `github-token`, and explicitly configure `privatePackages` with `version: true` and `tag: false`.
+- ✅ For future major upgrades, review CLI compatibility, action inputs, authentication, and private-package versioning together; keep action major updates ignored in Dependabot until that review is complete.
+- ❌ Upgrade only the action major, rely on a stale version comment, or pass the custom token only through `env.GITHUB_TOKEN` — the action may reject the CLI or use the wrong authentication identity.
+
 ## JavaScript module tests — Avoid type-only casts without declarations
 
 When a TypeScript test imports a local `.mjs` module without a declaration file, do not add a type-only import solely to cast the imported function. Some lint contexts treat that type binding as unused. Test the observable result directly, or add a real module declaration when compile-time typing is required.

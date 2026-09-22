@@ -52,14 +52,12 @@ jobs:
 
       # Publish the release or pre-release
       - name: Run Changesets Action
-        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v1
+        # Action v2 is compatible with @changesets/cli v3; review future majors together.
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          publish: 'pnpm changeset publish' # The command to run to publish the packages
-          title: 'Release: New Version Updates' # The title for the changeset commit
-          commit: 'Release new versions' # The commit message for the changeset commit
-          setupGitUser: true # Set this to true if you want to set up the git user for the action
-          version: pnpm changeset version # The command to run to bump the version
-          createGithubReleases: true # Set this to true if you want to create a GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.LUFA_CI_SECRET_WRITE }}
-          NPM_TOKEN: ${{ secrets.LUFA_CI_SECRET_WRITE }}
+          github-token: ${{ secrets.LUFA_CI_SECRET_WRITE }}
+          publish-script: 'pnpm changeset publish' # The command to run to publish the packages
+          pr-title: 'Release: New Version Updates' # The title for the release pull request
+          commit-message: 'Release new versions' # The commit message for the changeset commit
+          version-script: pnpm changeset version # The command to run to bump the version
+          create-github-releases: true # Set this to true if you want to create a GitHub release
