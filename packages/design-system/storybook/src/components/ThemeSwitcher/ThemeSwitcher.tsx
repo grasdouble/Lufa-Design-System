@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import type { ThemeName } from '@grasdouble/lufa_design-system';
-import { Button, Typography, useTheme } from '@grasdouble/lufa_design-system';
+import { Button, Text, useTheme } from '@grasdouble/lufa_design-system';
 
 import styles from './ThemeSwitcher.module.css';
 
@@ -45,6 +45,9 @@ export type ThemeSwitcherProps = {
  * ThemeSwitcher component allows users to switch between different accessibility modes.
  * Modes (light/dark/high-contrast) are applied by setting the data-mode attribute.
  *
+ * Accessibility: native buttons and select support keyboard interaction; buttons
+ * expose their selected state with aria-pressed.
+ *
  * Note: Theme variants (ocean/forest) are placeholders for Phase 6.
  */
 export function ThemeSwitcher({
@@ -83,9 +86,9 @@ export function ThemeSwitcher({
         {showModeSwitcher && (
           <>
             {showLabel && (
-              <Typography variant="bodySmall" color="secondary" weight="medium">
+              <Text variant="body-small" color="secondary" weight="medium">
                 Mode:
-              </Typography>
+              </Text>
             )}
             <select
               id="mode-select"
@@ -113,6 +116,7 @@ export function ThemeSwitcher({
               <Button
                 appearance={mode === 'light' ? 'solid' : 'ghost'}
                 size="sm"
+                aria-pressed={mode === 'light'}
                 onClick={() => handleModeChange('light')}
                 title="Light mode"
               >
@@ -121,6 +125,7 @@ export function ThemeSwitcher({
               <Button
                 appearance={mode === 'dark' ? 'solid' : 'ghost'}
                 size="sm"
+                aria-pressed={mode === 'dark'}
                 onClick={() => handleModeChange('dark')}
                 title="Dark mode"
               >
@@ -129,6 +134,7 @@ export function ThemeSwitcher({
               <Button
                 appearance={mode === 'high-contrast' ? 'solid' : 'ghost'}
                 size="sm"
+                aria-pressed={mode === 'high-contrast'}
                 onClick={() => handleModeChange('high-contrast')}
                 title="High contrast mode"
               >
@@ -148,13 +154,14 @@ export function ThemeSwitcher({
         <>
           <div className={styles.buttonGroup}>
             {showLabel && (
-              <Typography variant="bodySmall" color="secondary" weight="medium">
+              <Text variant="body-small" color="secondary" weight="medium">
                 Mode:
-              </Typography>
+              </Text>
             )}
             <Button
               appearance={mode === 'light' ? 'solid' : 'outline'}
               size="sm"
+              aria-pressed={mode === 'light'}
               onClick={() => handleModeChange('light')}
               title="Light mode"
             >
@@ -163,6 +170,7 @@ export function ThemeSwitcher({
             <Button
               appearance={mode === 'dark' ? 'solid' : 'outline'}
               size="sm"
+              aria-pressed={mode === 'dark'}
               onClick={() => handleModeChange('dark')}
               title="Dark mode"
             >
@@ -171,6 +179,7 @@ export function ThemeSwitcher({
             <Button
               appearance={mode === 'high-contrast' ? 'solid' : 'outline'}
               size="sm"
+              aria-pressed={mode === 'high-contrast'}
               onClick={() => handleModeChange('high-contrast')}
               title="High contrast mode"
             >

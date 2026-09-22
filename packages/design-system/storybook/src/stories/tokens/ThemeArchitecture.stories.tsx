@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from '@grasdouble/lufa_design-system';
@@ -66,7 +65,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const Overview: Story = {
   render: () => (
-    <StoryContainer title="Theme Architecture Overview">
+    <StoryContainer>
       {/* Architecture Diagram */}
       <div
         style={{
@@ -352,7 +351,7 @@ export const Overview: Story = {
  */
 export const ThemeableVsNonThemeable: Story = {
   render: () => (
-    <StoryContainer title="Themeable vs Non-Themeable Tokens">
+    <StoryContainer>
       <div
         style={{
           padding: '16px',
@@ -438,7 +437,7 @@ export const ThemeableVsNonThemeable: Story = {
  */
 export const ModeAwareTokens: Story = {
   render: () => (
-    <StoryContainer title="Mode-Aware Tokens">
+    <StoryContainer>
       <TokenMatrix
         title="Mode-Aware Semantic Tokens"
         description="These tokens automatically adapt to the selected mode (light/dark/high-contrast)"
@@ -561,7 +560,7 @@ export const ModeAwareTokens: Story = {
  */
 export const PrimitiveImmutability: Story = {
   render: () => (
-    <StoryContainer title="Primitive Token Immutability">
+    <StoryContainer>
       <div
         style={{
           padding: '20px',
@@ -705,7 +704,7 @@ export const PrimitiveImmutability: Story = {
  */
 export const TokenReferenceChains: Story = {
   render: () => (
-    <StoryContainer title="Token Reference Chains">
+    <StoryContainer>
       <div
         style={{
           padding: '16px',
@@ -834,7 +833,7 @@ export const TokenReferenceChains: Story = {
  */
 export const ComponentExamples: Story = {
   render: () => (
-    <StoryContainer title="Component Examples with Themeable Tokens">
+    <StoryContainer>
       <div
         style={{
           padding: '16px',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { DotNav } from '@grasdouble/lufa_design-system';
@@ -36,6 +36,7 @@ import { CodeBlock, PropCard, StoryContainer } from '../../components/helpers';
 const meta = {
   title: '9. Navigation/DotNav',
   component: DotNav,
+  args: { sections: [], activeId: '', onSelect: () => undefined },
   parameters: {
     layout: 'fullscreen',
   },

@@ -105,7 +105,7 @@ export const ThemeShowcase: Story = {
     };
 
     return (
-      <StoryContainer title="Theme Testing">
+      <StoryContainer>
         {/* Instructions Banner */}
         <div
           style={{

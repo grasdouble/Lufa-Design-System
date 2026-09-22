@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Box, Button, Text } from '@grasdouble/lufa_design-system';
@@ -64,7 +63,7 @@ const PRIMARY = STORY_COLORS.primary;
 export const TokenVsHardCoded: Story = {
   render: () => {
     return (
-      <StoryContainer title="Token vs Hard-Coded Comparison">
+      <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {/* Good Example - Token-Based */}
           <section>
@@ -243,7 +242,7 @@ color: var(--lufa-semantic-ui-text-success);`}
 export const WhyTokensMatter: Story = {
   render: () => {
     return (
-      <StoryContainer title="Why Tokens Matter - Theme Adaptation Demo">
+      <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {/* Instructions */}
           <Box padding="comfortable" background="info" borderRadius="default">
@@ -395,7 +394,7 @@ export const WhyTokensMatter: Story = {
 export const CommonPatterns: Story = {
   render: () => {
     return (
-      <StoryContainer title="Common Token Patterns">
+      <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
           {/* Pattern 1: Component Tokens */}
           <section>
@@ -535,7 +534,7 @@ color: var(--lufa-component-button-type-solid-variant-primary-text);`}
 export const WhenHardCodedIsOK: Story = {
   render: () => {
     return (
-      <StoryContainer title="When Hard-Coded Values Are Acceptable">
+      <StoryContainer>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {/* Acceptable Cases */}
           <section>

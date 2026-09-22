@@ -17,6 +17,44 @@ test.describe('useTheme', () => {
     });
   });
 
+  for (const failure of ['access', 'read', 'write'] as const) {
+    test(`should keep shared themes usable when storage fails on ${failure}`, async ({ mount, page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      await page.evaluate((failure) => {
+        if (failure === 'access') {
+          Object.defineProperty(window, 'localStorage', {
+            configurable: true,
+            get() {
+              throw new DOMException('Storage blocked', 'SecurityError');
+            },
+          });
+        } else {
+          Storage.prototype[failure === 'read' ? 'getItem' : 'setItem'] = () => {
+            throw new DOMException('Storage unavailable', 'QuotaExceededError');
+          };
+        }
+      }, failure);
+
+      const component = await mount(
+        <div>
+          <ThemeHarness />
+          <SharedThemeHarness />
+        </div>
+      );
+      await component.getByRole('button', { name: 'Ocean' }).click();
+      await expect(component.getByTestId('theme')).toHaveText('ocean');
+      await expect(page.locator('html')).toHaveAttribute('data-theme', 'ocean');
+      await component.getByRole('button', { name: 'Legacy dark' }).click();
+      await expect(component.getByTestId('theme-mode')).toHaveText('dark');
+      await expect(component.getByTestId('legacy-mode')).toHaveText('dark');
+      await expect(page.locator('html')).toHaveAttribute('data-mode', 'dark');
+      await component.getByRole('button', { name: 'Legacy contrast' }).click();
+      await expect(component.getByTestId('theme-mode')).toHaveText('high-contrast');
+      expect(errors).toEqual([]);
+    });
+  }
+
   test('should synchronize theme and explicit mode with the document and storage', async ({ mount, page }) => {
     const component = await mount(<ThemeHarness />);
 

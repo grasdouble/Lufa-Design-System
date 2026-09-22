@@ -42,7 +42,7 @@ const TypographyToken = ({
   name: string;
   value: string;
   description?: string;
-  example?: string;
+  example?: React.ReactNode;
   exampleStyle?: React.CSSProperties;
 }) => (
   <div style={{ marginBottom: '32px' }}>

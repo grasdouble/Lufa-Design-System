@@ -25,6 +25,7 @@ const PRIMARY = STORY_COLORS.primary;
 const meta = {
   title: '5. Content/Icon',
   component: Icon,
+  args: { name: 'user' },
   parameters: {
     layout: 'fullscreen',
   },
