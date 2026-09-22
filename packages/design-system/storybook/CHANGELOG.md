@@ -1,5 +1,13 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.6
+
+### Patch Changes
+
+- 8e0452a: fix: Typecheck both Storybook application sources and Vite configuration instead of the empty references project. Repair the exposed story typings and obsolete theme switcher imports, and expose button selection state.
+- Updated dependencies [8e0452a]
+  - @grasdouble/lufa_design-system@3.5.1
+
 ## 1.3.5
 
 ### Patch Changes
