@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          token: ${{ github.token }}
           persist-credentials: false
 
       # Setup using composite action (partial - manual install due to npmrc config)

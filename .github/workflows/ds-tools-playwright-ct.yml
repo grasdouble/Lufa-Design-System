@@ -22,6 +22,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: read
+      packages: read
       pull-requests: write
     # Skip tests when snapshot-update label is present - wait for snapshot update job to complete
     if: |
@@ -37,7 +38,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -361,7 +362,7 @@ jobs:
         if: github.event_name == 'pull_request' && always() && !contains(github.event.pull_request.labels.*.name, 'snapshot-update')
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: ${{ steps.comment.outputs.body }}
 
@@ -384,6 +385,7 @@ jobs:
     timeout-minutes: 60
     permissions:
       contents: write
+      packages: read
       pull-requests: write
       actions: write
     # Only run when the 'snapshot-update' label is added to a PR
@@ -406,7 +408,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -519,7 +521,7 @@ jobs:
         if: steps.commit.outputs.updated == 'true'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: |
             <!-- playwright-ct-results -->
@@ -544,7 +546,7 @@ jobs:
         if: steps.commit.outputs.updated == 'false'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
           comment-body: |
             <!-- playwright-ct-results -->

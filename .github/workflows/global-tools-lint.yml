@@ -10,7 +10,7 @@ permissions:
   checks: none
   deployments: none
   issues: none
-  packages: none
+  packages: read
   repository-projects: none
   security-events: none
   statuses: none
@@ -27,10 +27,16 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
+
+      - name: 🧪 Check CI authentication configuration
+        run: pnpm test:ci-auth
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: 🧹 Lint CI authentication test
+        run: pnpm exec eslint scripts/ci-auth.test.mjs
 
       # Step 5: Build packages (needed for type checking)
       - name: 🏗️ Build packages
