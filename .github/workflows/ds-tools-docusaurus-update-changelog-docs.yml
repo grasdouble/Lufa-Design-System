@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  packages: read
   pull-requests: write
 
 jobs:
@@ -24,7 +25,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile

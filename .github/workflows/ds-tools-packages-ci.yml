@@ -72,6 +72,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+      packages: read
       pull-requests: write
 
     steps:
@@ -82,7 +83,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -112,7 +113,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- ds-packages-ci-report -->'
           comment-body: ${{ steps.checks.outputs.comment-body }}
 
@@ -135,6 +136,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+      packages: read
       pull-requests: write
 
     steps:
@@ -145,7 +147,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -166,7 +168,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- performance-budget-comment -->'
           comment-body: ${{ steps.perf.outputs.comment-body }}
 

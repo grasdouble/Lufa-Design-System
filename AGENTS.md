@@ -268,6 +268,20 @@ Prefix guide:
 
 ---
 
+## GitHub Packages — Verify visibility before granting CI access
+
+The repository is public. Check each `@grasdouble` package's actual GitHub Packages visibility before replacing registry credentials with `GITHUB_TOKEN` or granting this repository access under **Manage Actions access**.
+
+- ✅ Use `gh api orgs/grasdouble/packages/npm/<name> --jq .visibility` with the `read:packages` scope; grant this public repository access only to packages confirmed public, and keep internal packages out of CI installs.
+- ❌ Infer a package is private from a `401 Unauthorized` registry response, or grant this public repository access to an internal package; authentication can be required even for public npm packages, and fork workflows may then gain access to the internal package.
+
+Before saying that a CI secret can be removed, search **every** workflow, including manually triggered release and deployment jobs, and cover the absence of references in the CI auth test.
+
+- ✅ Search `.github/workflows/` for `LUFA_CI_SECRET_READ` and test that no workflow still references it.
+- ❌ Review only PR workflows and declare the secret unused while `ds-release-lufa-prod-publish.yml` still consumes it.
+
+---
+
 ## Build & Validation
 
 Run these commands to validate your changes before presenting them to the user. **Always prefix commands with `rtk`** (e.g. `rtk pnpm all:lint`).
@@ -314,6 +328,13 @@ Tests are also listed in the Build & Validation table above.
 
 If a feature cannot be tested in the current test infrastructure, explain why and propose an alternative.
 
+## CI tests — Wire standalone tests into a workflow
+
+Root-level tests outside the Playwright package do not run as part of `pnpm test` there. When adding one, give it a root script and call that script from an existing CI workflow.
+
+- ✅ `scripts/ci-auth.test.mjs` → root `test:ci-auth` script → `pnpm test:ci-auth` in `.github/workflows/global-tools-lint.yml`.
+- ❌ Add `scripts/new-check.test.mjs` and run it only manually; future PRs will never execute it.
+
 ## Changesets — Verify action and CLI compatibility together
 
 The release workflow must use an action major compatible with the installed Changesets CLI; a version comment does not prove which release a pinned SHA executes.
@@ -328,6 +349,13 @@ When a TypeScript test imports a local `.mjs` module without a declaration file,
 
 - ✅ `expect(createBuildOptions(true)).toMatchObject({ minify: true })`
 - ❌ `import type * as Esbuild from 'esbuild'` followed only by a cast to `Esbuild.BuildOptions`
+
+## Root Node scripts — Import globals flagged by ESLint
+
+Root-level `.mjs` tests use an ESLint context that does not define every Node global. Import APIs explicitly and run targeted ESLint before treating a passing Node test as validated.
+
+- ✅ `import { URL } from 'node:url'` before `new URL(...)`, then `rtk pnpm exec eslint scripts/ci-auth.test.mjs`.
+- ❌ Use `new URL(...)` without importing `URL`; the test passes under Node but ESLint fails with `no-undef`.
 
 ## Vitest configuration — Typecheck against the installed API
 

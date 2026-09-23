@@ -194,12 +194,15 @@ yamllint .github/dependabot.yml
 
 ### PRs Failing CI
 
-If Dependabot PRs consistently fail CI:
+The CI uses the per-job `GITHUB_TOKEN` to download `@grasdouble` npm packages and to post PR comments. It does not require a duplicate `LUFA_CI_SECRET_READ` in Actions and Dependabot secrets.
 
-1. Check if the dependency has known issues in the version
-2. Review the error logs to identify the problem
-3. Consider opening an issue with the dependency maintainer
-4. Temporarily ignore the update if it's blocking
+Before running the updated workflows, grant **Read** access to `grasdouble/Lufa-Design-System` under **Manage Actions access** in the settings of the public GitHub npm packages installed from the lockfile (`lufa_config_eslint`, `lufa_config_prettier`, and `lufa_config_tsconfig`). Workflow jobs that install dependencies request `packages: read`. If `pnpm install` still receives `401 Unauthorized`, verify that each package has this repository listed there.
+
+`lufa_config_agents` is an internal package used only by `pnpm sync:agents`, so it is fetched on demand (at the latest published version) rather than included in the normal installation or granted to this public repository's workflows. `pnpm sync:agents:local` uses the neighboring Lufa-Core checkout instead. Syncing from the published package still requires local registry access. Do not grant this public repository Actions access to the internal package: GitHub warns that workflows from forks may then be able to read it.
+
+The changeset automation pushes commits to Dependabot PR branches, so it still needs the separate `LUFA_CI_SECRET_DEPENDABOT` **Dependabot secret** with write access to this repository. The workflow does not install npm packages. Keep its credential separate from the read-only package access: commits pushed with `GITHUB_TOKEN` do not trigger subsequent CI workflows.
+
+After configuring package access and the write credential, rerun the PR checks to evaluate the dependency updates themselves.
 
 ### Too Many PRs
 

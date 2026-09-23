@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
   pull-requests: write
   id-token: write
 
@@ -25,7 +26,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
 
       - name: 📦 Install dependencies
         run: pnpm install --frozen-lockfile
@@ -216,7 +217,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'false' || steps.detect-packages.outputs.count == 0
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- changeset-validation-comment -->'
           comment-body: |
             <!-- changeset-validation-comment -->
@@ -304,7 +305,7 @@ jobs:
         if: steps.detect-packages.outputs.count > 0
         uses: ./.github/actions/pr-comment
         with:
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
+          github-token: ${{ github.token }}
           comment-marker: '<!-- changeset-validation-comment -->'
           comment-body: ${{ steps.build-comment.outputs.body }}
 

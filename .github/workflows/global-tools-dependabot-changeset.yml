@@ -20,15 +20,6 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-        with:
-          node-version-file: '.tool-versions'
-          github-token: ${{ secrets.LUFA_CI_SECRET_READ }}
-
-      - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: 🔍 Detect affected packages
         id: detect
         run: |
