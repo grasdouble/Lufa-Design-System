@@ -1,5 +1,12 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.5
+
+### Patch Changes
+
+- c2a25d2: Dependency updates
+- 4b365b7: Dependency updates
+
 ## 1.3.4
 
 ### Patch Changes

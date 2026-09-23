@@ -1,5 +1,17 @@
 # @grasdouble/lufa_design-system-docusaurus
 
+## 1.3.5
+
+### Patch Changes
+
+- c2a25d2: Dependency updates
+- 4b365b7: Dependency updates
+- Updated dependencies [c2a25d2]
+- Updated dependencies [4b365b7]
+  - @grasdouble/lufa_design-system@3.5.2
+  - @grasdouble/lufa_design-system-themes@1.1.9
+  - @grasdouble/lufa_design-system-tokens@1.2.9
+
 ## 1.3.4
 
 ### Patch Changes
