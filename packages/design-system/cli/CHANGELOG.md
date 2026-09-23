@@ -1,5 +1,16 @@
 # @grasdouble/lufa_design-system-cli
 
+## 1.2.1
+
+### Patch Changes
+
+- d847021: Dependency updates
+- c2a25d2: Dependency updates
+- eec3c54: Dependency updates
+- c863360: Dependency updates
+- Updated dependencies [c2a25d2]
+  - @grasdouble/lufa_design-system-tokens@1.2.9
+
 ## 1.2.0
 
 ### Minor Changes

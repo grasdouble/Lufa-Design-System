@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-tokens
 
+## 1.2.9
+
+### Patch Changes
+
+- c2a25d2: Dependency updates
+
 ## 1.2.8
 
 ### Patch Changes
