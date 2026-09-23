@@ -61,7 +61,7 @@
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.46.0"
+    "lucide-react": "^1.47.0"
   },
   "devDependencies": {
     "@grasdouble/lufa_config_eslint": "^0.1.11",
