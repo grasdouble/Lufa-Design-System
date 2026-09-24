@@ -32,28 +32,36 @@ jobs:
       - name: 🧪 Check CI authentication configuration
         run: pnpm test:ci-auth
 
+      - name: 📦 Install dependencies
+        id: install-dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build packages
+        id: build
+        run: pnpm all:build
+
       - name: Run shared pnpm quality checks
         id: check-quality
-        uses: grasdouble/Lufa-CICD/actions/check-quality@check-quality-v1
+        if: always() && steps.install-dependencies.outcome == 'success'
+        uses: grasdouble/Lufa-CICD/actions/check-quality@check-quality-v2
         with:
-          install-command: pnpm install --frozen-lockfile
-          build-command: pnpm all:build
+          check-agent-rules: 'true'
           lint-command: pnpm all:lint
-          typecheck-command: pnpm all:typecheck
+          typecheck-command: ${{ steps.build.outcome == 'success' && 'pnpm all:typecheck' || '' }}
           format-command: pnpm all:prettier:check
 
       - name: Lint CI authentication test
-        if: always() && steps.check-quality.outputs.install-succeeded == 'true'
+        if: always() && steps.install-dependencies.outcome == 'success'
         run: pnpm exec eslint scripts/ci-auth.test.mjs
 
       - name: Test CLI with coverage
-        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
+        if: always() && steps.build.outcome == 'success'
         run: pnpm --filter @grasdouble/lufa_design-system-cli run test:coverage
 
       - name: Test VS Code extension
-        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
+        if: always() && steps.build.outcome == 'success'
         run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run test
 
       - name: Build production VS Code extension
-        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
+        if: always() && steps.build.outcome == 'success'
         run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run build:production

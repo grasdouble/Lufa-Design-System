@@ -126,8 +126,6 @@
     "sync:agents:local": "node ../Lufa-Core/packages/config/agents/bin/sync-agents.mjs --local ../Lufa-Core",
     "sync-----------------------------": "",
     "test:ci-auth": "node --test scripts/ci-auth.test.mjs",
-    "tools:---------------------------------------------": "",
-    "tools:generate-outdated-report": "node .github/actions/dependency-update/generateOutdatedReport.js",
     "validate:------------------------------------------": "",
     "validate:docs": "bash scripts/validate-ai-docs.sh",
     "validate:docs:test": "bash scripts/validate-ai-docs.test.sh"
