@@ -335,6 +335,13 @@ Root-level tests outside the Playwright package do not run as part of `pnpm test
 - ✅ `scripts/ci-auth.test.mjs` → root `test:ci-auth` script → `pnpm test:ci-auth` in `.github/workflows/global-tools-lint.yml`.
 - ❌ Add `scripts/new-check.test.mjs` and run it only manually; future PRs will never execute it.
 
+## Dependabot CI auth tests — Allow pnpm setup without dependency installation
+
+When the Dependabot Changeset workflow needs pnpm for workspace enumeration, its auth test must allow `setup-node-pnpm` with `github.token` while still rejecting dependency installs and unnecessary `packages: read` permission.
+
+- ✅ Assert `persist-credentials: false`, shared pnpm setup with `github.token`, and the dedicated write token passed to `dependabot-changeset`; reject `pnpm install` and `packages: read`.
+- ❌ Reject every `setup-node-pnpm` step; this breaks CI when the shared action requires pnpm but does not download project dependencies.
+
 ## Changesets — Verify action and CLI compatibility together
 
 The release workflow must use an action major compatible with the installed Changesets CLI; a version comment does not prove which release a pinned SHA executes.

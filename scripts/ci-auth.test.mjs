@@ -56,8 +56,12 @@ test('CI runs the auth checks before installing dependencies', () => {
 
 test('Dependabot changeset pushes keep their dedicated write credential', () => {
   const content = workflow('global-tools-dependabot-changeset.yml');
-  assert.match(content, /token: \$\{\{ secrets\.LUFA_CI_SECRET_DEPENDABOT \}\}/);
-  assert.doesNotMatch(content, /pnpm install|setup-node-pnpm|packages: read/);
+  assert.match(content, /persist-credentials: false/);
+  assert.match(content, /uses: grasdouble\/Lufa-CICD\/actions\/setup-node-pnpm@setup-node-pnpm-v1/);
+  assert.match(content, /github-token: \$\{\{ github\.token \}\}/);
+  assert.match(content, /uses: grasdouble\/Lufa-CICD\/actions\/dependabot-changeset@dependabot-changeset-v1/);
+  assert.match(content, /github-token: \$\{\{ secrets\.LUFA_CI_SECRET_DEPENDABOT \}\}/);
+  assert.doesNotMatch(content, /pnpm install|packages: read/);
 });
 
 test('the internal agents sync tool is installed only when explicitly requested', () => {
