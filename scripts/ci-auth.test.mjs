@@ -128,15 +128,11 @@ test('Dependabot changeset pushes keep their dedicated write credential', () => 
   assert.doesNotMatch(content, /pnpm install|packages: read/);
 });
 
-test('the internal agents sync tool is installed only when explicitly requested', () => {
+test('the published agent sync tool is invoked on demand with pnpm dlx', () => {
   const manifest = JSON.parse(readFileSync(new URL('package.json', root), 'utf8'));
   const lockfile = readFileSync(new URL('pnpm-lock.yaml', root), 'utf8');
 
   assert.equal(manifest.devDependencies['@grasdouble/lufa_config_agents'], undefined);
   assert.equal(manifest.scripts['sync:agents'], 'pnpm dlx @grasdouble/lufa_config_agents');
-  assert.match(
-    manifest.scripts['sync:agents:local'],
-    /^node \.\.\/Lufa-Core\/packages\/config\/agents\/bin\/sync-agents\.mjs --local \.\.\/Lufa-Core$/
-  );
   assert.doesNotMatch(lockfile, /lufa_config_agents/);
 });
