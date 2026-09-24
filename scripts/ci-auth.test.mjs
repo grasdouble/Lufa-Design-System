@@ -25,10 +25,15 @@ test('install jobs use the built-in token with package read access', () => {
   }
 });
 
-test('PR comments and release checkout do not depend on a read PAT', () => {
+test('PR comments and the shared release do not depend on a read PAT', () => {
   assert.match(workflow('ds-tools-playwright-ct.yml'), /github-token: \$\{\{ github\.token \}\}/);
-  assert.match(workflow('global-release-changeset.yml'), /token: \$\{\{ github\.token \}\}/);
-  assert.doesNotMatch(workflow('global-release-changeset.yml'), /LUFA_CI_SECRET_READ/);
+  const release = workflow('global-release-changeset.yml');
+  assert.match(release, /uses: grasdouble\/Lufa-CICD\/actions\/changesets-release@changesets-release-v1/);
+  assert.match(release, /token: \$\{\{ github\.token \}\}/);
+  assert.match(release, /persist-credentials: false/);
+  assert.match(release, /release-token: \$\{\{ secrets\.LUFA_CI_SECRET_WRITE \}\}/);
+  assert.match(release, /registry-token: \$\{\{ secrets\.LUFA_CI_SECRET_WRITE \}\}/);
+  assert.doesNotMatch(release, /LUFA_CI_SECRET_READ/);
 });
 
 test('no workflow still needs the old read PAT', () => {

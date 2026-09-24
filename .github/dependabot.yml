@@ -35,11 +35,6 @@ updates:
   # Enable version updates for GitHub Actions
   - package-ecosystem: 'github-actions'
     directory: '/'
-    # Changesets Action v2 uses CLI v3; future majors require a coordinated compatibility review.
-    ignore:
-      - dependency-name: 'changesets/action'
-        update-types:
-          - 'version-update:semver-major'
     schedule:
       interval: 'weekly'
       day: 'monday'

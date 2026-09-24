@@ -36,7 +36,6 @@ jobs:
               - '.tool-versions'
               - '.npmrc'
               - '*config*'
-              - '.github/actions/setup-node-pnpm/**'
               - '.github/actions/design-system-build/**'
               - 'packages/design-system/main/**'
               - 'packages/design-system/tokens/**'
@@ -54,7 +53,6 @@ jobs:
               - '.tool-versions'
               - '.npmrc'
               - '*config*'
-              - '.github/actions/setup-node-pnpm/**'
               - '.github/actions/design-system-build/**'
               - 'packages/design-system/main/src/**'
               - 'packages/design-system/tokens/**/*.json'
@@ -80,7 +78,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
+        uses: grasdouble/Lufa-CICD/actions/setup-node-pnpm@setup-node-pnpm-v1
         with:
           node-version-file: '.tool-versions'
           github-token: ${{ github.token }}
@@ -111,7 +109,7 @@ jobs:
 
       - name: 💬 Comment on PR
         if: github.event_name == 'pull_request'
-        uses: ./.github/actions/pr-comment
+        uses: grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1
         with:
           github-token: ${{ github.token }}
           comment-marker: '<!-- ds-packages-ci-report -->'
@@ -144,7 +142,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
+        uses: grasdouble/Lufa-CICD/actions/setup-node-pnpm@setup-node-pnpm-v1
         with:
           node-version-file: '.tool-versions'
           github-token: ${{ github.token }}
@@ -166,7 +164,7 @@ jobs:
 
       - name: 💬 Comment on PR
         if: github.event_name == 'pull_request'
-        uses: ./.github/actions/pr-comment
+        uses: grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1
         with:
           github-token: ${{ github.token }}
           comment-marker: '<!-- performance-budget-comment -->'

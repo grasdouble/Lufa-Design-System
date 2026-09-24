@@ -93,7 +93,7 @@ On `push` to `main` and `workflow_dispatch`, it always runs.
 5. **Aggregate** — Counts failures, sets `overall` output
 6. **Build PR Comment** — Constructs the markdown report, sets `comment-body` output
 
-The workflow then posts the comment via `.github/actions/pr-comment` and fails the job if `overall == failure`.
+The workflow then posts the comment via `grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1` and fails the job if `overall == failure`.
 
 ---
 
