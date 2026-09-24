@@ -316,20 +316,19 @@ pnpm list --recursive --depth 0
 pnpm list --recursive --depth 0 --filter "@grasdouble/lufa_design-system-*"
 ```
 
-### Updating Dependencies
+### Dependency Updates and Reports
 
 ```bash
-# Check outdated dependencies
-pnpm outdated
+# Check outdated workspace dependencies locally
+pnpm outdated -r
 
 # Update specific dependency
 pnpm --filter @grasdouble/lufa_design-system update react@latest
-
-# Generate outdated report (custom script)
-pnpm tools:generate-outdated-report
 ```
 
-**Automated updates:** Dependabot configured in `.github/dependabot.yml`
+**Automated updates:** Dependabot creates dependency update PRs using
+`.github/dependabot.yml`. The weekly **Cron:Dependency-Report** workflow publishes
+the outdated-dependency report in its job summary and as a downloadable artifact.
 
 ---
 

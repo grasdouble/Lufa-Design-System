@@ -123,11 +123,9 @@
     "plugin:vite:prettier:write": "pnpm --filter @grasdouble/lufa_plugin_vite_* run prettier:write",
     "prepare": "husky",
     "sync:agents": "pnpm dlx @grasdouble/lufa_config_agents",
-    "sync:agents:local": "node ../Lufa-Core/packages/config/agents/bin/sync-agents.mjs --local ../Lufa-Core",
+    "sync:agents:local": "pnpm dlx @grasdouble/lufa_config_agents --local ../Lufa-Core",
     "sync-----------------------------": "",
     "test:ci-auth": "node --test scripts/ci-auth.test.mjs",
-    "tools:---------------------------------------------": "",
-    "tools:generate-outdated-report": "node .github/actions/dependency-update/generateOutdatedReport.js",
     "validate:------------------------------------------": "",
     "validate:docs": "bash scripts/validate-ai-docs.sh",
     "validate:docs:test": "bash scripts/validate-ai-docs.test.sh"

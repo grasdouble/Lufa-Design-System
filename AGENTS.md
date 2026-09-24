@@ -5,7 +5,7 @@ These rules apply to every session, including after a compact or checkpoint. Bef
 ---
 
 <!-- BEGIN:AGENTS.shared -->
-<!-- source: @grasdouble/lufa_config_agents@1.1.3 — DO NOT EDIT this block manually, run `pnpm sync:agents` -->
+<!-- source: @grasdouble/lufa_config_agents@1.1.4 — DO NOT EDIT this block manually, run `pnpm sync:agents` -->
 
 # Shared Agent Rules — Grasdouble Ecosystem
 
@@ -341,6 +341,13 @@ When the Dependabot Changeset workflow needs pnpm for workspace enumeration, its
 
 - ✅ Assert `persist-credentials: false`, shared pnpm setup with `github.token`, and the dedicated write token passed to `dependabot-changeset`; reject `pnpm install` and `packages: read`.
 - ❌ Reject every `setup-node-pnpm` step; this breaks CI when the shared action requires pnpm but does not download project dependencies.
+
+## Local agent sync — Keep sibling checkout commands out of CI
+
+`sync:agents:local` requires a neighboring `Lufa-Core` checkout and is for developer workstations; CI must validate generated rules through the shared `sync-agents` action instead.
+
+- ✅ Test that `sync:agents` uses `pnpm dlx` on demand and that the private package is absent from the normal lockfile.
+- ❌ Execute or require `sync:agents:local` in CI; hosted runners do not contain the sibling `Lufa-Core` checkout.
 
 ## Changesets — Verify action and CLI compatibility together
 
