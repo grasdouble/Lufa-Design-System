@@ -123,7 +123,7 @@
     "plugin:vite:prettier:write": "pnpm --filter @grasdouble/lufa_plugin_vite_* run prettier:write",
     "prepare": "husky",
     "sync:agents": "pnpm dlx @grasdouble/lufa_config_agents",
-    "sync:agents:local": "node ../Lufa-Core/packages/config/agents/bin/sync-agents.mjs --local ../Lufa-Core",
+    "sync:agents:local": "pnpm dlx @grasdouble/lufa_config_agents --local ../Lufa-Core",
     "sync-----------------------------": "",
     "test:ci-auth": "node --test scripts/ci-auth.test.mjs",
     "validate:------------------------------------------": "",
