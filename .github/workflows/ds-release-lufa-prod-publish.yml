@@ -1,7 +1,6 @@
 name: DS:Release:Lufa:Prod-Publish
-description: |
-  This workflow publishes Lufa artifacts (Storybook or Documentation) to production via FTP.
-  It is manually triggered with a choice of target.
+# Publish Lufa artifacts (Storybook or documentation) to production via FTP.
+# Manually triggered with a choice of target.
 
 on:
   workflow_dispatch:
@@ -37,7 +36,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
+        uses: grasdouble/Lufa-CICD/actions/setup-node-pnpm@setup-node-pnpm-v1
         with:
           node-version-file: '.tool-versions'
           github-token: ${{ github.token }}
@@ -52,7 +51,7 @@ jobs:
           build-docusaurus: ${{ inputs.target == 'documentation' && 'true' || 'false' }}
 
       - name: 📂 Deploy to FTP
-        uses: ./.github/actions/ftp-deploy
+        uses: grasdouble/Lufa-CICD/actions/ftp-deploy@ftp-deploy-v1
         with:
           server: ${{ secrets.LUFA_FTP_URL }}
           port: ${{ secrets.LUFA_FTP_PORT }}

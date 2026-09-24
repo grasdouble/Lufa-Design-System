@@ -43,12 +43,14 @@ Dependabot scans the entire monorepo from the root directory, automatically dete
 All GitHub Actions updates are grouped together to simplify review and merging. This includes updates to:
 
 - `actions/checkout`
-- `actions/setup-node`
-- `pnpm/action-setup`
-- `changesets/action`
+- Independently versioned `grasdouble/Lufa-CICD` actions
 - Custom actions used in workflows
 
-Major updates to `changesets/action` are ignored pending a coordinated compatibility review. The repository uses action v2 with Changesets CLI v3; future major upgrades must review the CLI, workflow inputs, authentication, and private-package versioning together before revisiting the ignore rule. Minor and patch updates remain enabled.
+The shared setup and release dependencies are maintained in `Lufa-CICD`.
+Its Dependabot configuration holds the major-version ignore rule for
+`changesets/action`. Upgrades to the shared `changesets-release` action and this repository's Changesets
+CLI upgrades must be reviewed together for compatibility, including authentication
+and private-package versioning.
 
 **PR Limit**: Maximum 5 open PRs at a time to avoid overwhelming the review queue.
 

@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
+        uses: grasdouble/Lufa-CICD/actions/setup-node-pnpm@setup-node-pnpm-v1
         with:
           node-version-file: '.tool-versions'
           github-token: ${{ github.token }}
@@ -360,7 +360,7 @@ jobs:
       # Step 12: Comment on PR
       - name: 💬 Comment on PR
         if: github.event_name == 'pull_request' && always() && !contains(github.event.pull_request.labels.*.name, 'snapshot-update')
-        uses: ./.github/actions/pr-comment
+        uses: grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1
         with:
           github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
@@ -405,7 +405,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: 📦 Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
+        uses: grasdouble/Lufa-CICD/actions/setup-node-pnpm@setup-node-pnpm-v1
         with:
           node-version-file: '.tool-versions'
           github-token: ${{ github.token }}
@@ -519,7 +519,7 @@ jobs:
       # Step 15: Comment on PR - Success
       - name: Comment on PR - Success
         if: steps.commit.outputs.updated == 'true'
-        uses: ./.github/actions/pr-comment
+        uses: grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1
         with:
           github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
@@ -544,7 +544,7 @@ jobs:
       # Step 16: Comment on PR - No changes
       - name: Comment on PR - No changes
         if: steps.commit.outputs.updated == 'false'
-        uses: ./.github/actions/pr-comment
+        uses: grasdouble/Lufa-CICD/actions/pr-comment@pr-comment-v1
         with:
           github-token: ${{ github.token }}
           comment-marker: '<!-- playwright-ct-results -->'
