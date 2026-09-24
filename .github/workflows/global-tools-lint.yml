@@ -32,41 +32,28 @@ jobs:
       - name: 🧪 Check CI authentication configuration
         run: pnpm test:ci-auth
 
-      - name: 📦 Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Run shared pnpm quality checks
+        id: check-quality
+        uses: grasdouble/Lufa-CICD/actions/check-quality@check-quality-v1
+        with:
+          install-command: pnpm install --frozen-lockfile
+          build-command: pnpm all:build
+          lint-command: pnpm all:lint
+          typecheck-command: pnpm all:typecheck
+          format-command: pnpm all:prettier:check
 
-      - name: 🧹 Lint CI authentication test
+      - name: Lint CI authentication test
+        if: always() && steps.check-quality.outputs.install-succeeded == 'true'
         run: pnpm exec eslint scripts/ci-auth.test.mjs
 
-      # Step 5: Build packages (needed for type checking)
-      - name: 🏗️ Build packages
-        run: pnpm all:build
-
-      - name: 🧪 Test CLI with coverage
+      - name: Test CLI with coverage
+        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
         run: pnpm --filter @grasdouble/lufa_design-system-cli run test:coverage
 
-      - name: 🧪 Test VS Code extension
+      - name: Test VS Code extension
+        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
         run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run test
 
-      - name: 📦 Build production VS Code extension
+      - name: Build production VS Code extension
+        if: always() && steps.check-quality.outputs.build-succeeded == 'true'
         run: pnpm --filter @grasdouble/lufa_plugin_vscode_lufa-ds-preview run build:production
-
-      # Step 6: Run lint
-      - name: 🧹 Run lint
-        if: always()
-        run: pnpm all:lint
-
-      # Step 7: Run type checking
-      - name: 🔍 Run type checking
-        if: always()
-        run: pnpm all:typecheck
-
-      # Step 8: Check formatting
-      - name: 🎨 Check formatting
-        if: always()
-        id: prettier
-        run: |
-          echo "::group::Prettier Format Check"
-          pnpm all:prettier:check
-          echo "::endgroup::"
-        continue-on-error: true

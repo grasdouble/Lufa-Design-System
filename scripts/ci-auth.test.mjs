@@ -42,16 +42,32 @@ test('no workflow still needs the old read PAT', () => {
   }
 });
 
-test('CI runs the auth checks before installing dependencies', () => {
+test('CI runs the auth checks before shared dependency installation', () => {
   const manifest = JSON.parse(readFileSync(new URL('package.json', root), 'utf8'));
   const lintWorkflow = workflow('global-tools-lint.yml');
+  const authCheckIndex = lintWorkflow.indexOf('run: pnpm test:ci-auth');
+  const checkQualityActionIndex = lintWorkflow.indexOf(
+    'uses: grasdouble/Lufa-CICD/actions/check-quality@check-quality-v1'
+  );
 
   assert.equal(manifest.scripts['test:ci-auth'], 'node --test scripts/ci-auth.test.mjs');
   assert.match(lintWorkflow, /run: pnpm test:ci-auth/);
-  assert.ok(
-    lintWorkflow.indexOf('run: pnpm test:ci-auth') < lintWorkflow.indexOf('run: pnpm install --frozen-lockfile')
-  );
+  assert.ok(authCheckIndex >= 0 && authCheckIndex < checkQualityActionIndex);
   assert.match(lintWorkflow, /run: pnpm exec eslint scripts\/ci-auth\.test\.mjs/);
+});
+
+test('the shared quality action receives each project command explicitly', () => {
+  const lintWorkflow = workflow('global-tools-lint.yml');
+
+  for (const command of [
+    'install-command: pnpm install --frozen-lockfile',
+    'build-command: pnpm all:build',
+    'lint-command: pnpm all:lint',
+    'typecheck-command: pnpm all:typecheck',
+    'format-command: pnpm all:prettier:check',
+  ]) {
+    assert.ok(lintWorkflow.includes(command), `global-tools-lint.yml must pass ${command}`);
+  }
 });
 
 test('Dependabot changeset pushes keep their dedicated write credential', () => {
