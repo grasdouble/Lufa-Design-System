@@ -67,7 +67,7 @@
     "@grasdouble/lufa_config_prettier": "^0.1.5",
     "@grasdouble/lufa_config_tsconfig": "^0.1.4",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@types/node": "^25.9.6",
+    "@types/node": "^26.6.2",
     "eslint": "^10.11.0",
     "glob": "^13.0.6",
     "prettier": "^3.9.8",
