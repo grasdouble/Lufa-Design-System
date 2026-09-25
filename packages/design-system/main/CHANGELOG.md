@@ -1,5 +1,13 @@
 # @grasdouble/lufa_design-system
 
+## 3.5.3
+
+### Patch Changes
+
+- 027acc6: Dependency updates
+- Updated dependencies [027acc6]
+  - @grasdouble/lufa_design-system-tokens@1.2.10
+
 ## 3.5.2
 
 ### Patch Changes

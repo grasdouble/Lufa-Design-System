@@ -1,5 +1,16 @@
 # @grasdouble/lufa_design-system-cli
 
+## 1.2.2
+
+### Patch Changes
+
+- 7dd3869: Dependency updates
+- 2464605: Dependency updates
+- 027acc6: Dependency updates
+- a058686: Dependency updates
+- Updated dependencies [027acc6]
+  - @grasdouble/lufa_design-system-tokens@1.2.10
+
 ## 1.2.1
 
 ### Patch Changes
