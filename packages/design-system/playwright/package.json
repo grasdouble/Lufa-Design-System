@@ -51,7 +51,7 @@
     "@grasdouble/lufa_config_tsconfig": "^0.1.4",
     "@grasdouble/lufa_design-system": "workspace:^",
     "@playwright/experimental-ct-react": "^1.62.1",
-    "@types/node": "^25.9.6",
+    "@types/node": "^26.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "eslint": "^10.11.0",
