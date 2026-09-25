@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "@csstools/selector-resolve-nested": "^3.1.0",
+    "@csstools/selector-resolve-nested": "^4.0.1",
     "@csstools/selector-specificity": "^6.0.0",
     "@grasdouble/lufa_design-system-tokens": "workspace:^",
     "chalk": "^6.0.0",
