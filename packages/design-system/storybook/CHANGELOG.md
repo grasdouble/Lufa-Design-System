@@ -1,5 +1,18 @@
 # @grasdouble/lufa_design-system-storybook
 
+## 1.3.8
+
+### Patch Changes
+
+- 9734b22: Dependency updates
+- f8d5c08: Dependency updates
+- Updated dependencies [027acc6]
+- Updated dependencies [9734b22]
+- Updated dependencies [f8d5c08]
+  - @grasdouble/lufa_design-system@3.5.3
+  - @grasdouble/lufa_design-system-themes@1.1.10
+  - @grasdouble/lufa_design-system-tokens@1.2.10
+
 ## 1.3.7
 
 ### Patch Changes

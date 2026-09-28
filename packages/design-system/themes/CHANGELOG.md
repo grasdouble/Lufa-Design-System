@@ -1,5 +1,15 @@
 # @grasdouble/lufa_design-system-themes
 
+## 1.1.10
+
+### Patch Changes
+
+- 027acc6: Dependency updates
+- 9734b22: Dependency updates
+- Updated dependencies [027acc6]
+- Updated dependencies [9734b22]
+  - @grasdouble/lufa_design-system-tokens@1.2.10
+
 ## 1.1.9
 
 ### Patch Changes
