@@ -14,7 +14,7 @@ import styles from './Box.module.css';
  * for all layout compositions in the Lufa Design System v2.
  *
  * Features:
- * - Utility-based props for spacing, backgrounds, borders, and display
+ * - Utility-based props for spacing, backgrounds, borders, shadows, and display
  * - Polymorphic `as` prop for semantic HTML elements
  * - Performance-optimized (CSS classes, not inline styles)
  * - Token-based design (semantic layer tokens)
@@ -94,9 +94,10 @@ type BorderWidthValue = 'none' | 'thin' | 'medium' | 'thick';
  */
 type BorderColorValue = 'default' | 'strong' | 'success' | 'error' | 'warning' | 'info';
 
-/**
- * Display values (CSS display property)
- */
+/** Decorative shadow values based on semantic theme tokens. */
+type ShadowValue = 'none' | 'small' | 'medium' | 'large' | 'extra-large';
+
+/** Display values (CSS display property). */
 type DisplayValue = 'block' | 'inline-block' | 'flex' | 'inline-flex' | 'grid' | 'none';
 
 /**
@@ -236,6 +237,17 @@ export type BoxProps<T extends ElementType = 'div'> = {
   borderColor?: BorderColorValue;
 
   // ==========================================
+  // SHADOW
+  // ==========================================
+
+  /**
+   * Decorative shadow from semantic theme tokens. Omit to preserve existing styling.
+   * Use none to explicitly remove a shadow.
+   * @default undefined
+   */
+  shadow?: ShadowValue;
+
+  // ==========================================
   // DISPLAY
   // ==========================================
 
@@ -282,7 +294,8 @@ export type BoxComponentProps<T extends ElementType> = BoxProps<T> &
  * Box component with ref forwarding.
  *
  * Accessibility contract: choose a semantic `as` element matching the content.
- * Box adds no role, accessible name, or keyboard behavior.
+ * Box adds no role, accessible name, or keyboard behavior. Shadows are decorative;
+ * convey meaningful state through accessible content rather than elevation alone.
  */
 const BoxImpl = <T extends ElementType = 'div'>(
   {
@@ -309,6 +322,8 @@ const BoxImpl = <T extends ElementType = 'div'>(
     borderRadius,
     borderWidth,
     borderColor,
+    // Shadow
+    shadow,
     // Display
     display,
     // Grow
@@ -363,6 +378,9 @@ const BoxImpl = <T extends ElementType = 'div'>(
     borderRadius && styles[`borderRadius-${borderRadius}`],
     borderWidth && styles[`borderWidth-${borderWidth}`],
     borderColor && styles[`borderColor-${borderColor}`],
+
+    // Shadow utilities
+    shadow && styles[`shadow-${shadow}`],
 
     // Display utilities
     display && styles[`display-${display}`],

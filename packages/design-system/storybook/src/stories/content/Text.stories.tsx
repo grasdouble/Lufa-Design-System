@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Text } from '@grasdouble/lufa_design-system';
@@ -60,6 +61,16 @@ const meta = {
         category: 'Typography',
         type: { summary: 'ColorValue' },
         defaultValue: { summary: 'primary' },
+      },
+    },
+    fontFamily: {
+      control: 'select',
+      options: [undefined, 'inherit', 'body', 'heading', 'code'],
+      description: 'Theme font family; independent of HTML semantics. Omit to preserve existing styling.',
+      table: {
+        category: 'Typography',
+        type: { summary: 'FontFamilyValue' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     weight: {
@@ -827,4 +838,35 @@ export const RealWorldPatterns: Story = {
       </StoryContainer>
     );
   },
+};
+
+/** Optional theme fonts do not change HTML semantics or typography size. */
+export const PropFontFamily: Story = {
+  render: () => (
+    <StoryContainer>
+      <div
+        style={
+          {
+            fontFamily: 'serif',
+            '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+            '--lufa-core-typography-heading-font-family': 'Georgia, serif',
+            '--lufa-core-typography-code-font-family': 'monospace',
+          } as CSSProperties
+        }
+      >
+        {(['inherit', 'body', 'heading', 'code'] as const).map((fontFamily) => (
+          <PropCard key={fontFamily} label={`fontFamily="${fontFamily}"`}>
+            <Text fontFamily={fontFamily}>The quick brown fox jumps over the lazy dog.</Text>
+          </PropCard>
+        ))}
+        <CodeBlock
+          code={
+            '<Text as="h2" variant="h6" fontFamily="heading">Section title</Text>\n<Text fontFamily="code">48.8566, 2.3522</Text>'
+          }
+          language="jsx"
+          title="JSX"
+        />
+      </div>
+    </StoryContainer>
+  ),
 };

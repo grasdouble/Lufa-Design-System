@@ -164,6 +164,13 @@ const meta = {
       table: { category: 'Border', type: { summary: 'BorderColorValue' } },
     },
 
+    shadow: {
+      control: 'select',
+      options: [undefined, 'none', 'small', 'medium', 'large', 'extra-large'],
+      description: 'Decorative semantic shadow. Omit to preserve existing styling; none removes a shadow.',
+      table: { category: 'Appearance', type: { summary: 'ShadowValue' }, defaultValue: { summary: 'undefined' } },
+    },
+
     // Display
     display: {
       control: 'select',
@@ -1685,4 +1692,31 @@ export const ResponsiveVisibility: Story = {
       </StoryContainer>
     );
   },
+};
+
+/** Decorative elevation uses semantic tokens and adapts to theme overrides. */
+export const PropShadow: Story = {
+  render: () => (
+    <StoryContainer>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '32px',
+          padding: '32px',
+        }}
+      >
+        {(['none', 'small', 'medium', 'large', 'extra-large'] as const).map((shadow) => (
+          <Box key={shadow} shadow={shadow} padding="comfortable" background="surface" borderRadius="medium">
+            shadow="{shadow}"
+          </Box>
+        ))}
+      </div>
+      <CodeBlock
+        code='<Box shadow="medium" padding="comfortable" background="surface">Content</Box>'
+        language="jsx"
+        title="JSX"
+      />
+    </StoryContainer>
+  ),
 };

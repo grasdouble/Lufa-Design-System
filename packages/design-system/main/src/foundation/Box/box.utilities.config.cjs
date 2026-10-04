@@ -253,6 +253,20 @@ module.exports = {
     },
 
     // ==========================================
+    // SHADOW
+    // ==========================================
+    shadow: {
+      property: 'box-shadow',
+      values: {
+        none: 'none',
+        small: '--lufa-semantic-ui-shadow-small',
+        medium: '--lufa-semantic-ui-shadow-medium',
+        large: '--lufa-semantic-ui-shadow-large',
+        'extra-large': '--lufa-semantic-ui-shadow-extra-large',
+      },
+    },
+
+    // ==========================================
     // LAYOUT - Grow (fill available space)
     // ==========================================
     grow: {

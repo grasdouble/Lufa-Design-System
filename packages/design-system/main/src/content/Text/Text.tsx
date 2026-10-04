@@ -13,6 +13,7 @@ import styles from './Text.module.css';
  * Features:
  * - Typography scale (h1-h6, body variants, caption, label)
  * - Semantic color values (primary, secondary, success, error, etc.)
+ * - Optional font family from theme tokens
  * - Font weight control (normal, medium, semibold, bold)
  * - Text alignment (left, center, right, justify)
  * - Text transformation (none, uppercase, lowercase, capitalize)
@@ -61,6 +62,9 @@ type VariantValue =
  */
 type ColorValue = 'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info' | 'inverse';
 
+/** Font family values; omission preserves existing styling. */
+type FontFamilyValue = 'inherit' | 'body' | 'heading' | 'code';
+
 /**
  * Font weight values
  * Maps to: font-weight CSS property
@@ -104,6 +108,13 @@ export type TextProps<T extends ElementType = 'p'> = {
   color?: ColorValue;
 
   /**
+   * Font family from theme tokens. Omit to preserve inherited or custom styling.
+   * Independent of the typography variant and HTML element.
+   * @default undefined
+   */
+  fontFamily?: FontFamilyValue;
+
+  /**
    * Font weight
    * @default 'normal'
    */
@@ -143,13 +154,18 @@ type TextComponentProps<T extends ElementType> = TextProps<T> & Omit<ComponentPr
 // ============================================
 
 /**
- * Text component with ref forwarding
+ * Text component with ref forwarding.
+ *
+ * Accessibility contract: `as` determines HTML semantics and heading level.
+ * `variant` and `fontFamily` only change appearance. Text adds no role or
+ * keyboard behavior; consumers supply native semantics and accessible names.
  */
 const TextImpl = <T extends ElementType = 'p'>(
   {
     as,
     variant = 'body',
     color = 'primary',
+    fontFamily,
     weight = 'normal',
     align = 'left',
     transform = 'none',
@@ -169,6 +185,9 @@ const TextImpl = <T extends ElementType = 'p'>(
 
     // Color utilities
     color && styles[`color-${color}`],
+
+    // Font family utilities
+    fontFamily && styles[`fontFamily-${fontFamily}`],
 
     // Weight utilities
     weight && styles[`weight-${weight}`],
