@@ -1,0 +1,122 @@
+/**
+ * Select Component - CSS Module
+ *
+ * Uses component input tokens for visual consistency with the Input component,
+ * and semantic tokens for size variants (matching Button sizing).
+ */
+
+/* ========================================== */
+/* WRAPPER */
+/* ========================================== */
+
+/* Wrapper to support error message display and full-width layout */
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--lufa-component-input-label-spacing);
+}
+
+.wrapper.fullWidth {
+  display: flex;
+  width: 100%;
+}
+
+/* ========================================== */
+/* BASE CLASS */
+/* ========================================== */
+
+/* Base Select class */
+.select {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  padding-block: var(--lufa-component-input-padding-md-block);
+  padding-inline: var(--lufa-component-input-padding-md-inline);
+  font-family: inherit;
+  font-size: var(--lufa-component-input-font-size-md);
+  line-height: var(--lufa-core-typography-body-line-height);
+  color: var(--lufa-component-input-text-default);
+  background-color: var(--lufa-component-input-background-default);
+  border: var(--lufa-component-input-border-width) solid var(--lufa-component-input-border-default);
+  border-radius: var(--lufa-component-input-border-radius);
+  transition:
+    border-color var(--lufa-semantic-ui-transition-duration-fast),
+    box-shadow var(--lufa-semantic-ui-transition-duration-fast);
+  outline: none;
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* ========================================== */
+/* SIZE */
+/* ========================================== */
+
+.size-sm {
+  padding-block: var(--lufa-component-input-padding-sm-block);
+  padding-inline: var(--lufa-component-input-padding-sm-inline);
+  font-size: var(--lufa-component-input-font-size-sm);
+}
+
+.size-md {
+  padding-block: var(--lufa-component-input-padding-md-block);
+  padding-inline: var(--lufa-component-input-padding-md-inline);
+  font-size: var(--lufa-component-input-font-size-md);
+}
+
+.size-lg {
+  padding-block: var(--lufa-component-input-padding-lg-block);
+  padding-inline: var(--lufa-component-input-padding-lg-inline);
+  font-size: var(--lufa-component-input-font-size-lg);
+}
+
+/* ========================================== */
+/* ERROR */
+/* ========================================== */
+
+.error {
+  border-color: var(--lufa-component-input-border-error);
+}
+
+/* ========================================== */
+/* DISABLED */
+/* ========================================== */
+
+.disabled {
+  background-color: var(--lufa-component-input-background-disabled);
+  color: var(--lufa-component-input-text-disabled);
+  border-color: var(--lufa-component-input-border-disabled);
+  cursor: var(--lufa-component-input-state-disabled-cursor);
+}
+
+/* ========================================== */
+/* FULLWIDTH */
+/* ========================================== */
+
+.fullWidth {
+  width: 100%;
+  display: block;
+}
+
+/* ========================================== */
+/* ERROR MESSAGE */
+/* ========================================== */
+
+.errorMessage {
+  font-size: var(--lufa-component-input-helper-text-font-size);
+  color: var(--lufa-component-input-helper-text-color-error);
+}
+
+/* ========================================== */
+/* STANDALONE SELECTORS */
+/* ========================================== */
+
+/* Focus ring (keyboard navigation) */
+.select:focus-visible {
+  border-color: var(--lufa-component-input-border-focus);
+  box-shadow: 0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-shared-focus-outline-color);
+}
+
+/* Error + Focus — red focus ring */
+.select.error:focus-visible {
+  box-shadow: 0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-input-border-error);
+}
