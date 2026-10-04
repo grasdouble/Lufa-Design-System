@@ -51,6 +51,19 @@ module.exports = {
     },
 
     // ==========================================
+    // TYPOGRAPHY - Font Family
+    // ==========================================
+    fontFamily: {
+      property: 'font-family',
+      values: {
+        inherit: 'inherit',
+        body: '--lufa-core-typography-body-font-family',
+        heading: '--lufa-core-typography-heading-font-family',
+        code: '--lufa-core-typography-code-font-family',
+      },
+    },
+
+    // ==========================================
     // TYPOGRAPHY - Weight
     // ==========================================
     weight: {

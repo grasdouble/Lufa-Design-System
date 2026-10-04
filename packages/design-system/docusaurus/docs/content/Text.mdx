@@ -32,6 +32,7 @@ Use `Text` when you need…
 
 - Consistent typography using semantic type scales (h1-h6, body, caption, label)
 - Semantic text colors that adapt to light and dark themes
+- Theme font families (`inherit`, `body`, `heading`, `code`)
 - Font weight control (normal, medium, semibold, bold)
 - Text alignment (left, center, right, justify)
 - Text transformations (uppercase, lowercase, capitalize)
@@ -116,22 +117,47 @@ function App() {
 
 ## Props
 
-| Prop        | Type                                                                                                             | Default     | Description                            |
-| ----------- | ---------------------------------------------------------------------------------------------------------------- | ----------- | -------------------------------------- |
-| `as`        | `'p' \| 'span' \| 'div' \| 'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'label' \| 'legend' \| 'figcaption'`  | `'p'`       | HTML element to render                 |
-| `variant`   | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'body-large' \| 'body' \| 'body-small' \| 'caption' \| 'label'` | `'body'`    | Typography variant (semantic scale)    |
-| `color`     | `'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'`             | `'primary'` | Text color using semantic tokens       |
-| `weight`    | `'normal' \| 'medium' \| 'semibold' \| 'bold'`                                                                   | `'normal'`  | Font weight                            |
-| `align`     | `'left' \| 'center' \| 'right' \| 'justify'`                                                                     | `'left'`    | Text alignment                         |
-| `transform` | `'none' \| 'uppercase' \| 'lowercase' \| 'capitalize'`                                                           | `'none'`    | Text transformation                    |
-| `className` | `string`                                                                                                         | `undefined` | Additional CSS classes                 |
-| `children`  | `ReactNode`                                                                                                      | `undefined` | Text content to render inside the Text |
+| Prop         | Type                                                                                                             | Default            | Description                            |
+| ------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------ | -------------------------------------- |
+| `as`         | `'p' \| 'span' \| 'div' \| 'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'label' \| 'legend' \| 'figcaption'`  | `'p'`              | HTML element to render                 |
+| `variant`    | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'body-large' \| 'body' \| 'body-small' \| 'caption' \| 'label'` | `'body'`           | Typography variant (semantic scale)    |
+| `color`      | `'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'inverse'`             | `'primary'`        | Text color using semantic tokens       |
+| `fontFamily` | `'inherit' \| 'body' \| 'heading' \| 'code'`                                                                     | Based on `variant` | Theme font family override             |
+| `weight`     | `'normal' \| 'medium' \| 'semibold' \| 'bold'`                                                                   | `'normal'`         | Font weight                            |
+| `align`      | `'left' \| 'center' \| 'right' \| 'justify'`                                                                     | `'left'`           | Text alignment                         |
+| `transform`  | `'none' \| 'uppercase' \| 'lowercase' \| 'capitalize'`                                                           | `'none'`           | Text transformation                    |
+| `className`  | `string`                                                                                                         | `undefined`        | Additional CSS classes                 |
+| `children`   | `ReactNode`                                                                                                      | `undefined`        | Text content to render inside the Text |
 
 Also supports all standard HTML attributes for the underlying element (for example `id`, `role`, `aria-*`, `data-*`, `style`, and event handlers).
 
+### Font family
+
+When `fontFamily` is omitted, heading variants (`h1` through `h6`) use `heading`;
+all other variants use `body`. An explicit value overrides this choice, and `inherit` uses the parent's family.
+
+The default `body` and `heading` tokens use the system sans-serif stack; `code` uses the system monospace stack.
+The values reference existing theme tokens:
+
+| Value     | Token                                        |
+| --------- | -------------------------------------------- |
+| `body`    | `--lufa-core-typography-body-font-family`    |
+| `heading` | `--lufa-core-typography-heading-font-family` |
+| `code`    | `--lufa-core-typography-code-font-family`    |
+
+Override these tokens in your theme to select the actual fonts. An explicit `fontFamily` overrides the variant's default. The HTML element chosen with `as` does not influence font choice:
+
+```tsx
+<Text as="h2" variant="h6" fontFamily="heading">Section title</Text>
+<Text fontFamily="heading">Estimated address</Text>
+<Text as="code" fontFamily="code">48.8566, 2.3522</Text>
+```
+
+The first example remains a level-two heading, and the second remains a paragraph.
+
 ## Accessibility
 
-Use semantic elements and matching variants for headings and labels to ensure correct screen reader output.
+Use `as` to choose semantic elements and heading levels. `variant` and `fontFamily` only control appearance; they do not change screen reader semantics.
 
 ```tsx
 import { Text } from '@grasdouble/lufa_design-system';
@@ -168,7 +194,7 @@ export function LabeledField() {
 }
 ```
 
-- Match heading variants to heading elements (`as="h2"` with `variant="h2"`).
+- Choose heading levels from the content hierarchy with `as`; their visual size and font family can differ.
 - Associate labels with inputs using `htmlFor` and `id`.
 - Avoid making Text focusable unless it is intentionally interactive.
 - Ensure color contrast remains at WCAG AA levels.
@@ -204,7 +230,7 @@ export function TokenColorExample() {
 
 :::warning Don't
 
-- Use heading variants without matching heading elements
+- Rely on typography size or font family to give a paragraph heading semantics
 - Skip heading levels in a content hierarchy
 - Hard-code colors in `style` when tokens suffice
 - Use uppercase for long passages of text

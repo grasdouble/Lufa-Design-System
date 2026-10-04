@@ -562,6 +562,30 @@
 }
 
 /* ========================================== */
+/* SHADOW */
+/* ========================================== */
+
+.shadow-none {
+  box-shadow: none;
+}
+
+.shadow-small {
+  box-shadow: var(--lufa-semantic-ui-shadow-small);
+}
+
+.shadow-medium {
+  box-shadow: var(--lufa-semantic-ui-shadow-medium);
+}
+
+.shadow-large {
+  box-shadow: var(--lufa-semantic-ui-shadow-large);
+}
+
+.shadow-extra-large {
+  box-shadow: var(--lufa-semantic-ui-shadow-extra-large);
+}
+
+/* ========================================== */
 /* GROW */
 /* ========================================== */
 

@@ -112,6 +112,7 @@ export function SemanticSection() {
 | `borderRadius`  | `'none' \| 'small' \| 'default' \| 'medium' \| 'large' \| 'full'`                                                                                                              | `undefined` | Border radius (rounded corners)         |
 | `borderWidth`   | `'none' \| 'thin' \| 'medium' \| 'thick'`                                                                                                                                      | `undefined` | Border width on all sides               |
 | `borderColor`   | `'default' \| 'strong' \| 'success' \| 'error' \| 'warning' \| 'info'`                                                                                                         | `undefined` | Border color using semantic tokens      |
+| `shadow`        | `'none' \| 'small' \| 'medium' \| 'large' \| 'extra-large'`                                                                                                                    | `undefined` | Optional decorative semantic shadow     |
 | `display`       | `'block' \| 'inline-block' \| 'flex' \| 'inline-flex' \| 'grid' \| 'none'`                                                                                                     | `undefined` | CSS display property                    |
 | `className`     | `string`                                                                                                                                                                       | `undefined` | Additional CSS classes                  |
 | `children`      | `ReactNode`                                                                                                                                                                    | `undefined` | Child elements to render inside the Box |
@@ -131,6 +132,28 @@ export function SpacingPriority() {
   );
 }
 ```
+
+### Shadows
+
+Use `shadow` for decorative elevation without adding container-specific CSS:
+
+```tsx
+<Box as="section" aria-label="Location details" background="surface" padding="comfortable" shadow="medium">
+  Location details
+</Box>
+```
+
+Omitting `shadow` adds no shadow class and preserves existing styling. `none` explicitly sets `box-shadow: none`.
+The other values use the following existing semantic tokens, which can be overridden in a theme:
+
+| Value         | Token                                   |
+| ------------- | --------------------------------------- |
+| `small`       | `--lufa-semantic-ui-shadow-small`       |
+| `medium`      | `--lufa-semantic-ui-shadow-medium`      |
+| `large`       | `--lufa-semantic-ui-shadow-large`       |
+| `extra-large` | `--lufa-semantic-ui-shadow-extra-large` |
+
+Shadows do not add roles, focus behavior, or dialog semantics. Convey meaningful state through accessible content as well.
 
 ## Accessibility
 

@@ -94,6 +94,26 @@
 }
 
 /* ========================================== */
+/* FONTFAMILY */
+/* ========================================== */
+
+.fontFamily-inherit {
+  font-family: inherit;
+}
+
+.fontFamily-body {
+  font-family: var(--lufa-core-typography-body-font-family);
+}
+
+.fontFamily-heading {
+  font-family: var(--lufa-core-typography-heading-font-family);
+}
+
+.fontFamily-code {
+  font-family: var(--lufa-core-typography-code-font-family);
+}
+
+/* ========================================== */
 /* WEIGHT */
 /* ========================================== */
 

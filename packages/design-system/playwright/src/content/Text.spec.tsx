@@ -19,6 +19,7 @@
  * @see .github/instructions/lufa-design-system-playwright-ct.instructions.md
  */
 
+import type { CSSProperties } from 'react';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/experimental-ct-react';
 
@@ -87,6 +88,102 @@ test.describe('Text Component', () => {
   // ============================================
 
   test.describe('Variants', () => {
+    test.describe('Font Family', () => {
+      const families = [
+        ['inherit', 'Verdana, sans-serif'],
+        ['body', 'Arial, sans-serif'],
+        ['heading', 'Georgia, serif'],
+        ['code', 'monospace'],
+      ] as const;
+
+      for (const [fontFamily, expected] of families) {
+        test(`should resolve fontFamily="${fontFamily}" through the surrounding theme`, async ({ mount }) => {
+          const component = await mount(
+            <div
+              style={
+                {
+                  fontFamily: 'Verdana, sans-serif',
+                  '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+                  '--lufa-core-typography-heading-font-family': 'Georgia, serif',
+                  '--lufa-core-typography-code-font-family': 'monospace',
+                } as CSSProperties
+              }
+            >
+              <Text as="span" fontFamily={fontFamily}>
+                Theme font
+              </Text>
+            </div>
+          );
+          const text = component.locator('span');
+          await expect(text).toHaveCSS('font-family', expected);
+          await expect(text).not.toHaveAttribute('font-family');
+          await expect(text).not.toHaveAttribute('fontfamily');
+        });
+      }
+
+      test('should use the body token by default instead of the surrounding font', async ({ mount }) => {
+        const component = await mount(
+          <div
+            style={
+              {
+                fontFamily: 'Verdana, sans-serif',
+                '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+              } as CSSProperties
+            }
+          >
+            <Text>Default body font</Text>
+            <Text as="h2" variant="body">
+              Semantic heading with body appearance
+            </Text>
+          </div>
+        );
+        await expect(component.locator('p')).toHaveCSS('font-family', 'Arial, sans-serif');
+        await expect(component.getByRole('heading', { level: 2 })).toHaveCSS('font-family', 'Arial, sans-serif');
+      });
+
+      test('should use the heading token for heading variants without changing HTML semantics', async ({ mount }) => {
+        const component = await mount(
+          <div style={{ '--lufa-core-typography-heading-font-family': 'Georgia, serif' } as CSSProperties}>
+            <Text as="span" variant="h2">
+              Visual heading
+            </Text>
+            <Text variant="h6">Small visual heading</Text>
+          </div>
+        );
+        await expect(component.locator('span')).toHaveCSS('font-family', 'Georgia, serif');
+        await expect(component.locator('p')).toHaveCSS('font-family', 'Georgia, serif');
+        await expect(component.getByRole('heading')).toHaveCount(0);
+      });
+
+      test('should choose fonts independently of semantic headings and size variants', async ({ mount }) => {
+        const component = await mount(
+          <div
+            style={
+              {
+                '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+                '--lufa-core-typography-heading-font-family': 'Georgia, serif',
+              } as CSSProperties
+            }
+          >
+            <Text as="h2" variant="h6" fontFamily="body">
+              Section heading
+            </Text>
+            <Text fontFamily="heading">Estimated address</Text>
+          </div>
+        );
+        await expect(component.getByRole('heading', { name: 'Section heading', level: 2 })).toHaveCSS(
+          'font-family',
+          'Arial, sans-serif'
+        );
+        await expect(component.locator('p')).toHaveCSS('font-family', 'Georgia, serif');
+        await expect(component.locator('p')).not.toHaveAttribute('role');
+        await component.evaluate((element) =>
+          (element as HTMLElement).style.setProperty('--lufa-core-typography-heading-font-family', 'monospace')
+        );
+        await expect(component.locator('p')).toHaveCSS('font-family', 'monospace');
+      });
+    });
+
     test.describe('Variant Prop', () => {
       const variantValues = [
         'h1',
@@ -801,6 +898,26 @@ test.describe('Text Component', () => {
                     The Quick Brown Fox Jumps Over The Lazy Dog
                   </Text>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          <section style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '20px', color: 'var(--lufa-semantic-ui-text-secondary)' }}>Font Families</h2>
+            <div
+              style={
+                {
+                  fontFamily: 'serif',
+                  '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+                  '--lufa-core-typography-heading-font-family': 'Georgia, serif',
+                  '--lufa-core-typography-code-font-family': 'monospace',
+                } as CSSProperties
+              }
+            >
+              {(['inherit', 'body', 'heading', 'code'] as const).map((fontFamily) => (
+                <Text key={fontFamily} fontFamily={fontFamily}>
+                  {fontFamily}: The quick brown fox jumps over the lazy dog.
+                </Text>
               ))}
             </div>
           </section>

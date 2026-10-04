@@ -28,6 +28,48 @@ import { Box } from '@grasdouble/lufa_design-system';
 // ============================================
 
 test.describe('Box Component', () => {
+  test.describe('Shadow', () => {
+    const shadows = ['small', 'medium', 'large', 'extra-large'] as const;
+    for (const shadow of shadows) {
+      test(`should resolve shadow="${shadow}" through theme tokens`, async ({ mount }) => {
+        const component = await mount(
+          <div style={{ [`--lufa-semantic-ui-shadow-${shadow}`]: '0px 3px 9px 0px rgb(10, 20, 30)' }}>
+            <Box as="section" aria-label="Elevated surface" shadow={shadow}>
+              Content
+            </Box>
+          </div>
+        );
+        const surface = component.getByRole('region', { name: 'Elevated surface' });
+        await expect(surface).toHaveCSS('box-shadow', 'rgb(10, 20, 30) 0px 3px 9px 0px');
+        await expect(surface).not.toHaveAttribute('shadow');
+        await component.evaluate(
+          (element, token) => (element as HTMLElement).style.setProperty(token, '0px 6px 12px 0px rgb(30, 20, 10)'),
+          `--lufa-semantic-ui-shadow-${shadow}`
+        );
+        await expect(surface).toHaveCSS('box-shadow', 'rgb(30, 20, 10) 0px 6px 12px 0px');
+      });
+    }
+
+    test('should explicitly remove a shadow with shadow="none"', async ({ mount }) => {
+      const component = await mount(
+        <div>
+          <style>{':where(.existing-shadow) { box-shadow: 0 3px 9px black; }'}</style>
+          <Box shadow="none" className="existing-shadow">
+            Flat surface
+          </Box>
+        </div>
+      );
+      await expect(component.locator('.existing-shadow')).toHaveCSS('box-shadow', 'none');
+      await expect(component.locator('.existing-shadow')).not.toHaveAttribute('shadow');
+    });
+
+    test('should leave existing shadows intact when shadow is omitted', async ({ mount }) => {
+      const component = await mount(<Box style={{ boxShadow: '0px 3px 9px black' }}>Existing surface</Box>);
+      await expect(component).toHaveCSS('box-shadow', 'rgb(0, 0, 0) 0px 3px 9px 0px');
+      await expect(component).not.toHaveClass(/shadow-/);
+    });
+  });
+
   test.describe('Basic Rendering', () => {
     test('should render with default props', async ({ mount }) => {
       const component = await mount(<Box>Default content</Box>);
@@ -1012,6 +1054,17 @@ test.describe('Box Component', () => {
                     </Box>
                   </Box>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          <section style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '20px', color: 'var(--lufa-semantic-ui-text-secondary)' }}>Shadows</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', padding: '24px' }}>
+              {(['none', 'small', 'medium', 'large', 'extra-large'] as const).map((shadow) => (
+                <Box key={shadow} shadow={shadow} padding="comfortable" background="surface" borderRadius="medium">
+                  {shadow}
+                </Box>
               ))}
             </div>
           </section>
