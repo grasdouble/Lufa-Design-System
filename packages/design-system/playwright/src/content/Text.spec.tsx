@@ -121,14 +121,38 @@ test.describe('Text Component', () => {
         });
       }
 
-      test('should preserve existing font inheritance when fontFamily is omitted', async ({ mount }) => {
+      test('should use the body token by default instead of the surrounding font', async ({ mount }) => {
         const component = await mount(
-          <div style={{ fontFamily: 'Verdana, sans-serif' }}>
-            <Text>Inherited font</Text>
+          <div
+            style={
+              {
+                fontFamily: 'Verdana, sans-serif',
+                '--lufa-core-typography-body-font-family': 'Arial, sans-serif',
+              } as CSSProperties
+            }
+          >
+            <Text>Default body font</Text>
+            <Text as="h2" variant="body">
+              Semantic heading with body appearance
+            </Text>
           </div>
         );
-        await expect(component.locator('p')).toHaveCSS('font-family', 'Verdana, sans-serif');
-        await expect(component.locator('p')).not.toHaveClass(/fontFamily-/);
+        await expect(component.locator('p')).toHaveCSS('font-family', 'Arial, sans-serif');
+        await expect(component.getByRole('heading', { level: 2 })).toHaveCSS('font-family', 'Arial, sans-serif');
+      });
+
+      test('should use the heading token for heading variants without changing HTML semantics', async ({ mount }) => {
+        const component = await mount(
+          <div style={{ '--lufa-core-typography-heading-font-family': 'Georgia, serif' } as CSSProperties}>
+            <Text as="span" variant="h2">
+              Visual heading
+            </Text>
+            <Text variant="h6">Small visual heading</Text>
+          </div>
+        );
+        await expect(component.locator('span')).toHaveCSS('font-family', 'Georgia, serif');
+        await expect(component.locator('p')).toHaveCSS('font-family', 'Georgia, serif');
+        await expect(component.getByRole('heading')).toHaveCount(0);
       });
 
       test('should choose fonts independently of semantic headings and size variants', async ({ mount }) => {

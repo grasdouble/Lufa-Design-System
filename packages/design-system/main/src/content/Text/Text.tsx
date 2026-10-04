@@ -13,7 +13,7 @@ import styles from './Text.module.css';
  * Features:
  * - Typography scale (h1-h6, body variants, caption, label)
  * - Semantic color values (primary, secondary, success, error, etc.)
- * - Optional font family from theme tokens
+ * - Font family from theme tokens, selected by typography variant
  * - Font weight control (normal, medium, semibold, bold)
  * - Text alignment (left, center, right, justify)
  * - Text transformation (none, uppercase, lowercase, capitalize)
@@ -62,7 +62,7 @@ type VariantValue =
  */
 type ColorValue = 'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info' | 'inverse';
 
-/** Font family values; omission preserves existing styling. */
+/** Font family values; omission selects heading or body from the variant. */
 type FontFamilyValue = 'inherit' | 'body' | 'heading' | 'code';
 
 /**
@@ -108,9 +108,9 @@ export type TextProps<T extends ElementType = 'p'> = {
   color?: ColorValue;
 
   /**
-   * Font family from theme tokens. Omit to preserve inherited or custom styling.
-   * Independent of the typography variant and HTML element.
-   * @default undefined
+   * Font family from theme tokens. Overrides the family selected by variant.
+   * Use inherit to follow the surrounding font. Does not change HTML semantics.
+   * @default heading for h1-h6 variants, body otherwise
    */
   fontFamily?: FontFamilyValue;
 
@@ -177,6 +177,7 @@ const TextImpl = <T extends ElementType = 'p'>(
 ) => {
   // Determine the element to render
   const Component = as ?? 'p';
+  const resolvedFontFamily = fontFamily ?? (variant.startsWith('h') ? 'heading' : 'body');
 
   // Build className from utility props
   const textClassName = clsx(
@@ -187,7 +188,7 @@ const TextImpl = <T extends ElementType = 'p'>(
     color && styles[`color-${color}`],
 
     // Font family utilities
-    fontFamily && styles[`fontFamily-${fontFamily}`],
+    styles[`fontFamily-${resolvedFontFamily}`],
 
     // Weight utilities
     weight && styles[`weight-${weight}`],

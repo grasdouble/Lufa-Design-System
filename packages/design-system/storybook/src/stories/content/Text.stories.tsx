@@ -66,11 +66,11 @@ const meta = {
     fontFamily: {
       control: 'select',
       options: [undefined, 'inherit', 'body', 'heading', 'code'],
-      description: 'Theme font family; independent of HTML semantics. Omit to preserve existing styling.',
+      description: 'Theme font family override; defaults to heading for h1-h6 variants and body otherwise.',
       table: {
         category: 'Typography',
         type: { summary: 'FontFamilyValue' },
-        defaultValue: { summary: 'undefined' },
+        defaultValue: { summary: 'heading for h1-h6; body otherwise' },
       },
     },
     weight: {
@@ -840,7 +840,7 @@ export const RealWorldPatterns: Story = {
   },
 };
 
-/** Optional theme fonts do not change HTML semantics or typography size. */
+/** Theme font overrides do not change HTML semantics or typography size. */
 export const PropFontFamily: Story = {
   render: () => (
     <StoryContainer>
