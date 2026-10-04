@@ -9,6 +9,11 @@ import styles from './Label.module.css';
  *
  * A simple label component for form inputs to ensure accessibility and consistent styling.
  *
+ * Accessibility contract: use the default native label and `htmlFor` matching
+ * the control ID to provide its accessible name and native click-to-focus behavior.
+ * The label adds no ARIA role or tab stop. When changing `as`, consumers must
+ * provide the control's accessible name separately.
+ *
  * @example
  * ```tsx
  * <Label htmlFor="email">Email Address</Label>

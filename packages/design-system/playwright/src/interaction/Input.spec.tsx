@@ -1,7 +1,101 @@
+import type { CSSProperties } from 'react';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/experimental-ct-react';
 
 import { FormField, Input } from '@grasdouble/lufa_design-system';
+
+test.describe('Input theme customization', () => {
+  for (const size of ['sm', 'md', 'lg'] as const) {
+    test(`uses the ${size} size tokens without emitting a native size attribute`, async ({ mount }) => {
+      const component = await mount(
+        <div
+          style={{
+            [`--lufa-component-input-height-${size}`]: '80px',
+            [`--lufa-component-input-padding-${size}-block`]: '5px',
+            [`--lufa-component-input-padding-${size}-inline`]: '9px',
+            [`--lufa-component-input-font-size-${size}`]: '18px',
+          }}
+        >
+          <Input size={size} aria-label="Sized input" />
+        </div>
+      );
+      const input = component.getByRole('textbox');
+      await expect(input).toHaveCSS('min-height', '80px');
+      await expect(input).toHaveCSS('padding-top', '5px');
+      await expect(input).toHaveCSS('padding-left', '9px');
+      await expect(input).toHaveCSS('font-size', '18px');
+      await expect(input).not.toHaveAttribute('size');
+    });
+  }
+
+  test('themes input typography, invalid background, and keyboard focus independently', async ({ mount, page }) => {
+    const component = await mount(
+      <div
+        style={
+          {
+            '--lufa-component-input-font-family': 'monospace',
+            '--lufa-component-input-font-weight': '700',
+            '--lufa-component-input-line-height': 'normal',
+            '--lufa-component-input-background-error': 'rgb(255, 240, 240)',
+            '--lufa-component-input-focus-outline': '2px solid rgb(0, 95, 204)',
+            '--lufa-component-input-focus-shadow': 'none',
+            '--lufa-component-input-focus-error-shadow': 'none',
+            '--lufa-component-input-focus-error-border': 'rgb(185, 28, 28)',
+          } as CSSProperties
+        }
+      >
+        <Input error aria-label="Invalid input" />
+      </div>
+    );
+    const input = component.getByRole('textbox');
+    await page.keyboard.press('Tab');
+    await expect(input).toBeFocused();
+    await expect(input).toHaveCSS('font-family', 'monospace');
+    await expect(input).toHaveCSS('font-weight', '700');
+    await expect(input).toHaveCSS('line-height', 'normal');
+    await expect(input).toHaveCSS('background-color', 'rgb(255, 240, 240)');
+    await expect(input).toHaveCSS('outline-color', 'rgb(0, 95, 204)');
+    await expect(input).toHaveCSS('outline-style', 'solid');
+    await expect(input).toHaveCSS('outline-width', '2px');
+    await expect(input).toHaveCSS('box-shadow', 'none');
+    await expect(input).toHaveCSS('border-top-color', 'rgb(185, 28, 28)');
+  });
+
+  test('themes FormField spacing, label, and feedback without nested Text components', async ({ mount }) => {
+    const component = await mount(
+      <div
+        style={
+          {
+            '--lufa-component-form-field-gap': '7px',
+            '--lufa-component-input-label-font-weight': '700',
+            '--lufa-component-input-label-line-height': 'normal',
+            '--lufa-component-form-field-feedback-font-size': '11px',
+            '--lufa-component-form-field-feedback-line-height': '1.35',
+            '--lufa-component-form-field-error-font-weight': '600',
+          } as CSSProperties
+        }
+      >
+        <FormField
+          label="Latitude"
+          description="Decimal degrees"
+          errorMessage={<span role="alert">Invalid latitude</span>}
+        >
+          <Input />
+        </FormField>
+      </div>
+    );
+    const input = component.getByRole('textbox', { name: 'Latitude' });
+    await expect(input).toHaveAccessibleDescription('Decimal degrees Invalid latitude');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(component.locator('label')).toHaveCSS('font-weight', '700');
+    await expect(component.locator('label')).toHaveCSS('line-height', 'normal');
+    await expect(component.locator('label').locator('..')).toHaveCSS('row-gap', '7px');
+    await expect(component.getByText('Decimal degrees')).toHaveCSS('font-size', '11px');
+    await expect(component.getByRole('alert')).toHaveCSS('font-size', '11px');
+    await expect(component.getByRole('alert')).toHaveCSS('font-weight', '600');
+    await expect(component.getByRole('alert')).toHaveCSS('line-height', '14.85px');
+  });
+});
 
 test.describe('Input', () => {
   test('should pass a11y checks', async ({ mount, page }) => {

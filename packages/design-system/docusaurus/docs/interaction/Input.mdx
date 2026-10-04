@@ -53,13 +53,14 @@ export function Example() {
 
 ## Props
 
-| Prop        | Type                  | Default     | Description                                                  |
-| ----------- | --------------------- | ----------- | ------------------------------------------------------------ |
-| `error`     | `boolean`             | `false`     | Applies error styling (red border).                          |
-| `disabled`  | `boolean`             | `false`     | Disables interaction and applies disabled styling.           |
-| `fullWidth` | `boolean`             | `false`     | Stretches the input to 100% of container width.              |
-| `className` | `string`              | `undefined` | Additional CSS classes.                                      |
-| `...props`  | `InputHTMLAttributes` | -           | All standard input attributes (type, value, onChange, etc.). |
+| Prop        | Type                   | Default     | Description                                                                                  |
+| ----------- | ---------------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `error`     | `boolean`              | `false`     | Applies error styling (red border).                                                          |
+| `size`      | `'sm' \| 'md' \| 'lg'` | `'md'`      | Visual padding, minimum height, and font size; replaces the native numeric `size` attribute. |
+| `disabled`  | `boolean`              | `false`     | Disables interaction and applies disabled styling.                                           |
+| `fullWidth` | `boolean`              | `false`     | Stretches the input to 100% of container width.                                              |
+| `className` | `string`               | `undefined` | Additional CSS classes.                                                                      |
+| `...props`  | `InputHTMLAttributes`  | -           | All standard input attributes (type, value, onChange, etc.).                                 |
 
 ## Accessibility
 
@@ -68,6 +69,25 @@ Always associate a label with the input using `htmlFor` and `id`. Do not rely on
 ## Theming & Tokens
 
 Input uses component tokens for background, border, and text colors. These tokens are theme‑aware.
+
+Use `size="sm"`, `size="md"`, or `size="lg"` to select the corresponding
+`--lufa-component-input-height-*`, `padding-*-block`, `padding-*-inline`, and
+`font-size-*` tokens. Heights are minimums: text and padding can make the field taller.
+
+Themes can also customize fields without selectors targeting their internal elements:
+
+- `--lufa-component-input-font-family`, `font-weight`, and `line-height` control values.
+- `--lufa-component-input-label-font-weight` and `label-line-height` control labels.
+- `--lufa-component-input-background-error` controls the invalid surface.
+- `--lufa-component-input-focus-outline`, `focus-shadow`, `focus-error-shadow`,
+  and `focus-error-border` control keyboard focus. Keep a visible focus indicator
+  for both valid and invalid fields, including in dark and high contrast modes.
+- `--lufa-component-form-field-gap`, `feedback-font-size`, `feedback-line-height`,
+  and `error-font-weight` control `FormField` spacing and feedback typography.
+
+Existing defaults remain unchanged. For example, the invalid background uses the
+normal surface unless a theme overrides it. `FormField` keeps label and feedback
+associations through `aria-describedby`; an error message still sets `aria-invalid`.
 
 ## Do / Don’t
 

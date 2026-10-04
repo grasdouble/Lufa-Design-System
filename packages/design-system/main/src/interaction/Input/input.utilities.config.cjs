@@ -15,9 +15,10 @@ module.exports = {
     width: '100%',
     'padding-block': 'var(--lufa-component-input-padding-md-block)',
     'padding-inline': 'var(--lufa-component-input-padding-md-inline)',
-    'font-family': 'inherit',
+    'font-family': 'var(--lufa-component-input-font-family)',
+    'font-weight': 'var(--lufa-component-input-font-weight)',
     'font-size': 'var(--lufa-component-input-font-size-md)',
-    'line-height': 'var(--lufa-core-typography-body-line-height)',
+    'line-height': 'var(--lufa-component-input-line-height)',
     color: 'var(--lufa-component-input-text-default)',
     'background-color': 'var(--lufa-component-input-background-default)',
     border: 'var(--lufa-component-input-border-width) solid var(--lufa-component-input-border-default)',
@@ -28,10 +29,24 @@ module.exports = {
   },
 
   utilities: {
+    size: {
+      property: ['min-height', 'padding-block', 'padding-inline', 'font-size'],
+      values: Object.fromEntries(
+        ['sm', 'md', 'lg'].map((size) => [
+          size,
+          [
+            `var(--lufa-component-input-height-${size})`,
+            `var(--lufa-component-input-padding-${size}-block)`,
+            `var(--lufa-component-input-padding-${size}-inline)`,
+            `var(--lufa-component-input-font-size-${size})`,
+          ],
+        ])
+      ),
+    },
     error: {
-      property: 'border-color',
+      property: ['border-color', 'background-color'],
       values: {
-        true: 'var(--lufa-component-input-border-error)',
+        true: ['var(--lufa-component-input-border-error)', 'var(--lufa-component-input-background-error)'],
       },
     },
     disabled: {
@@ -66,15 +81,16 @@ module.exports = {
       selector: '.input:focus-visible',
       properties: {
         'border-color': 'var(--lufa-component-input-border-focus)',
-        'box-shadow':
-          '0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-shared-focus-outline-color)',
+        outline: 'var(--lufa-component-input-focus-outline)',
+        'box-shadow': 'var(--lufa-component-input-focus-shadow)',
       },
     },
     {
       comment: 'Error + Focus — red focus ring',
       selector: '.input.error:focus-visible',
       properties: {
-        'box-shadow': '0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-input-border-error)',
+        'border-color': 'var(--lufa-component-input-focus-error-border)',
+        'box-shadow': 'var(--lufa-component-input-focus-error-shadow)',
       },
     },
   ],

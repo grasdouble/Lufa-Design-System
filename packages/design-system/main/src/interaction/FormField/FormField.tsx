@@ -31,6 +31,8 @@ export type FormFieldProps = {
  * receives `aria-invalid` when an error is present, and is associated with the
  * visible label and descriptions. Consumers overriding the input ID must pass
  * the same value through `inputId`.
+ * Keyboard interactions remain those of the nested native control; the wrapper
+ * introduces no additional role or tab stop. Feedback uses themed component tokens.
  */
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   ({ label, description, errorMessage, inputId, required = false, children, className, ...props }, ref) => {

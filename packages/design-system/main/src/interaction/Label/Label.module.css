@@ -18,8 +18,8 @@
   display: block;
   font-family: inherit;
   font-size: var(--lufa-component-input-label-font-size);
-  font-weight: var(--lufa-primitive-typography-font-weight-medium);
+  font-weight: var(--lufa-component-input-label-font-weight);
   color: var(--lufa-component-input-label-color);
   margin-bottom: var(--lufa-component-input-label-spacing);
-  line-height: var(--lufa-primitive-typography-line-height-tight);
+  line-height: var(--lufa-component-input-label-line-height);
 }
