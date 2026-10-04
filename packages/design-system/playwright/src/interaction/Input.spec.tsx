@@ -241,7 +241,7 @@ test.describe('Visual Regression', () => {
         </section>
 
         {/* Section 5: Full Width */}
-        <section>
+        <section style={{ marginBottom: '24px' }}>
           <h2
             style={{
               marginBottom: '16px',
@@ -253,6 +253,27 @@ test.describe('Visual Regression', () => {
             Full Width
           </h2>
           <Input fullWidth placeholder="Full width input" />
+        </section>
+
+        {/* Section 6: Sizes */}
+        <section>
+          <h2
+            style={{
+              marginBottom: '16px',
+              fontSize: '20px',
+              fontWeight: '600',
+              color: 'var(--lufa-semantic-ui-text-secondary)',
+            }}
+          >
+            Sizes
+          </h2>
+          <div style={{ display: 'grid', gap: 'var(--lufa-semantic-ui-spacing-comfortable)' }}>
+            {(['sm', 'md', 'lg'] as const).map((size) => (
+              <FormField key={size} label={`Size: ${size}`} description={`Input size ${size}`}>
+                <Input size={size} defaultValue="48.85833" />
+              </FormField>
+            ))}
+          </div>
         </section>
       </div>
     );
