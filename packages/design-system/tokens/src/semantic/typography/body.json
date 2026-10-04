@@ -40,6 +40,19 @@
               "themeLevel": "extended"
             }
           }
+        },
+        "line-height": {
+          "$value": "{core.typography.body.line-height}",
+          "$type": "number",
+          "$description": "Body text line height",
+          "$extensions": {
+            "lufa": {
+              "category": "typography",
+              "useCase": "Body text line height",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
         }
       }
     }

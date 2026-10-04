@@ -1,12 +1,13 @@
 .field {
   display: grid;
-  gap: var(--lufa-semantic-ui-spacing-tight);
+  gap: var(--lufa-component-form-field-gap);
 }
 
 .description,
 .error {
   margin: 0;
-  font-size: var(--lufa-semantic-ui-typography-caption);
+  font-size: var(--lufa-component-form-field-feedback-font-size);
+  line-height: var(--lufa-component-form-field-feedback-line-height);
 }
 
 .description {
@@ -14,5 +15,6 @@
 }
 
 .error {
+  font-weight: var(--lufa-component-form-field-error-font-weight);
   color: var(--lufa-semantic-ui-text-error);
 }

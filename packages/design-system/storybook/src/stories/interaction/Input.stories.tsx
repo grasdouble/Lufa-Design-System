@@ -25,6 +25,11 @@ const meta = {
     layout: 'fullscreen',
   },
   argTypes: {
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+      description: 'Visual size: padding, minimum height, and text size',
+    },
     placeholder: {
       control: 'text',
       description: 'Placeholder text',
@@ -162,6 +167,21 @@ export const AccessibleFormField: Story = {
           title="JSX"
         />
       </div>
+    </StoryContainer>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <StoryContainer>
+      <div style={{ display: 'grid', gap: 'var(--lufa-semantic-ui-spacing-default)' }}>
+        {(['sm', 'md', 'lg'] as const).map((size) => (
+          <FormField key={size} label={`Size: ${size}`}>
+            <Input size={size} placeholder="Type a value" />
+          </FormField>
+        ))}
+      </div>
+      <CodeBlock code={'<Input size="sm" />\n<Input size="md" />\n<Input size="lg" />'} language="jsx" title="JSX" />
     </StoryContainer>
   ),
 };

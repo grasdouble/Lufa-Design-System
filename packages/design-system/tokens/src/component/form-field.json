@@ -1,0 +1,62 @@
+{
+  "component": {
+    "form-field": {
+      "gap": {
+        "$value": "{semantic.ui.spacing.tight}",
+        "$type": "dimension",
+        "$description": "Gap between form field label, control, and feedback",
+        "$extensions": {
+          "lufa": {
+            "category": "form-field",
+            "useCase": "Gap between form field label, control, and feedback",
+            "themeable": true,
+            "themeLevel": "advanced"
+          }
+        }
+      },
+      "feedback": {
+        "font-size": {
+          "$value": "{semantic.typography.caption}",
+          "$type": "dimension",
+          "$description": "Form field description and error font size",
+          "$extensions": {
+            "lufa": {
+              "category": "form-field",
+              "useCase": "Form field description and error font size",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "line-height": {
+          "$value": "inherit",
+          "$type": "other",
+          "$description": "Form field description and error line height",
+          "$extensions": {
+            "lufa": {
+              "category": "form-field",
+              "useCase": "Form field description and error line height",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "error": {
+        "font-weight": {
+          "$value": "inherit",
+          "$type": "other",
+          "$description": "Form field error message font weight",
+          "$extensions": {
+            "lufa": {
+              "category": "form-field",
+              "useCase": "Form field error message font weight",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      }
+    }
+  }
+}

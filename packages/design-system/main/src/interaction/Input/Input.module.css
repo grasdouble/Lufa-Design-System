@@ -20,9 +20,10 @@
   width: 100%;
   padding-block: var(--lufa-component-input-padding-md-block);
   padding-inline: var(--lufa-component-input-padding-md-inline);
-  font-family: inherit;
+  font-family: var(--lufa-component-input-font-family);
+  font-weight: var(--lufa-component-input-font-weight);
   font-size: var(--lufa-component-input-font-size-md);
-  line-height: var(--lufa-core-typography-body-line-height);
+  line-height: var(--lufa-component-input-line-height);
   color: var(--lufa-component-input-text-default);
   background-color: var(--lufa-component-input-background-default);
   border: var(--lufa-component-input-border-width) solid var(--lufa-component-input-border-default);
@@ -34,11 +35,37 @@
 }
 
 /* ========================================== */
+/* SIZE */
+/* ========================================== */
+
+.size-sm {
+  min-height: var(--lufa-component-input-height-sm);
+  padding-block: var(--lufa-component-input-padding-sm-block);
+  padding-inline: var(--lufa-component-input-padding-sm-inline);
+  font-size: var(--lufa-component-input-font-size-sm);
+}
+
+.size-md {
+  min-height: var(--lufa-component-input-height-md);
+  padding-block: var(--lufa-component-input-padding-md-block);
+  padding-inline: var(--lufa-component-input-padding-md-inline);
+  font-size: var(--lufa-component-input-font-size-md);
+}
+
+.size-lg {
+  min-height: var(--lufa-component-input-height-lg);
+  padding-block: var(--lufa-component-input-padding-lg-block);
+  padding-inline: var(--lufa-component-input-padding-lg-inline);
+  font-size: var(--lufa-component-input-font-size-lg);
+}
+
+/* ========================================== */
 /* ERROR */
 /* ========================================== */
 
 .error {
   border-color: var(--lufa-component-input-border-error);
+  background-color: var(--lufa-component-input-background-error);
 }
 
 /* ========================================== */
@@ -73,10 +100,12 @@
 /* Focus ring (keyboard navigation) */
 .input:focus-visible {
   border-color: var(--lufa-component-input-border-focus);
-  box-shadow: 0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-shared-focus-outline-color);
+  outline: var(--lufa-component-input-focus-outline);
+  box-shadow: var(--lufa-component-input-focus-shadow);
 }
 
 /* Error + Focus — red focus ring */
 .input.error:focus-visible {
-  box-shadow: 0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-input-border-error);
+  border-color: var(--lufa-component-input-focus-error-border);
+  box-shadow: var(--lufa-component-input-focus-error-shadow);
 }

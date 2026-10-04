@@ -24,6 +24,11 @@ import styles from './Input.module.css';
  */
 
 export type InputProps = {
+  /** Visual size, using component padding, minimum height, and font-size tokens.
+   * @default 'md'
+   */
+  size?: 'sm' | 'md' | 'lg';
+
   /**
    * Error state
    * @default false
@@ -49,12 +54,15 @@ export type InputProps = {
  * `error` sets `aria-invalid`; native `aria-describedby` is supported directly.
  * Inside `FormField`, label, description, error, required, and invalid state are
  * connected automatically.
+ * Keyboard input and Tab navigation follow native input behavior. Themes must
+ * retain a visible keyboard focus outline or shadow in both valid and invalid states.
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
       error = false,
+      size = 'md',
       fullWidth,
       disabled,
       id,
@@ -79,6 +87,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         aria-invalid={invalid}
         className={clsx(
           styles.input,
+          styles[`size-${size}`],
           (error || field?.invalid) && styles.error,
           fullWidth && styles.fullWidth,
           disabled && styles.disabled,

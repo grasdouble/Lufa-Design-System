@@ -234,6 +234,19 @@
               "themeLevel": "advanced"
             }
           }
+        },
+        "error": {
+          "$value": "{component.input.background.default}",
+          "$type": "color",
+          "$description": "Invalid input background; unchanged from the default surface unless themed",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Invalid input background; unchanged from the default surface unless themed",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
         }
       },
       "border": {
@@ -389,6 +402,32 @@
               "themeLevel": "advanced"
             }
           }
+        },
+        "font-weight": {
+          "$value": 500,
+          "$type": "fontWeight",
+          "$description": "Input label font weight",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Input label font weight",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "line-height": {
+          "$value": 1.25,
+          "$type": "number",
+          "$description": "Input label line height",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Input label line height",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
         }
       },
       "helper": {
@@ -525,6 +564,99 @@
                 "useCase": "Disabled input field cursor",
                 "themeable": false
               }
+            }
+          }
+        }
+      },
+      "font-family": {
+        "$value": "inherit",
+        "$type": "fontFamily",
+        "$description": "Input font family; inherits the surrounding typography by default",
+        "$extensions": {
+          "lufa": {
+            "category": "input",
+            "useCase": "Input font family; inherits the surrounding typography by default",
+            "themeable": true,
+            "themeLevel": "advanced"
+          }
+        }
+      },
+      "font-weight": {
+        "$value": 400,
+        "$type": "fontWeight",
+        "$description": "Input value font weight",
+        "$extensions": {
+          "lufa": {
+            "category": "input",
+            "useCase": "Input value font weight",
+            "themeable": true,
+            "themeLevel": "advanced"
+          }
+        }
+      },
+      "line-height": {
+        "$value": "{semantic.typography.body.line-height}",
+        "$type": "number",
+        "$description": "Input value line height",
+        "$extensions": {
+          "lufa": {
+            "category": "input",
+            "useCase": "Input value line height",
+            "themeable": true,
+            "themeLevel": "advanced"
+          }
+        }
+      },
+      "focus": {
+        "outline": {
+          "$value": "none",
+          "$type": "other",
+          "$description": "Keyboard focus outline; retain a visible outline or shadow in every theme",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Keyboard focus outline; retain a visible outline or shadow in every theme",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "shadow": {
+          "$value": "0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-shared-focus-outline-color)",
+          "$type": "shadow",
+          "$description": "Keyboard focus shadow; CSS variable references keep the focus ring responsive to theme overrides",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Keyboard focus shadow",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "error-shadow": {
+          "$value": "0 0 0 var(--lufa-component-shared-focus-outline-width) var(--lufa-component-input-border-error)",
+          "$type": "shadow",
+          "$description": "Invalid input keyboard focus shadow; CSS variable references keep the focus ring responsive to theme overrides",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Invalid input keyboard focus shadow",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "error-border": {
+          "$value": "{component.input.border.focus}",
+          "$type": "color",
+          "$description": "Invalid input border while keyboard focused",
+          "$extensions": {
+            "lufa": {
+              "category": "input",
+              "useCase": "Invalid input border while keyboard focused",
+              "themeable": true,
+              "themeLevel": "advanced"
             }
           }
         }

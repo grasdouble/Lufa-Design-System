@@ -11,15 +11,15 @@ Design token package for the Lufa Design System.
 
 <!-- token-statistics:start -->
 
-The build currently contains **699 source tokens** and emits **699 unique CSS custom properties** across **805 CSS declarations** (including mode overrides).
+The build currently contains **714 source tokens** and emits **714 unique CSS custom properties** across **820 CSS declarations** (including mode overrides).
 
 | Level     | Source tokens |
 | --------- | ------------: |
 | Primitive |           182 |
 | Core      |           109 |
-| Semantic  |           169 |
-| Component |           239 |
-| **Total** |       **699** |
+| Semantic  |           170 |
+| Component |           253 |
+| **Total** |       **714** |
 
 <!-- token-statistics:end -->
 

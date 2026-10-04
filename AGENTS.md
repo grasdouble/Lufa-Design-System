@@ -335,6 +335,14 @@ Root-level tests outside the Playwright package do not run as part of `pnpm test
 - ✅ `scripts/ci-auth.test.mjs` → root `test:ci-auth` script → `pnpm test:ci-auth` in `.github/workflows/global-tools-lint.yml`.
 - ❌ Add `scripts/new-check.test.mjs` and run it only manually; future PRs will never execute it.
 
+## Visual variants — Extend the existing all-variants screenshot
+
+New component sizes or appearances need visual coverage alongside behavior and CSS assertions.
+
+- ✅ Add `Input` sizes `sm/md/lg` to the existing `All Variants` fixture and review its updated light/dark macOS references. Linux references are managed by CI.
+- ✅ Create a separate screenshot only when the state or composition cannot be represented clearly in the existing overview.
+- ❌ Add only CSS assertions for new visual variants, duplicate the all-variants overview with a new snapshot, or generate Linux references locally.
+
 ## Dependabot CI auth tests — Allow pnpm setup without dependency installation
 
 When the Dependabot Changeset workflow needs pnpm for workspace enumeration, its auth test must allow `setup-node-pnpm` with `github.token` while still rejecting dependency installs and unnecessary `packages: read` permission.
