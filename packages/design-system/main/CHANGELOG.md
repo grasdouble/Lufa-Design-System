@@ -1,5 +1,20 @@
 # @grasdouble/lufa_design-system
 
+## 3.6.0
+
+### Minor Changes
+
+- 3a250db: feat: add small, medium, and large Input sizes backed by existing padding, font-size, and minimum-height tokens. Expose themeable input and label typography, invalid backgrounds, keyboard focus, and FormField spacing and feedback typography while preserving the default appearance.
+
+  test: cover field sizing and theme overrides with component tests, retain existing visual references, and document the new controls in Storybook and the Input guide.
+
+  test: extend the existing Input all-variants overview with small, medium, and large sizes and update its light and dark macOS references; Linux references are managed by CI.
+
+### Patch Changes
+
+- Updated dependencies [3a250db]
+  - @grasdouble/lufa_design-system-tokens@1.3.0
+
 ## 3.5.3
 
 ### Patch Changes
