@@ -222,6 +222,7 @@ function generateCompounds(compounds) {
  *   {
  *     selector: '.button:focus-visible',
  *     properties: { outline: '...', 'outline-offset': '...' }
+ *     // Optional media: '(prefers-reduced-motion: reduce)' wraps this selector.
  *   }
  * ]
  *
@@ -231,14 +232,20 @@ function generateCompounds(compounds) {
 function generateSelectors(selectors) {
   if (!selectors || selectors.length === 0) return [];
 
-  return selectors.map(({ selector, comment, properties }) => {
+  return selectors.map(({ selector, comment, properties, media }) => {
     const lines = [];
     if (comment) lines.push(`/* ${comment} */`);
     const props = Object.entries(properties)
       .map(([prop, val]) => `  ${prop}: ${val};`)
       .join('\n');
     lines.push(`${selector} {\n${props}\n}`);
-    return lines.join('\n');
+    const block = lines.join('\n');
+    return media
+      ? `@media ${media} {\n${block
+          .split('\n')
+          .map((line) => `  ${line}`)
+          .join('\n')}\n}`
+      : block;
   });
 }
 

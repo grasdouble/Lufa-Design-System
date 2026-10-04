@@ -67,13 +67,33 @@
 /* STANDALONE SELECTORS */
 /* ========================================== */
 
+/* Native button reset; the variant retains control of the bottom border */
+button.link {
+  appearance: none;
+  background: transparent;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
+  text-align: inherit;
+}
+
+/* Disabled native buttons remain unavailable without hover feedback */
+button.link:disabled {
+  cursor: var(--lufa-semantic-interactive-cursor-disabled);
+  opacity: var(--lufa-semantic-interactive-opacity-disabled);
+}
+
 /* Primary color - darken on hover */
-.link.color-primary:hover {
+.link.color-primary:hover:not(:disabled) {
   color: var(--lufa-semantic-interactive-link-hover);
 }
 
 /* Default variant - border appears on hover */
-.link.variant-underline:hover {
+.link.variant-underline:hover:not(:disabled) {
   border-bottom-color: currentColor;
 }
 
@@ -82,4 +102,11 @@
   outline: var(--lufa-component-shared-focus-outline-width) solid var(--lufa-component-shared-focus-outline-color);
   outline-offset: var(--lufa-component-shared-focus-outline-offset);
   border-radius: var(--lufa-semantic-ui-border-radius-small);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Respect the preference for reduced motion */
+  .link {
+    transition: none;
+  }
 }
