@@ -59,15 +59,39 @@ module.exports = {
   // ==========================================
   selectors: [
     {
+      comment: 'Native button reset; the variant retains control of the bottom border',
+      selector: 'button.link',
+      properties: {
+        appearance: 'none',
+        background: 'transparent',
+        'border-top': '0',
+        'border-right': '0',
+        'border-left': '0',
+        'border-radius': '0',
+        padding: '0',
+        margin: '0',
+        'line-height': 'inherit',
+        'text-align': 'inherit',
+      },
+    },
+    {
+      comment: 'Disabled native buttons remain unavailable without hover feedback',
+      selector: 'button.link:disabled',
+      properties: {
+        cursor: 'var(--lufa-semantic-interactive-cursor-disabled)',
+        opacity: 'var(--lufa-semantic-interactive-opacity-disabled)',
+      },
+    },
+    {
       comment: 'Primary color - darken on hover',
-      selector: '.link.color-primary:hover',
+      selector: '.link.color-primary:hover:not(:disabled)',
       properties: {
         color: 'var(--lufa-semantic-interactive-link-hover)',
       },
     },
     {
       comment: 'Default variant - border appears on hover',
-      selector: '.link.variant-underline:hover',
+      selector: '.link.variant-underline:hover:not(:disabled)',
       properties: {
         'border-bottom-color': 'currentColor',
       },
@@ -81,6 +105,12 @@ module.exports = {
         'outline-offset': 'var(--lufa-component-shared-focus-outline-offset)',
         'border-radius': 'var(--lufa-semantic-ui-border-radius-small)',
       },
+    },
+    {
+      comment: 'Respect the preference for reduced motion',
+      media: '(prefers-reduced-motion: reduce)',
+      selector: '.link',
+      properties: { transition: 'none' },
     },
   ],
 };

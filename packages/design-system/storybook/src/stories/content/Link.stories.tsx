@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Link, Text } from '@grasdouble/lufa_design-system';
@@ -383,6 +384,36 @@ export const InlineUsage: Story = {
     smouillour
   </Link>.
 </Text>`}
+            language="jsx"
+            title="JSX"
+          />
+        </div>
+      </StoryContainer>
+    );
+  },
+};
+
+/** Secondary inline actions retain native button semantics and keyboard behavior. */
+export const InlineAction: Story = {
+  render: function InlineActionDemo() {
+    const [activated, setActivated] = useState(false);
+    return (
+      <StoryContainer>
+        <div style={{ padding: '32px' }}>
+          <Text as="p" variant="body">
+            Estimated address: 1 Example Street.{' '}
+            <Link as="button" onClick={() => setActivated(true)}>
+              Confirm address
+            </Link>
+          </Text>
+          {activated && <Text role="status">Address confirmed.</Text>}
+          <Text as="p" variant="body">
+            <Link as="button" variant="plain" disabled>
+              Unavailable action
+            </Link>
+          </Text>
+          <CodeBlock
+            code='<Link as="button" onClick={handleAction}>Confirm address</Link>'
             language="jsx"
             title="JSX"
           />

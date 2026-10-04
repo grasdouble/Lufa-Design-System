@@ -142,9 +142,16 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // Use as a button (no href needed)
 <Link as="button" onClick={handleClick} variant="plain">
-  Click me
+  Copy address
 </Link>
 ```
+
+Use `as="button"` for a secondary inline action such as copying text. It renders a
+native button with `type="button"` by default, so it does not submit an enclosing
+form. Native button backgrounds, side borders, and padding are removed; typography
+is inherited from the surrounding text. The `underline` variant retains its hover
+border. Use `disabled` when the action is unavailable. Prefer `Button` for prominent
+actions and a native anchor with `href` for navigation.
 
 ## Font Inheritance
 
@@ -160,7 +167,10 @@ The Link component inherits `font-size` and `font-weight` from its parent, makin
 ## Accessibility
 
 - Uses native `<a>` element by default for correct semantics
+- Anchors with `href` activate with Enter; `as="button"` actions activate with Enter and Space
+- Native disabled buttons cannot be activated and are skipped during keyboard navigation
 - Visible focus ring on keyboard navigation (uses DS focus tokens)
+- Hover transitions are disabled when `prefers-reduced-motion: reduce` is set
 - Auto `rel="noopener noreferrer"` when `target="_blank"` prevents tab-nabbing
 - Color is not the only visual affordance — border-bottom appears on hover
 

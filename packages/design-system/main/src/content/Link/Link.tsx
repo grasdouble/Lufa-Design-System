@@ -21,6 +21,14 @@ import styles from './Link.module.css';
  * - Inherits font-size and font-weight from parent context
  * - Token-based design (semantic layer tokens)
  *
+ * Accessibility contract:
+ * - Use the default anchor with href for navigation; Enter follows its destination.
+ * - Use as="button" for inline actions; Enter and Space activate the native button.
+ *   Its default type="button" prevents form submission, and disabled uses native behavior.
+ * - Both interactive elements retain a visible token-based keyboard focus indicator.
+ * - Provide an accessible name through children or aria-label. Custom components must
+ *   preserve the appropriate keyboard behavior, semantics, and forwarded ref.
+ *
  * @example
  * ```tsx
  * // Default inline link

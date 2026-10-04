@@ -418,3 +418,10 @@ Rules when adding or modifying a component:
 - **Tokens** → CSS must use design tokens for all dimensions, colors, spacing — no hard-coded `px`/`rem`/`color` values (enforced by `validate:token-usage`)
 - **Export** → add the component and its types to the package's top-level `index.ts`
 - **Validate** → run `pnpm validate:components` and `pnpm validate:token-usage` from `packages/design-system/main/` after any component change
+
+## Component reuse — Inspect existing polymorphic capabilities first
+
+Before proposing a new appearance or component, inspect the existing API, implementation, and tests for the requested semantics.
+
+- ✅ For an inline action, check `Link as="button"` and fix its native button styling while preserving keyboard activation and focus.
+- ❌ Introduce a new Button appearance without checking Link's existing button rendering, or use an anchor with a fake href for an action.
