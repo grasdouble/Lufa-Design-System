@@ -83,8 +83,8 @@
   "devDependencies": {
     "@grasdouble/lufa_config_eslint": "^0.1.12",
     "@grasdouble/lufa_config_prettier": "^0.1.6",
-    "@types/node": "^26.6.2",
-    "@types/vscode": "^1.138.0",
+    "@types/node": "^26.6.4",
+    "@types/vscode": "^1.140.0",
     "@vitest/coverage-v8": "^4.1.11",
     "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.28.2",
