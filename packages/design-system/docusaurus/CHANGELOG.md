@@ -1,5 +1,13 @@
 # @grasdouble/lufa_design-system-docusaurus
 
+## 1.3.11
+
+### Patch Changes
+
+- 94dcf6f: feat: add mobile-first responsive column counts to Grid and responsive direction to Stack using shared breakpoints.
+- Updated dependencies [94dcf6f]
+  - @grasdouble/lufa_design-system@4.1.0
+
 ## 1.3.10
 
 ### Patch Changes
