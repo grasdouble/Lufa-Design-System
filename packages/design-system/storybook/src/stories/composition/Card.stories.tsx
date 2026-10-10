@@ -47,9 +47,9 @@ export const Default: Story = {
               💡 TOKEN EDUCATION:
               Background: var(--lufa-component-card-background)
               Border: var(--lufa-component-card-border)
-              Shadow: var(--lufa-component-card-shadow-sm)
+              Shadow: var(--lufa-component-card-shadow-none)
               Padding: var(--lufa-component-card-padding-md)
-              Border Radius: var(--lufa-component-card-border-radius-sm)
+              Border Radius: var(--lufa-component-card-border-radius-md)
             */}
             <Card style={{ maxWidth: '400px' }}>
               <Text as="h3" style={{ fontWeight: 'bold', marginBottom: '8px' }}>
@@ -79,4 +79,25 @@ export const Default: Story = {
       </StoryContainer>
     );
   },
+};
+
+export const TokenScales: Story = {
+  render: () => (
+    <StoryContainer>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+        <Card padding="sm" radius="sm" shadow="none">
+          <Text as="h3">Compact flat card</Text>
+          <Text color="secondary">Small padding and radius, no elevation.</Text>
+        </Card>
+        <Card padding="md" radius="md" shadow="sm">
+          <Text as="h3">Standard card</Text>
+          <Text color="secondary">Medium padding and radius with subtle elevation.</Text>
+        </Card>
+        <Card padding="lg" radius="lg" shadow="md">
+          <Text as="h3">Spacious card</Text>
+          <Text color="secondary">Large padding and radius with stronger elevation.</Text>
+        </Card>
+      </div>
+    </StoryContainer>
+  ),
 };

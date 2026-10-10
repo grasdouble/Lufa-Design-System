@@ -16,9 +16,9 @@
           }
         },
         "md": {
-          "$value": "{semantic.ui.spacing.comfortable}",
+          "$value": "26px",
           "$type": "dimension",
-          "$description": "Medium card padding (default)",
+          "$description": "Default content-card padding, calibrated against the MapositionGPS editorial card pattern",
           "$extensions": {
             "lufa": {
               "category": "card",
@@ -29,9 +29,9 @@
           }
         },
         "lg": {
-          "$value": "{semantic.ui.spacing.spacious}",
+          "$value": "30px",
           "$type": "dimension",
-          "$description": "Large card padding for spacious layouts",
+          "$description": "Large feature-card padding, calibrated against the MapositionGPS feature-card pattern",
           "$extensions": {
             "lufa": {
               "category": "card",
@@ -57,9 +57,9 @@
           }
         },
         "md": {
-          "$value": "{semantic.ui.border-radius.medium}",
+          "$value": "16px",
           "$type": "dimension",
-          "$description": "Medium border radius (default)",
+          "$description": "Medium card radius (default), calibrated for standard content cards",
           "$extensions": {
             "lufa": {
               "category": "card",
@@ -70,7 +70,7 @@
           }
         },
         "lg": {
-          "$value": "{semantic.ui.border-radius.large}",
+          "$value": "18px",
           "$type": "dimension",
           "$description": "Large border radius for prominent rounding",
           "$extensions": {
@@ -100,7 +100,7 @@
         "md": {
           "$value": "{semantic.ui.shadow.medium}",
           "$type": "shadow",
-          "$description": "Medium shadow for standard elevation (default)",
+          "$description": "Medium shadow for standard card elevation",
           "$extensions": {
             "lufa": {
               "category": "card",
@@ -118,6 +118,19 @@
             "lufa": {
               "category": "card",
               "useCase": "Modal cards, floating panels, prominent cards",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "none": {
+          "$value": "none",
+          "$type": "shadow",
+          "$description": "Flat card with no elevation shadow",
+          "$extensions": {
+            "lufa": {
+              "category": "card",
+              "useCase": "Flat cards and dense editorial grids",
               "themeable": true,
               "themeLevel": "advanced"
             }

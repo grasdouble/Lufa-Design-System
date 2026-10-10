@@ -26,6 +26,24 @@ test.describe('Card', () => {
     await expect(component).toContainText('Card Content');
   });
 
+  test('uses token-scale defaults and allows existing scales to be selected', async ({ mount }) => {
+    const component = await mount(
+      <div>
+        <Card data-testid="default-card">Default</Card>
+        <Card data-testid="scaled-card" padding="lg" radius="lg" shadow="none">
+          Scaled
+        </Card>
+      </div>
+    );
+
+    await expect(component.getByTestId('default-card')).toHaveClass(/padding-md/);
+    await expect(component.getByTestId('default-card')).toHaveClass(/radius-md/);
+    await expect(component.getByTestId('default-card')).toHaveClass(/shadow-none/);
+    await expect(component.getByTestId('scaled-card')).toHaveClass(/padding-lg/);
+    await expect(component.getByTestId('scaled-card')).toHaveClass(/radius-lg/);
+    await expect(component.getByTestId('scaled-card')).toHaveClass(/shadow-none/);
+  });
+
   test('should support polymorphism', async ({ mount }) => {
     const component = await mount(
       <Card as="section">
@@ -93,7 +111,35 @@ test.describe('Card', () => {
             </Card>
           </section>
 
-          {/* Section 3: Polymorphic (as section) */}
+          {/* Section 3: Token scales */}
+          <section style={{ marginBottom: '24px' }}>
+            <h2
+              style={{
+                marginBottom: '16px',
+                fontSize: '20px',
+                fontWeight: '600',
+                color: 'var(--lufa-semantic-ui-text-secondary)',
+              }}
+            >
+              Token Scales
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+              <Card padding="sm" radius="sm" shadow="none">
+                <Text as="h3">Compact</Text>
+                <Text color="secondary">Small padding and radius, no shadow.</Text>
+              </Card>
+              <Card padding="md" radius="md" shadow="sm">
+                <Text as="h3">Standard</Text>
+                <Text color="secondary">Medium padding and radius, subtle shadow.</Text>
+              </Card>
+              <Card padding="lg" radius="lg" shadow="md">
+                <Text as="h3">Spacious</Text>
+                <Text color="secondary">Large padding and radius, medium shadow.</Text>
+              </Card>
+            </div>
+          </section>
+
+          {/* Section 4: Polymorphic (as section) */}
           <section>
             <h2
               style={{

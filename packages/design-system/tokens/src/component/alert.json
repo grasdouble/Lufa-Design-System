@@ -1,0 +1,176 @@
+{
+  "component": {
+    "alert": {
+      "padding": {
+        "block": {
+          "$value": "10px",
+          "$type": "dimension",
+          "$description": "Vertical padding for compact feedback notices, calibrated against the MapositionGPS feedback pattern",
+          "$extensions": {
+            "lufa": {
+              "category": "alert",
+              "useCase": "Inline validation and compact status notices",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "inline": {
+          "$value": "12px",
+          "$type": "dimension",
+          "$description": "Horizontal padding for compact feedback notices",
+          "$extensions": {
+            "lufa": {
+              "category": "alert",
+              "useCase": "Inline validation and compact status notices",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "border": {
+        "width": {
+          "$value": "0px",
+          "$type": "dimension",
+          "$description": "Default alert border width; the subtle surface provides the tone without an extra outline",
+          "$extensions": {
+            "lufa": {
+              "category": "alert",
+              "useCase": "Compact feedback notice surfaces",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "border-radius": {
+        "$value": "10px",
+        "$type": "dimension",
+        "$description": "Corner radius for compact feedback notices, calibrated against the MapositionGPS feedback pattern",
+        "$extensions": {
+          "lufa": {
+            "category": "alert",
+            "useCase": "Inline validation and compact status notices",
+            "themeable": true,
+            "themeLevel": "advanced"
+          }
+        }
+      },
+      "variant": {
+        "error": {
+          "background": {
+            "$value": "{semantic.ui.background.error}",
+            "$type": "color",
+            "$description": "Subtle error notice surface, calibrated against the MapositionGPS feedback pattern",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Error messages and urgent inline feedback",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "text": {
+            "$value": "{semantic.ui.text.error}",
+            "$type": "color",
+            "$description": "Error alert text color",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Error messages and urgent inline feedback",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          }
+        },
+        "info": {
+          "background": {
+            "$value": "{semantic.ui.background.info}",
+            "$type": "color",
+            "$description": "Subtle information notice surface",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Informational notices and callouts",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "text": {
+            "$value": "{semantic.ui.text.info}",
+            "$type": "color",
+            "$description": "Information alert text color",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Informational notices and callouts",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          }
+        },
+        "success": {
+          "background": {
+            "$value": "{semantic.ui.background.success}",
+            "$type": "color",
+            "$description": "Subtle success notice surface",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Confirmation and successful status notices",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "text": {
+            "$value": "{semantic.ui.text.success}",
+            "$type": "color",
+            "$description": "Success alert text color",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Confirmation and successful status notices",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          }
+        },
+        "warning": {
+          "background": {
+            "$value": "{semantic.ui.background.warning}",
+            "$type": "color",
+            "$description": "Subtle warning notice surface",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Warnings and caution notices",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "text": {
+            "$value": "{semantic.ui.text.warning}",
+            "$type": "color",
+            "$description": "Warning alert text color, calibrated against the MapositionGPS feedback pattern",
+            "$extensions": {
+              "lufa": {
+                "category": "alert",
+                "useCase": "Warnings and caution notices",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

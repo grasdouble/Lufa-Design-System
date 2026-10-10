@@ -1,0 +1,74 @@
+.accordion {
+  border-bottom: 1px solid var(--lufa-component-accordion-border-color);
+  color: var(--lufa-semantic-ui-text-primary);
+}
+
+.summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--lufa-semantic-ui-spacing-compact);
+  padding-block: var(--lufa-component-accordion-summary-padding-block);
+  padding-inline: var(--lufa-component-accordion-summary-padding-inline-start)
+    var(--lufa-component-accordion-summary-padding-inline-end);
+  color: inherit;
+  line-height: normal;
+  list-style: none;
+  cursor: pointer;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary-label {
+  font-weight: var(--lufa-component-accordion-summary-font-weight);
+}
+
+.plus-minus {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  flex: 0 0 auto;
+  width: var(--lufa-component-accordion-indicator-size);
+  height: var(--lufa-component-accordion-indicator-size);
+  color: var(--lufa-component-accordion-indicator-color);
+  font-size: var(--lufa-component-accordion-indicator-size);
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.plus-minus::before {
+  content: '+';
+}
+
+.accordion[open] .plus-minus::before {
+  content: '−';
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: var(--lufa-component-accordion-indicator-size);
+  height: var(--lufa-component-accordion-indicator-size);
+  color: var(--lufa-component-accordion-indicator-color);
+  transition: transform var(--lufa-component-accordion-indicator-transition-duration);
+}
+
+.accordion[open] .chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.content {
+  padding: 0 0 var(--lufa-component-accordion-content-padding-bottom);
+  color: var(--lufa-semantic-ui-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

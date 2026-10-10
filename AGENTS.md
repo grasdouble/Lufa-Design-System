@@ -337,11 +337,7 @@ Root-level tests outside the Playwright package do not run as part of `pnpm test
 
 ## Visual variants — Extend the existing all-variants screenshot
 
-New component sizes or appearances need visual coverage alongside behavior and CSS assertions.
-
-- ✅ Add `Input` sizes `sm/md/lg` to the existing `All Variants` fixture and review its updated light/dark macOS references. Linux references are managed by CI.
-- ✅ Create a separate screenshot only when the state or composition cannot be represented clearly in the existing overview.
-- ❌ Add only CSS assertions for new visual variants, duplicate the all-variants overview with a new snapshot, or generate Linux references locally.
+For the detailed rule on keeping one all-variations visual snapshot per component, see [`packages/design-system/playwright/AGENTS.md`](packages/design-system/playwright/AGENTS.md).
 
 ## Dependabot CI auth tests — Allow pnpm setup without dependency installation
 

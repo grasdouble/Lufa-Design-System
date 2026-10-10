@@ -1,0 +1,25 @@
+.alert {
+  padding: var(--lufa-component-alert-padding-block) var(--lufa-component-alert-padding-inline);
+  border: var(--lufa-component-alert-border-width) solid transparent;
+  border-radius: var(--lufa-component-alert-border-radius);
+}
+
+.variant-error {
+  color: var(--lufa-component-alert-variant-error-text);
+  background: var(--lufa-component-alert-variant-error-background);
+}
+
+.variant-info {
+  color: var(--lufa-component-alert-variant-info-text);
+  background: var(--lufa-component-alert-variant-info-background);
+}
+
+.variant-success {
+  color: var(--lufa-component-alert-variant-success-text);
+  background: var(--lufa-component-alert-variant-success-background);
+}
+
+.variant-warning {
+  color: var(--lufa-component-alert-variant-warning-text);
+  background: var(--lufa-component-alert-variant-warning-background);
+}
