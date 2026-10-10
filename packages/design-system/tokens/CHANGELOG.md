@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-tokens
 
+## 2.0.0
+
+### Major Changes
+
+- 52ee898: feat: add Accordion and Alert, expose Card token scales, and align Card defaults with flat, medium-radius content cards.
+
 ## 1.3.0
 
 ### Minor Changes
