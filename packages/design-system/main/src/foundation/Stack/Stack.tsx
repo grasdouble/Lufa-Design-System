@@ -3,7 +3,8 @@ import { forwardRef } from 'react';
 import { clsx } from 'clsx';
 
 import type { SemanticSpacing } from '../../utils/component-values';
-import type { ResponsiveVisibilityProps } from '../../utils/responsive-visibility';
+import type { ResponsiveValue, ResponsiveVisibilityProps } from '../../utils/responsive-visibility';
+import { getResponsiveLayoutClasses } from '../../utils/responsive-layout';
 import { getResponsiveVisibilityClasses } from '../../utils/responsive-visibility';
 import styles from './Stack.module.css';
 
@@ -16,6 +17,7 @@ import styles from './Stack.module.css';
  *
  * Features:
  * - Direction control (vertical/horizontal)
+ * - Responsive direction changes at DS breakpoints
  * - Gap-based spacing (using semantic tokens)
  * - Flexbox alignment (align-items and justify-content)
  * - Flex wrap support for responsive layouts
@@ -49,9 +51,10 @@ import styles from './Stack.module.css';
  *   {items.map(item => <Card key={item.id} {...item} />)}
  * </Stack>
  *
- * // Responsive visibility
- * <Stack hideFrom="md" spacing="default">
- *   <MobileNav />
+ * // Responsive layout
+ * <Stack direction={{ base: 'vertical', md: 'horizontal' }} spacing="default">
+ *   <PrimaryAction />
+ *   <SecondaryAction />
  * </Stack>
  * ```
  */
@@ -96,9 +99,11 @@ export type StackProps<T extends ElementType = 'div'> = {
 
   /**
    * Layout direction
+   * Accepts a responsive map using the DS breakpoints.
+   * @example { base: 'vertical', md: 'horizontal' }
    * @default 'vertical'
    */
-  direction?: DirectionValue;
+  direction?: ResponsiveValue<DirectionValue>;
 
   /**
    * Spacing between children (uses gap property)
@@ -213,7 +218,8 @@ const StackImpl = <T extends ElementType = 'div'>(
     styles.stack,
 
     // Direction utilities
-    direction && styles[`direction-${direction}`],
+    typeof direction === 'string' && styles[`direction-${direction}`],
+    ...getResponsiveLayoutClasses('stack', 'direction', direction),
 
     // Spacing utilities (gap)
     spacing && styles[`spacing-${spacing}`],

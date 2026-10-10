@@ -1,0 +1,213 @@
+/**
+ * Responsive Grid and Stack utilities.
+ * Breakpoint values match tokens/src/primitives/breakpoint.json.
+ */
+
+/* Base values apply below the first configured breakpoint. */
+.lufa-grid-columns-base-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.lufa-grid-columns-base-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.lufa-stack-direction-base-vertical {
+  flex-direction: column;
+}
+.lufa-stack-direction-base-horizontal {
+  flex-direction: row;
+}
+
+@media (min-width: 320px) {
+  .lufa-grid-columns-xs-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xs-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-xs-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-xs-horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 640px) {
+  .lufa-grid-columns-sm-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-sm-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-sm-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-sm-horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .lufa-grid-columns-md-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-md-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-md-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-md-horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lufa-grid-columns-lg-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-lg-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-lg-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-lg-horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lufa-grid-columns-xl-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-xl-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-xl-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-xl-horizontal {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1536px) {
+  .lufa-grid-columns-2xl-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lufa-grid-columns-2xl-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .lufa-stack-direction-2xl-vertical {
+    flex-direction: column;
+  }
+  .lufa-stack-direction-2xl-horizontal {
+    flex-direction: row;
+  }
+}
