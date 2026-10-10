@@ -1,5 +1,11 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.11
+
+### Patch Changes
+
+- 94dcf6f: feat: add mobile-first responsive column counts to Grid and responsive direction to Stack using shared breakpoints.
+
 ## 1.3.10
 
 ### Patch Changes
