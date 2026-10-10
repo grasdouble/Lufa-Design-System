@@ -206,13 +206,15 @@ export function CardGrid() {
 | Prop        | Type                                                                                            | Default      | Description                                 |
 | ----------- | ----------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------- |
 | `as`        | `'div' \| 'section' \| 'article' \| 'header' \| 'footer' \| 'main' \| 'nav' \| 'aside' \| 'ul'` | `'div'`      | HTML element to render                      |
-| `direction` | `'vertical' \| 'horizontal'`                                                                    | `'vertical'` | Stack direction (column or row)             |
+| `direction` | `'vertical' \| 'horizontal'` or a responsive map                                                | `'vertical'` | Stack direction (column or row)             |
 | `spacing`   | `'none' \| 'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'`                    | `'default'`  | Gap between children using semantic tokens  |
 | `align`     | `'start' \| 'center' \| 'end' \| 'stretch' \| 'baseline'`                                       | `'stretch'`  | Cross-axis alignment (align-items)          |
 | `justify`   | `'start' \| 'center' \| 'end' \| 'space-between' \| 'space-around' \| 'space-evenly'`           | `'start'`    | Main-axis distribution (justify-content)    |
 | `wrap`      | `boolean`                                                                                       | `false`      | Enable flex wrapping for responsive layouts |
 | `className` | `string`                                                                                        | `undefined`  | Additional CSS classes                      |
 | `children`  | `ReactNode`                                                                                     | `undefined`  | Child elements to render inside the Stack   |
+
+`direction` also accepts a mobile-first breakpoint map, for example `direction={{ base: 'vertical', md: 'horizontal' }}`. Supported keys are `base`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; the last configured value remains active until overridden. If `base` is omitted, Stack keeps its default vertical direction until the first configured breakpoint.
 
 Also supports all standard HTML attributes for the underlying element (for example `id`, `role`, `aria-*`, `data-*`, `style`, and event handlers).
 

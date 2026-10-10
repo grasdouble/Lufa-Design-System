@@ -41,22 +41,34 @@ import { Grid } from '@grasdouble/lufa_design-system';
 </Grid>;
 ```
 
+Use a breakpoint map when the number of columns should adapt to available space:
+
+```tsx
+<Grid columns={{ base: 1, md: 2, lg: 3 }} gap="default">
+  <FeatureCard />
+  <FeatureCard />
+  <FeatureCard />
+</Grid>
+```
+
 ## Props
 
 Grid inherits all **Box** props.
 
-| Prop      | Type                                                               | Default | Description                        |
-| :-------- | :----------------------------------------------------------------- | :------ | :--------------------------------- |
-| `columns` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 12`                                 | -       | `grid-template-columns` shorthand. |
-| `gap`     | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'` | -       | Both row and column gap.           |
-| `gapX`    | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'` | -       | Column gap.                        |
-| `gapY`    | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'` | -       | Row gap.                           |
-| `align`   | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'`          | -       | `align-items`.                     |
-| `justify` | `'start' \| 'end' \| 'center' \| 'stretch'`                        | -       | `justify-items`.                   |
+| Prop      | Type                                                                                      | Default | Description                        |
+| :-------- | :---------------------------------------------------------------------------------------- | :------ | :--------------------------------- |
+| `columns` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 12` or `ResponsiveValue<1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 12>` | -       | `grid-template-columns` shorthand. |
+| `gap`     | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'`                        | -       | Both row and column gap.           |
+| `gapX`    | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'`                        | -       | Column gap.                        |
+| `gapY`    | `'tight' \| 'compact' \| 'default' \| 'comfortable' \| 'spacious'`                        | -       | Row gap.                           |
+| `align`   | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'`                                 | -       | `align-items`.                     |
+| `justify` | `'start' \| 'end' \| 'center' \| 'stretch'`                                               | -       | `justify-items`.                   |
 
 ## Accessibility
 
 Grid affects visual layout only. Keep DOM order meaningful for screen readers and keyboard navigation.
+
+Responsive maps use the shared breakpoints (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`) and are mobile-first. `base` applies below the first breakpoint; each breakpoint value applies from that width upward until another value overrides it. If `base` is omitted, Grid keeps its implicit single-column layout until the first configured breakpoint.
 
 ## Theming & Tokens
 

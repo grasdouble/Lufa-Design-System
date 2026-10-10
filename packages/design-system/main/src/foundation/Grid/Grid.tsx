@@ -4,13 +4,17 @@ import type { BoxComponentProps } from '@foundation/Box/Box';
 import { Box } from '@foundation/Box/Box';
 import { clsx } from 'clsx';
 
+import type { ResponsiveValue } from '../../utils/responsive-visibility';
+import { getResponsiveLayoutClasses } from '../../utils/responsive-layout';
 import styles from './Grid.module.css';
 
 export type GridProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
   /**
    * Number of columns
+   * Accepts a responsive map using the DS breakpoints.
+   * @example { base: 1, md: 2, lg: 3 }
    */
-  columns?: 1 | 2 | 3 | 4 | 5 | 6 | 12;
+  columns?: ResponsiveValue<1 | 2 | 3 | 4 | 5 | 6 | 12>;
   /**
    * Gap between items (shorthand for row-gap and column-gap)
    */
@@ -40,7 +44,7 @@ export type GridProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
 /**
  * Grid Component
  *
- * A layout primitive for CSS Grid layouts.
+ * A layout primitive for CSS Grid layouts, including responsive column counts.
  * Inherits all Box props including responsive visibility controls.
  *
  * @example
@@ -50,9 +54,11 @@ export type GridProps<T extends ElementType = 'div'> = BoxComponentProps<T> & {
  *   <div>Column 2</div>
  * </Grid>
  *
- * // Responsive visibility
- * <Grid hide={{ base: false, md: true }} columns={3}>
- *   <MobileGridItem />
+ * // Responsive columns
+ * <Grid columns={{ base: 1, md: 2, lg: 3 }} gap="default">
+ *   <Card />
+ *   <Card />
+ *   <Card />
  * </Grid>
  * ```
  */
@@ -62,7 +68,8 @@ const GridImpl = <T extends ElementType = 'div'>(
 ) => {
   const gridClassName = clsx(
     styles.grid, // Base grid class
-    columns && styles[`columns-${columns}`],
+    typeof columns === 'number' && styles[`columns-${columns}`],
+    ...getResponsiveLayoutClasses('grid', 'columns', columns),
     gap && styles[`gap-${gap}`],
     gapX && styles[`gapX-${gapX}`],
     gapY && styles[`gapY-${gapY}`],

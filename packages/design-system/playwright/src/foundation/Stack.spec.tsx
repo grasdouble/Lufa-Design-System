@@ -115,6 +115,36 @@ test.describe('Stack Component', () => {
         const component = await mount(<Stack>Content</Stack>);
         await expect(component).toHaveClass(/direction-vertical/);
       });
+
+      test('supports responsive direction at DS breakpoints', async ({ mount, page }) => {
+        const component = await mount(
+          <Stack direction={{ base: 'vertical', md: 'horizontal' }}>
+            <div>First</div>
+            <div>Second</div>
+          </Stack>
+        );
+
+        await page.setViewportSize({ width: 500, height: 900 });
+        await expect(component).toHaveCSS('flex-direction', 'column');
+
+        await page.setViewportSize({ width: 800, height: 900 });
+        await expect(component).toHaveCSS('flex-direction', 'row');
+      });
+
+      test('uses the default vertical direction when a responsive map omits base', async ({ mount, page }) => {
+        const component = await mount(
+          <Stack direction={{ md: 'horizontal' }}>
+            <div>First</div>
+            <div>Second</div>
+          </Stack>
+        );
+
+        await page.setViewportSize({ width: 500, height: 900 });
+        await expect(component).toHaveCSS('flex-direction', 'column');
+
+        await page.setViewportSize({ width: 800, height: 900 });
+        await expect(component).toHaveCSS('flex-direction', 'row');
+      });
     });
 
     test.describe('Spacing Variants', () => {
@@ -668,7 +698,7 @@ test.describe('Stack Component', () => {
           style={{
             padding: '32px',
             background: 'var(--lufa-semantic-ui-background-page)',
-            width: '900px',
+            width: 'min(900px, calc(100vw - 64px))',
           }}
         >
           <h1
@@ -1077,10 +1107,90 @@ test.describe('Stack Component', () => {
               </Stack>
             </Stack>
           </section>
+
+          <section style={{ marginBottom: '40px' }}>
+            <h2
+              style={{
+                marginBottom: '16px',
+                fontSize: '20px',
+                fontWeight: '600',
+                color: 'var(--lufa-semantic-ui-text-secondary)',
+              }}
+            >
+              Responsive direction (base vertical, md horizontal)
+            </h2>
+            <Stack
+              data-testid="responsive-direction-example"
+              direction={{ base: 'vertical', md: 'horizontal' }}
+              spacing="default"
+              style={{ width: '320px', maxWidth: '100%' }}
+            >
+              {['First', 'Second', 'Third'].map((item) => (
+                <div
+                  key={item}
+                  style={{
+                    padding: '12px',
+                    background: '#6366f1',
+                    color: 'white',
+                    borderRadius: '6px',
+                    fontWeight: '600',
+                    minWidth: '80px',
+                    textAlign: 'center',
+                  }}
+                >
+                  {item}
+                </div>
+              ))}
+            </Stack>
+          </section>
         </div>
       );
 
       await component.page().evaluate(() => document.fonts.ready);
+
+      const page = component.page();
+      const originalViewport = page.viewportSize();
+      const responsiveDirection = component.getByTestId('responsive-direction-example');
+      const viewportExamples: { width: number; label: string; screenshot: string }[] = [];
+
+      for (const viewport of [
+        { width: 500, label: '500px · vertical' },
+        { width: 800, label: '800px (md) · horizontal' },
+      ]) {
+        await page.setViewportSize({ width: viewport.width, height: 900 });
+        const screenshot = await responsiveDirection.screenshot();
+        viewportExamples.push({ ...viewport, screenshot: screenshot.toString('base64') });
+      }
+
+      if (originalViewport) await page.setViewportSize(originalViewport);
+
+      await page.evaluate(async (examples) => {
+        const target = document.querySelector('[data-testid="responsive-direction-example"]');
+        if (!target) throw new Error('Responsive Stack fixture was not found');
+
+        const comparison = document.createElement('div');
+        comparison.style.cssText = 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px';
+
+        for (const example of examples) {
+          const panel = document.createElement('figure');
+          panel.style.cssText = 'min-width:0;margin:0;padding:6px;border:1px solid #94a3b8;background:#fff';
+
+          const caption = document.createElement('figcaption');
+          caption.textContent = example.label;
+          caption.style.cssText = 'margin-bottom:6px;font:600 11px system-ui,sans-serif;color:#334155';
+
+          const image = document.createElement('img');
+          image.src = `data:image/png;base64,${example.screenshot}`;
+          image.alt = '';
+          image.style.cssText = 'display:block;width:100%;height:auto';
+
+          panel.append(caption, image);
+          comparison.append(panel);
+        }
+
+        target.replaceWith(comparison);
+        await Promise.all(Array.from(comparison.querySelectorAll('img'), (image) => image.decode()));
+      }, viewportExamples);
 
       await expect(component).toHaveScreenshot('stack-all-variants.png');
     });
