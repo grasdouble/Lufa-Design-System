@@ -1,0 +1,133 @@
+{
+  "component": {
+    "accordion": {
+      "summary": {
+        "padding": {
+          "block": {
+            "$value": "23px",
+            "$type": "dimension",
+            "$description": "Vertical space around a disclosure summary, calibrated against the MapositionGPS FAQ pattern",
+            "$extensions": {
+              "lufa": {
+                "category": "accordion",
+                "useCase": "Comfortable FAQ and disclosure rows",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "inline-start": {
+            "$value": "3px",
+            "$type": "dimension",
+            "$description": "Inline start inset for disclosure summaries",
+            "$extensions": {
+              "lufa": {
+                "category": "accordion",
+                "useCase": "Align summary labels with surrounding content",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          },
+          "inline-end": {
+            "$value": "45px",
+            "$type": "dimension",
+            "$description": "Inline end inset for disclosure summaries",
+            "$extensions": {
+              "lufa": {
+                "category": "accordion",
+                "useCase": "Reserve a balanced inset for disclosure indicators",
+                "themeable": true,
+                "themeLevel": "advanced"
+              }
+            }
+          }
+        },
+        "font-weight": {
+          "$value": "700",
+          "$type": "fontWeight",
+          "$description": "Emphasis for disclosure summary labels",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "FAQ and disclosure summary labels",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "content": {
+        "padding-bottom": {
+          "$value": "23px",
+          "$type": "dimension",
+          "$description": "Space after expanded disclosure content",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "Separate expanded content from the next disclosure row",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "border": {
+        "color": {
+          "$value": "{semantic.ui.border.default}",
+          "$type": "color",
+          "$description": "Separator color between disclosure rows",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "FAQ and disclosure row separators",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      },
+      "indicator": {
+        "color": {
+          "$value": "{semantic.interactive.link.default}",
+          "$type": "color",
+          "$description": "Disclosure indicator color",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "Plus/minus or chevron indicators on disclosure summaries",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "size": {
+          "$value": "1.4rem",
+          "$type": "dimension",
+          "$description": "Visual size of the disclosure indicator",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "Plus/minus or chevron indicators on disclosure summaries",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        },
+        "transition-duration": {
+          "$value": "{semantic.ui.transition.duration.fast}",
+          "$type": "duration",
+          "$description": "Disclosure indicator transition duration",
+          "$extensions": {
+            "lufa": {
+              "category": "accordion",
+              "useCase": "Animate chevron disclosure indicators",
+              "themeable": true,
+              "themeLevel": "advanced"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -49,11 +49,14 @@ export function Example() {
 
 ## Props
 
-| Prop        | Type          | Default     | Description                                                                  |
-| ----------- | ------------- | ----------- | ---------------------------------------------------------------------------- |
-| `as`        | `ElementType` | `'div'`     | Polymorphic prop to render a different element (e.g., `section`, `article`). |
-| `children`  | `ReactNode`   | `undefined` | The content inside the card.                                                 |
-| `className` | `string`      | `undefined` | Additional CSS classes.                                                      |
+| Prop        | Type                             | Default     | Description                                                                  |
+| ----------- | -------------------------------- | ----------- | ---------------------------------------------------------------------------- |
+| `as`        | `ElementType`                    | `'div'`     | Polymorphic prop to render a different element (e.g., `section`, `article`). |
+| `children`  | `ReactNode`                      | `undefined` | The content inside the card.                                                 |
+| `className` | `string`                         | `undefined` | Additional CSS classes.                                                      |
+| `padding`   | `'sm' \| 'md' \| 'lg'`           | `'md'`      | Selects the existing card padding token scale.                               |
+| `radius`    | `'sm' \| 'md' \| 'lg'`           | `'md'`      | Selects the existing card corner-radius token scale.                         |
+| `shadow`    | `'none' \| 'sm' \| 'md' \| 'lg'` | `'none'`    | Selects the existing card elevation token, or no shadow.                     |
 
 ## Accessibility
 
@@ -61,7 +64,7 @@ Choose semantic elements with `as` to improve document structure. Ensure heading
 
 ## Theming & Tokens
 
-Card uses component tokens for background, border, and shadow. These tokens are theme‑aware.
+Card uses component tokens for its background, border, padding, corner radius, and shadow. These tokens are theme‑aware; the scale props select among existing token values and preserve the current appearance by default.
 
 ## Do / Don’t
 

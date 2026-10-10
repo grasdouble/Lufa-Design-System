@@ -1,9 +1,46 @@
 .card {
   background-color: var(--lufa-component-card-background);
   border: 1px solid var(--lufa-component-card-border);
-  border-radius: var(--lufa-component-card-border-radius-sm);
-  box-shadow: var(--lufa-component-card-shadow-sm);
-  padding: var(--lufa-component-card-padding-md);
   color: var(--lufa-semantic-ui-text-primary);
   overflow: hidden; /* Ensures content respects border-radius */
+}
+
+.padding-sm {
+  padding: var(--lufa-component-card-padding-sm);
+}
+
+.padding-md {
+  padding: var(--lufa-component-card-padding-md);
+}
+
+.padding-lg {
+  padding: var(--lufa-component-card-padding-lg);
+}
+
+.radius-sm {
+  border-radius: var(--lufa-component-card-border-radius-sm);
+}
+
+.radius-md {
+  border-radius: var(--lufa-component-card-border-radius-md);
+}
+
+.radius-lg {
+  border-radius: var(--lufa-component-card-border-radius-lg);
+}
+
+.shadow-none {
+  box-shadow: var(--lufa-component-card-shadow-none);
+}
+
+.shadow-sm {
+  box-shadow: var(--lufa-component-card-shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--lufa-component-card-shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--lufa-component-card-shadow-lg);
 }

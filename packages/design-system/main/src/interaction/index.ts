@@ -10,3 +10,6 @@ export type { FormFieldProps } from './FormField';
 
 export { Label } from './Label';
 export type { LabelProps } from './Label';
+
+export { Accordion } from './Accordion';
+export type { AccordionProps } from './Accordion';

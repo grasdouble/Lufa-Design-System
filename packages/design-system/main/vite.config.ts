@@ -85,7 +85,7 @@ export default defineConfig(({ command, mode, isPreview }) => {
         minify: false,
         sourcemap: true,
         declaration: true,
-        cssMinify: false,
+        cssMinify: true,
         outDir: 'dist',
         // assetsInlineLimit: isProduction ? 4096 : 0,
         lib: {

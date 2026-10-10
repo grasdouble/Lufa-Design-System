@@ -23,6 +23,9 @@ export * from './foundation';
 // Content - Display content, text, icons, badges, visual elements
 export * from './content';
 
+// Feedback - Accessible status and alert messaging
+export * from './feedback';
+
 // Interaction - Interactive elements like buttons, inputs, forms
 export * from './interaction';
 
