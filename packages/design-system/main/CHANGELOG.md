@@ -1,5 +1,16 @@
 # @grasdouble/lufa_design-system
 
+## 4.1.1
+
+### Patch Changes
+
+- f6ed0b2: Dependency updates
+- 673b350: Dependency updates
+- 4b60210: Dependency updates
+- Updated dependencies [f6ed0b2]
+- Updated dependencies [4b60210]
+  - @grasdouble/lufa_design-system-tokens@2.0.1
+
 ## 4.1.0
 
 ### Minor Changes
