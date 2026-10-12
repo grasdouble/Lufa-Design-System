@@ -60,7 +60,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sort-package-json": "^4.0.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "packageManager": "pnpm@12.4.2"
 }
