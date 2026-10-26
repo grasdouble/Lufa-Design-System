@@ -55,12 +55,12 @@
   },
   "dependencies": {
     "@csstools/selector-resolve-nested": "^4.0.2",
-    "@csstools/selector-specificity": "^6.0.0",
+    "@csstools/selector-specificity": "^6.0.1",
     "@grasdouble/lufa_design-system-tokens": "workspace:^",
     "chalk": "^6.0.1",
     "commander": "^15.0.0",
-    "postcss": "^8.5.28",
-    "postcss-selector-parser": "^7.1.6",
+    "postcss": "^8.5.31",
+    "postcss-selector-parser": "^7.1.7",
     "postcss-value-parser": "^4.2.0"
   },
   "devDependencies": {
