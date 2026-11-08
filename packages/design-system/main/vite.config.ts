@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import reactPlugin from '@vitejs/plugin-react';
+import dts from 'unplugin-dts/vite';
 import { defineConfig, loadEnv } from 'vite';
-import dts from 'vite-plugin-dts';
 import { externalizeDeps } from 'vite-plugin-externalize-deps';
 
 export default defineConfig(({ command, mode, isPreview }) => {

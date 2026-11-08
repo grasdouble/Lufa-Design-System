@@ -18,7 +18,7 @@
     "prettier:write": "prettier --write .",
     "serve": "docusaurus serve",
     "swizzle": "docusaurus swizzle",
-    "typecheck": "tsc",
+    "typecheck": "tsc6",
     "update-changelog": "node scripts/update-changelog.js",
     "validate:token-usage": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.tsx,.ts,.mdx",
     "validate:token-usage:unused": "pnpm --filter @grasdouble/lufa_design-system-tokens run validate:token-usage -- --dir $PWD --ext .css,.tsx,.ts,.mdx --unused",
@@ -80,11 +80,12 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^10.13.0",
     "prettier": "^3.9.10",
     "sort-package-json": "^4.1.0",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "engines": {
     "node": ">=20.0"
