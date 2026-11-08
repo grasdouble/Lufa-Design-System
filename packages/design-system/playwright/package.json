@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@grasdouble/lufa_config_eslint": "^0.1.13",
+    "@grasdouble/lufa_config_eslint": "^0.1.15",
     "@grasdouble/lufa_config_prettier": "^0.1.6",
     "@grasdouble/lufa_config_tsconfig": "^0.1.5",
     "@grasdouble/lufa_design-system": "workspace:^",
