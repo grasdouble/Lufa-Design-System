@@ -1,5 +1,17 @@
 # @grasdouble/lufa_design-system-playwright
 
+## 1.3.12
+
+### Patch Changes
+
+- f6ed0b2: Dependency updates
+- 673b350: Dependency updates
+- 4b60210: Dependency updates
+- 901ed1c: Dependency updates
+- 31d18f2: Dependency updates
+- 12a5ab5: Dependency updates
+- ac0af50: chore: support TypeScript 7 alongside the TypeScript 6 API compatibility package
+
 ## 1.3.11
 
 ### Patch Changes

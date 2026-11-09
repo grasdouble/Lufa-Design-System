@@ -1,5 +1,23 @@
 # @grasdouble/lufa_plugin_vscode_lufa-ds-preview
 
+## 0.4.16
+
+### Patch Changes
+
+- f6ed0b2: Dependency updates
+- 4b60210: Dependency updates
+- 342be14: Dependency updates
+- 901ed1c: Dependency updates
+- 12a5ab5: Dependency updates
+- ac0af50: chore: support TypeScript 7 alongside the TypeScript 6 API compatibility package
+- Updated dependencies [f5ccd3e]
+- Updated dependencies [f6ed0b2]
+- Updated dependencies [4b60210]
+- Updated dependencies [901ed1c]
+- Updated dependencies [12a5ab5]
+- Updated dependencies [ac0af50]
+  - @grasdouble/lufa_design-system-tokens@2.0.1
+
 ## 0.4.15
 
 ### Patch Changes
