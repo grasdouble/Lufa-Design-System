@@ -1,5 +1,0 @@
----
-"@grasdouble/lufa_design-system-tokens": patch
----
-
-Dependency updates

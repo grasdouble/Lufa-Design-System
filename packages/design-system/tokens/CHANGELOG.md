@@ -1,5 +1,16 @@
 # @grasdouble/lufa_design-system-tokens
 
+## 2.0.1
+
+### Patch Changes
+
+- f5ccd3e: Dependency updates
+- f6ed0b2: Dependency updates
+- 4b60210: Dependency updates
+- 901ed1c: Dependency updates
+- 12a5ab5: Dependency updates
+- ac0af50: chore: support TypeScript 7 alongside the TypeScript 6 API compatibility package
+
 ## 2.0.0
 
 ### Major Changes
